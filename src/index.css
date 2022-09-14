@@ -1,0 +1,257 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Futura font-family */
+@font-face {
+  font-family: "Futura LT";
+  src: url("./assets/futura-lt/FuturaLT-Oblique.eot");
+  src: url("./assets/futura-lt/FuturaLT-Oblique.eot?#iefix") format("embedded-opentype"),
+    url("./assets/futura-lt/FuturaLT-Oblique.woff2") format("woff2"),
+    url("./assets/futura-lt/FuturaLT-Oblique.woff") format("woff"),
+    url("./assets/futura-lt/FuturaLT-Oblique.ttf") format("truetype");
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Futura LT";
+  src: url("./assets/futura-lt/FuturaLT-Bold.eot");
+  src: url("./assets/futura-lt/FuturaLT-Bold.eot?#iefix") format("embedded-opentype"),
+    url("./assets/futura-lt/FuturaLT-Bold.woff2") format("woff2"),
+    url("./assets/futura-lt/FuturaLT-Bold.woff") format("woff"),
+    url("./assets/futura-lt/FuturaLT-Bold.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Futura LT";
+  src: url("./assets/futura-lt/FuturaLT-BoldOblique.eot");
+  src: url("./assets/futura-lt/FuturaLT-BoldOblique.eot?#iefix") format("embedded-opentype"),
+    url("./assets/futura-lt/FuturaLT-BoldOblique.woff2") format("woff2"),
+    url("./assets/futura-lt/FuturaLT-BoldOblique.woff") format("woff"),
+    url("./assets/futura-lt/FuturaLT-BoldOblique.ttf") format("truetype");
+  font-weight: bold;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Futura LT";
+  src: url("./assets/futura-lt/FuturaLT-Book.eot");
+  src: url("./assets/futura-lt/FuturaLT-Book.eot?#iefix") format("embedded-opentype"),
+    url("./assets/futura-lt/FuturaLT-Book.woff2") format("woff2"),
+    url("./assets/futura-lt/FuturaLT-Book.woff") format("woff"),
+    url("./assets/futura-lt/FuturaLT-Book.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Futura LT";
+  src: url("./assets/futura-lt/FuturaLT.eot");
+  src: url("./assets/futura-lt/FuturaLT.eot?#iefix") format("embedded-opentype"),
+    url("./assets/futura-lt/FuturaLT.woff2") format("woff2"),
+    url("./assets/futura-lt/FuturaLT.woff") format("woff"),
+    url("./assets/futura-lt/FuturaLT.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Futura LT";
+  src: url("./assets/futura-lt/FuturaLT-BookOblique.eot");
+  src: url("./assets/futura-lt/FuturaLT-BookOblique.eot?#iefix") format("embedded-opentype"),
+    url("./assets/futura-lt/FuturaLT-BookOblique.woff2") format("woff2"),
+    url("./assets/futura-lt/FuturaLT-BookOblique.woff") format("woff"),
+    url("./assets/futura-lt/FuturaLT-BookOblique.ttf") format("truetype");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Futura LT";
+  src: url("./assets/futura-lt/FuturaLT-CondensedBold.eot");
+  src: url("./assets/futura-lt/FuturaLT-CondensedBold.eot?#iefix") format("embedded-opentype"),
+    url("./assets/futura-lt/FuturaLT-CondensedBold.woff2") format("woff2"),
+    url("./assets/futura-lt/FuturaLT-CondensedBold.woff") format("woff"),
+    url("./assets/futura-lt/FuturaLT-CondensedBold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Futura LT";
+  src: url("./assets/futura-lt/FuturaLT-CondensedBoldOblique.eot");
+  src: url("./assets/futura-lt/FuturaLT-CondensedBoldOblique.eot?#iefix")
+      format("embedded-opentype"),
+    url("./assets/futura-lt/FuturaLT-CondensedBoldOblique.woff2") format("woff2"),
+    url("./assets/futura-lt/FuturaLT-CondensedBoldOblique.woff") format("woff"),
+    url("./assets/futura-lt/FuturaLT-CondensedBoldOblique.ttf") format("truetype");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Futura LT";
+  src: url("./assets/futura-lt/FuturaLT-Condensed.eot");
+  src: url("./assets/futura-lt/FuturaLT-Condensed.eot?#iefix") format("embedded-opentype"),
+    url("./assets/futura-lt/FuturaLT-Condensed.woff2") format("woff2"),
+    url("./assets/futura-lt/FuturaLT-Condensed.woff") format("woff"),
+    url("./assets/futura-lt/FuturaLT-Condensed.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Futura LT";
+  src: url("./assets/futura-lt/FuturaLT-CondensedExtraBold.eot");
+  src: url("./assets/futura-lt/FuturaLT-CondensedExtraBold.eot?#iefix") format("embedded-opentype"),
+    url("./assets/futura-lt/FuturaLT-CondensedExtraBold.woff2") format("woff2"),
+    url("./assets/futura-lt/FuturaLT-CondensedExtraBold.woff") format("woff"),
+    url("./assets/futura-lt/FuturaLT-CondensedExtraBold.ttf") format("truetype");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Futura LT";
+  src: url("./assets/futura-lt/FuturaLT-ExtraBold.eot");
+  src: url("./assets/futura-lt/FuturaLT-ExtraBold.eot?#iefix") format("embedded-opentype"),
+    url("./assets/futura-lt/FuturaLT-ExtraBold.woff2") format("woff2"),
+    url("./assets/futura-lt/FuturaLT-ExtraBold.woff") format("woff"),
+    url("./assets/futura-lt/FuturaLT-ExtraBold.ttf") format("truetype");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Futura LT";
+  src: url("./assets/futura-lt/FuturaLT-CondensedOblique.eot");
+  src: url("./assets/futura-lt/FuturaLT-CondensedOblique.eot?#iefix") format("embedded-opentype"),
+    url("./assets/futura-lt/FuturaLT-CondensedOblique.woff2") format("woff2"),
+    url("./assets/futura-lt/FuturaLT-CondensedOblique.woff") format("woff"),
+    url("./assets/futura-lt/FuturaLT-CondensedOblique.ttf") format("truetype");
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Futura LT";
+  src: url("./assets/futura-lt/FuturaLT-CondensedLight.eot");
+  src: url("./assets/futura-lt/FuturaLT-CondensedLight.eot?#iefix") format("embedded-opentype"),
+    url("./assets/futura-lt/FuturaLT-CondensedLight.woff2") format("woff2"),
+    url("./assets/futura-lt/FuturaLT-CondensedLight.woff") format("woff"),
+    url("./assets/futura-lt/FuturaLT-CondensedLight.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Futura LT";
+  src: url("./assets/futura-lt/FuturaLT-CondensedLightObl.eot");
+  src: url("./assets/futura-lt/FuturaLT-CondensedLightObl.eot?#iefix") format("embedded-opentype"),
+    url("./assets/futura-lt/FuturaLT-CondensedLightObl.woff2") format("woff2"),
+    url("./assets/futura-lt/FuturaLT-CondensedLightObl.woff") format("woff"),
+    url("./assets/futura-lt/FuturaLT-CondensedLightObl.ttf") format("truetype");
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Futura LT";
+  src: url("./assets/futura-lt/FuturaLT-CondExtraBoldObl.eot");
+  src: url("./assets/futura-lt/FuturaLT-CondExtraBoldObl.eot?#iefix") format("embedded-opentype"),
+    url("./assets/futura-lt/FuturaLT-CondExtraBoldObl.woff2") format("woff2"),
+    url("./assets/futura-lt/FuturaLT-CondExtraBoldObl.woff") format("woff"),
+    url("./assets/futura-lt/FuturaLT-CondExtraBoldObl.ttf") format("truetype");
+  font-weight: 800;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Futura LT";
+  src: url("./assets/futura-lt/FuturaLT-LightOblique.eot");
+  src: url("./assets/futura-lt/FuturaLT-LightOblique.eot?#iefix") format("embedded-opentype"),
+    url("./assets/futura-lt/FuturaLT-LightOblique.woff2") format("woff2"),
+    url("./assets/futura-lt/FuturaLT-LightOblique.woff") format("woff"),
+    url("./assets/futura-lt/FuturaLT-LightOblique.ttf") format("truetype");
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Futura LT";
+  src: url("./assets/futura-lt/FuturaLT-Light.eot");
+  src: url("./assets/futura-lt/FuturaLT-Light.eot?#iefix") format("embedded-opentype"),
+    url("./assets/futura-lt/FuturaLT-Light.woff2") format("woff2"),
+    url("./assets/futura-lt/FuturaLT-Light.woff") format("woff"),
+    url("./assets/futura-lt/FuturaLT-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Futura LT";
+  src: url("./assets/futura-lt/FuturaLT-Heavy.eot");
+  src: url("./assets/futura-lt/FuturaLT-Heavy.eot?#iefix") format("embedded-opentype"),
+    url("./assets/futura-lt/FuturaLT-Heavy.woff2") format("woff2"),
+    url("./assets/futura-lt/FuturaLT-Heavy.woff") format("woff"),
+    url("./assets/futura-lt/FuturaLT-Heavy.ttf") format("truetype");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Futura LT";
+  src: url("./assets/futura-lt/FuturaLT-Oblique_1.eot");
+  src: url("./assets/futura-lt/FuturaLT-Oblique_1.eot?#iefix") format("embedded-opentype"),
+    url("./assets/futura-lt/FuturaLT-Oblique_1.woff2") format("woff2"),
+    url("./assets/futura-lt/FuturaLT-Oblique_1.woff") format("woff"),
+    url("./assets/futura-lt/FuturaLT-Oblique_1.ttf") format("truetype");
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Futura LT";
+  src: url("./assets/futura-lt/FuturaLT-ExtraBoldOblique.eot");
+  src: url("./assets/futura-lt/FuturaLT-ExtraBoldOblique.eot?#iefix") format("embedded-opentype"),
+    url("./assets/futura-lt/FuturaLT-ExtraBoldOblique.woff2") format("woff2"),
+    url("./assets/futura-lt/FuturaLT-ExtraBoldOblique.woff") format("woff"),
+    url("./assets/futura-lt/FuturaLT-ExtraBoldOblique.ttf") format("truetype");
+  font-weight: 800;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Futura LT";
+  src: url("./assets/futura-lt/FuturaLT-HeavyOblique.eot");
+  src: url("./assets/futura-lt/FuturaLT-HeavyOblique.eot?#iefix") format("embedded-opentype"),
+    url("./assets/futura-lt/FuturaLT-HeavyOblique.woff2") format("woff2"),
+    url("./assets/futura-lt/FuturaLT-HeavyOblique.woff") format("woff"),
+    url("./assets/futura-lt/FuturaLT-HeavyOblique.ttf") format("truetype");
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
