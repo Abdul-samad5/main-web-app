@@ -1,3 +1,8 @@
+// Images
+import logo from "./images/logo.png";
+import logo_2 from "./images/logo_2.png";
+
+// Icons
 import arrow_up from "./icons/arrow_up.png";
 import arrow_down from "./icons/arrow_down.png";
 import arrow_left from "./icons/arrow_left.png";
@@ -46,6 +51,8 @@ export {
   folder,
   home,
   minus,
+  logo,
+  logo_2,
   plus,
   settings,
   sound_max,
