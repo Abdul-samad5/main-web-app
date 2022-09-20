@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { logo_2 } from "../assets";
-import { Login, CreateStore, ResetPassword } from "../components";
+import { Login, CreateStore, ResetPassword, GetStarted } from "../components";
 
 const Register = () => {
   // Initialize state for the login, forgotPassword, and createStore.
@@ -8,6 +8,7 @@ const Register = () => {
     login: true,
     forgotPassword: false,
     createStore: false,
+    getStarted: false,
   });
 
   // Logic to display toggle the state of the three components in order to conditionally render Login, forgotPassword, createStore
@@ -37,6 +38,7 @@ const Register = () => {
       {getStarted.login && <Login handleClick={handleGetStarted} />}
       {getStarted.forgotPassword && <ResetPassword handleClick={handleGetStarted} />}
       {getStarted.createStore && <CreateStore handleClick={handleGetStarted} />}
+      {getStarted.getStarted && <GetStarted handleClick={handleGetStarted} />}
     </div>
   );
 };

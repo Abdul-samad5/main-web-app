@@ -113,7 +113,11 @@ const CreateStore = ({ handleClick }) => {
             </a>
           </label>
         </div>
-        <button className="w-full py-3 bg-brand-primary text-white font-normal rounded-lg hover:bg-brand-secondary transition-colors duration-500">
+        <button
+          type="button"
+          onClick={() => handleClick("getStarted")}
+          className="w-full py-3 bg-brand-primary text-white font-normal rounded-lg hover:bg-brand-secondary transition-colors duration-500"
+        >
           Create store
         </button>
         <div className="w-full flex justify-between items-center mt-2">
