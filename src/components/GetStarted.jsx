@@ -1,6 +1,24 @@
 import { useState, useEffect } from "react";
 import { styles } from "../constants";
 
+function DescRadio({ id, value, handleChange, formData }) {
+  return (
+    <div className={`${styles.radioLabel3}`}>
+      <input
+        type="radio"
+        name="industry"
+        id={id}
+        onChange={handleChange}
+        checked={formData.industry}
+        value={value}
+      />
+      <label htmlFor={id} className="font-normal text-[16px]">
+        {value}
+      </label>
+    </div>
+  );
+}
+
 const GetStarted = ({ handleClick }) => {
   const [formData, setFormData] = useState({
     bestDescription: "",
@@ -81,287 +99,125 @@ const GetStarted = ({ handleClick }) => {
           <h2 className={`${styles.stepFormHeading}`}>What industry are you in?</h2>
           <div className={`${styles.stepFormVBox}`}>
             <div className={`${styles.radioGroup}`}>
-              <div className={`${styles.radioLabel3}`}>
-                <input
-                  type="radio"
-                  name="industry"
-                  id="artsPhotography"
-                  onChange={handleChange}
-                  checked={formData.industry}
-                  value="Arts and Photography"
-                />
-                <label htmlFor="artsPhotography" className="font-normal text-[16px]">
-                  Arts and Photography
-                </label>
-              </div>
-              <div className={`${styles.radioLabel3}`}>
-                <input
-                  type="radio"
-                  name="industry"
-                  id="automobile"
-                  onChange={handleChange}
-                  checked={formData.industry}
-                  value="Automobile"
-                />
-                <label htmlFor="automobile" className="font-normal text-[16px]">
-                  Automobile
-                </label>
-              </div>
-
-              <div className={`${styles.radioLabel3}`}>
-                <input
-                  type="radio"
-                  name="industry"
-                  id="booksMagazines"
-                  onChange={handleChange}
-                  checked={formData.industry}
-                  value="Books and Magazines"
-                />
-                <label htmlFor="booksMagazines" className="font-normal text-[16px]">
-                  Books and Magazines
-                </label>
-              </div>
-
-              <div className={`${styles.radioLabel3}`}>
-                <input
-                  type="radio"
-                  name="industry"
-                  id="charityCause"
-                  onChange={handleChange}
-                  checked={formData.industry}
-                  value="Charities and Cause"
-                />
-                <label htmlFor="charityCause" className="font-normal text-[16px]">
-                  Charities and Cause
-                </label>
-              </div>
-
-              <div className={`${styles.radioLabel3}`}>
-                <input
-                  type="radio"
-                  name="industry"
-                  id="constructionIndustrial"
-                  onChange={handleChange}
-                  checked={formData.industry}
-                  value="Construction and Industrial"
-                />
-                <label htmlFor="constructionIndustrial" className="font-normal text-[16px]">
-                  Construction and Industrial
-                </label>
-              </div>
-
-              <div className={`${styles.radioLabel3}`}>
-                <input
-                  type="radio"
-                  name="industry"
-                  id="crafts"
-                  onChange={handleChange}
-                  checked={formData.industry}
-                  value="Crafts"
-                />
-                <label htmlFor="crafts" className="font-normal text-[16px]">
-                  Crafts
-                </label>
-              </div>
-
-              <div className={`${styles.radioLabel3}`}>
-                <input
-                  type="radio"
-                  name="industry"
-                  id="designMarketing"
-                  onChange={handleChange}
-                  checked={formData.industry}
-                  value="Design and Marketing"
-                />
-                <label htmlFor="designMarketing" className="font-normal text-[16px]">
-                  Design and Marketing
-                </label>
-              </div>
-
-              <div className={`${styles.radioLabel3}`}>
-                <input
-                  type="radio"
-                  name="industry"
-                  id="educationLearning"
-                  onChange={handleChange}
-                  checked={formData.industry}
-                  value="Education and Learning"
-                />
-                <label htmlFor="educationLearning" className="font-normal text-[16px]">
-                  Education and Learning
-                </label>
-              </div>
-
-              <div className={`${styles.radioLabel3}`}>
-                <input
-                  type="radio"
-                  name="industry"
-                  id="fashionApparel"
-                  onChange={handleChange}
-                  checked={formData.industry}
-                  value="Fashion and Apparel"
-                />
-                <label htmlFor="fashionApparel" className="font-normal text-[16px]">
-                  Fashion and Apparel
-                </label>
-              </div>
-
-              <div className={`${styles.radioLabel3}`}>
-                <input
-                  type="radio"
-                  name="industry"
-                  id="flowersCollectibles"
-                  onChange={handleChange}
-                  checked={formData.industry}
-                  value="Flowers, Gifts and Collectibles"
-                />
-                <label htmlFor="flowersCollectibles" className="font-normal text-[16px]">
-                  Flowers, Gifts and Collectibles
-                </label>
-              </div>
+              <DescRadio
+                id="artsPhotography"
+                value="Arts and Photography"
+                formData={formData}
+                handleChange={handleChange}
+              />
+              <DescRadio
+                id="automobile"
+                value="Automobile"
+                formData={formData}
+                handleChange={handleChange}
+              />
+              <DescRadio
+                id="booksMagazines"
+                value="Books and Magazines"
+                formData={formData}
+                handleChange={handleChange}
+              />
+              <DescRadio
+                id="charitiesCause"
+                value="Charities and Cause"
+                formData={formData}
+                handleChange={handleChange}
+              />
+              <DescRadio
+                id="constructionIndustrial"
+                value="Construction and Industrial"
+                formData={formData}
+                handleChange={handleChange}
+              />
+              <DescRadio
+                id="crafts"
+                value="Crafts"
+                formData={formData}
+                handleChange={handleChange}
+              />
+              <DescRadio
+                id="designMarketing"
+                value="Design and Marketing"
+                formData={formData}
+                handleChange={handleChange}
+              />
+              <DescRadio
+                id="educationLearning"
+                value="Education and Learning"
+                formData={formData}
+                handleChange={handleChange}
+              />
+              <DescRadio
+                id="fashionApparel"
+                value="Fashion and Apparel"
+                formData={formData}
+                handleChange={handleChange}
+              />
+              <DescRadio
+                id="flowersCollectibles"
+                value="Flowers, Gifts and Collectibles"
+                formData={formData}
+                handleChange={handleChange}
+              />
             </div>
 
             {/* {Second Half} */}
             <div className={`${styles.radioGroup2}`}>
-              <div className={`${styles.radioLabel3}`}>
-                <input
-                  type="radio"
-                  name="industry"
-                  id="home"
-                  onChange={handleChange}
-                  checked={formData.industry}
-                  value="home and furniture"
-                />
-                <label htmlFor="home" className="font-normal text-[16px]">
-                  Home and Furniture
-                </label>
-              </div>
-
-              <div className={`${styles.radioLabel3}`}>
-                <input
-                  type="radio"
-                  name="industry"
-                  id="jewelry"
-                  onChange={handleChange}
-                  checked={formData.industry}
-                  value="Jewelry"
-                />
-                <label htmlFor="jewelry" className="font-normal text-[16px]">
-                  Jewelry
-                </label>
-              </div>
-
-              <div className={`${styles.radioLabel3}`}>
-                <input
-                  type="radio"
-                  name="industry"
-                  id="music"
-                  onChange={handleChange}
-                  checked={formData.industry}
-                  value="Music"
-                />
-                <label htmlFor="music" className="font-normal text-[16px]">
-                  Music
-                </label>
-              </div>
-
-              <div className={`${styles.radioLabel3}`}>
-                <input
-                  type="radio"
-                  name="industry"
-                  id="petsCare"
-                  onChange={handleChange}
-                  checked={formData.industry}
-                  value="Pets and Pet care"
-                />
-                <label htmlFor="petsCare" className="font-normal text-[16px]">
-                  Pets and Pet care
-                </label>
-              </div>
-
-              <div className={`${styles.radioLabel3}`}>
-                <input
-                  type="radio"
-                  name="industry"
-                  id="softwareTechnology"
-                  onChange={handleChange}
-                  checked={formData.industry}
-                  value="Software and Technology"
-                />
-                <label htmlFor="softwareTechnology" className="font-normal text-[16px]">
-                  Software and Technology
-                </label>
-              </div>
-
-              <div className={`${styles.radioLabel3}`}>
-                <input
-                  type="radio"
-                  name="industry"
-                  id="sportsRecreations"
-                  onChange={handleChange}
-                  checked={formData.industry}
-                  value="Sports and Recreations"
-                />
-                <label htmlFor="sportsRecreations" className="font-normal text-[16px]">
-                  Sports and Recreations
-                </label>
-              </div>
-
-              <div className={`${styles.radioLabel3}`}>
-                <input
-                  type="radio"
-                  name="industry"
-                  id="stationerySupplies"
-                  onChange={handleChange}
-                  checked={formData.industry}
-                  value="Stationery and Office supplies"
-                />
-                <label htmlFor="stationerySupplies" className="font-normal text-[16px]">
-                  Stationery and Office supplies
-                </label>
-              </div>
-
-              <div className={`${styles.radioLabel3}`}>
-                <input
-                  type="radio"
-                  name="industry"
-                  id="templatesPrintables"
-                  onChange={handleChange}
-                  checked={formData.industry}
-                  value="Templates and Printables"
-                />
-                <label htmlFor="templatesPrintables" className="font-normal text-[16px]">
-                  Templates and Printables
-                </label>
-              </div>
-
-              <div className={`${styles.radioLabel3}`}>
-                <input
-                  type="radio"
-                  name="industry"
-                  id="travelLeisure"
-                  onChange={handleChange}
-                  checked={formData.industry}
-                  value="Travel and Leisure"
-                />
-                <label htmlFor="travelLeisure" className="font-normal text-[16px]">
-                  Travel and Leisure
-                </label>
-              </div>
-
-              <div className={`${styles.radioLabel3}`}>
-                <input
-                  type="radio"
-                  name="industry"
-                  id="healthBeauty"
-                  onChange={handleChange}
-                  checked={formData.industry}
-                  value="Health and Beauty"
-                />
-                <label htmlFor="healthBeauty" className="font-normal text-[16px]">
-                  Health and Beauty
-                </label>
-              </div>
+              <DescRadio
+                id="homeFurniture"
+                value="Home and Furniture"
+                formData={formData}
+                handleChange={handleChange}
+              />
+              <DescRadio
+                id="jewelry"
+                value="Jewelry"
+                formData={formData}
+                handleChange={handleChange}
+              />
+              <DescRadio id="music" value="Music" formData={formData} handleChange={handleChange} />
+              <DescRadio
+                id="petsCare"
+                value="Pets and Pet care"
+                formData={formData}
+                handleChange={handleChange}
+              />
+              <DescRadio
+                id="softwareTechnology"
+                value="Software and Technology"
+                formData={formData}
+                handleChange={handleChange}
+              />
+              <DescRadio
+                id="sportsRecreations"
+                value="Sports and Recreations"
+                formData={formData}
+                handleChange={handleChange}
+              />
+              <DescRadio
+                id="stationerySupplies"
+                value="Stationery and Office supplies"
+                formData={formData}
+                handleChange={handleChange}
+              />
+              <DescRadio
+                id="templatesPrintables"
+                value="Templates and Printables"
+                formData={formData}
+                handleChange={handleChange}
+              />
+              <DescRadio
+                id="travelLeisure"
+                value="Travel and Leisure"
+                formData={formData}
+                handleChange={handleChange}
+              />
+              <DescRadio
+                id="healthBeauty"
+                value="Health and Beauty"
+                formData={formData}
+                handleChange={handleChange}
+              />
             </div>
           </div>
           <div className={`${styles.skipNext}`}>
