@@ -1,6 +1,7 @@
 // Images
 import logo from "./images/logo.png";
 import logo_2 from "./images/logo_2.png";
+import dashboardImg from "./images/dashboard-img.png";
 
 // Icons
 import arrow_up from "./icons/arrow_up.png";
@@ -59,4 +60,5 @@ export {
   toggle_off,
   toggle_on,
   user,
+  dashboardImg,
 };

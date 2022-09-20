@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { styles, countries } from "../constants";
+import { dashboardImg } from "../assets";
 
 function Radio({ name, id, value, handleChange, formData }) {
   return (
@@ -312,8 +313,10 @@ const GetStarted = ({ handleClick }) => {
 
         {/* {Slide 4} */}
         <div>
-          <p className="font-normal text-[14px] mb-4">Step 4 of 4</p>
-          <h2 className={`${styles.stepFormHeading}`}>Where will your business be located??</h2>
+          <p className="font-normal text-[14px] mb-4 text-center">Step 4 of 4</p>
+          <h2 className={`${styles.stepFormHeading} text-center`}>
+            Where will your business be located??
+          </h2>
           <div className={`${styles.stepFormHBox}`}>
             <div className="px-[40px]">
               <h3 className="font-normal text-[16px]">Choose country/region</h3>
@@ -337,6 +340,22 @@ const GetStarted = ({ handleClick }) => {
             <button type="button" className={`${styles.button}`}>
               Next
             </button>
+          </div>
+        </div>
+
+        {/* {Slide 5} */}
+        <div className="flex items-center justify-between">
+          <div className="w-[40%]">
+            <h1 className="text-[14px]">Final step to your dashboard!</h1>
+            <h1 className="font-bold leading-[1.3] text-[28px] my-3">
+              Proceed to dashboard to complete your store setup.
+            </h1>
+            <button type="button" className={`${styles.button}`}>
+              Proceed to dashboard
+            </button>
+          </div>
+          <div className="w-1/2">
+            <img src={dashboardImg} alt="Dashboard Image" />
           </div>
         </div>
       </form>
