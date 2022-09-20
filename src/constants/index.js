@@ -1,3 +1,18 @@
+import axios from "axios";
+
+// Load ALL countries from countries endpoint
+let countries = [];
+axios.get("https://restcountries.com/v3.1/all").then(function (response) {
+  const countryInfo = response.data;
+  for (const value of countryInfo.values()) {
+    let country = value.name.common;
+    countries.push(country);
+  }
+
+  // Sort in alphabetical order
+  countries.sort();
+});
+
 const styles = {
   button:
     "py-[16px] px-[32px] bg-brand-primary text-white rounded-[8px] hover:bg-brand-secondary transition:colors duration-500",
@@ -12,4 +27,4 @@ const styles = {
   skipNext: "flex justify-end items-center gap-[16px]",
 };
 
-export { styles };
+export { styles, countries };

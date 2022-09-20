@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { styles } from "../constants";
+import { styles, countries } from "../constants";
 
 function Radio({ name, id, value, handleChange, formData }) {
   return (
@@ -24,6 +24,7 @@ const GetStarted = ({ handleClick }) => {
     description: "",
     industry: "",
     products: "",
+    country: "",
   });
 
   function handleChange(e) {
@@ -310,10 +311,25 @@ const GetStarted = ({ handleClick }) => {
         </div>
 
         {/* {Slide 4} */}
-        <div className="text-center">
+        <div>
           <p className="font-normal text-[14px] mb-4">Step 4 of 4</p>
           <h2 className={`${styles.stepFormHeading}`}>Where will your business be located??</h2>
-          <div className={`${styles.stepFormHBox}`}></div>
+          <div className={`${styles.stepFormHBox}`}>
+            <div className="px-[40px]">
+              <h3 className="font-normal text-[16px]">Choose country/region</h3>
+              <select name="country" onChange={handleChange} value={formData.country}>
+                <option>Nigeria</option>
+                {countries.map((country) => (
+                  <option
+                    className="py-5 text-brand-black bg-white block"
+                    value={country.toLowerCase()}
+                  >
+                    {country}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
           <div className={`${styles.skipNext}`}>
             <button type="button" className="text-brand-gray text-[14px] font-normal">
               Skip
