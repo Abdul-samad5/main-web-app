@@ -16,6 +16,7 @@ axios.get("https://restcountries.com/v3.1/all").then(function (response) {
 const styles = {
   button:
     "py-[16px] px-[32px] bg-brand-primary text-white rounded-[8px] hover:bg-brand-secondary transition:colors duration-500",
+  stepFormCont: "w-full shrink-0",
   stepFormHeading: "font-bold text-[20px] mb-[56px]",
   stepFormHBox: "border border-[#CACACA] py-[40px] mb-[40px] max-w-[700px] mx-auto",
   stepFormVBox: "flex flex-col md:flex-row border border-[#CACACA] mb-[40px] max-w-[700px] mx-auto",
