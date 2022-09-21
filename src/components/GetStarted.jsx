@@ -351,7 +351,7 @@ const GetStarted = ({ handleClick }) => {
         </div>
 
         {/* {Slide 5} */}
-        <div className={`${styles.stepFormCont} flex items-center justify-between`}>
+        <div className={`${styles.stepFormCont} flex justify-between`}>
           <div className="w-[40%]">
             <h1 className="text-[14px]">Final step to your dashboard!</h1>
             <h1 className="font-bold leading-[1.3] text-[28px] my-3">
