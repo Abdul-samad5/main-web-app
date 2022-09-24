@@ -28,6 +28,7 @@ const GetStarted = ({ handleClick }) => {
 
   useEffect(() => {
     form.style.transform = `translateX(-${count * size}%)`;
+    window.scrollTo(0, 0);
   }, [count]);
 
   function nextSlide() {
