@@ -24,9 +24,10 @@ const GetStarted = ({ handleClick }) => {
   // Slider
   const [count, setCount] = useState(0);
   let form = document.querySelector("form");
+  const size = 100 / document.querySelectorAll(".gs_slide").length;
 
   useEffect(() => {
-    form.style.transform = `translateX(-${count * 16.66}%)`;
+    form.style.transform = `translateX(-${count * size}%)`;
   }, [count]);
 
   function nextSlide() {
@@ -49,7 +50,6 @@ const GetStarted = ({ handleClick }) => {
 
   function handleChange(e) {
     const { name, value, checked, type } = e.target;
-    console.dir(e.target);
     setFormData((prev) => {
       return {
         ...prev,
@@ -62,12 +62,15 @@ const GetStarted = ({ handleClick }) => {
     <div className="relative w-full mb-20">
       {/* {Slide Back Arrow} */}
       {count > 0 && (
-        <div className="w-[20px] absolute -left-[100px] top-0 cursor-pointer" onClick={prevSlide}>
+        <div
+          className="w-[20px] absolute z-10 left-0 lg:-left-[100px] top-3 md:top-0 cursor-pointer"
+          onClick={prevSlide}
+        >
           <img src={arrow_left} alt="Left Arrow" />
         </div>
       )}
       <div className="w-full overflow-hidden">
-        <form className="flex transition-transform duration-500 w-[600%]">
+        <form className="flex transition-transform duration-500 w-[600%] mt-10 md:mt-0">
           {/* {Slide 0} */}
           <div className={`${styles.stepFormCont}`}>
             <div className="text-center max-w-[700px] mx-auto">
@@ -362,7 +365,12 @@ const GetStarted = ({ handleClick }) => {
             <div className={`${styles.stepFormHBox}`}>
               <div className="px-[40px]">
                 <h3 className="font-normal text-[16px]">Choose country/region</h3>
-                <select name="country" onChange={handleChange} value={formData.country}>
+                <select
+                  name="country"
+                  onChange={handleChange}
+                  value={formData.country}
+                  className="block w-full p-4 border bg-inherit"
+                >
                   <option>Nigeria</option>
                   {countries.map((country) => (
                     <option
@@ -391,8 +399,8 @@ const GetStarted = ({ handleClick }) => {
           </div>
 
           {/* {Slide 5} */}
-          <div className={`${styles.stepFormCont} flex justify-between`}>
-            <div className="w-[40%]">
+          <div className={`${styles.stepFormCont} flex flex-col md:flex-row md:justify-between`}>
+            <div className="w-full md:w-[40%] mb-[40px] md:mb-0">
               <h1 className="text-[14px]">Final step to your dashboard!</h1>
               <h1 className="font-bold leading-[1.3] text-[28px] my-3">
                 Proceed to dashboard to complete your store setup.
@@ -401,7 +409,7 @@ const GetStarted = ({ handleClick }) => {
                 Proceed to dashboard
               </button>
             </div>
-            <div className="w-1/2">
+            <div className="w-full md:w-1/2">
               <img src={dashboardImg} alt="Dashboard Image" />
             </div>
           </div>

@@ -29,7 +29,7 @@ const Register = () => {
   }
 
   return (
-    <div className="w-[70%] mx-auto">
+    <div className="w-full px-[24px] lg:w-[70%] lg:px-0 mx-auto">
       <div className="py-5">
         <a href="/" className="w-[50px] block">
           <img src={logo_2} alt="Yetti Logo" />
