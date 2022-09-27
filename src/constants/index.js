@@ -27,6 +27,8 @@ const styles = {
   radioGroup: "md:border-r md:py-[40px] w-full md:w-1/2",
   radioGroup2: "md:py-[40px] w-full md:w-1/2",
   skipNext: "flex justify-end items-center gap-[16px] max-w-[700px] mx-auto",
+  dbNavItem:
+    "flex gap-[12px] items-center px-4 py-2 bg-white text-brand-gray hover:bg-brand-gray-200 hover:text-brand-primary hover:border-l-[4px] hover:border-brand-primary hover:cursor-pointer transition-colors duration-500 mb-[10px]",
 };
 
 export { styles, countries };

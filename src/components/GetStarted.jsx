@@ -406,9 +406,9 @@ const GetStarted = ({ handleClick }) => {
               <h1 className="font-bold leading-[1.3] text-[28px] my-3">
                 Proceed to dashboard to complete your store setup.
               </h1>
-              <button type="button" className={`${styles.button}`}>
+              <a className={`${styles.button}`} href="/dashboard">
                 Proceed to dashboard
-              </button>
+              </a>
             </div>
             <div className="w-full md:w-1/2">
               <img src={dashboardImg} alt="Dashboard Image" />

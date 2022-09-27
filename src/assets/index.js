@@ -30,8 +30,30 @@ import sound_max from "./icons/sound_max.png";
 import toggle_off from "./icons/toggle_off.png";
 import toggle_on from "./icons/toggle_on.png";
 import user from "./icons/user.png";
+import all_prods from "./icons/all_prods.png";
+import add_prod from "./icons/add_prod.png";
+import collections from "./icons/collections.png";
+import customers from "./icons/customers.png";
+import edit from "./icons/edit.png";
+import history from "./icons/history.png";
+import marketing from "./icons/marketing.png";
+import orders from "./icons/orders.png";
+import products from "./icons/products.png";
+import review from "./icons/review.png";
+import store from "./icons/store.png";
 
 export {
+  all_prods,
+  add_prod,
+  collections,
+  customers,
+  edit,
+  history,
+  marketing,
+  orders,
+  products,
+  review,
+  store,
   arrow_down,
   arrow_left,
   arrow_right,
