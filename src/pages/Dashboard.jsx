@@ -13,6 +13,7 @@ import {
   review,
   store,
   settings,
+  arrow_right,
 } from "../assets";
 
 function DbIcon({ src }) {
@@ -39,17 +40,23 @@ const Dashboard = () => {
             <DbIcon src={orders} />
             <h2>My Orders</h2>
           </div>
-          <div className={`${styles.dbNavItem}`}>
+          <div className={`${styles.dbNavItem} relative`}>
             <DbIcon src={products} />
             <h2>Products</h2>
+            <div className="absolute top-1/2 -translate-y-1/2 right-4">
+              <DbIcon src={arrow_right} />
+            </div>
           </div>
           <div className={`${styles.dbNavItem}`}>
             <DbIcon src={customers} />
             <h2>My Customers</h2>
           </div>
-          <div className={`${styles.dbNavItem}`}>
+          <div className={`${styles.dbNavItem} relative`}>
             <DbIcon src={marketing} />
             <h2>Marketing</h2>
+            <div className="absolute top-1/2 -translate-y-1/2 right-4">
+              <DbIcon src={arrow_right} />
+            </div>
           </div>
           <div className={`${styles.dbNavItem}`}>
             <DbIcon src={review} />
@@ -62,9 +69,12 @@ const Dashboard = () => {
           <div className="border-b border-t p-4 mb-[10px]">
             <h1 className="font-bold text-[16px] text-brand-gray">Settings</h1>
           </div>
-          <div className={`${styles.dbNavItem}`}>
+          <div className={`${styles.dbNavItem} relative w-full`}>
             <DbIcon src={settings} />
             <h2>Store settings</h2>
+            <div className="absolute top-1/2 -translate-y-1/2 right-4">
+              <DbIcon src={arrow_right} />
+            </div>
           </div>
         </div>
         <div className="w-4/5 shrink-0 bg-brand-gray-200 min-h-screen"></div>
