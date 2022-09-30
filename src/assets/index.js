@@ -43,6 +43,8 @@ import products from "./icons/products.png";
 import review from "./icons/review.png";
 import store from "./icons/store.png";
 import search from "./icons/search.png";
+import burger from "./icons/burger.png";
+import close from "./icons/close.png";
 
 export {
   all_prods,
@@ -87,4 +89,6 @@ export {
   dashboardImg,
   search,
   user_img,
+  burger,
+  close,
 };

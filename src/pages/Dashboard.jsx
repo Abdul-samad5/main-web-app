@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { styles } from "../constants";
 import {
   logo,
@@ -18,6 +19,8 @@ import {
   search,
   bell,
   user_img,
+  burger,
+  close,
 } from "../assets";
 
 function DbIcon({ src }) {
@@ -25,12 +28,23 @@ function DbIcon({ src }) {
 }
 
 const Dashboard = () => {
+  const [isNavOpen, setIsNavOpen] = useState(false);
+
+  function handleClick() {
+    setIsNavOpen((prev) => !prev);
+  }
+
   return (
     <div className="w-full overflow-hidden">
       <div className="w-full flex">
-        <div className="w-4/5 lg:w-1/5 shrink-0 left-0 top-0 h-screen border-r border-brand-gray-300 -translate-x-[100%] lg:-translate-x-[0] absolute lg:relative">
-          <div className="border-b p-5">
-            <img src={logo} className="w-[50px]" />
+        <div
+          className={`w-full lg:w-1/5 shrink-0 left-0 top-0 h-screen border-r border-brand-gray-300 ${
+            isNavOpen ? "-translate-x-[0]" : "-translate-x-[100%]"
+          } lg:-translate-x-[0] absolute z-10 bg-white lg:relative transition-transform duration-500`}
+        >
+          <div className="border-b p-5 flex w-full justify-between items-center">
+            <img src={logo} className="w-[50px]" alt="Yetti Logo" />
+            <img src={close} className="w-[24px]" alt="Icon" onClick={handleClick} />
           </div>
           <div className="border-b flex items-center justify-between p-4 mb-[10px]">
             <h1 className="font-bold text-[16px] ">Micheline</h1>
@@ -83,9 +97,17 @@ const Dashboard = () => {
         </div>
         <div className="lg:w-4/5 w-full shrink-0 bg-brand-gray-200 min-h-screen p-[24px] lg:px-10 lg:py-5">
           <div className="w-full flex justify-between items-center">
-            <button className={`${styles.buttonOutline}`}>Go to store front</button>
+            <div className="flex gap-8 items-center">
+              <img
+                src={burger}
+                className="w-[24px] block lg:hidden"
+                alt="Icon"
+                onClick={handleClick}
+              />
+              <button className={`${styles.buttonOutline}`}>Go to store front</button>
+            </div>
             <div className="flex items-center">
-              <div className="relative w-[370px]">
+              <div className="relative w-[370px] hidden lg:block">
                 <img
                   src={search}
                   alt="Icon"
