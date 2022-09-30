@@ -1,6 +1,7 @@
 // Images
 import logo from "./images/logo.png";
 import logo_2 from "./images/logo_2.png";
+import user_img from "./images/user_img.png";
 import dashboardImg from "./images/dashboard-img.png";
 
 // Icons
@@ -41,6 +42,7 @@ import orders from "./icons/orders.png";
 import products from "./icons/products.png";
 import review from "./icons/review.png";
 import store from "./icons/store.png";
+import search from "./icons/search.png";
 
 export {
   all_prods,
@@ -83,4 +85,6 @@ export {
   toggle_on,
   user,
   dashboardImg,
+  search,
+  user_img,
 };

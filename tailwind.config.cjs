@@ -10,6 +10,7 @@ module.exports = {
         "brand-gray": "#A9A9A9",
         "brand-gray-200": "rgba(233, 233, 233, 0.2)",
         "brand-gray-300": "#E9E9E9",
+        "brand-gray-400": "rgba(169, 169, 169, 0.5)",
         "brand-warning": "#E4C65B",
         "brand-error": "#E25C5C",
         "brand-black": "#263131",
