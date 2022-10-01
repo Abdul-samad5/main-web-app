@@ -1,10 +1,14 @@
-import { Register } from "./pages";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Register, Dashboard } from "./pages";
 
 function App() {
   return (
-    <div>
-      <Register />
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Register />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+      </Routes>
+    </Router>
   );
 }
 

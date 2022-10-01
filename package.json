@@ -13,8 +13,12 @@
     "draft-js": "^0.11.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+<<<<<<< HEAD
     "slate": "^0.82.1",
     "slate-react": "^0.83.0"
+=======
+    "react-router-dom": "^6.4.1"
+>>>>>>> b1f4024c1ed25a81ac97fbad9288535acbdf15e4
   },
   "devDependencies": {
     "@types/react": "^18.0.17",

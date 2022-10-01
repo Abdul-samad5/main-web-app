@@ -1,3 +1,4 @@
 import Register from "./Register";
+import Dashboard from "./Dashboard";
 
-export { Register };
+export { Register, Dashboard };

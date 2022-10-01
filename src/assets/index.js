@@ -1,6 +1,7 @@
 // Images
 import logo from "./images/logo.png";
 import logo_2 from "./images/logo_2.png";
+import user_img from "./images/user_img.png";
 import dashboardImg from "./images/dashboard-img.png";
 
 // Icons
@@ -30,8 +31,33 @@ import sound_max from "./icons/sound_max.png";
 import toggle_off from "./icons/toggle_off.png";
 import toggle_on from "./icons/toggle_on.png";
 import user from "./icons/user.png";
+import all_prods from "./icons/all_prods.png";
+import add_prod from "./icons/add_prod.png";
+import collections from "./icons/collections.png";
+import customers from "./icons/customers.png";
+import edit from "./icons/edit.png";
+import history from "./icons/history.png";
+import marketing from "./icons/marketing.png";
+import orders from "./icons/orders.png";
+import products from "./icons/products.png";
+import review from "./icons/review.png";
+import store from "./icons/store.png";
+import search from "./icons/search.png";
+import burger from "./icons/burger.png";
+import close from "./icons/close.png";
 
 export {
+  all_prods,
+  add_prod,
+  collections,
+  customers,
+  edit,
+  history,
+  marketing,
+  orders,
+  products,
+  review,
+  store,
   arrow_down,
   arrow_left,
   arrow_right,
@@ -61,4 +87,8 @@ export {
   toggle_on,
   user,
   dashboardImg,
+  search,
+  user_img,
+  burger,
+  close,
 };
