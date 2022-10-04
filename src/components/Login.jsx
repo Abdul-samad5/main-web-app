@@ -76,7 +76,7 @@ const Login = ({ handleClick }) => {
             type="button"
             onClick={() => handleClick("createStore")}
           >
-            Create new store
+            Register
           </button>
         </div>
       </form>
