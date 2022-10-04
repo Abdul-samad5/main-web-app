@@ -13,6 +13,7 @@ axios.get("https://restcountries.com/v3.1/all").then(function (response) {
   countries.sort();
 });
 
+// all reusable Tailwind styles
 const styles = {
   button:
     "py-[10px] px-[32px] bg-brand-primary text-white rounded-[8px] hover:bg-brand-secondary transition:colors duration-500",
@@ -31,6 +32,7 @@ const styles = {
   skipNext: "flex justify-end items-center gap-[16px] max-w-[700px] mx-auto",
   dbNavItem:
     "flex gap-[12px] items-center px-4 py-2 bg-white text-brand-gray hover:bg-brand-gray-200 hover:text-brand-primary hover:border-l-[4px] hover:border-brand-primary hover:cursor-pointer transition-colors duration-500 mb-[10px]",
+  flex: "flex items-center justify-between",
 };
 
 export { styles, countries };

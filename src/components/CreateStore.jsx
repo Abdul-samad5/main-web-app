@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { User, Store, BASE_URL } from "../constants/config";
+import axios from "axios";
 
 const CreateStore = ({ handleClick }) => {
   const [formData, setFormData] = useState({
@@ -20,8 +22,25 @@ const CreateStore = ({ handleClick }) => {
     });
   }
 
-  function formSubmit(e) {
+  async function formSubmit(e) {
     e.preventDefault();
+    let user = new User(formData.email, formData.password, formData.fullName);
+    let store = new Store(formData.storeName, formData.storeDomain);
+    console.log(user);
+    console.log(store);
+
+    const postUser = () => axios.post(`${BASE_URL}auth/register`, user);
+    const postStore = () => axios.post(`${BASE_URL}store/create_store`, store);
+
+    try {
+      const res = await Promise.all([postUser(), postStore()]);
+      console.log(res);
+
+      if (!res.status === 201) return;
+      handleClick("getStarted");
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   return (
@@ -114,8 +133,8 @@ const CreateStore = ({ handleClick }) => {
           </label>
         </div>
         <button
-          type="button"
-          onClick={() => handleClick("getStarted")}
+          type="submit"
+          //onClick={() => handleClick("getStarted")}
           className="w-full py-3 bg-brand-primary text-white font-normal rounded-lg hover:bg-brand-secondary transition-colors duration-500"
         >
           Create store
