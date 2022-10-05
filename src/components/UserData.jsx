@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { styles } from '../constants/index';
+import sortImage from '../assets/images/sort.png'
 
 // Structural template for the components such as the My Customers, Collections, etc.
 const UserData = ({type, data, image, infoHead, children: Children, handleNext, handleSearch}) =>  {
@@ -32,8 +33,9 @@ const UserData = ({type, data, image, infoHead, children: Children, handleNext, 
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className={`${styles.svgStyle} bottom-8 left-4`}><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg>
                 </span>
                 
-                <div className="border flex justify-between border-slate-700 border-opacity-50 rounded-lg text-sm shadow-sm px-4 placeholder-slate-300">
-                    <p className='text-base my-auto'>Sort</p>
+                <div className="border flex justify-between border-slate-300 h-10 rounded-lg shadow-sm px-4">
+                    <img src={sortImage} className='w-4 h-3 my-auto mx-1'/>
+                    <p className='text-base my-auto mx-1 text-slate-300'>Sort</p>
                 </div>
             </div>
 

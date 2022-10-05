@@ -33,7 +33,8 @@ const styles = {
     "flex gap-[12px] items-center px-4 py-2 bg-white text-brand-gray hover:bg-brand-gray-200 hover:text-brand-primary hover:border-l-[4px] hover:border-brand-primary hover:cursor-pointer transition-colors duration-500 mb-[10px]",
   inputBox: "border border-slate-700 border-opacity-50 rounded-lg text-sm shadow-sm py-3 placeholder-slate-300", 
   svgStyle: "relative fill-slate-300 h-4 w-4",
-  componentHeader: "text-2xl text-black-800 font-bold w-4/5 mx-auto mb-10"
+  componentHeader: "text-2xl text-black-800 font-bold w-4/5 mx-auto mb-10",
+  valueStyle: 'text-xs my-auto'
 };
 
 export { styles, countries };

@@ -42,12 +42,12 @@ const Children = ({id, name, order,  date, amount, paymentMethod, status}) => {
     
     return (
         <div className="flex justify-between">
-            <p className='text-xs my-auto'>{id}</p>
-            <p className='text-xs my-auto'>{name}</p>
-            <p className='text-xs my-auto'>{order}</p>
-            <p className='text-xs my-auto'>{date}</p>
-            <p className='text-xs my-auto'>{amount}</p>
-            <p className='text-xs my-auto'>{paymentMethod}</p>
+            <p className={`${styles.valueStyle}`}>{id}</p>
+            <p className={`${styles.valueStyle}`}>{name}</p>
+            <p className={`${styles.valueStyle}`}>{order}</p>
+            <p className={`${styles.valueStyle}`}>{date}</p>
+            <p className={`${styles.valueStyle}`}>{amount}</p>
+            <p className={`${styles.valueStyle}`}>{paymentMethod}</p>
             <Status value={status}/>
         </div>
     )
@@ -58,11 +58,11 @@ const Children = ({id, name, order,  date, amount, paymentMethod, status}) => {
 const Status = ({value}) => {
     if(value === "Completed") {
         return (
-            <div className="rounded text-blue-800 bg-blue-100 text-sm px-2 py-2">{value}</div>
+            <div className="rounded text-blue-800 bg-blue-100 text-sm px-2 py-1">{value}</div>
         )
     } else if(value === "Cancelled") {
         return (
-            <div className="rounded text-yellow-800 bg-yellow-100 text-sm px-2 py-2">{value}</div>
+            <div className="rounded text-yellow-800 bg-yellow-100 text-sm px-2 py-1">{value}</div>
         )
     }
 }
