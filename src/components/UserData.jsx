@@ -3,8 +3,9 @@ import { useState } from 'react';
 import { styles } from '../constants/index';
 
 // Structural template for the components such as the My Customers, Collections, etc.
-const UserData = ({type, data, image, infoHead, children: Children, handleNext}) =>  {
+const UserData = ({type, data, image, infoHead, children: Children, handleNext, handleSearch}) =>  {
     const [currentPage, setCurrentPage] = useState(0);
+    const [searchValue, setSearchValue] = useState("");
 
     const handleClick = () => {
         setCurrentPage((prev) => {
@@ -13,13 +14,21 @@ const UserData = ({type, data, image, infoHead, children: Children, handleNext})
         handleNext();
     }
     
+    const search = (event) => {
+        setSearchValue((prev) => {
+            prev = event.target.value;
+            handleSearch(prev);
+        });
+    }
+
+
     return (
         <div className="rounded shadow-xl w-4/5 px-5 py-3 mx-auto my-auto h-auto ">
             
             {/* Search Bar */}
             <div className='flex justify-between'>
                 <span className='w-2/5'>
-                    <input placeholder={`Search ${type}`} className={`${styles.inputBox} pl-9 pr-3 w-full`} type="text"/>
+                    <input placeholder={`Search ${type}`} className={`${styles.inputBox} pl-9 pr-3 w-full`} type="text" value={searchValue} onChange={search}/>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className={`${styles.svgStyle} bottom-8 left-4`}><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg>
                 </span>
                 
@@ -95,7 +104,7 @@ const UserData = ({type, data, image, infoHead, children: Children, handleNext})
                                     date={"29"}
                                     amount={"#10100"}
                                     paymentMethod={"Stripe"}
-                                    status={"Cancelled"}/>
+                                    status={"Completed"}/>
                             </div>
                         );
                     }

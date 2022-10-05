@@ -16,10 +16,15 @@ const MyCustomers = () => {
         });
     }
 
+    const handleCustomerSearch = (searchValue) => {
+        // Logic for searching for a specific transaction history by setting the transaction history state to the data gotten from the API following the users prompt.
+        // alert(searchValue);
+    }
+
     return (
         <div>
             <p className={`${styles.componentHeader}`}>My Customers</p>
-            <UserData type={"Customer"} image={noCustomer} infoHead={details} data={customers} children={Children} handleNext={handleNext}></UserData>
+            <UserData type={"Customer"} image={noCustomer} handleSearch={handleCustomerSearch} infoHead={details} data={customers} children={Children} handleNext={handleNext}></UserData>
         </div>
     )
 }

@@ -6,7 +6,7 @@ import UserData from './UserData';
 const details = ["Customer's name", "Order", "Date", "Amount", "Payment Method", "Status"];
 const TransactionHistory = () => {
   // State to store the histories gotten from the API.
-  const [transactionHistory, setTransactionHistory] = useState([0]);
+  const [transactionHistory, setTransactionHistory] = useState([]);
 
   // Function to update the state to the next five or so transaction histories gotten from the API.
   const handleNext = () => {
@@ -15,10 +15,24 @@ const TransactionHistory = () => {
       });
   }
 
+  const handleTransactionSearch = (searchValue) => {
+        // Logic to retrieve the details the user requires from the 
+        // API and change the state to that affect
+  }
+
   return (
       <div>
-          <p className={`${styles.componentHeader}`}>Store Reviews</p>
-          <UserData type={"Transaction History"} image={noReviews} infoHead={details} data={transactionHistory} children={Children} handleNext={handleNext}></UserData>
+          <p className={`${styles.componentHeader}`}>Transaction History</p>
+          <UserData 
+            type={"Transaction History"} 
+            image={noReviews} 
+            infoHead={details} 
+            data={transactionHistory} 
+            children={Children} 
+            handleNext={handleNext}
+            handleSearch={handleTransactionSearch}>
+
+        </UserData>
       </div>
   )
 }
@@ -51,7 +65,6 @@ const Status = ({value}) => {
             <div className="rounded text-yellow-800 bg-yellow-100 text-sm px-2 py-2">{value}</div>
         )
     }
-
 }
 
 export default TransactionHistory

@@ -15,12 +15,24 @@ const Collections = () => {
             return prev = [0, 2, 3];
         });
     }
-  return (
-    <div>
-        <p className={`${styles.componentHeader}`}>Collections</p>
-        <UserData type={"Collections"} image={noCollections} infoHead={details} data={collections} children={Children} handleNext={handleNext}></UserData>
-    </div>
-  )
+
+    const handleCollectionSearch = (searchValue) => {
+        // Logic for searching for a specific transaction history by setting the transaction history state to the data gotten from the API following the users prompt.
+        // alert(searchValue);
+    }
+    return (
+        <div>
+            <p className={`${styles.componentHeader}`}>Collections</p>
+            <UserData 
+                type={"Collections"} 
+                image={noCollections} 
+                handleSearch={handleCollectionSearch} 
+                infoHead={details} 
+                data={collections} 
+                children={Children} 
+                handleNext={handleNext}></UserData>
+        </div>
+    )
 };
 
 const Children = ({id, collectionName, product}) => {

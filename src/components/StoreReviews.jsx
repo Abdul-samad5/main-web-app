@@ -17,10 +17,20 @@ const StoreReviews = () => {
         });
     }
 
+    const handleStoreReviewSearch = (searchValue) => {
+        
+    }
+
     return (
         <div>
             <p className={`${styles.componentHeader}`}>Store Reviews</p>
-            <UserData type={"Store Reviews"} image={noReviews} infoHead={details} data={storeReviews} children={Children} handleNext={handleNext}></UserData>
+            <UserData 
+                type={"Store Reviews"} 
+                image={noReviews} 
+                infoHead={details} data={storeReviews} 
+                children={Children} 
+                handleNext={handleNext}
+                handleSearch={handleStoreReviewSearch}></UserData>
         </div>
     )
 }
