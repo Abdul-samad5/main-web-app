@@ -13,6 +13,7 @@ axios.get("https://restcountries.com/v3.1/all").then(function (response) {
   countries.sort();
 });
 
+// all reusable Tailwind styles
 const styles = {
   button:
     "py-[10px] px-[32px] bg-brand-primary text-white rounded-[8px] hover:bg-brand-secondary transition:colors duration-500",

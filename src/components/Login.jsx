@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { styles } from "../constants";
 
 const Login = ({ handleClick }) => {
   const [formData, setFormData] = useState({
@@ -61,9 +62,7 @@ const Login = ({ handleClick }) => {
           />
           <label htmlFor="remember">Remember me</label>
         </div>
-        <button className="w-full py-3 bg-brand-primary text-white font-normal rounded-lg hover:bg-brand-secondary transition-colors duration-500">
-          Login to store
-        </button>
+        <button className={`${styles.button} w-full`}>Login to store</button>
         <div className="w-full flex justify-between items-center mt-2">
           <button
             type="button"
@@ -77,7 +76,7 @@ const Login = ({ handleClick }) => {
             type="button"
             onClick={() => handleClick("createStore")}
           >
-            Create new store
+            Register
           </button>
         </div>
       </form>
