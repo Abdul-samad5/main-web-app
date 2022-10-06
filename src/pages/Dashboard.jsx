@@ -66,7 +66,7 @@ const Dashboard = () => {
         <div
           className={`w-full lg:w-1/5 shrink-0 fixed left-0 top-0 h-screen border-r border-brand-gray-300 ${
             isNavOpen ? "-translate-x-[0]" : "-translate-x-[100%]"
-          } lg:-translate-x-[0] z-10 bg-white transition-transform duration-500`}
+          } lg:-translate-x-[0] z-10 bg-white transition-transform duration-500 overflow-y-scroll no-scrollbar`}
         >
           <div className="border-b p-5 flex w-full justify-between items-center">
             <img src={logo} className="w-[50px]" alt="Yetti Logo" />
