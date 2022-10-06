@@ -1,18 +1,3 @@
-import axios from "axios";
-
-// Load ALL countries from countries endpoint
-let countries = [];
-axios.get("https://restcountries.com/v3.1/all").then(function (response) {
-  const countryInfo = response.data;
-  for (const value of countryInfo.values()) {
-    let country = value.name.common;
-    countries.push(country);
-  }
-
-  // Sort in alphabetical order
-  countries.sort();
-});
-
 // all reusable Tailwind styles
 const styles = {
   button:
@@ -35,4 +20,4 @@ const styles = {
   flex: "flex items-center justify-between",
 };
 
-export { styles, countries };
+export { styles };

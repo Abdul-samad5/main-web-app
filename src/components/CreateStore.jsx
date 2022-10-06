@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { User, Store, BASE_URL } from "../constants/config";
-import axios from "axios";
+import { User, Store } from "../constants/config";
+import { postUser, postStore } from "../services/services";
 
 const CreateStore = ({ handleClick }) => {
   const [formData, setFormData] = useState({
@@ -26,15 +26,9 @@ const CreateStore = ({ handleClick }) => {
     e.preventDefault();
     let user = new User(formData.email, formData.password, formData.fullName);
     let store = new Store(formData.storeName, formData.storeDomain);
-    console.log(user);
-    console.log(store);
-
-    const postUser = () => axios.post(`${BASE_URL}auth/register`, user);
-    const postStore = () => axios.post(`${BASE_URL}store/create_store`, store);
 
     try {
-      const res = await Promise.all([postUser(), postStore()]);
-      console.log(res);
+      const res = await Promise.all([postUser(user), postStore(store)]);
 
       if (!res.status === 201) return;
       handleClick("getStarted");

@@ -12,5 +12,3 @@ export class Store {
     this.store_domain = storeDomain;
   }
 }
-
-export const BASE_URL = "https://yetti-backend.herokuapp.com/api/v1/";
