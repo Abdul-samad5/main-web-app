@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { styles } from "../constants";
 import {
   logo,
@@ -23,28 +23,54 @@ import {
   close,
 } from "../assets";
 
+import {
+  AddEditProducts,
+  Collections,
+  MyCustomers,
+  TransactionHistory,
+  StoreReviews,
+} from "../components";
+
 function DbIcon({ src }) {
   return <img src={src} className="w-[16px]" alt="Icon" />;
 }
 
 const Dashboard = () => {
+  // Sidebar
   const [isNavOpen, setIsNavOpen] = useState(false);
+
+  // Component to be rendered on the main
+  const [activeComponent, setActiveComponent] = useState([<AddEditProducts />]);
+
+  // Dropdowns on the sidebar
+  const [isProdOpen, setIsProdOpen] = useState(false);
 
   function handleClick() {
     setIsNavOpen((prev) => !prev);
   }
 
+  function showActiveComponent(e, comp) {
+    e.stopPropagation();
+    setActiveComponent([comp]);
+  }
+
+  function handleDropdown(e, handler) {
+    e.stopPropagation();
+    handler((prev) => !prev);
+  }
+
   return (
     <div className="w-full overflow-hidden">
       <div className="w-full flex">
+        {/* {Sidebar} */}
         <div
-          className={`w-full lg:w-1/5 shrink-0 left-0 top-0 h-screen border-r border-brand-gray-300 ${
+          className={`w-full lg:w-1/5 shrink-0 fixed left-0 top-0 h-screen border-r border-brand-gray-300 ${
             isNavOpen ? "-translate-x-[0]" : "-translate-x-[100%]"
-          } lg:-translate-x-[0] absolute z-10 bg-white lg:relative transition-transform duration-500`}
+          } lg:-translate-x-[0] z-10 bg-white transition-transform duration-500`}
         >
           <div className="border-b p-5 flex w-full justify-between items-center">
             <img src={logo} className="w-[50px]" alt="Yetti Logo" />
-            <img src={close} className="w-[24px]" alt="Icon" onClick={handleClick} />
+            <img src={close} className="w-[24px] lg:hidden" alt="Icon" onClick={handleClick} />
           </div>
           <div className="border-b flex items-center justify-between p-4 mb-[10px]">
             <h1 className="font-bold text-[16px] ">Micheline</h1>
@@ -58,11 +84,40 @@ const Dashboard = () => {
             <DbIcon src={orders} />
             <h2>My Orders</h2>
           </div>
-          <div className={`${styles.dbNavItem} relative`}>
-            <DbIcon src={products} />
-            <h2>Products</h2>
-            <div className="absolute top-1/2 -translate-y-1/2 right-4">
-              <DbIcon src={arrow_right} />
+          <div className="w-full" onClick={(e) => handleDropdown(e, setIsProdOpen)}>
+            <div className={`${styles.dbNavItem} relative`}>
+              <DbIcon src={products} />
+              <h2>Products</h2>
+              <div className="absolute top-1/2 -translate-y-1/2 right-4">
+                <DbIcon src={arrow_right} />
+              </div>
+            </div>
+            <div
+              className={`${
+                isProdOpen ? "max-h-[200px]" : "max-h-0"
+              } transition-[max-height] duration-300 pl-[24px] overflow-hidden`}
+            >
+              <div
+                className={`${styles.dbNavItemDrop}`}
+                onClick={(e) => showActiveComponent(e, <AddEditProducts />)}
+              >
+                <DbIcon src={all_prods} />
+                <h2>All Products</h2>
+              </div>
+              <div
+                className={`${styles.dbNavItemDrop}`}
+                onClick={(e) => showActiveComponent(e, <AddEditProducts />)}
+              >
+                <DbIcon src={add_prod} />
+                <h2>Add New Product</h2>
+              </div>
+              <div
+                className={`${styles.dbNavItemDrop}`}
+                onClick={(e) => showActiveComponent(e, <Collections />)}
+              >
+                <DbIcon src={collections} />
+                <h2>Collections</h2>
+              </div>
             </div>
           </div>
           <div className={`${styles.dbNavItem}`}>
@@ -76,11 +131,17 @@ const Dashboard = () => {
               <DbIcon src={arrow_right} />
             </div>
           </div>
-          <div className={`${styles.dbNavItem}`}>
+          <div
+            className={`${styles.dbNavItem}`}
+            onClick={(e) => showActiveComponent(e, <StoreReviews />)}
+          >
             <DbIcon src={review} />
             <h2>Store reviews</h2>
           </div>
-          <div className={`${styles.dbNavItem}`}>
+          <div
+            className={`${styles.dbNavItem}`}
+            onClick={(e) => showActiveComponent(e, <TransactionHistory />)}
+          >
             <DbIcon src={history} />
             <h2>Transaction history</h2>
           </div>
@@ -95,7 +156,9 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
-        <div className="lg:w-4/5 w-full shrink-0 bg-brand-gray-200 min-h-screen p-[24px] lg:px-10 lg:py-5">
+
+        {/* {Main} */}
+        <div className="lg:w-4/5 w-full shrink-0 bg-brand-gray-200 min-h-screen p-[24px] lg:px-10 lg:py-5 lg:absolute top-0 right-0">
           <div className="w-full flex justify-between items-center">
             <div className="flex gap-8 items-center">
               <img
@@ -128,6 +191,7 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
+          <div>{activeComponent[0]}</div>
         </div>
       </div>
     </div>
