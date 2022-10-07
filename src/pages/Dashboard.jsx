@@ -21,6 +21,7 @@ import {
   user_img,
   burger,
   close,
+  discounts,
 } from "../assets";
 
 import {
@@ -44,6 +45,7 @@ const Dashboard = () => {
 
   // Dropdowns on the sidebar
   const [isProdOpen, setIsProdOpen] = useState(false);
+  const [isMarkOpen, setIsMarkOpen] = useState(false);
 
   function handleClick() {
     setIsNavOpen((prev) => !prev);
@@ -89,7 +91,7 @@ const Dashboard = () => {
               <DbIcon src={products} />
               <h2>Products</h2>
               <div className="absolute top-1/2 -translate-y-1/2 right-4">
-                <DbIcon src={arrow_right} />
+                <DbIcon src={isProdOpen ? arrow_down : arrow_right} />
               </div>
             </div>
             <div
@@ -120,15 +122,40 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
-          <div className={`${styles.dbNavItem}`}>
+          <div
+            className={`${styles.dbNavItem}`}
+            onClick={(e) => showActiveComponent(e, <MyCustomers />)}
+          >
             <DbIcon src={customers} />
             <h2>My Customers</h2>
           </div>
-          <div className={`${styles.dbNavItem} relative`}>
-            <DbIcon src={marketing} />
-            <h2>Marketing</h2>
-            <div className="absolute top-1/2 -translate-y-1/2 right-4">
-              <DbIcon src={arrow_right} />
+          <div className="w-full" onClick={(e) => handleDropdown(e, setIsMarkOpen)}>
+            <div className={`${styles.dbNavItem} relative`}>
+              <DbIcon src={products} />
+              <h2>Marketing</h2>
+              <div className="absolute top-1/2 -translate-y-1/2 right-4">
+                <DbIcon src={isMarkOpen ? arrow_down : arrow_right} />
+              </div>
+            </div>
+            <div
+              className={`${
+                isMarkOpen ? "max-h-[200px]" : "max-h-0"
+              } transition-[max-height] duration-300 pl-[24px] overflow-hidden`}
+            >
+              <div
+                className={`${styles.dbNavItemDrop}`}
+                onClick={(e) => showActiveComponent(e, <AddEditProducts />)}
+              >
+                <DbIcon src={discounts} />
+                <h2>Discounts</h2>
+              </div>
+              <div
+                className={`${styles.dbNavItemDrop}`}
+                onClick={(e) => showActiveComponent(e, <AddEditProducts />)}
+              >
+                <DbIcon src={marketing} />
+                <h2>Campaign</h2>
+              </div>
             </div>
           </div>
           <div

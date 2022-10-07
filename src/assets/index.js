@@ -45,6 +45,7 @@ import store from "./icons/store.png";
 import search from "./icons/search.png";
 import burger from "./icons/burger.png";
 import close from "./icons/close.png";
+import discounts from "./icons/discounts.png";
 
 export {
   all_prods,
@@ -91,4 +92,5 @@ export {
   user_img,
   burger,
   close,
+  discounts,
 };
