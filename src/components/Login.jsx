@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useState, Link } from "react";
+import { useNavigate } from "react-router-dom";
 import { styles } from "../constants";
+import { userLogin } from "../services/services";
 
 const Login = ({ handleClick }) => {
   const [formData, setFormData] = useState({
@@ -7,6 +9,8 @@ const Login = ({ handleClick }) => {
     password: "",
     remember: false,
   });
+
+  const navigate = useNavigate();
 
   function handleChange(e) {
     const { name, value, type, checked } = e.target;
@@ -18,8 +22,22 @@ const Login = ({ handleClick }) => {
     });
   }
 
-  function formSubmit(e) {
+  async function formSubmit(e) {
     e.preventDefault();
+
+    let user = {
+      email: formData.email,
+      password: formData.password,
+    };
+
+    try {
+      const res = await userLogin(user);
+
+      if (!res.statusText === "OK") return;
+      navigate("/dashboard");
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   return (

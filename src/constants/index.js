@@ -1,18 +1,3 @@
-import axios from "axios";
-
-// Load ALL countries from countries endpoint
-let countries = [];
-axios.get("https://restcountries.com/v3.1/all").then(function (response) {
-  const countryInfo = response.data;
-  for (const value of countryInfo.values()) {
-    let country = value.name.common;
-    countries.push(country);
-  }
-
-  // Sort in alphabetical order
-  countries.sort();
-});
-
 // all reusable Tailwind styles
 const styles = {
   button:
@@ -32,10 +17,14 @@ const styles = {
   skipNext: "flex justify-end items-center gap-[16px] max-w-[700px] mx-auto",
   dbNavItem:
     "flex gap-[12px] items-center px-4 py-2 bg-white text-brand-gray hover:bg-brand-gray-200 hover:text-brand-primary hover:border-l-[4px] hover:border-brand-primary hover:cursor-pointer transition-colors duration-500 mb-[10px]",
-  inputBox: "border border-slate-700 border-opacity-50 rounded-lg text-sm shadow-sm py-3 placeholder-slate-300", 
+  dbNavItemDrop:
+    "flex gap-[12px] items-center px-4 py-2 bg-white text-brand-gray hover:bg-brand-gray-200 hover:text-brand-primary hover:cursor-pointer transition-colors duration-500 mb-[10px]",
+  inputBox:
+    "border border-slate-700 border-opacity-50 rounded-lg text-sm shadow-sm py-3 placeholder-slate-300",
   svgStyle: "relative fill-slate-300 h-4 w-4",
   componentHeader: "text-2xl text-black-800 font-bold w-4/5 mx-auto mb-10",
-  valueStyle: 'text-xs my-auto'
+  valueStyle: "text-xs my-auto",
+  dbContainer: "",
 };
 
-export { styles, countries };
+export { styles };
