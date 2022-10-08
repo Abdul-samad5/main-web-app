@@ -24,6 +24,7 @@ const styles = {
   svgStyle: "relative fill-slate-300 h-4 w-4",
   componentHeader: "text-2xl text-black-800 font-bold w-4/5 mx-auto mb-10",
   valueStyle: "text-xs my-auto",
+  dbContainer: "",
 };
 
 export { styles };

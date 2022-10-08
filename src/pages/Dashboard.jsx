@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { styles } from "../constants";
 import {
   logo,
@@ -22,6 +22,9 @@ import {
   burger,
   close,
   discounts,
+  cookies,
+  user_account,
+  subscription,
 } from "../assets";
 
 import {
@@ -181,6 +184,29 @@ const Dashboard = () => {
             <div className="absolute top-1/2 -translate-y-1/2 right-4">
               <DbIcon src={arrow_right} />
             </div>
+          </div>
+          <div
+            className={`${styles.dbNavItem}`}
+            onClick={(e) => showActiveComponent(e, <TransactionHistory />)}
+          >
+            <DbIcon src={subscription} />
+            <h2>Subscription</h2>
+          </div>
+
+          <div
+            className={`${styles.dbNavItem}`}
+            onClick={(e) => showActiveComponent(e, <TransactionHistory />)}
+          >
+            <DbIcon src={user_account} />
+            <h2>User Account</h2>
+          </div>
+
+          <div
+            className={`${styles.dbNavItem}`}
+            onClick={(e) => showActiveComponent(e, <TransactionHistory />)}
+          >
+            <DbIcon src={cookies} />
+            <h2>Privacy & Cookies</h2>
           </div>
         </div>
 

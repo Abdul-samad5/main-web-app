@@ -46,6 +46,10 @@ import search from "./icons/search.png";
 import burger from "./icons/burger.png";
 import close from "./icons/close.png";
 import discounts from "./icons/discounts.png";
+import cookies from "./icons/cookies.png";
+import subscription from "./icons/subscription.png";
+import store_settings from "./icons/store_settings.png";
+import user_account from "./icons/user_account.png";
 
 export {
   all_prods,
@@ -93,4 +97,8 @@ export {
   burger,
   close,
   discounts,
+  cookies,
+  user_account,
+  store_settings,
+  subscription,
 };
