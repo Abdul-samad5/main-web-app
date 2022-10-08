@@ -1,10 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { StoreDetails } from './components/index'
 import './index.css'
+import Dashboard from './pages/Dashboard'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <StoreDetails/>
+    <Dashboard/>
   </React.StrictMode>
 )

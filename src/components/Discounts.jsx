@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
-import noDiscounts from '../assets/images/Discounts.png'; 
+import { noDiscounts } from '../assets';
 import {styles} from '../constants/index';
 import UserData from './UserData';
 
 const details = ["Discount status", "Method", "Status", "Type", "Usage", "Action"];
 const Discounts = () => {
     // State to store the collections gotten from the API
-    const [discounts, setDiscounts] = useState([0]);
+    const [discounts, setDiscounts] = useState([]);
     const [isVisible, setVisisble] = useState(false);
     const [newDiscountInfo, setDiscountInfo] = useState({
         discountType: "",
@@ -61,9 +61,9 @@ const Discounts = () => {
     }
 
     return (
-        <div>
-            <div className='flex justify-between mx-auto w-4/5 mb-10'>
-                <p className="text-2xl text-black-800 font-bold w-4/5 mx-auto my-auto">Discounts</p>
+        <div className='w-full'>
+            <div className='flex justify-between w-full mb-10'>
+                <p className="text-2xl text-black-800 font-bold my-auto">Discounts</p>
                 <span className='flex justify-between hover:opacity-50 cursor-pointer' onClick={toggleAddDiscount}>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" className='fill-blue-400 w-4 mx-1 h-4 my-auto'><path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/></svg>
                     <p className='text-blue-400 text-sm my-auto mx-1'>Create Discount</p>
@@ -79,7 +79,7 @@ const Discounts = () => {
                 children={Children} 
                 handleNext={handleNext}></UserData>
 
-            <div className={isVisible ? 'h-full w-full absolute top-0 right-0 overfloww-y-auto' : ' -translate-x-full'}>
+            <div className={isVisible ? 'h-full w-full absolute top-0 right-0' : ' -translate-x-full hidden'}>
                 <div className='h-auto w-1/3 shadow-2xl bg-white float-right px-4 py-3'>
                     <span className='cursor-pointer text-2xl float-right block text-slate-300' onClick={toggleAddDiscount}>x</span>
 

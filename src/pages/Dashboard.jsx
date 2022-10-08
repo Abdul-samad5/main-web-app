@@ -33,6 +33,9 @@ import {
   MyCustomers,
   TransactionHistory,
   StoreReviews,
+  StoreDetails,
+  Discounts,
+  WebsiteSettings
 } from "../components";
 
 function DbIcon({ src }) {
@@ -147,7 +150,7 @@ const Dashboard = () => {
             >
               <div
                 className={`${styles.dbNavItemDrop}`}
-                onClick={(e) => showActiveComponent(e, <AddEditProducts />)}
+                onClick={(e) => showActiveComponent(e, <Discounts />)}
               >
                 <DbIcon src={discounts} />
                 <h2>Discounts</h2>
@@ -178,7 +181,10 @@ const Dashboard = () => {
           <div className="border-b border-t p-4 mb-[10px]">
             <h1 className="font-bold text-[16px] text-brand-gray">Settings</h1>
           </div>
-          <div className={`${styles.dbNavItem} relative w-full`}>
+          <div 
+            className={`${styles.dbNavItem} relative w-full`}
+            onClick={(e) => showActiveComponent(e, <StoreDetails />)}
+          >
             <DbIcon src={settings} />
             <h2>Store settings</h2>
             <div className="absolute top-1/2 -translate-y-1/2 right-4">

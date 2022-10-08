@@ -8,6 +8,9 @@ import MyCustomers from "./MyCustomers";
 import StoreReviews from "./StoreReviews";
 import TransactionHistory from "./TransactionHistory";
 import UserData from "./UserData";
+import StoreDetails from "./StoreDetails";
+import Discounts from "./Discounts";
+import WebsiteSettings from "./WebsiteSettings";
 
 export {
   Login,
@@ -20,4 +23,7 @@ export {
   StoreReviews,
   TransactionHistory,
   UserData,
+  StoreDetails,
+  Discounts,
+  WebsiteSettings
 };

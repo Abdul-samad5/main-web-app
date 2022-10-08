@@ -22,7 +22,7 @@ const styles = {
   inputBox:
     "border border-slate-700 border-opacity-50 rounded-lg text-sm shadow-sm py-3 placeholder-slate-300",
   svgStyle: "relative fill-slate-300 h-4 w-4",
-  componentHeader: "text-2xl text-black-800 font-bold w-4/5 mx-auto mb-10",
+  componentHeader: "text-2xl text-black-800 font-bold w-full mx-auto mb-10",
   valueStyle: "text-xs my-auto",
   dbContainer: "",
 };
