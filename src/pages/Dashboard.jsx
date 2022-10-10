@@ -35,7 +35,8 @@ import {
   StoreReviews,
   StoreDetails,
   Discounts,
-  WebsiteSettings
+  WebsiteSettings,
+  MyOrders
 } from "../components";
 
 function DbIcon({ src }) {
@@ -88,7 +89,9 @@ const Dashboard = () => {
             <DbIcon src={store} />
             <h2>My Store</h2>
           </div>
-          <div className={`${styles.dbNavItem}`}>
+          <div 
+            className={`${styles.dbNavItem}`}
+            onClick={(e) => showActiveComponent(e, <MyOrders />)}>
             <DbIcon src={orders} />
             <h2>My Orders</h2>
           </div>

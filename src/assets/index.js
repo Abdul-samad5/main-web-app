@@ -7,6 +7,7 @@ import noDiscounts from './images/Discounts.png';
 import noCollections from "../assets/images/Collections.png";
 import noCustomer from '../assets/images/customer.png';
 import noReviews from '../assets/images/review.png';
+import noOrders from "../assets/images/Orders.png"
 
 // Icons
 import arrow_up from "./icons/arrow_up.png";
@@ -112,5 +113,6 @@ export {
   noCustomer,
   noReviews,
   facebook,
-  instagram
+  instagram,
+  noOrders
 };

@@ -11,6 +11,7 @@ import UserData from "./UserData";
 import StoreDetails from "./StoreDetails";
 import Discounts from "./Discounts";
 import WebsiteSettings from "./WebsiteSettings";
+import MyOrders from "./MyOrders";
 
 export {
   Login,
@@ -25,5 +26,6 @@ export {
   UserData,
   StoreDetails,
   Discounts,
-  WebsiteSettings
+  WebsiteSettings,
+  MyOrders
 };
