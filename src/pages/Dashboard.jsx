@@ -36,7 +36,8 @@ import {
   StoreDetails,
   Discounts,
   WebsiteSettings,
-  MyOrders
+  MyOrders,
+  AllProducts
 } from "../components";
 
 function DbIcon({ src }) {
@@ -110,7 +111,7 @@ const Dashboard = () => {
             >
               <div
                 className={`${styles.dbNavItemDrop}`}
-                onClick={(e) => showActiveComponent(e, <AddEditProducts />)}
+                onClick={(e) => showActiveComponent(e, <AllProducts />)}
               >
                 <DbIcon src={all_prods} />
                 <h2>All Products</h2>

@@ -171,6 +171,19 @@ const UserData = ({
                 />
               </div>
             )
+          } else if (type === "Products") {
+              return (
+                <div className="mb-3">
+                  <Children
+                    id={index + 1}
+                    key={index + 1}
+                    productName={"Nike Sneakers"}
+                    price={"#500000"}
+                    status={"Active"}
+                    inventory={10}
+                  />
+                </div>
+              )
           }
         })}
       </div>
