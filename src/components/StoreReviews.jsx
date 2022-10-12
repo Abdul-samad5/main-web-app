@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import noReviews from '../assets/images/review.png'; 
+import { noReviews } from '../assets'; 
 import {styles} from '../constants/index';
 import UserData from './UserData';
 
@@ -8,7 +8,7 @@ const details = ["Reviews", "Ratings", "Date", "Action"];
 
 const StoreReviews = () => {
     // State to store the store reviews gotten from the API.
-    const [storeReviews, setStoreReviews] = useState([0, 2]);
+    const [storeReviews, setStoreReviews] = useState([]);
 
     // Function to update the state to the next five or so store reviews gotten from the API.
     const handleNext = () => {

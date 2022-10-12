@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import noReviews from "../assets/images/review.png";
+import { noReviews } from '../assets'
 import { styles } from "../constants/index";
 import UserData from "./UserData";
 

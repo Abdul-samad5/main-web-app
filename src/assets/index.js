@@ -3,6 +3,10 @@ import logo from "./images/logo.png";
 import logo_2 from "./images/logo_2.png";
 import user_img from "./images/user_img.png";
 import dashboardImg from "./images/dashboard-img.png";
+import noDiscounts from './images/Discounts.png'; 
+import noCollections from "../assets/images/Collections.png";
+import noCustomer from '../assets/images/customer.png';
+import noReviews from '../assets/images/review.png';
 
 // Icons
 import arrow_up from "./icons/arrow_up.png";
@@ -50,6 +54,8 @@ import cookies from "./icons/cookies.png";
 import subscription from "./icons/subscription.png";
 import store_settings from "./icons/store_settings.png";
 import user_account from "./icons/user_account.png";
+import facebook from './icons/facebook.png'
+import instagram from './icons/instagram.png';
 
 export {
   all_prods,
@@ -101,4 +107,10 @@ export {
   user_account,
   store_settings,
   subscription,
+  noDiscounts,
+  noCollections,
+  noCustomer,
+  noReviews,
+  facebook,
+  instagram
 };

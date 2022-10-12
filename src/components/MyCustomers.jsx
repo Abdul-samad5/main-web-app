@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import noCustomer from '../assets/images/customer.png';
+import { noCustomer } from '../assets';
 import UserData from './UserData';
 import {styles} from '../constants/index';
 

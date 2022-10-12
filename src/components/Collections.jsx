@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import noCollections from "../assets/images/Collections.png";
+import { noCollections } from '../assets';
 import { styles } from "../constants/index";
 import UserData from "./UserData";
 
@@ -63,8 +63,8 @@ const Collections = () => {
 
   return (
     <div>
-      <div className="flex justify-between mx-auto w-4/5 mb-10">
-        <p className="text-2xl text-black-800 font-bold w-4/5 mx-auto my-auto">Collections</p>
+      <div className="flex justify-between mx-auto w-full mb-10">
+        <p className="text-2xl text-black-800 font-bold my-auto">Collections</p>
         <span
           className="flex justify-between hover:opacity-50 cursor-pointer"
           onClick={toggleAddCollection}

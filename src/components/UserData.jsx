@@ -31,7 +31,7 @@ const UserData = ({
   };
 
   return (
-    <div className="rounded shadow-xl w-4/5 px-5 py-3 mx-auto my-auto h-auto ">
+    <div className="rounded shadow-xl w-full px-5 py-3 mx-auto my-auto h-auto ">
       {/* Search Bar */}
       <div className="flex justify-between">
         <span className="w-2/5">
@@ -139,6 +139,21 @@ const UserData = ({
                   amount={"#10100"}
                   paymentMethod={"Stripe"}
                   status={"Completed"}
+                />
+              </div>
+            );
+          } else if (type === "Discounts") {
+            return (
+              <div className="mb-3">
+                <Children
+                  id={index + 1}
+                  key={index + 1}
+                  discountStatus={"Alex Ikenna"}
+                  method={"Alex@gmail.com"}
+                  type={"29"}
+                  status={"Active"}
+                  usage={"Stripe"}
+                  // id, discountStatus, method, status, type, usage
                 />
               </div>
             );
