@@ -9,6 +9,8 @@ import noCustomer from '../assets/images/customer.png';
 import noReviews from '../assets/images/review.png';
 import noOrders from "../assets/images/Orders.png";
 import noProducts from "../assets/images/products.png";
+import chartStore from "../assets/images/Chart.png";
+import product from "../assets/images/product.png";
 
 // Icons
 import arrow_up from "./icons/arrow_up.png";
@@ -58,6 +60,12 @@ import store_settings from "./icons/store_settings.png";
 import user_account from "./icons/user_account.png";
 import facebook from './icons/facebook.png'
 import instagram from './icons/instagram.png';
+import today_customer from './icons/today_customer.png';
+import total_orders from './icons/total_orders.png';
+import naira from './icons/naira.png';
+import wallet from './icons/wallet.png';
+import up_trend from './icons/up_trend.png';
+import down_trend from './icons/down_trend.png';
 
 export {
   all_prods,
@@ -116,5 +124,13 @@ export {
   facebook,
   instagram,
   noOrders,
-  noProducts
+  noProducts,
+  chartStore,
+  today_customer,
+  total_orders,
+  product,
+  naira,
+  wallet,
+  up_trend,
+  down_trend
 };

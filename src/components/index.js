@@ -12,7 +12,8 @@ import StoreDetails from "./StoreDetails";
 import Discounts from "./Discounts";
 import WebsiteSettings from "./WebsiteSettings";
 import MyOrders from "./MyOrders";
-import AllProducts from "./AllProducts"
+import AllProducts from "./AllProducts";
+import MyStore from "./MyStore";
 
 export {
   Login,
@@ -29,5 +30,6 @@ export {
   Discounts,
   WebsiteSettings,
   MyOrders,
-  AllProducts
+  AllProducts,
+  MyStore
 };
