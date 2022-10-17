@@ -14,6 +14,7 @@ import WebsiteSettings from "./WebsiteSettings";
 import MyOrders from "./MyOrders";
 import AllProducts from "./AllProducts";
 import MyStore from "./MyStore";
+import Finances from "./Finances"
 
 export {
   Login,
@@ -31,5 +32,6 @@ export {
   WebsiteSettings,
   MyOrders,
   AllProducts,
-  MyStore
+  MyStore,
+  Finances
 };
