@@ -181,7 +181,7 @@ const Dashboard = () => {
           </div>
           <div
             className={`${styles.dbNavItem}`}
-            // onClick={(e) => showActiveComponent(e, <TransactionHistory />)}
+
             onClick={(e) => showActiveComponent(e, <Finances />)}
           >
             <DbIcon src={history} />
