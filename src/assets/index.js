@@ -66,6 +66,7 @@ import naira from './icons/naira.png';
 import wallet from './icons/wallet.png';
 import up_trend from './icons/up_trend.png';
 import down_trend from './icons/down_trend.png';
+import invoice_styles from "./icons/invoice_style.png";
 
 export {
   all_prods,
@@ -132,5 +133,6 @@ export {
   naira,
   wallet,
   up_trend,
-  down_trend
+  down_trend,
+  invoice_styles
 };
