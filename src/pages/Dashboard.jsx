@@ -35,7 +35,11 @@ import {
   StoreReviews,
   StoreDetails,
   Discounts,
-  WebsiteSettings
+  WebsiteSettings,
+  MyOrders,
+  AllProducts,
+  MyStore,
+  Finances
 } from "../components";
 
 function DbIcon({ src }) {
@@ -84,11 +88,15 @@ const Dashboard = () => {
             <h1 className="font-bold text-[16px] ">Micheline</h1>
             <DbIcon src={edit} />
           </div>
-          <div className={`${styles.dbNavItem}`}>
+          <div 
+            className={`${styles.dbNavItem}`}
+            onClick={(e) => showActiveComponent(e, <MyStore />)}>
             <DbIcon src={store} />
             <h2>My Store</h2>
           </div>
-          <div className={`${styles.dbNavItem}`}>
+          <div 
+            className={`${styles.dbNavItem}`}
+            onClick={(e) => showActiveComponent(e, <MyOrders />)}>
             <DbIcon src={orders} />
             <h2>My Orders</h2>
           </div>
@@ -107,7 +115,7 @@ const Dashboard = () => {
             >
               <div
                 className={`${styles.dbNavItemDrop}`}
-                onClick={(e) => showActiveComponent(e, <AddEditProducts />)}
+                onClick={(e) => showActiveComponent(e, <AllProducts />)}
               >
                 <DbIcon src={all_prods} />
                 <h2>All Products</h2>
@@ -173,7 +181,8 @@ const Dashboard = () => {
           </div>
           <div
             className={`${styles.dbNavItem}`}
-            onClick={(e) => showActiveComponent(e, <TransactionHistory />)}
+
+            onClick={(e) => showActiveComponent(e, <Finances />)}
           >
             <DbIcon src={history} />
             <h2>Transaction history</h2>

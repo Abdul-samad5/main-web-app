@@ -86,7 +86,9 @@ const UserData = ({
         />
         <p
           className={data.length === 0 ? "text-base text-center" : "hidden"}
-        >{`No ${type} found`}</p>
+        >{
+          type === "My Orders" ? "No orders found" : `No ${type} found`
+        }</p>
 
         {/* Structure of the children passed into the component and to be mapped into each of the data also passed into the component. } */}
         {data.map((children, index) => {
@@ -99,7 +101,6 @@ const UserData = ({
             );
             // Displays the details of each customer if the type of the component equals Customer.
           } else if (type === "Customer") {
-            s;
             return (
               <div className="mb-3">
                 <Children
@@ -157,6 +158,32 @@ const UserData = ({
                 />
               </div>
             );
+          } else if (type === "My Orders") {
+            return (
+              <div className="mb-3">
+                <Children
+                  id={index + 1}
+                  key={index + 1}
+                  customer={"Alex Ikenna"}
+                  date={"Alex@gmail.com"}
+                  status={"Cancelled"}
+                  total={"Stripe"}
+                />
+              </div>
+            )
+          } else if (type === "Products") {
+              return (
+                <div className="mb-3">
+                  <Children
+                    id={index + 1}
+                    key={index + 1}
+                    productName={"Nike Sneakers"}
+                    price={"#500000"}
+                    status={"Active"}
+                    inventory={10}
+                  />
+                </div>
+              )
           }
         })}
       </div>
