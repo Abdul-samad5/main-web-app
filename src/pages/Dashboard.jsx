@@ -39,7 +39,7 @@ import {
   MyOrders,
   AllProducts,
   MyStore,
-  Finances
+  Finances,
 } from "../components";
 
 function DbIcon({ src }) {
@@ -51,7 +51,7 @@ const Dashboard = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
 
   // Component to be rendered on the main
-  const [activeComponent, setActiveComponent] = useState([<AddEditProducts />]);
+  const [activeComponent, setActiveComponent] = useState([<MyStore />]);
 
   // Dropdowns on the sidebar
   const [isProdOpen, setIsProdOpen] = useState(false);
@@ -82,25 +82,35 @@ const Dashboard = () => {
         >
           <div className="border-b p-5 flex w-full justify-between items-center">
             <img src={logo} className="w-[50px]" alt="Yetti Logo" />
-            <img src={close} className="w-[24px] lg:hidden" alt="Icon" onClick={handleClick} />
+            <img
+              src={close}
+              className="w-[24px] lg:hidden"
+              alt="Icon"
+              onClick={handleClick}
+            />
           </div>
           <div className="border-b flex items-center justify-between p-4 mb-[10px]">
             <h1 className="font-bold text-[16px] ">Micheline</h1>
             <DbIcon src={edit} />
           </div>
-          <div 
+          <div
             className={`${styles.dbNavItem}`}
-            onClick={(e) => showActiveComponent(e, <MyStore />)}>
+            onClick={(e) => showActiveComponent(e, <MyStore />)}
+          >
             <DbIcon src={store} />
             <h2>My Store</h2>
           </div>
-          <div 
+          <div
             className={`${styles.dbNavItem}`}
-            onClick={(e) => showActiveComponent(e, <MyOrders />)}>
+            onClick={(e) => showActiveComponent(e, <MyOrders />)}
+          >
             <DbIcon src={orders} />
             <h2>My Orders</h2>
           </div>
-          <div className="w-full" onClick={(e) => handleDropdown(e, setIsProdOpen)}>
+          <div
+            className="w-full"
+            onClick={(e) => handleDropdown(e, setIsProdOpen)}
+          >
             <div className={`${styles.dbNavItem} relative`}>
               <DbIcon src={products} />
               <h2>Products</h2>
@@ -143,7 +153,10 @@ const Dashboard = () => {
             <DbIcon src={customers} />
             <h2>My Customers</h2>
           </div>
-          <div className="w-full" onClick={(e) => handleDropdown(e, setIsMarkOpen)}>
+          <div
+            className="w-full"
+            onClick={(e) => handleDropdown(e, setIsMarkOpen)}
+          >
             <div className={`${styles.dbNavItem} relative`}>
               <DbIcon src={products} />
               <h2>Marketing</h2>
@@ -181,7 +194,6 @@ const Dashboard = () => {
           </div>
           <div
             className={`${styles.dbNavItem}`}
-
             onClick={(e) => showActiveComponent(e, <Finances />)}
           >
             <DbIcon src={history} />
@@ -190,7 +202,7 @@ const Dashboard = () => {
           <div className="border-b border-t p-4 mb-[10px]">
             <h1 className="font-bold text-[16px] text-brand-gray">Settings</h1>
           </div>
-          <div 
+          <div
             className={`${styles.dbNavItem} relative w-full`}
             onClick={(e) => showActiveComponent(e, <StoreDetails />)}
           >
@@ -235,7 +247,9 @@ const Dashboard = () => {
                 alt="Icon"
                 onClick={handleClick}
               />
-              <button className={`${styles.buttonOutline}`}>Go to store front</button>
+              <button className={`${styles.buttonOutline}`}>
+                Go to store front
+              </button>
             </div>
             <div className="flex items-center">
               <div className="relative w-[370px] hidden lg:block">
