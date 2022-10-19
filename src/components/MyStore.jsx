@@ -1,10 +1,12 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {styles} from '../constants/index';
+import { Line } from 'react-chartjs-2';
+import {Chart, LineElement, PointElement, LinearScale, CategoryScale} from "chart.js";
 import { chartStore, today_customer, total_orders, product, naira, wallet, up_trend, down_trend } from "../assets"
 
 const MyStore = ({name}) => {
     const [storeData, setStoreData] = React.useState({
-        totalSales: "2,340,00",
+        totalSales: "2,300",
         totalCustomers: 15,
         totalOrders: 21,
         todayCustomers: 12,
@@ -15,6 +17,45 @@ const MyStore = ({name}) => {
         yesterdayProfit: 5000,
     });
 
+    Chart.register(
+        LineElement,
+        CategoryScale,
+        PointElement,
+        LinearScale
+    );
+
+    // Stores the amount of sales of the previous days of the week and is to be rendered on the line graph below.
+    const [historySales, setHistorySales] = useState([3, 6, 3, 5, 4, 5, 5]);
+
+    // Stores the amount of sales of the previous days of the week and is to be rendered on the line graph below.
+    const [historyProfit, setHistoryProfit] = useState([5, 6, 7, 6, 7, 7, 3]);
+
+    // Stores the amount of sales of the previous days of the week and is to be rendered on the line graph below.
+    const [historyGrowth, setHistoryGrowth] = useState([6, 5, 4, 6, 9, 3, 2]);
+
+    const options = {
+        plugins: {
+            legend: false,
+            maintainAspectRatio: false,
+            // responsive: false,
+        },
+        scales: {
+            x: {
+                grid: {
+                    display: false,
+                }
+            },
+            y: {
+                display: false,
+                min: 0,
+                max: 10,
+                ticks: {
+                    stopSize: 5
+                } 
+            }
+        }
+    }
+
     const [productSales, setProductSales] = React.useState([0, 3, 4, 5, 6, 7, 8, 9, 8]);
 
     return (
@@ -24,9 +65,9 @@ const MyStore = ({name}) => {
 
             <div className='flex justify-between w-full'>
                 <div className='w-1/2'>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between w-full">
                         {/* To display the setup status of the store */}
-                        <div className="flex justify-between bg-blue-600 shadow-lg rounded-lg py-6 mx-1 px-8 w-1/2 mb-3">
+                        <div className="flex justify-between bg-brand-primary shadow-lg rounded-lg py-6 mx-1 px-5 w-1/2 mb-3">
                             <div className='rounded-full bg-blue-100 px-4 py-3 mr-3'>
                                 <img src={chartStore} alt="" className='w-5 h-5'/>
                             </div>
@@ -41,7 +82,7 @@ const MyStore = ({name}) => {
                         <Total image={chartStore} type ={"sales"} number={storeData.totalSales}></Total>
                     </div>
                     
-                    <div className="flex justify-between">
+                    <div className="flex justify-between w-full">
                         {/* Displays the total customers of the store so far */}
                         <Total image={today_customer} type ={"customers"} number={storeData.totalCustomers}></Total>
 
@@ -51,7 +92,7 @@ const MyStore = ({name}) => {
                 </div>
 
                 {/* Activity box of the My Store Component */}
-                <div className='w-1/2 bg-white rounded-lg shadow-lg h-auto px-3 py-3 mb-3'>
+                <div className='w-1/2 bg-white rounded-lg shadow-lg h-[205px] px-3 pt-3 mb-3'>
                     <div className='flex justify-between pr-8'>
                         <p className='text-black font-bold text-base'>Activity</p>
 
@@ -77,14 +118,47 @@ const MyStore = ({name}) => {
                         </div>
                     </div>
 
-                    <div className='flex justify-between'>
-                        <p className='text-xs opacity-50'>Mon</p>
-                        <p className='text-xs opacity-50'>Tue</p>
-                        <p className='text-xs opacity-50'>Wed</p>
-                        <p className='text-xs opacity-50'>Thu</p>
-                        <p className='text-xs opacity-50'>Fri</p>
-                        <p className='text-xs opacity-50'>Sat</p>
-                        <p className='text-xs opacity-50'>Sun</p>
+                    <div className='w-full scale-y-[0.60] my-auto relative bottom-10'>
+                        <Line
+                            datasetIdKey='id'
+                            data={{
+                                labels: ['Mon', 'Tue', 'Wed', "Thu", "Fri", "Sat", "Sun"],
+                                datasets: [
+                                    {
+                                        id: 1,
+                                        label: 'profit',
+                                        data: historyProfit,
+                                        borderColor: '#E07B02',
+                                        backgroundColor: '#E07B02',
+                                        tension: 0.4,
+                                        pointRadius: 0,
+                                        borderWidth: 2,
+                                    },
+                                    {
+                                        id: 2,
+                                        label: 'sales',
+                                        data: historySales,
+                                        borderColor: '#02A9F7',
+                                        backgroundColor: '#02A9F7',
+                                        tension: 0.4,
+                                        pointRadius: 0,
+                                        borderWidth: 2
+                                    },
+                                    {
+                                        id: 3,
+                                        label: 'growth',
+                                        data: historyGrowth,
+                                        borderColor: '#0DE0B1',
+                                        backgroundColor: '#0DE0B1',
+                                        tension: 0.4,
+                                        pointRadius: 0,
+                                        fill: '#0DE0B1',
+                                        borderWidth: 2
+                                    },
+                                ],
+                            }}
+                            options={options}
+                        />
                     </div>
                 </div>
             </div>
@@ -189,18 +263,18 @@ const MyStore = ({name}) => {
 
 const Total = ({image, type, number}) => {
     return (
-        <div className="flex justify-between bg-white shadow-lg rounded-lg py-6 mx-1 pl-6 pr-10 w-1/2 mb-3">
-            <div className='rounded-full bg-blue-100 w-1/3 py-3 mr-3'>
-                <img src={image} alt="" className='w-5 h-5 mx-auto'/>
+        <div className="flex justify-between bg-white shadow-lg rounded-lg py-6 mx-1 pr-10 px-4 w-1/2 mb-3">
+            <div className='rounded-full bg-blue-100 w-auto px-4 py-3'>
+                <img src={image} alt="" className='w-5 h-5 mx-auto my-auto'/>
             </div>
 
             <div>
                 <p className='text-sm opacity-50'>{`Total ${type}`}</p>
-                <p className={type === "sales" ? "hidden" : 'font-extrabold text-black-800 text-xl'}>{number}</p>
+                <p className={type === "sales" ? "hidden" : 'font-semibold text-black-800 text-xl'}>{number}</p>
                 
                 <div className={type === "sales" ? 'flex' : "hidden invisible"}>
                     <img src={naira} alt="" className='w-4 h-4 my-auto'/>
-                    <p className='font-extrabold text-black-800 text-xl'> {number} </p>
+                    <p className='font-semibold text-black-800 text-xl'> {number} </p>
                 </div>
             </div>
         </div>
@@ -215,11 +289,11 @@ const Today = ({image, type, number, storeData}) => {
             </div>
             <p className='text-xs opacity-50'>{`Today's ${type}`}</p>
 
-            <p className={type === "sales" || type === "profit" ? "hidden invisible" : 'font-extrabold text-black-800 my-2 text-xl'}>{number}</p>
+            <p className={type === "sales" || type === "profit" ? "hidden invisible" : 'font-semibold text-black-800 my-2 text-xl'}>{number}</p>
             
             <div className={type === "sales" || type === "profit" ? 'flex' : "hidden invisible"}>
                 <img src={naira} alt="" className='w-4 h-4 my-auto'/>
-                <p className='font-extrabold text-black-800 my-2 text-xl'> {number} </p>
+                <p className='font-semibold text-black-800 my-2 text-xl'> {number} </p>
                 
             </div>
             {type === "sales" && <Rate yesterday_value={storeData.yesterdaySales} today_value={storeData.todaySales}/>}
