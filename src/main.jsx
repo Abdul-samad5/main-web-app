@@ -1,10 +1,14 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import './index.css'
-import { Dashboard }from './pages'
+import React from "react";
+import ReactDOM from "react-dom/client";
+import LoginProvider from "./context/LoginContext";
+import "./index.css";
+import { Register } from "./pages";
+import App from "./App";
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <Dashboard />
+    <LoginProvider>
+      <App />
+    </LoginProvider>
   </React.StrictMode>
-)
+);

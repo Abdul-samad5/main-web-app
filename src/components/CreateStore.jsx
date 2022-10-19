@@ -3,6 +3,31 @@ import { User, Store } from "../constants/config";
 import { postUser, postStore } from "../services/services";
 
 const CreateStore = ({ handleClick }) => {
+  // Initialize state for submit button textContent
+  const [message, setMessage] = useState({ text: true });
+
+  function changeMessage(status) {
+    if (status) {
+      setMessage({
+        color: "text-brand-secondary",
+        text: "Submitting...",
+      });
+    }
+    if (status === 200 || status === 201) {
+      setMessage({
+        color: "text-green-500",
+        text: "Registration successful!",
+      });
+    }
+    if (status >= 400) {
+      setMessage({
+        color: "text-red-500",
+        text: "Registration Failed!",
+      });
+    }
+  }
+
+  // Collect form data
   const [formData, setFormData] = useState({
     storeName: "",
     fullName: "",
@@ -26,20 +51,25 @@ const CreateStore = ({ handleClick }) => {
     e.preventDefault();
     let user = new User(formData.email, formData.password, formData.fullName);
     let store = new Store(formData.storeName, formData.storeDomain);
+    changeMessage(true);
 
     try {
       const res = await Promise.all([postUser(user), postStore(store)]);
-
+      changeMessage(res.status);
+      console.log(res.status);
       if (!res.status === 201) return;
       handleClick("getStarted");
     } catch (err) {
+      changeMessage(err.response.status);
       console.log(err);
     }
   }
 
   return (
     <div className="max-w-[400px] w-full mx-auto mb-20">
-      <h1 className="text-center text-[28px] mb-[40px] font-normal">Register</h1>
+      <h1 className="text-center text-[28px] mb-[40px] font-normal">
+        Register
+      </h1>
       <form className="w-full" onSubmit={formSubmit}>
         {/* <div className="mb-4 w-full">
           <label htmlFor="storeName" className="w-full mb-3 ml-2">
@@ -126,6 +156,11 @@ const CreateStore = ({ handleClick }) => {
             </a>
           </label>
         </div>
+        {message.text && (
+          <p className={`${message.color} text-sm text-center`}>
+            {message?.text}
+          </p>
+        )}
         <button
           type="submit"
           //onClick={() => handleClick("getStarted")}
@@ -134,7 +169,9 @@ const CreateStore = ({ handleClick }) => {
           Register
         </button>
         <div className="w-full flex justify-between items-center mt-2">
-          <p className="text-brand-gray font-normal text-[14px]">Already have an account?</p>
+          <p className="text-brand-gray font-normal text-[14px]">
+            Already have an account?
+          </p>
           <button
             className="text-brand-gray font-normal text-[14px]"
             type="button"
