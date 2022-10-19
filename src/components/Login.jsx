@@ -1,9 +1,13 @@
-import { useState, Link } from "react";
+import { useState, useContext, Link } from "react";
 import { useNavigate } from "react-router-dom";
+import { LoginContext } from "../context/LoginContext";
 import { styles } from "../constants";
 import { userLogin } from "../services/services";
 
 const Login = ({ handleClick }) => {
+  // Initialize state for the login to enable user login
+  const { isLoggedIn, userLoggedIn, userLoggedOut } = useContext(LoginContext);
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -34,6 +38,7 @@ const Login = ({ handleClick }) => {
       const res = await userLogin(user);
 
       if (!res.statusText === "OK") return;
+      userLoggedIn();
       navigate("/dashboard");
     } catch (err) {
       console.log(err);
@@ -42,7 +47,9 @@ const Login = ({ handleClick }) => {
 
   return (
     <div className="max-w-[400px] w-full mx-auto">
-      <h1 className="text-center text-[28px] mb-[40px] font-normal">Login to your account</h1>
+      <h1 className="text-center text-[28px] mb-[40px] font-normal">
+        Login to your account
+      </h1>
       <form className="w-full" onSubmit={formSubmit}>
         <div className="mb-4 w-full">
           <label htmlFor="email" className="w-full mb-3 ml-2">

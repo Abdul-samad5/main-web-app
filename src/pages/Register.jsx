@@ -3,7 +3,7 @@ import { logo_2 } from "../assets";
 import { Login, CreateStore, ResetPassword, GetStarted } from "../components";
 
 const Register = () => {
-  // Initialize state for the login, forgotPassword, and createStore.
+  // Initialize state for the login, forgotPassword, and createStore to determine the component to show.
   const [getStarted, setGetStarted] = useState({
     login: true,
     forgotPassword: false,
@@ -36,7 +36,9 @@ const Register = () => {
         </a>
       </div>
       {getStarted.login && <Login handleClick={handleGetStarted} />}
-      {getStarted.forgotPassword && <ResetPassword handleClick={handleGetStarted} />}
+      {getStarted.forgotPassword && (
+        <ResetPassword handleClick={handleGetStarted} />
+      )}
       {getStarted.createStore && <CreateStore handleClick={handleGetStarted} />}
       {getStarted.getStarted && <GetStarted handleClick={handleGetStarted} />}
     </div>
