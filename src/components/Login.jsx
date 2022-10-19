@@ -1,4 +1,7 @@
-import { useState } from "react";
+import { useState, Link } from "react";
+import { useNavigate } from "react-router-dom";
+import { styles } from "../constants";
+import { userLogin } from "../services/services";
 
 const Login = ({ handleClick }) => {
   const [formData, setFormData] = useState({
@@ -6,6 +9,8 @@ const Login = ({ handleClick }) => {
     password: "",
     remember: false,
   });
+
+  const navigate = useNavigate();
 
   function handleChange(e) {
     const { name, value, type, checked } = e.target;
@@ -17,8 +22,22 @@ const Login = ({ handleClick }) => {
     });
   }
 
-  function formSubmit(e) {
+  async function formSubmit(e) {
     e.preventDefault();
+
+    let user = {
+      email: formData.email,
+      password: formData.password,
+    };
+
+    try {
+      const res = await userLogin(user);
+
+      if (!res.statusText === "OK") return;
+      navigate("/dashboard");
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   return (
@@ -61,9 +80,7 @@ const Login = ({ handleClick }) => {
           />
           <label htmlFor="remember">Remember me</label>
         </div>
-        <button className="w-full py-3 bg-brand-primary text-white font-normal rounded-lg hover:bg-brand-secondary transition-colors duration-500">
-          Login to store
-        </button>
+        <button className={`${styles.button} w-full`}>Login to store</button>
         <div className="w-full flex justify-between items-center mt-2">
           <button
             type="button"
@@ -77,7 +94,7 @@ const Login = ({ handleClick }) => {
             type="button"
             onClick={() => handleClick("createStore")}
           >
-            Create new store
+            Register
           </button>
         </div>
       </form>

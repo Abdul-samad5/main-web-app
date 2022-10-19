@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { User, Store } from "../constants/config";
+import { postUser, postStore } from "../services/services";
 
 const CreateStore = ({ handleClick }) => {
   const [formData, setFormData] = useState({
@@ -20,15 +22,26 @@ const CreateStore = ({ handleClick }) => {
     });
   }
 
-  function formSubmit(e) {
+  async function formSubmit(e) {
     e.preventDefault();
+    let user = new User(formData.email, formData.password, formData.fullName);
+    let store = new Store(formData.storeName, formData.storeDomain);
+
+    try {
+      const res = await Promise.all([postUser(user), postStore(store)]);
+
+      if (!res.status === 201) return;
+      handleClick("getStarted");
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   return (
     <div className="max-w-[400px] w-full mx-auto mb-20">
-      <h1 className="text-center text-[28px] mb-[40px] font-normal">Create Store</h1>
+      <h1 className="text-center text-[28px] mb-[40px] font-normal">Register</h1>
       <form className="w-full" onSubmit={formSubmit}>
-        <div className="mb-4 w-full">
+        {/* <div className="mb-4 w-full">
           <label htmlFor="storeName" className="w-full mb-3 ml-2">
             Store name
           </label>
@@ -40,7 +53,7 @@ const CreateStore = ({ handleClick }) => {
             onChange={handleChange}
             className="w-full border border-brand-stroke rounded-lg p-3"
           />
-        </div>
+        </div> */}
         <div className="mb-4 w-full">
           <label htmlFor="storeName" className="w-full mb-3 ml-2">
             Full name
@@ -80,7 +93,7 @@ const CreateStore = ({ handleClick }) => {
             className="w-full border border-brand-stroke rounded-lg p-3"
           />
         </div>
-        <div className="w-full mb-4">
+        {/* <div className="w-full mb-4">
           <label htmlFor="password" className="w-full mb-3 ml-2">
             Store domain
           </label>
@@ -94,10 +107,10 @@ const CreateStore = ({ handleClick }) => {
               className="w-full border border-brand-stroke rounded-lg p-3"
             />
             <span className="absolute top-1/2 -translate-y-[50%] right-[12px] text-[14px] text-brand-gray">
-              @yetti.com
+              .myetti.co
             </span>
           </div>
-        </div>
+        </div> */}
         <div className="w-full mb-4 flex gap-2 items-center">
           <input
             type="checkbox"
@@ -114,11 +127,11 @@ const CreateStore = ({ handleClick }) => {
           </label>
         </div>
         <button
-          type="button"
-          onClick={() => handleClick("getStarted")}
+          type="submit"
+          //onClick={() => handleClick("getStarted")}
           className="w-full py-3 bg-brand-primary text-white font-normal rounded-lg hover:bg-brand-secondary transition-colors duration-500"
         >
-          Create store
+          Register
         </button>
         <div className="w-full flex justify-between items-center mt-2">
           <p className="text-brand-gray font-normal text-[14px]">Already have an account?</p>
