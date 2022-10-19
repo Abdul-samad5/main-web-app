@@ -277,7 +277,7 @@ const MyStore = ({name}) => {
             </div>
         </div>
     )
-};
+}
 
 const Today = ({image, type, number, storeData}) => {
     return (

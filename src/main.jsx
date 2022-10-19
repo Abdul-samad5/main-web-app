@@ -8,7 +8,8 @@ import App from "./App";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    
-    <Dashboard />
+    <LoginProvider>
+      <App />
+    </LoginProvider>
   </React.StrictMode>
 );
