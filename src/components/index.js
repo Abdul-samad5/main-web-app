@@ -14,7 +14,10 @@ import WebsiteSettings from "./WebsiteSettings";
 import MyOrders from "./MyOrders";
 import AllProducts from "./AllProducts";
 import MyStore from "./MyStore";
-import Finances from "./Finances"
+import Finances from "./Finances";
+import UserAccount from "./UserAccount";
+import Security from "./Security";
+import Profile from "./Profile";
 
 export {
   Login,
@@ -33,5 +36,8 @@ export {
   MyOrders,
   AllProducts,
   MyStore,
-  Finances
+  Finances,
+  UserAccount,
+  Security,
+  Profile
 };

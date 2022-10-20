@@ -119,7 +119,7 @@ const MyStore = ({ name }) => {
             </div>
 
             {/* Activity box of the My Store Component */}
-            <div className="w-1/2 bg-white rounded-lg shadow-lg h-auto px-3 py-3 mb-3">
+            <div className="w-1/2 bg-white rounded-lg shadow-lg h-[200px] px-3 py-3 mb-3">
                 <div className="flex justify-between pr-8">
                     <p className="text-black font-bold text-base">Activity</p>
 
