@@ -1,5 +1,7 @@
-import React from "react";
+import React, {useState} from "react";
 import { styles } from "../constants/index";
+import { Line } from 'react-chartjs-2';
+import {Chart, LineElement, PointElement, LinearScale, CategoryScale} from "chart.js";
 import {
   chartStore,
   today_customer,
@@ -17,7 +19,7 @@ function Icon({ icon }) {
 
 const MyStore = ({ name }) => {
   const [storeData, setStoreData] = React.useState({
-    totalSales: "2,340,00",
+    totalSales: "2,300",
     totalCustomers: 15,
     totalOrders: 21,
     todayCustomers: 12,
@@ -28,9 +30,46 @@ const MyStore = ({ name }) => {
     yesterdayProfit: 5000,
   });
 
-  const [productSales, setProductSales] = React.useState([
-    0, 3, 4, 5, 6, 7, 8, 9, 8,
-  ]);
+    Chart.register(
+        LineElement,
+        CategoryScale,
+        PointElement,
+        LinearScale
+    );
+
+    // Stores the amount of sales of the previous days of the week and is to be rendered on the line graph below.
+    const [historySales, setHistorySales] = useState([3, 6, 3, 5, 4, 5, 5]);
+
+    // Stores the amount of sales of the previous days of the week and is to be rendered on the line graph below.
+    const [historyProfit, setHistoryProfit] = useState([5, 6, 7, 6, 7, 7, 3]);
+
+    // Stores the amount of sales of the previous days of the week and is to be rendered on the line graph below.
+    const [historyGrowth, setHistoryGrowth] = useState([6, 5, 4, 6, 9, 3, 2]);
+
+    const options = {
+        plugins: {
+            legend: false,
+            maintainAspectRatio: false,
+            // responsive: false,
+        },
+        scales: {
+            x: {
+                grid: {
+                    display: false,
+                }
+            },
+            y: {
+                display: false,
+                min: 0,
+                max: 10,
+                ticks: {
+                    stopSize: 5
+                } 
+            }
+        }
+    }
+
+    const [productSales, setProductSales] = React.useState([0, 3, 4, 5, 6, 7, 8, 9, 8]);
 
   return (
     <div>
@@ -106,17 +145,50 @@ const MyStore = ({ name }) => {
             </div>
           </div>
 
-          <div className="flex justify-between">
-            <p className="text-xs opacity-50">Mon</p>
-            <p className="text-xs opacity-50">Tue</p>
-            <p className="text-xs opacity-50">Wed</p>
-            <p className="text-xs opacity-50">Thu</p>
-            <p className="text-xs opacity-50">Fri</p>
-            <p className="text-xs opacity-50">Sat</p>
-            <p className="text-xs opacity-50">Sun</p>
-          </div>
-        </div>
-      </div>
+                    <div className='w-full scale-y-[0.60] my-auto relative bottom-10'>
+                        <Line
+                            datasetIdKey='id'
+                            data={{
+                                labels: ['Mon', 'Tue', 'Wed', "Thu", "Fri", "Sat", "Sun"],
+                                datasets: [
+                                    {
+                                        id: 1,
+                                        label: 'profit',
+                                        data: historyProfit,
+                                        borderColor: '#E07B02',
+                                        backgroundColor: '#E07B02',
+                                        tension: 0.4,
+                                        pointRadius: 0,
+                                        borderWidth: 2,
+                                    },
+                                    {
+                                        id: 2,
+                                        label: 'sales',
+                                        data: historySales,
+                                        borderColor: '#02A9F7',
+                                        backgroundColor: '#02A9F7',
+                                        tension: 0.4,
+                                        pointRadius: 0,
+                                        borderWidth: 2
+                                    },
+                                    {
+                                        id: 3,
+                                        label: 'growth',
+                                        data: historyGrowth,
+                                        borderColor: '#0DE0B1',
+                                        backgroundColor: '#0DE0B1',
+                                        tension: 0.4,
+                                        pointRadius: 0,
+                                        fill: '#0DE0B1',
+                                        borderWidth: 2
+                                    },
+                                ],
+                            }}
+                            options={options}
+                        />
+                    </div>
+                </div>
+            </div>
 
       <div className="flex justify-between">
         <span className="flex justify-between w-1/2">
@@ -235,34 +307,6 @@ const MyStore = ({ name }) => {
   );
 };
 
-const Total = ({ image, type, number }) => {
-  return (
-    <div className="flex items-center bg-white shadow-lg rounded-lg p-4 mx-1 w-1/2 mb-3 gap-3">
-      <div className="rounded-full bg-blue-100 w-[32px] h-[32px] flex justify-center items-center">
-        <img src={image} alt="" className=" w-4 h-4 mx-auto" />
-      </div>
-
-      <div>
-        <p className="text-sm opacity-50">{`Total ${type}`}</p>
-        <p
-          className={
-            type === "sales"
-              ? "hidden"
-              : "font-extrabold text-brand-black text-xl"
-          }
-        >
-          {number}
-        </p>
-
-        <div className={type === "sales" ? "flex" : "hidden invisible"}>
-          <img src={naira} alt="" className="w-4 h-4 my-auto" />
-          <p className="font-extrabold text-brand-black text-xl"> {number} </p>
-        </div>
-      </div>
-    </div>
-  );
-};
-
 const Today = ({ image, type, number, storeData }) => {
   return (
     <div className="flex flex-col gap-2 bg-white shadow-lg rounded-lg py-4 px-2 mx-1 w-1/3">
@@ -369,6 +413,34 @@ const Status = ({ value }) => {
       {value}
     </div>
   );
+};
+
+const Total = ({ image, type, number }) => {
+    return (
+      <div className="flex items-center bg-white shadow-lg rounded-lg p-4 mx-1 w-1/2 mb-3 gap-3">
+        <div className="rounded-full bg-blue-100 w-[32px] h-[32px] flex justify-center items-center">
+          <img src={image} alt="" className=" w-4 h-4 mx-auto" />
+        </div>
+  
+        <div>
+          <p className="text-sm opacity-50">{`Total ${type}`}</p>
+          <p
+            className={
+              type === "sales"
+                ? "hidden"
+                : "font-semibold text-brand-black text-xl"
+            }
+          >
+            {number}
+          </p>
+  
+          <div className={type === "sales" ? "flex" : "hidden invisible"}>
+            <img src={naira} alt="" className="w-4 h-4 my-auto" />
+            <p className="font-semibold text-brand-black text-xl"> {number} </p>
+          </div>
+        </div>
+      </div>
+    );
 };
 
 export default MyStore;
