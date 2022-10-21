@@ -40,6 +40,7 @@ import {
   AllProducts,
   MyStore,
   Finances,
+  UserAccount
 } from "../components";
 
 function DbIcon({ src }) {
@@ -222,7 +223,7 @@ const Dashboard = () => {
 
           <div
             className={`${styles.dbNavItem}`}
-            onClick={(e) => showActiveComponent(e, <TransactionHistory />)}
+            onClick={(e) => showActiveComponent(e, <UserAccount />)}
           >
             <DbIcon src={user_account} />
             <h2>User Account</h2>
