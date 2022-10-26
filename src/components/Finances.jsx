@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import Invoice from './Invoice';
+import {Invoice, Payments} from "./index";
 
 const Finances = () => {
     const [currentPage, setCurrentPage] = React.useState(0);
@@ -36,7 +36,7 @@ const Finances = () => {
                     </div>
                 </div>
 
-                {currentPage === 0 && <Invoice/>}
+                {currentPage === 0 && <Payments/>}
                 {currentPage === 1 && <Invoice/>}
                 {/* {currentPage === 2 && <Invoice/>} */}
             </div>

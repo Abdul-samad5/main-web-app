@@ -18,6 +18,8 @@ import Finances from "./Finances";
 import UserAccount from "./UserAccount";
 import Security from "./Security";
 import Profile from "./Profile";
+import Payments from "./Payments";
+import Invoice from "./Invoice";
 
 export {
   Login,
@@ -39,5 +41,7 @@ export {
   Finances,
   UserAccount,
   Security,
-  Profile
+  Profile,
+  Payments,
+  Invoice
 };

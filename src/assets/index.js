@@ -11,6 +11,7 @@ import noOrders from "../assets/images/Orders.png";
 import noProducts from "../assets/images/products.png";
 import chartStore from "../assets/images/Chart.png";
 import product from "../assets/images/product.png";
+import CreditCard from "./images/plain-credit-card.png";
 
 // Icons
 import arrow_up from "./icons/arrow_up.png";
@@ -67,7 +68,8 @@ import wallet from './icons/wallet.png';
 import up_trend from './icons/up_trend.png';
 import down_trend from './icons/down_trend.png';
 import invoice_styles from "./icons/invoice_style.png";
-import camera from "./icons/camera.png"
+import camera from "./icons/camera.png";
+
 
 export {
   all_prods,
@@ -136,5 +138,6 @@ export {
   up_trend,
   down_trend,
   invoice_styles,
-  camera
+  camera,
+  CreditCard
 };
