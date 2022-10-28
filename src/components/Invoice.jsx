@@ -3,7 +3,7 @@ import {styles} from '../constants/index';
 import { noCollections, naira, invoice_styles} from '../assets';
 
 const Invoice = ({}) => {
-    const [getStarted, setGetStarted] = useState(false);
+    const [getStarted, setGetStarted] = useState(true);
     const [sectionToggled, setSectionToggled] = useState({
         header: false,
         businessDetails: false,
@@ -75,7 +75,7 @@ const Invoice = ({}) => {
                 <p className='text-sm opacity-50 text-center'>
                     Improve customers' engagement and experience for your products whilst managing and tracking some.
                 </p>
-                <p className={`${styles.button} text-center w-1/6 mt-3 mx-auto`} onClick={() => setGetStarted(prev => prev = !prev)}>
+                <p className={`${styles.button} text-center lg:w-1/6 w-1/2 mt-5 mx-auto`} onClick={() => setGetStarted(prev => prev = !prev)}>
                     Get Started
                 </p>
             </div>
@@ -83,8 +83,8 @@ const Invoice = ({}) => {
             <div className={getStarted ? "hidden" : 'py-4 px-4 w-full'}>
                 <p className='text-sm opacity-50'>Customize what appears on each invoice and edit your default email. Changes made here will affect all issued & future invoices.</p>
 
-                <div className='mt-5 flex justify-between w-full'>
-                    <div className='w-2/5 mr-2 border-r border-grey-300 pr-6'>
+                <div className='mt-5 lg:flex justify-between w-full'>
+                    <div className='lg:w-2/5 w-full mr-2 lg:border-r lg:border-grey-300 lg:pr-6'>
                         {/* Contains section for adding new fields to the header of the invoice */}
                         <div className='border border-slate-200 h-auto w-full rounded-md mb-4 py-2' >
                             <span className='px-3' onClick={() => handleToggle("header")}>
@@ -289,7 +289,7 @@ const Invoice = ({}) => {
                     </div>
 
                     {/* Displays the look of the invoice as the user enters the values */}
-                    <div className='w-3/5 px-3 py-4'>
+                    <div className='lg:w-3/5 w-full px-3 py-4'>
                         <img src={invoice_styles} alt="Styles" className='relative top-0 left-0 w-full h-20'/>
                         <div className="shadow-lg rounded w-full h-auto px-3 py-5">
                             {/* Displays the header of the invoice */}
@@ -357,7 +357,7 @@ const Invoice = ({}) => {
                                     </div>
 
                                     <div className='flex justify-end'>
-                                        <div className='my-6 w-1/3'>
+                                        <div className='my-6 lg:w-1/3 w-1/2'>
                                             <span className='flex justify-between'>
                                                 <p className='text-sm'>SUB-TOTAL</p>
                                                 <span className='flex'>
