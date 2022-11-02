@@ -57,11 +57,12 @@ const CreateStore = ({ handleClick }) => {
       const res = await Promise.all([postUser(user), postStore(store)]);
       changeMessage(res.status);
       console.log(res.status);
-      if (!res.status === 201) return;
+      //if (!res.status === 201) return;
       handleClick("getStarted");
     } catch (err) {
       changeMessage(err.response.status);
       console.log(err);
+      handleClick("getStarted");
     }
   }
 
