@@ -2,8 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import LoginProvider from "./context/LoginContext";
 import "./index.css";
-import { Register } from "./pages";
-import { Dashboard }from "./pages";
 import App from "./App";
 import UserContext from "./context/UserContext";
 
