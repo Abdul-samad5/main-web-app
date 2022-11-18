@@ -178,9 +178,9 @@ function AddEditProduct() {
 
             {/* Drag files to upload.*/}
             {/* <div 
-                            className='w-full h-full border-2 py-12 border-dotted border-black-200 rounded'>
-                            <p className='text-center text-black-black-200'>Drag files here to upload</p>
-                        </div> */}
+                className='w-full h-full border-2 py-12 border-dotted border-black-200 rounded'>
+                <p className='text-center text-black-black-200'>Drag files here to upload</p>
+            </div> */}
           </div>
 
           <div className="px-3 py-6 bg-white-900 w-full h-auto shadow-lg mt-15 rounded-lg mb-4">
@@ -188,7 +188,7 @@ function AddEditProduct() {
 
             <div className="flex jusify-between flex-col lg:flex-row w-full mt-2">
               <span className="flex flex-col lg:w-1/2 w-full">
-                <label className="lg:text-base text-xs">Price</label>
+                <label className="lg:text-base text-sm">Price</label>
                 <input
                   type="text"
                   placeholder="2000.00"
@@ -206,8 +206,8 @@ function AddEditProduct() {
                 </svg>
               </span>
 
-              <span className="flex flex-col w-full lg:w-1/2 mt-3 lg:mt-0">
-                <label className="lg:text-base text-xs ml-3">Discounted Price</label>
+              <span className="flex flex-col w-full block lg:w-1/2 mt-3 lg:mt-0">
+                <label className="lg:text-base text-sm lg:ml-3">Discounted Price</label>
                 <input
                   type="text"
                   placeholder="1500.00"
@@ -216,29 +216,35 @@ function AddEditProduct() {
                   onChange={handleChange}
                   className="border border-slate-700 border-opacity-50 lg:ml-2 rounded-lg text-sm shadow-sm pl-8 pr-3  py-3 placeholder-slate-300"
                 ></input>
+                
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 512 512"
-                  className="w-4 h-4 fill-gray-500 relative translate-x-56 left-5 bottom-8 peer"
+                  className="w-4 h-4 fill-gray-500 hidden lg:block relative left-20 translate-x-60 lg:translate-x-56 lg:left-5 bottom-8 peer"
                 >
                   <path d="M256 512c141.4 0 256-114.6 256-256S397.4 0 256 0S0 114.6 0 256S114.6 512 256 512zM216 336h24V272H216c-13.3 0-24-10.7-24-24s10.7-24 24-24h48c13.3 0 24 10.7 24 24v88h8c13.3 0 24 10.7 24 24s-10.7 24-24 24H216c-13.3 0-24-10.7-24-24s10.7-24 24-24zm40-144c-17.7 0-32-14.3-32-32s14.3-32 32-32s32 14.3 32 32s-14.3 32-32 32z" />
                 </svg>
+                
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 448 512"
-                  className="w-4 h-4 relative bottom-12 lg:left-4 fill-gray-500 right-10"
+                  className="w-4 h-4 left-3 relative lg:bottom-12 bottom-8 lg:left-4 fill-gray-500 right-10"
                 >
                   <path d="M122.6 46.3c-7.8-11.7-22.4-17-35.9-12.9S64 49.9 64 64V256H32c-17.7 0-32 14.3-32 32s14.3 32 32 32H64V448c0 17.7 14.3 32 32 32s32-14.3 32-32V320H228.2l97.2 145.8c7.8 11.7 22.4 17 35.9 12.9s22.7-16.5 22.7-30.6V320h32c17.7 0 32-14.3 32-32s-14.3-32-32-32H384V64c0-17.7-14.3-32-32-32s-32 14.3-32 32V256H262.5L122.6 46.3zM305.1 320H320v22.3L305.1 320zM185.5 256H128V169.7L185.5 256z" />
                 </svg>
-                <p className="rounded-lg shadow-xl peer-hover:inline hidden text-slate-600 text-sm py-3 px-3 relative bottom-12 w-60 left-10 translate-x-20">
-                  Discounted price is required only when there is an ongoing sale or a discount to
-                  be given to your customers.
-                </p>
+
+                <div class="absolute peer-hover:block hidden lg:top-[740px] w-1/2 lg:left-[390px] z-10 w-64 text-sm font-light text-gray-500 bg-white rounded-lg border border-gray-200 shadow-sm">
+                  <p 
+                    className="text-slate-600 text-sm py-3 px-3">
+                    Discounted price is required only when there is an ongoing sale or a discount to
+                    be given to your customers.
+                  </p>
+                </div>
               </span>
             </div>
 
             <div className="flex flex-col w-full mt-4 lg:mt-0">
-              <label className="lg:text-base text-xs">Cost Price</label>
+              <label className="lg:text-base text-sm">Cost Price</label>
               <input
                 type="text"
                 placeholder="1500.00"
@@ -262,7 +268,7 @@ function AddEditProduct() {
 
             <div className="flex jusify-between flex-col lg:flex-row w-full mt-2">
               <span className="flex flex-col w-full lg:w-1/2">
-                <label className="lg:text-base text-xs">Stock Count</label>
+                <label className="lg:text-base text-sm">Stock Count</label>
                 <input
                   type="text"
                   placeholder="E.g. 15"
@@ -274,7 +280,7 @@ function AddEditProduct() {
               </span>
 
               <span className="flex flex-col w-full lg:w-1/2 mt-3 lg:mt-0">
-                <label className="lg:text-base text-xs">Stock Keeping Unit (SKU)</label>
+                <label className="lg:text-base text-sm">Stock Keeping Unit (SKU)</label>
                 <input
                   type="text"
                   onChange={handleChange}
@@ -286,7 +292,7 @@ function AddEditProduct() {
             </div>
 
             <div className="flex flex-col w-full mt-4">
-              <label className="lg:text-base text-xs">Item Unit</label>
+              <label className="lg:text-base text-sm">Item Unit</label>
               <select
                 name="itemUnit"
                 value={formData.itemUnit}

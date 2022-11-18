@@ -5,9 +5,12 @@ import "./index.css";
 import { Register } from "./pages";
 import { Dashboard }from "./pages";
 import App from "./App";
+import UserContext from "./context/UserContext";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <Dashboard/>
+    <UserContext>
+      <App />
+    </UserContext>
   </React.StrictMode>
 );
