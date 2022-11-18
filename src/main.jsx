@@ -7,8 +7,10 @@ import UserContext from "./context/UserContext";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <UserContext>
-      <App />
-    </UserContext>
+    <LoginProvider>
+      <UserContext>
+        <App />
+      </UserContext>
+    </LoginProvider>
   </React.StrictMode>
 );
