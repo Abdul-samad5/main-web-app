@@ -1,7 +1,10 @@
-import React from 'react';
-import {UserData} from "./index";
-import {noProducts} from "../assets";
-import {styles} from '../constants/index';
+import React, { useContext, useEffect } from 'react';
+import { UserData } from "./index";
+import { noProducts } from "../assets";
+import axios from "axios";
+import { BASE_URL } from '../services/services';
+import { styles } from '../constants/index';
+import { UserContext }from '../context/UserContext';
 
 const details = ["Product name", "Price", "Status:", "Inventory:", "Action"];
 const MyOrders = () => {
@@ -12,6 +15,20 @@ const MyOrders = () => {
             return (prev = [0, 1, 2, 3, 4, 5, 6, 7, 7, 8, 89]);
         });
     }
+
+    const { userData } = useContext(UserContext);
+    
+    useEffect(() => {
+        axios.get(`${BASE_URL}product/list`, {
+            headers: {
+              'Authorization': 'Bearer ' + userData.access
+            }
+          }).then((response) => {
+            // console.log(response);
+            setMyProducts(response.data.data);
+          }).catch((err) => console.log(err));
+        // console.log(userData);
+    }, []);
 
     const handleProductSearch = () => {
 
@@ -29,7 +46,6 @@ const MyOrders = () => {
                 children={Children}
                 handleNext={handleNext}
             ></UserData>
-
         </div>
     )
 };

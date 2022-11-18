@@ -3,16 +3,19 @@ import { useNavigate } from "react-router-dom";
 import { LoginContext } from "../context/LoginContext";
 import { styles } from "../constants";
 import { userLogin } from "../services/services";
+import { UserContext } from "../context/UserContext";
 
 const Login = ({ handleClick }) => {
   // Initialize state for the login to enable user login
-  const { isLoggedIn, userLoggedIn, userLoggedOut } = useContext(LoginContext);
+  // const { isLoggedIn, userLoggedIn, userLoggedOut } = useContext(LoginContext);
 
   const [formData, setFormData] = useState({
     email: "",
     password: "",
     remember: false,
   });
+
+  const { onUserLogin, userData } = useContext(UserContext);
 
   const navigate = useNavigate();
 
@@ -38,7 +41,10 @@ const Login = ({ handleClick }) => {
       const res = await userLogin(user);
 
       if (!res.statusText === "OK") return;
-      userLoggedIn();
+      console.log(res);
+      onUserLogin(res.data.data);
+      // alert(userData);
+      // userLoggedIn();
       navigate("/dashboard");
     } catch (err) {
       console.log(err);
