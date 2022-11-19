@@ -39,7 +39,6 @@ const Login = ({ handleClick }) => {
 
     try {
       const res = await userLogin(user);
-
       if (!res.statusText === "OK") return;
       console.log(res);
       onUserLogin(res.data.data);
