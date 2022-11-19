@@ -12,6 +12,7 @@ import noProducts from "../assets/images/products.png";
 import chartStore from "../assets/images/Chart.png";
 import product from "../assets/images/product.png";
 import CreditCard from "./images/plain-credit-card.png";
+import finances from "./images/finances.png";
 
 // Icons
 import arrow_up from "./icons/arrow_up.png";
@@ -139,5 +140,6 @@ export {
   down_trend,
   invoice_styles,
   camera,
-  CreditCard
+  CreditCard,
+  finances
 };

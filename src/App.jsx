@@ -1,9 +1,7 @@
 import { BrowserRouter as Router, Route, Routes , Navigate} from "react-router-dom";
 import { Register, Dashboard } from "./pages";
 import { LoginContext } from "./context/LoginContext";
-import React, {useContext} from "react";
-
-
+import React, { useContext } from "react";
 
 function App() {
   const {isLoggedIn} = useContext(LoginContext);

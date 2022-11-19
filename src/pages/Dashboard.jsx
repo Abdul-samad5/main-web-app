@@ -25,6 +25,7 @@ import {
   cookies,
   user_account,
   subscription,
+  finances
 } from "../assets";
 
 import {
@@ -188,6 +189,13 @@ const Dashboard = () => {
           </div>
           <div
             className={`${styles.dbNavItem}`}
+            onClick={(e) => showActiveComponent(e, <Finances />)}
+          >
+            <DbIcon src={finances} />
+            <h2>Finances</h2>
+          </div>
+          <div
+            className={`${styles.dbNavItem}`}
             onClick={(e) => showActiveComponent(e, <StoreReviews />)}
           >
             <DbIcon src={review} />
@@ -195,7 +203,7 @@ const Dashboard = () => {
           </div>
           <div
             className={`${styles.dbNavItem}`}
-            onClick={(e) => showActiveComponent(e, <Finances />)}
+            onClick={(e) => showActiveComponent(e, <TransactionHistory />)}
           >
             <DbIcon src={history} />
             <h2>Transaction history</h2>
@@ -213,13 +221,13 @@ const Dashboard = () => {
               <DbIcon src={arrow_right} />
             </div>
           </div>
-          <div
+          {/* <div
             className={`${styles.dbNavItem}`}
             onClick={(e) => showActiveComponent(e, <TransactionHistory />)}
           >
             <DbIcon src={subscription} />
             <h2>Subscription</h2>
-          </div>
+          </div> */}
 
           <div
             className={`${styles.dbNavItem}`}
@@ -229,13 +237,13 @@ const Dashboard = () => {
             <h2>User Account</h2>
           </div>
 
-          <div
+          {/* <div
             className={`${styles.dbNavItem}`}
             onClick={(e) => showActiveComponent(e, <TransactionHistory />)}
           >
             <DbIcon src={cookies} />
             <h2>Privacy & Cookies</h2>
-          </div>
+          </div> */}
         </div>
 
         {/* {Main} */}

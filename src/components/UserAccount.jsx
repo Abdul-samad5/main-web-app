@@ -1,5 +1,5 @@
 import React from 'react';
-import {Security, Profile} from "./index";
+import { Security, Profile, BankInformation } from "./index";
 
 const UserAccount = () => {
     const [currentPage, setCurrentPage] = React.useState(0);
@@ -16,7 +16,7 @@ const UserAccount = () => {
             
             <div className='w-full rounded-lg shadow-lg h-auto mt-3'>
                 <div className='border-b-2 py-7 border-brand-primary h-20 w-full px-10'>
-                    <div className='flex w-1/3'>
+                    <div className='flex w-1/2'>
                         <p 
                             onClick={() => handleClick(0)}
                             className={currentPage === 0 ? 'opacity-50 border-t-2 px-6 py-3 hover:cursor-pointer border-l-2 border-b-white border-brand-primary border-r-2' : "px-5 py-3 hover:cursor-pointer opacity-50"}>
@@ -27,11 +27,17 @@ const UserAccount = () => {
                             className={currentPage === 1 ? 'opacity-50 border-t-2 px-6 py-3 border-l-2 border-b-white hover:cursor-pointer border-brand-primary border-r-2' : "px-5 hover:cursor-pointer py-3 opacity-50"}>
                             Security
                         </p>
+                        <p 
+                            onClick={() => handleClick(2)}
+                            className={currentPage === 2 ? 'opacity-50 border-t-2 px-6 py-3 border-l-2 border-b-white hover:cursor-pointer border-brand-primary border-r-2' : "px-5 hover:cursor-pointer py-3 opacity-50"}>
+                            Bank Information
+                        </p>
                     </div>
                 </div>
 
                 {currentPage === 0 && <Profile/>}
                 {currentPage === 1 && <Security/>}
+                {currentPage === 2 && <BankInformation/>}
             </div>
         </div>
     ) 

@@ -20,6 +20,7 @@ import Security from "./Security";
 import Profile from "./Profile";
 import Payments from "./Payments";
 import Invoice from "./Invoice";
+import BankInformation from "./BankInformation";
 
 export {
   Login,
@@ -43,5 +44,6 @@ export {
   Security,
   Profile,
   Payments,
-  Invoice
+  Invoice,
+  BankInformation
 };

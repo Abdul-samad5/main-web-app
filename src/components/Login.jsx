@@ -7,7 +7,7 @@ import { UserContext } from "../context/UserContext";
 
 const Login = ({ handleClick }) => {
   // Initialize state for the login to enable user login
-  // const { isLoggedIn, userLoggedIn, userLoggedOut } = useContext(LoginContext);
+  const { isLoggedIn, userLoggedIn, userLoggedOut } = useContext(LoginContext);
 
   const [formData, setFormData] = useState({
     email: "",
@@ -44,7 +44,7 @@ const Login = ({ handleClick }) => {
       console.log(res);
       onUserLogin(res.data.data);
       // alert(userData);
-      // userLoggedIn();
+      userLoggedIn();
       navigate("/dashboard");
     } catch (err) {
       console.log(err);
