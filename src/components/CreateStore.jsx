@@ -49,7 +49,7 @@ const CreateStore = ({ handleClick }) => {
 
   async function formSubmit(e) {
     e.preventDefault();
-    let user = new User(formData.email, formData.password, formData.fullName);
+    let user = new User(formData.email, formData.password, formData.fullName, "seller");
     let store = new Store(formData.storeName, formData.storeDomain);
     changeMessage(true);
 
