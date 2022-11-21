@@ -16,7 +16,7 @@ axios.get("https://restcountries.com/v3.1/all").then(function (response) {
 });
 
 // Register endpoint
-const postUser = (user) => axios.post(`${BASE_URL}auth/register`, user);
+const postUser = (user) => axios.post(`${BASE_URL}auth/register/seller`, user);
 
 // Store endpoint
 const postStore = (store) => axios.post(`${BASE_URL}store/create_store`, store);
