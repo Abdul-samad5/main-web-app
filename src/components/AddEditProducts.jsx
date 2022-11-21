@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { addProduct } from "../services/services";
 
 function AddEditProduct() {
   // Records if the user has clicked the toggle button in the last form element and accordingly records it
@@ -52,9 +53,37 @@ function AddEditProduct() {
     setIsToggled((prevValue) => !prevValue);
   };
 
-  const handleSubmit = (event) => {
+  async function handleSubmit(event) {
     event.preventDefault();
-  };
+
+    let product = {
+title: formData.productTitle,
+description: formData.productDesc,
+
+      media: formData.productImg,
+      price: formData.price,
+      theme: formData.storeTheme,
+      status: formData.status,
+      collection: formData.status,
+      color: formData.status,
+      size: formData.size,
+      item_unit: formData.itemUnit,
+      stock_count: formData.stockCount,
+      cost_price: formData.costPrice,
+      discounted_price: formData.discountedPrice,
+
+
+    };
+
+    try {
+      const res = await addProduct(product);
+      if (!res.statusText === "OK") return;
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
+
+  }
 
   // Gets Image selected by user and updates the selectedImage state to the url of the image selected.
   const onFileSelected = (event) => {
@@ -130,7 +159,7 @@ function AddEditProduct() {
             <h3 className="text-black opacity-50 mb-5">Product media</h3>
 
             {/* For selecting and adding images of products */}
-            <span className="block flex justify-between lg:flex-row flex-col">
+            <span className="flex justify-between lg:flex-row flex-col">
               <span>
                 <img
                   alt="Image Chosen"
@@ -164,7 +193,7 @@ function AddEditProduct() {
               <input
                 type="file"
                 id="image-selector"
-                className="border invisible border-dashed border-blue-500 border-2 rounded-md block border-black-500 bg-white"
+                className="invisible border-dashed border-blue-500 border-2 rounded-md block border-black-500 bg-white"
                 accept="image/*"
                 onChange={onFileSelected}
               ></input>
@@ -206,7 +235,7 @@ function AddEditProduct() {
                 </svg>
               </span>
 
-              <span className="flex flex-col w-full block lg:w-1/2 mt-3 lg:mt-0">
+              <span className="flex-col w-full block lg:w-1/2 mt-3 lg:mt-0">
                 <label className="lg:text-base text-sm lg:ml-3">Discounted Price</label>
                 <input
                   type="text"
@@ -233,7 +262,7 @@ function AddEditProduct() {
                   <path d="M122.6 46.3c-7.8-11.7-22.4-17-35.9-12.9S64 49.9 64 64V256H32c-17.7 0-32 14.3-32 32s14.3 32 32 32H64V448c0 17.7 14.3 32 32 32s32-14.3 32-32V320H228.2l97.2 145.8c7.8 11.7 22.4 17 35.9 12.9s22.7-16.5 22.7-30.6V320h32c17.7 0 32-14.3 32-32s-14.3-32-32-32H384V64c0-17.7-14.3-32-32-32s-32 14.3-32 32V256H262.5L122.6 46.3zM305.1 320H320v22.3L305.1 320zM185.5 256H128V169.7L185.5 256z" />
                 </svg>
 
-                <div class="absolute peer-hover:block hidden lg:top-[740px] w-1/2 lg:left-[390px] z-10 w-64 text-sm font-light text-gray-500 bg-white rounded-lg border border-gray-200 shadow-sm">
+                <div className="absolute peer-hover:block hidden lg:top-[740px] w-1/2 lg:left-[390px] z-10 w-64 text-sm font-light text-gray-500 bg-white rounded-lg border border-gray-200 shadow-sm">
                   <p 
                     className="text-slate-600 text-sm py-3 px-3">
                     Discounted price is required only when there is an ongoing sale or a discount to
