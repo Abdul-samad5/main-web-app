@@ -13,6 +13,7 @@ import chartStore from "../assets/images/Chart.png";
 import product from "../assets/images/product.png";
 import CreditCard from "./images/plain-credit-card.png";
 import finances from "./images/finances.png";
+import my_store from "./images/my-store.png";
 
 // Icons
 import arrow_up from "./icons/arrow_up.png";
@@ -141,5 +142,6 @@ export {
   invoice_styles,
   camera,
   CreditCard,
-  finances
+  finances,
+  my_store
 };
