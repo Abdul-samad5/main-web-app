@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { styles } from "../constants";
 import { countries } from "../services/services";
-import { dashboardImg, arrow_left } from "../assets";
+import { arrow_left, my_store } from "../assets";
 
 function Radio({ name, id, value, handleChange, formData }) {
   return (
@@ -412,7 +412,7 @@ const GetStarted = ({ handleClick }) => {
               </a>
             </div>
             <div className="w-full md:w-1/2">
-              <img src={dashboardImg} alt="Dashboard Image" />
+              <img src={my_store} alt="Dashboard Image" />
             </div>
           </div>
         </form>
