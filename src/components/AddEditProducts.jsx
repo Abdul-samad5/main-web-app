@@ -24,6 +24,7 @@ function AddEditProduct() {
     "Mg",
   ];
 
+
   const [formData, setFormData] = useState({
     productTitle: "",
     productDesc: "",
@@ -56,44 +57,33 @@ function AddEditProduct() {
   };
 
   const { userData } = useContext(UserContext);
-  const handleSubmit = (event) => {
+async function handleSubmit(event){
     event.preventDefault();
 
-    axios({
-      method: 'post',
-      url: `${BASE_URL}product/`,
-      headers: {
-        'Authorization': `Bearer ${userData.access}`
-      },
-      data: {
-        title: formData.title,
-        description: formData.productDesc,
-        media: formData.productImg,
-        price: formData.price,
-        discounted_price: formData.discountedPrice,
-        cost_price: formData.costPrice,
-        stock_count: formData.stockCount,
-        stock_keeping_unit: formData.stockUnit,
-        item_unit: parseInt(formData.itemUnit),
-        size: 2147,
-        color: "red",
-        collection: formData.productCollections,
-        status: formData.productStatus,
-        theme: formData.storeTheme
-      }}).then((response) => {
-          console.log(response);
-        }).catch((err) => 
-          console.log(err)
-        );
-  };
-
-    // try {
-    //   const res = await addProduct(product);
-    //   if (!res.statusText === "OK") return;
-    //   console.log(res);
-    // } catch (err) {
-    //   console.log(err);
-    // }
+    let product = {
+      description: formData.productDesc,
+      title: formData.productTitle,
+      media: formData.productImg,
+      price: formData.price,
+      theme: formData.storeTheme,
+      status: formData.status,
+      collection: formData.status,
+      color: formData.status,
+      size: formData.size,
+      item_unit: formData.itemUnit,
+      stock_count: formData.stockCount,
+      stock_keeping_unit: formData.stockUnit,
+      cost_price: formData.costPrice,
+      discounted_price: formData.discountedPrice,
+    };
+    try {
+      const res = await addProduct(product);
+      if (!res.statusText === "OK") return;
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   // Gets Image selected by user and updates the selectedImage state to the url of the image selected.
   const onFileSelected = (event) => {
@@ -154,7 +144,9 @@ function AddEditProduct() {
             </div>
 
             <div className="mt-3 h-auto">
-              <h3 className="text-black opacity-50 mb-2">Product Description</h3>
+              <h3 className="text-black opacity-50 mb-2">
+                Product Description
+              </h3>
               <textarea
                 placeholder="Black Shoulder"
                 className="border border-slate-400 rounded w-full px-3 py-3 h-40 resize-none placeholder-slate-300"
@@ -174,7 +166,9 @@ function AddEditProduct() {
                 <img
                   alt="Image Chosen"
                   className={
-                    formData.productImg === "" ? "block w-1/2 invisible" : "block w-1/2 h-full"
+                    formData.productImg === ""
+                      ? "block w-1/2 invisible"
+                      : "block w-1/2 h-full"
                   }
                   id="selected-image"
                   src={formData.productImg === "" ? "" : formData.productImg}
@@ -196,7 +190,9 @@ function AddEditProduct() {
                   >
                     <path d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0H284.2c12.1 0 23.2 6.8 28.6 17.7L320 32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 96 0 81.7 0 64S14.3 32 32 32h96l7.2-14.3zM32 128H416V448c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V128zm96 64c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16z" />
                   </svg>
-                  <p className="text-red-600 group-hover:text-red-200 text-sm">Delete Image</p>
+                  <p className="text-red-600 group-hover:text-red-200 text-sm">
+                    Delete Image
+                  </p>
                 </div>
               </span>
 
@@ -246,7 +242,9 @@ function AddEditProduct() {
               </span>
 
               <span className="flex-col w-full block lg:w-1/2 mt-3 lg:mt-0">
-                <label className="lg:text-base text-sm lg:ml-3">Discounted Price</label>
+                <label className="lg:text-base text-sm lg:ml-3">
+                  Discounted Price
+                </label>
                 <input
                   type="text"
                   placeholder="1500.00"
@@ -255,7 +253,7 @@ function AddEditProduct() {
                   onChange={handleChange}
                   className="border border-slate-700 border-opacity-50 lg:ml-2 rounded-lg text-sm shadow-sm pl-8 pr-3  py-3 placeholder-slate-300"
                 ></input>
-                
+
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 512 512"
@@ -263,7 +261,7 @@ function AddEditProduct() {
                 >
                   <path d="M256 512c141.4 0 256-114.6 256-256S397.4 0 256 0S0 114.6 0 256S114.6 512 256 512zM216 336h24V272H216c-13.3 0-24-10.7-24-24s10.7-24 24-24h48c13.3 0 24 10.7 24 24v88h8c13.3 0 24 10.7 24 24s-10.7 24-24 24H216c-13.3 0-24-10.7-24-24s10.7-24 24-24zm40-144c-17.7 0-32-14.3-32-32s14.3-32 32-32s32 14.3 32 32s-14.3 32-32 32z" />
                 </svg>
-                
+
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 448 512"
@@ -273,10 +271,9 @@ function AddEditProduct() {
                 </svg>
 
                 <div className="absolute peer-hover:block hidden lg:top-[740px] w-1/2 lg:left-[390px] z-10 w-64 text-sm font-light text-gray-500 bg-white rounded-lg border border-gray-200 shadow-sm">
-                  <p 
-                    className="text-slate-600 text-sm py-3 px-3">
-                    Discounted price is required only when there is an ongoing sale or a discount to
-                    be given to your customers.
+                  <p className="text-slate-600 text-sm py-3 px-3">
+                    Discounted price is required only when there is an ongoing
+                    sale or a discount to be given to your customers.
                   </p>
                 </div>
               </span>
@@ -319,7 +316,9 @@ function AddEditProduct() {
               </span>
 
               <span className="flex flex-col w-full lg:w-1/2 mt-3 lg:mt-0">
-                <label className="lg:text-base text-sm">Stock Keeping Unit (SKU)</label>
+                <label className="lg:text-base text-sm">
+                  Stock Keeping Unit (SKU)
+                </label>
                 <input
                   type="text"
                   onChange={handleChange}
@@ -338,9 +337,9 @@ function AddEditProduct() {
                 onChange={handleChange}
                 className="border border-slate-700 border-opacity-50 rounded-lg text-sm shadow-sm px-3 py-3 placeholder-slate-300"
               >
-                {itemUnits.map((country, index) => (
+                {itemUnits.map((item, index) => (
                   <option key={index} className="hover:bg-red-700 list-none">
-                    {country}
+                    {item}
                   </option>
                 ))}
               </select>
@@ -351,7 +350,9 @@ function AddEditProduct() {
             <h3 className="text-black opacity-50 mb-2">Product Options</h3>
 
             <div className="flex jusify-between w-full">
-              <p className="text-sm opacity-50 w-1/2">This product has of size, color, etc.</p>
+              <p className="text-sm opacity-50 w-1/2">
+                This product has of size, color, etc.
+              </p>
               <span className="w-1/2 align-right flex justify-end">
                 <div
                   className={

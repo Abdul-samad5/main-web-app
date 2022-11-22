@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { noCollections } from '../assets';
 import { styles } from "../constants/index";
+import { addCollection } from "../services/services";
 import UserData from "./UserData";
 
 const details = ["Collection name", "Product", "Action"];
@@ -24,6 +25,22 @@ const Collections = () => {
     // Logic for searching for a specific transaction history by setting the transaction history state to the data gotten from the API following the users prompt.
     // alert(searchValue);
   };
+
+ async function handleAddCollection(event){
+  event.preventDefault();
+  let collection = {
+    name: newCollectionInfo.collectionName,
+    image: newCollectionInfo.collectionImage,
+  };
+  try {
+    const res = await addCollection(collection);
+    if (!res.statusText === "OK") return;
+    console.log(res);
+  } catch (err) {
+    console.log(err);
+  }
+
+ }
 
   const toggleAddCollection = () => {
     if (isVisible === true) {
@@ -153,6 +170,7 @@ const Collections = () => {
               className={`${styles.button} mt-7 w-full ${
                 newCollectionInfo.collectionName === "" ? "opacity-50" : "opacity-100"
               }`}
+              onClick={handleAddCollection}
             >
               Add new collection
             </button>
@@ -165,7 +183,7 @@ const Collections = () => {
 
 const Children = ({ id, collectionName, product }) => {
   return (
-    <div className="flex justify-between">
+    <div className="flex justify-between" key={id}>
       <p className={`${styles.valueStyle}`}>{id}</p>
       <p className={`${styles.valueStyle}`}>{collectionName}</p>
       <p className={`${styles.valueStyle}`}>{product}</p>
