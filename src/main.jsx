@@ -10,7 +10,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <LoginProvider>
       <UserContext>
-        <Dashboard />
+        <App />
       </UserContext>
     </LoginProvider>
   </React.StrictMode>

@@ -1,4 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import axios from "axios";
+import { BASE_URL } from '../services/services';
+import { UserContext }from '../context/UserContext';
 
 function AddEditProduct() {
   // Records if the user has clicked the toggle button in the last form element and accordingly records it
@@ -28,10 +31,10 @@ function AddEditProduct() {
     price: "",
     discountedPrice: "",
     costPrice: "",
-    stockCount: "",
+    stockCount: 0,
     stockUnit: "",
-    itemUnit: "",
-    productCollections: [],
+    itemUnit: 0,
+    productCollections: 0,
     productStatus: "",
     storeTheme: "",
   });
@@ -52,8 +55,36 @@ function AddEditProduct() {
     setIsToggled((prevValue) => !prevValue);
   };
 
+  const { userData } = useContext(UserContext);
   const handleSubmit = (event) => {
     event.preventDefault();
+
+    axios({
+      method: 'post',
+      url: `${BASE_URL}product/`,
+      headers: {
+        'Authorization': `Bearer ${userData.access}`
+      },
+      data: {
+        title: formData.title,
+        description: formData.productDesc,
+        media: formData.productImg,
+        price: formData.price,
+        discounted_price: formData.discountedPrice,
+        cost_price: formData.costPrice,
+        stock_count: formData.stockCount,
+        stock_keeping_unit: formData.stockUnit,
+        item_unit: parseInt(formData.itemUnit),
+        size: 2147,
+        color: "red",
+        collection: formData.productCollections,
+        status: formData.productStatus,
+        theme: formData.storeTheme
+      }}).then((response) => {
+          console.log(response);
+        }).catch((err) => 
+          console.log(err)
+        );
   };
 
   // Gets Image selected by user and updates the selectedImage state to the url of the image selected.

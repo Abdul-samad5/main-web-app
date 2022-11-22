@@ -1,4 +1,4 @@
-import { useState, useContext, Link } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { LoginContext } from "../context/LoginContext";
 import { styles } from "../constants";
@@ -15,7 +15,7 @@ const Login = ({ handleClick }) => {
     remember: false,
   });
 
-  const { onUserLogin, userData } = useContext(UserContext);
+  const { onUserLogin } = useContext(UserContext);
 
   const navigate = useNavigate();
 

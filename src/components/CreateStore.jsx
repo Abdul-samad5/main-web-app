@@ -72,7 +72,7 @@ const CreateStore = ({ handleClick }) => {
         Register
       </h1>
       <form className="w-full" onSubmit={formSubmit}>
-        {/* <div className="mb-4 w-full">
+        <div className="mb-4 w-full">
           <label htmlFor="storeName" className="w-full mb-3 ml-2">
             Store name
           </label>
@@ -84,7 +84,7 @@ const CreateStore = ({ handleClick }) => {
             onChange={handleChange}
             className="w-full border border-brand-stroke rounded-lg p-3"
           />
-        </div> */}
+        </div>
         <div className="mb-4 w-full">
           <label htmlFor="storeName" className="w-full mb-3 ml-2">
             Full name
@@ -124,7 +124,7 @@ const CreateStore = ({ handleClick }) => {
             className="w-full border border-brand-stroke rounded-lg p-3"
           />
         </div>
-        {/* <div className="w-full mb-4">
+        <div className="w-full mb-4">
           <label htmlFor="password" className="w-full mb-3 ml-2">
             Store domain
           </label>
@@ -141,7 +141,7 @@ const CreateStore = ({ handleClick }) => {
               .myetti.co
             </span>
           </div>
-        </div> */}
+        </div>
         <div className="w-full mb-4 flex gap-2 items-center">
           <input
             type="checkbox"
