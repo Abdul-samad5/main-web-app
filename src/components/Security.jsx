@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
 import { styles } from '../constants';
+import axios from 'axios';
+import { BASE_URL } from '../services/services';
+import { UserContext } from '../context/UserContext';
 
 const Security = () => {
-    const [securityData, setSecurityData] = React.useState({
+    const [securityData, setSecurityData] = useState({
         emailAddress: "",
         password: "",
         changePassword: "",
@@ -16,8 +19,19 @@ const Security = () => {
         });
     }
 
+    const { userData } = useContext(UserContext);
     const handleSubmit = (event) => {
         event.preventDefault();
+
+        if(changePassword === repeatPassword) {
+            axios.put(`${BASE_URL}auth/reset-password-confirm/${userData.id}/${userData.access}`, {
+                'password': securityData.changePassword
+            }).then((response) => {
+                console.log(response);
+            }).catch((err) => console.log(err));
+        } else {
+            window.alert("Ensure you have typed the same password.");
+        }
     }
 
     return (

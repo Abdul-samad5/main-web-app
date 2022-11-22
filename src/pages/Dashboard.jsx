@@ -41,7 +41,7 @@ import {
   AllProducts,
   MyStore,
   Finances,
-  UserAccount
+  UserAccount,
 } from "../components";
 
 function DbIcon({ src }) {

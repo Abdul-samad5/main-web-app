@@ -19,15 +19,13 @@ const MyOrders = () => {
     const { userData } = useContext(UserContext);
     
     useEffect(() => {
+        // console.log(JSON.parse(JSON.stringify(userData.access)));
         axios.get(`${BASE_URL}product/list`, {
-            headers: {
-              'Authorization': 'Bearer ' + userData.access
-            }
+            headers: { Authorization: `Bearer ${userData.access}`}
           }).then((response) => {
-            // console.log(response);
+            console.log(response);
             setMyProducts(response.data.data);
           }).catch((err) => console.log(err));
-        // console.log(userData);
     }, []);
 
     const handleProductSearch = () => {
