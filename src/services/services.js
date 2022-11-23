@@ -42,4 +42,23 @@ const userLogin = (user) => axios.post(`${BASE_URL}auth/login`, user);
 // add product
 const addProduct = (product) => axios.post(`${BASE_URL}product/`, product, config);
 
-export { countries, postUser, postStore, userLogin, addProduct };
+// Buyer endpoints
+const createOrder = (order) => axios.post(`${BASE_URL}buyer/order_history/create/`, order, config);
+
+const deleteOrder = (buyer_id) => axios.delete(`${BASE_URL}buyer/order_history/delete/${buyer_id}`, config);
+
+const getRecords = () => axios.get(`${BASE_URL}buyer/order_history/records`, config);
+
+const getOrderHistoryUpdate = (buyer_id) => axios.get(`${BASE_URL}buyer/order_history/update/${buyer_id}`, config);
+
+const putOrderHistory = (buyer_id, OrderHistory) => axios.put(`${BASE_URL}buyer/order_history/update/${buyer_id}`, OrderHistory, config);
+
+const patchOrderHistory = (buyer_id, OrderHistory) => axios.patch(`${BASE_URL}buyer/order_history/update/${buyer_id}`, OrderHistory, config);
+
+const getOrderHistory = (buyer_id) => axios.get(`${BASE_URL}buyer/order_history/${buyer_id}`, config);
+
+export { 
+  countries, postUser, postStore, 
+  userLogin, addProduct, createOrder, 
+  deleteOrder, getRecords, getOrderHistoryUpdate, 
+  putOrderHistory, patchOrderHistory, getOrderHistory};
