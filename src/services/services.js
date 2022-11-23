@@ -32,6 +32,16 @@ const postStore = (store) => axios.post(`${BASE_URL}store/create_store`, store);
 // Login endpoint
 const userLogin = (user) => axios.post(`${BASE_URL}auth/login`, user);
 
+const userLogout = () => axios.post(`${BASE_URL}auth/logout`, config) 
+
+const resendActivationEmail = (email) => axios.get(`${BASE_URL}auth/resend_activation_link/${email}`, config);
+
+const activateAccount = (user_id, token) => axios.get(`${BASE_URL}auth/confirm-email/${user_id}/${token}`, config);
+
+const resetPasword = (email) => axios.post(`${BASE_URL}auth/reset_password/${email}`, config);
+
+const resetPasswordConfirm = (user_id, token) => axios.post(`${BASE_URL}auth/reset_password_confirm/${user_id}/${token}`, config);
+
 
 // add product
 const addProduct = (product) => axios.post(`${BASE_URL}product/`, product, config);
