@@ -1,8 +1,12 @@
 import axios from "axios";
+// import { UserContext } from "../context/UserContext";
+// import React, { useContext } from "react";
 
 export const BASE_URL = "https://yetti-backend.herokuapp.com/api/v1/";
 
-const token = "LrryO2PtOqGDL5jjrBQ9inh7fRXSmV7X9QSl4ejYAJYn342VMVZ2RUOJDaF0RUW9"
+const token = "LrryO2PtOqGDL5jjrBQ9inh7fRXSmV7X9QSl4ejYAJYn342VMVZ2RUOJDaF0RUW9";
+// const { userData } = useContext(UserContext); 
+
 // Load ALL countries from countries endpoint
 let countries = [];
 axios.get("https://restcountries.com/v3.1/all").then(function (response) {
