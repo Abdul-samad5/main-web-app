@@ -3,6 +3,8 @@ import axios from "axios";
 export const BASE_URL = "https://yetti-backend.herokuapp.com/api/v1/";
 
 const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjY5MTk5NjQwLCJpYXQiOjE2NjkxMTMyNDAsImp0aSI6ImUwMDlkZGZjNTJlNTRlN2M4NDJkZGU4ZDU0NGYxNDczIiwidXNlcl9pZCI6M30.3W338HjgUo7gD-v9e_8HClTtKPSY2YzVdMfRCVeV7fU'
+
+
 // Load ALL countries from countries endpoint
 let countries = [];
 axios.get("https://restcountries.com/v3.1/all").then(function (response) {
@@ -48,5 +50,16 @@ const getCollection = (id) => axios.get(`${BASE_URL}product/collection/${id}`, c
 
 const getCollectionList = () => axios.get(`${BASE_URL}product/collection/`, config);
 
+const getProductItemUnit = () => axios.get(`${BASE_URL}product/itemunit/`, config);
 
-export { countries, postUser, postStore, userLogin, addProduct, addCollection, deleteCollection };
+const deleteItemUnit = (id) => axios.delete(`${BASE_URL}product/itemunit/delete/${id}`, config);
+
+const updateItemUnit = (id, itemunit) => axios.put(`${BASE_URL}product/itemunit/update/${id}`, itemunit, config);
+
+const getProductItemUnitById = (id) => axios.get(`${BASE_URL}product/itemunits/${id}`, config);
+
+const getProductList = () => axios.get(`${BASE_URL}product/list`, config);
+
+
+export { countries, postUser, postStore, userLogin, addProduct, addCollection, deleteCollection, updateCollection, getCollection, getCollectionList, getProductItemUnit, deleteItemUnit, updateItemUnit, getProductItemUnitById, getProductList, deleteProduct, updateProduct };
+``

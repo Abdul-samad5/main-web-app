@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import axios from "axios";
-import { BASE_URL } from '../services/services';
-import { UserContext }from '../context/UserContext';
+import { addProduct, BASE_URL, updateProduct } from "../services/services";
+import { UserContext } from "../context/UserContext";
 
 function AddEditProduct() {
   // Records if the user has clicked the toggle button in the last form element and accordingly records it
@@ -23,7 +23,6 @@ function AddEditProduct() {
     "In",
     "Mg",
   ];
-
 
   const [formData, setFormData] = useState({
     productTitle: "",
@@ -57,7 +56,7 @@ function AddEditProduct() {
   };
 
   const { userData } = useContext(UserContext);
-async function handleSubmit(event){
+  async function handleSubmit(event) {
     event.preventDefault();
 
     let product = {
@@ -84,6 +83,18 @@ async function handleSubmit(event){
       console.log(err);
     }
   }
+
+  async function handleUpdateProduct(event, id)  {
+    event.preventDefault();
+     try
+      {
+        const res = await updateProduct(1)
+        if (!res.statusText === "OK") return;
+        console.log(res);
+      } catch (err) {
+        console.log(err);
+      }
+  };
 
   // Gets Image selected by user and updates the selectedImage state to the url of the image selected.
   const onFileSelected = (event) => {
@@ -121,7 +132,10 @@ async function handleSubmit(event){
           <button className="border border-blue-300 rounded-lg lg:px-8 py-2 px-4 mx-1 text-blue-300 bg-white">
             Preview
           </button>
-          <button className="bg-blue-400 text-white rounded-lg lg:px-8 px-4 py-2.5 mx-1 text-sm">
+          <button
+            className="bg-blue-400 text-white rounded-lg lg:px-8 px-4 py-2.5 mx-1 text-sm"
+            onClick={handleUpdateProduct}
+          >
             Save Changes
           </button>
         </span>
