@@ -1,6 +1,6 @@
 import React, {useState, useContext} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { cartContext } from '../App';
+import { cartContext } from '../context/CartContext';
 import { LoginContext } from '../context/LoginContext';
 import { UserContext } from '../context/UserContext';
 

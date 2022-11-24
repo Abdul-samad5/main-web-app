@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import Footer from './Footer';
 import Navbar from './Navbar';
-import { cartContext } from '../App';
+import { cartContext } from '../context/CartContext';
 
 const Cart = ({cart, deleteFromCart, clearCart, changeQuantity}) => {
   const getTotal = () => {

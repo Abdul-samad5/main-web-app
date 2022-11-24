@@ -4,13 +4,15 @@ import LoginProvider from "./context/LoginContext";
 import "./index.css";
 import App from "./App";
 import UserContext from "./context/UserContext";
-import { Dashboard } from "./pages";
+import CartContextProvider from "./context/CartContext";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <LoginProvider>
       <UserContext>
-        <App />
+        <CartContextProvider>
+          <App />
+        </CartContextProvider>
       </UserContext>
     </LoginProvider>
   </React.StrictMode>

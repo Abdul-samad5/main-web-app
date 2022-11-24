@@ -1,8 +1,9 @@
 import axios from "axios";
 import { useState, useEffect } from 'react';
+import { getProducts } from "../services/services";
 
 // Function to get the products from the API endpoint using axios, useState, and useEffect.
-const useFetchProducts = (url) => {
+const useFetchProducts = () => {
     // Stores a boolean as axios tries to retrieve the data from the API endpoint.
     const [isLoading, setIsLoading] = useState(true);
 
@@ -12,18 +13,21 @@ const useFetchProducts = (url) => {
     // Stores the the data - products in this case - axios gets from the database.
     const [products, setProducts] = useState([]);
 
-    useEffect(() => {
-        axios.get(url)
-        .then((response) => {
-            console.log(response.data);
-            setProducts(response.data);
+    async function fetchProducts() {
+        try {
+            const res = await getProducts();
+            if (!res.statusText === "OK") return;
+            console.log(res);
             setIsLoading(false);
-        }).catch((err) => {
+        } catch (err) {
             console.log(err);
-            setIsLoading(false);
             setIsError(true);
-        });
-    }, [url]);
+        }
+    }
+
+    useEffect(() => {
+        fetchProducts();
+    });
 
     return {isLoading, isError, products}
 }

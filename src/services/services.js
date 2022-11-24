@@ -42,6 +42,15 @@ const userLogin = (user) => axios.post(`${BASE_URL}auth/login`, user);
 // add product
 const addProduct = (product) => axios.post(`${BASE_URL}product/`, product, config);
 
+const getProducts = (access) => {
+  return axios.get(`${BASE_URL}product/list`, { 
+    headers: {
+      Authorization: `Bearer ${access}`,
+      "Content-Type": "application/json"
+    }
+  });
+}
+
 // Buyer endpoints
 const createOrder = (order) => axios.post(`${BASE_URL}buyer/order_history/create/`, order, config);
 
@@ -61,4 +70,7 @@ export {
   countries, postUser, postStore, 
   userLogin, addProduct, createOrder, 
   deleteOrder, getRecords, getOrderHistoryUpdate, 
-  putOrderHistory, patchOrderHistory, getOrderHistory};
+  putOrderHistory, patchOrderHistory, getOrderHistory,
+  getProducts
+
+};

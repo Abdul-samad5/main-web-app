@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
-import { cartContext } from '../App';
+import { cartContext } from '../context/CartContext';
 import { logo } from '../assets';
-import { Products, Navbar, Hero, Footer} from '../store-components';
+import { Products, Navbar, Hero, Footer } from '../store-components';
 
 const StoreFront = () => {
     const { cartLength, cart, products, deleteFromCart, addToCart } = useContext(cartContext);

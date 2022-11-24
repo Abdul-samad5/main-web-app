@@ -1,8 +1,26 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import { LoginContext } from '../context/LoginContext';
+import { UserContext } from '../context/UserContext';
+import { getProducts } from '../services/services';
 
 const Products = ({ products, handleAdd, handleDelete, cart }) => {
+    const {userData} = useContext(UserContext);
+    async function fetchProducts() {
+        try {
+            const res = await getProducts(userData.access);
+            if (!res.statusText === "OK") return;
+            console.log(res);
+            // setIsLoading(false);
+        } catch (err) {
+            console.log(err);
+            // setIsError(true);
+        }
+    } 
+  
+    useEffect(() => {
+        fetchProducts();
+    }, []);
   return (
     <div className='w-full lg:px-10 md:px-5 px-10 z-1 py-5 text-center'>
         <p className='text-black text-2xl'>OUR PR0DUCTS</p>

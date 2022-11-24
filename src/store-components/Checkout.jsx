@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 import { styles } from '../constants';
 import { countries } from '../services/services';
 import Footer from "./Footer";
-import { cartContext } from '../App';
+import Navbar from './Navbar';
+import { cartContext } from '../context/CartContext';
 
 const Checkout = ({cart}) => {
     const getSubTotal = () => {
