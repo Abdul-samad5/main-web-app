@@ -17,7 +17,7 @@ function Icon({ icon }) {
   return <div className="rounded-full p-4 h-[32px] w-[32px]"></div>;
 }
 
-const MyStore = ({ name }) => {
+const MyStore = () => {
   const [storeData, setStoreData] = React.useState({
     totalSales: "2,300",
     totalCustomers: 15,
@@ -274,33 +274,32 @@ const MyStore = ({ name }) => {
             </div>
 
             <div className="mt-8">
-            {/* Image and text to be displayed if no data is found */}
-            <img
-                src={product}
-                alt="No customer found"
-                className={productSales === 0 ? "mx-auto w-auto h-auto" : "hidden"}
-            />
-            <p
-                className={productSales === 0 ? "text-base text-center" : "hidden"}
-            >
-                You have no product sales yet!
-            </p>
+              {/* Image and text to be displayed if no data is found */}
+              <img
+                  src={product}
+                  alt="No customer found"
+                  className={productSales === 0 ? "mx-auto w-auto h-auto" : "hidden"}
+              />
+              <p
+                  className={productSales === 0 ? "text-base text-center" : "hidden"}
+              >
+                  You have no product sales yet!
+              </p>
 
-            {productSales.map((data, index) => {
-                return (
-                <div className="mb-3">
-                    <Children
-                    id={index + 1}
-                    key={index + 1}
-                    productName={"Nike Sneakers"}
-                    sales={100}
-                    price={"#500000"}
-                    stock={"500"}
-                    status={"Out of Stock"}
-                    />
-                </div>
-                );
-            })}
+              {productSales.map((data, index) => {
+                  return (
+                    <div className="mb-3" key={index}>
+                        <Children
+                          id={1}
+                          productName={"Nike Sneakers"}
+                          sales={100}
+                          price={"#500000"}
+                          stock={"500"}
+                          status={"Out of Stock"}
+                        />
+                    </div>
+                  );
+              })}
             </div>
         </div>
     </div>
