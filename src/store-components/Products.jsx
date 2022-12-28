@@ -2,13 +2,13 @@ import React, { useContext, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import { LoginContext } from '../context/LoginContext';
 import { UserContext } from '../context/UserContext';
-import { getProducts } from '../services/services';
+import { getProducts, getProductList, createOrder } from '../services/services';
 
 const Products = ({ products, handleAdd, handleDelete, cart }) => {
     const {userData} = useContext(UserContext);
     async function fetchProducts() {
         try {
-            const res = await getProducts(userData.access);
+            const res = await getProductList();
             if (!res.statusText === "OK") return;
             console.log(res);
             // setIsLoading(false);
@@ -17,35 +17,52 @@ const Products = ({ products, handleAdd, handleDelete, cart }) => {
             // setIsError(true);
         }
     } 
+
+    async function dataAdd() {
+        const data = {
+            product: 1,
+            amount: "1000",
+            status: "pending",
+            purchase_type: "paystack"
+        }
+        try {
+            const res = await createOrder(data);
+            if (!res.status === "OK") return;
+            console.log(res);
+        } catch(err) {
+            console.log(err);
+        }
+    } 
   
     useEffect(() => {
         fetchProducts();
     }, []);
-  return (
-    <div className='w-full lg:px-10 md:px-5 px-10 z-1 py-5 text-center'>
-        <p className='text-black text-2xl'>OUR PR0DUCTS</p>
-        <div className='flex flex-wrap justify-between mt-10 w-full'>
-            {products.map((product, index) => {
-                return (
-                    <div key={index} className="lg:w-1/5 lg:mx-2 md:w-2/5 md:mx-2 w-full">
-                        <DisplayProducts 
-                            productLogo={product.productLogo}
-                            productName={product.productName}
-                            productPrice={product.productPrice}
-                            id={product.id}
-                            addToCart={handleAdd}
-                            deleteFromCart={handleDelete}
-                            cart={cart}
-                        />
-                    </div>
-                )
-            })}
+    return (
+        <div className='w-full lg:px-10 md:px-5 px-10 z-1 py-5 text-center'>
+            <p className='text-black text-2xl'>OUR PR0DUCTS</p>
+            <div className='flex flex-wrap justify-between mt-10 w-full'>
+                {products.map((product, index) => {
+                    return (
+                        <div key={index} className="lg:w-1/5 lg:mx-2 md:w-2/5 md:mx-2 w-full">
+                            <DisplayProducts 
+                                productLogo={product.productLogo}
+                                productName={product.productName}
+                                productPrice={product.productPrice}
+                                id={product.id}
+                                addToCart={handleAdd}
+                                deleteFromCart={handleDelete}
+                                cart={cart}
+                                dataAdd={dataAdd}
+                            />
+                        </div>
+                    )
+                })}
+            </div>
         </div>
-    </div>
-  )
+    )
 }
 
-const DisplayProducts = ({productName, productLogo, productPrice, id, addToCart, deleteFromCart, cart}) => {
+const DisplayProducts = ({productName, productLogo, productPrice, id, addToCart, deleteFromCart, cart, dataAdd}) => {
     const [displayToggled, setDisplayToggled] = React.useState(false);
     const [added, setAdded] = React.useState(false);
     const { isLoggedIn } = useContext(LoginContext);
@@ -54,7 +71,8 @@ const DisplayProducts = ({productName, productLogo, productPrice, id, addToCart,
             alert("You need to login first!");
             return;
         }
-        addToCart(id);
+        // addToCart(id);
+        dataAdd();
         setAdded(true);
     }
     return (

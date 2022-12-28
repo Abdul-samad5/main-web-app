@@ -416,7 +416,7 @@ const Status = ({ value }) => {
 
 const Total = ({ image, type, number }) => {
     return (
-      <div className="flex items-center bg-white shadow-lg rounded-lg p-4 mx-1 w-1/2 mb-3 gap-3">
+      <div className="flex items-center bg-white shadow-lg rounded-lg px-4 py-6 mx-1 w-1/2 mb-3 gap-3">
         <div className="rounded-full bg-blue-100 w-[32px] h-[32px] flex justify-center items-center">
           <img src={image} alt="" className=" w-4 h-4 mx-auto" />
         </div>
