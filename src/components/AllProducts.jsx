@@ -19,7 +19,6 @@ const MyOrders = () => {
     const { userData } = useContext(UserContext);
     
     useEffect(() => {
-        // console.log(JSON.parse(JSON.stringify(userData.access)));
         axios.get(`${BASE_URL}product/list`, {
             headers: { Authorization: `Bearer ${userData.access}`}
           }).then((response) => {

@@ -1,5 +1,8 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useContext }from 'react';
 import {styles} from '../constants/index';
+import { BASE_URL } from '../services/services';
+import { UserContext } from '../context/UserContext';
 
 const StoreDetails = () => {
     const [storeDetails, setStoreDetails] = React.useState({
@@ -11,6 +14,28 @@ const StoreDetails = () => {
         storeEmail: "",
         storeContactNumber: ""
     });
+
+    const { userData } = useContext(UserContext);
+
+    const saveSettings = async () => {
+        let formDetails = {
+            "store_name": storeDetails.storeName,
+            "tag_line": storeDetails.tagLine,
+            "store_description": storeDetails.storeDesc,
+            "store_logo": storeDetails.storeLogo,
+            "store_currency": storeDetails.storeCurrency,
+            "store_email": storeDetails.storeEmail,
+            "store_phone_number": storeDetails.storeContactNumber
+        }
+
+        try {
+            const res = await axios.post(`${BASE_URL}store_settings/store`, formDetails, { headers: { Authorization: `Bearer ${userData.access}`} });
+            if (!res.statusText === "OK") return;
+            console.log(res);
+        } catch (error) {
+            console.log(error);
+        }
+    } 
 
     const handleChange = (event) => {
         const {name, value} = event.target;
@@ -37,6 +62,7 @@ const StoreDetails = () => {
 
     function handleSubmit(event) {
         event.preventDefault();
+        saveSettings();
     }
     
     return (
@@ -49,12 +75,12 @@ const StoreDetails = () => {
                     <div className='my-5 flex jusfity-between'>
                         <span className='w-1/2'>
                             <p className='mb-1'>Store name</p>
-                            <input placeholder="Michelline" className={`${styles.inputBox} px-3 w-11/12`} type="text"/>
+                            <input placeholder="Michelline" onChange={handleChange} value={storeDetails.storeName} className={`${styles.inputBox} px-3 w-11/12`} type="text"/>
                         </span>
 
                         <span className='w-1/2'>
                             <p className='mb-1'>Tag line</p>
-                            <input className={`${styles.inputBox} px-3 w-11/12`} type="text" />
+                            <input className={`${styles.inputBox} px-3 w-11/12`} onChange={handleChange} value={storeDetails.tagLine} type="text" />
                         </span>
                     </div>
 

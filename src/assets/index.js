@@ -14,6 +14,8 @@ import product from "../assets/images/product.png";
 import CreditCard from "./images/plain-credit-card.png";
 import finances from "./images/finances.png";
 import my_store from "./images/my-store.png";
+import storeDetails from "./images/store_details.png";
+import websiteSettings from "./images/website_settings.png";
 
 // Icons
 import arrow_up from "./icons/arrow_up.png";
@@ -143,5 +145,7 @@ export {
   camera,
   CreditCard,
   finances,
-  my_store
+  my_store,
+  storeDetails,
+  websiteSettings
 };

@@ -1,6 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import {styles} from '../constants/index';
+import axios from 'axios';
 import { facebook, instagram } from '../assets';
+import { BASE_URL } from '../services/services';
+import { UserContext } from '../context/UserContext';
 
 const WebsiteSettings = () => {
     const [websiteSettings, setWebsiteSettings] = React.useState({
@@ -9,8 +12,26 @@ const WebsiteSettings = () => {
         instagramUsername: ""
     });
 
-    function handleSubmit(event) {
+    const { userData } = useContext(UserContext);
+    async function handleSubmit(event) {
         event.preventDefault();
+
+        let formDetails = {
+            "store_url": websiteSettings.storeURL,
+            "facebook_url": websiteSettings.facebookUsername,
+            "instagram_url": websiteSettings.instagramUsername   
+        }
+
+        try {
+            const res = await axios.post(`${BASE_URL}store_settings/store`, formDetails, { headers: { Authorization: `Bearer ${userData.access}`} });
+            if (!res.statusText === "OK") return;
+            console.log(res);
+            setWebsiteSettings(prev => {
+                return {...prev, storeURL: "", facebookUsername: "", instagramUsername: ""}
+            });
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     function handleChange(event) {

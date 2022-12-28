@@ -25,7 +25,9 @@ import {
   cookies,
   user_account,
   subscription,
-  finances
+  storeDetails,
+  finances,
+  websiteSettings
 } from "../assets";
 
 import {
@@ -62,6 +64,7 @@ const Dashboard = () => {
   const [isProdOpen, setIsProdOpen] = useState(false);
   const [isMarkOpen, setIsMarkOpen] = useState(false);
   const [isLogOpen, setIsLogOpen] = useState(false);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
   function handleClick() {
     setIsNavOpen((prev) => !prev);
@@ -225,7 +228,7 @@ const Dashboard = () => {
           <div className="border-b border-t p-4 mb-[10px]">
             <h1 className="font-bold text-[16px] text-brand-gray">Settings</h1>
           </div>
-          <div
+          {/* <div
             className={`${styles.dbNavItem} relative w-full`}
             onClick={(e) => showActiveComponent(e, <StoreDetails />)}
           >
@@ -233,6 +236,38 @@ const Dashboard = () => {
             <h2>Store settings</h2>
             <div className="absolute top-1/2 -translate-y-1/2 right-4">
               <DbIcon src={arrow_right} />
+            </div>
+          </div> */}
+          <div
+            className="w-full"
+            onClick={(e) => handleDropdown(e, setIsSettingsOpen)}
+          >
+            <div className={`${styles.dbNavItem} relative`}>
+              <DbIcon src={settings} />
+              <h2>Store Settings</h2>
+              <div className="absolute top-1/2 -translate-y-1/2 right-4">
+                <DbIcon src={isSettingsOpen ? arrow_down : arrow_right} />
+              </div>
+            </div>
+            <div
+              className={`${
+                isSettingsOpen ? "max-h-[200px]" : "max-h-0"
+              } transition-[max-height] duration-300 pl-[24px] overflow-hidden`}
+            >
+              <div
+                className={`${styles.dbNavItemDrop}`}
+                onClick={(e) => showActiveComponent(e, <StoreDetails />)}
+              >
+                <DbIcon src={storeDetails} />
+                <h2>Store Details</h2>
+              </div>
+              <div
+                className={`${styles.dbNavItemDrop}`}
+                onClick={(e) => showActiveComponent(e, <WebsiteSettings />)}
+              >
+                <DbIcon src={websiteSettings} />
+                <h2>Website Settings</h2>
+              </div>
             </div>
           </div>
           {/* <div

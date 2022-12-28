@@ -42,7 +42,6 @@ const Login = ({ handleClick }) => {
       if (!res.statusText === "OK") return;
       console.log(res);
       onUserLogin(res.data.data);
-      // alert(userData);
       userLoggedIn();
       navigate("/dashboard");
     } catch (err) {

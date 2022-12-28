@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { User, Store } from "../constants/config";
-import { postUser, postStore } from "../services/services";
+import { postUser, postStore, userLogin } from "../services/services";
+// import { UserContext } from "../context/UserContext";
 
 const CreateStore = ({ handleClick }) => {
   // Initialize state for submit button textContent
@@ -27,6 +28,7 @@ const CreateStore = ({ handleClick }) => {
     }
   }
 
+  // const { userData, onUserLogin } = useContext(UserContext);
   // Collect form data
   const [formData, setFormData] = useState({
     storeName: "",
@@ -51,18 +53,28 @@ const CreateStore = ({ handleClick }) => {
     e.preventDefault();
     let user = new User(formData.email, formData.password, formData.fullName, "seller");
     let store = new Store(formData.storeName, formData.storeDomain);
+    // let userLog = {email: formData.email, password: formData.password}
     changeMessage(true);
 
     try {
       const res = await Promise.all([postUser(user), postStore(store)]);
+      // const res = await postUser(user);
+      console.log(res);
       changeMessage(res.status);
-      console.log(res.status);
-      //if (!res.status === 201) return;
+      // console.log(res.status);
+      if (res.status === 201 || res.status === 200) {
+          // const response = await userLogin(userLog);
+          // if(response.status === 201 || response.status === 200) {
+          //   onUserLogin(response.data.data);
+          //   const store_res = await postStore(store);
+          //   console.log(store_res);
+          // }
+          return;
+      };
       handleClick("getStarted");
     } catch (err) {
       changeMessage(err.response.status);
       console.log(err);
-      handleClick("getStarted");
     }
   }
 

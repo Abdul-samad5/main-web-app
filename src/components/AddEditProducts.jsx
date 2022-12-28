@@ -33,7 +33,7 @@ function AddEditProduct() {
     costPrice: "",
     stockCount: 0,
     stockUnit: "",
-    itemUnit: 0,
+    itemUnit: new Number(0),
     productCollections: 0,
     productStatus: "",
     storeTheme: "",
@@ -69,14 +69,15 @@ function AddEditProduct() {
       collection: formData.status,
       color: formData.status,
       size: formData.size,
-      item_unit: formData.itemUnit,
+      item_unit: Number("5"),
       stock_count: formData.stockCount,
       stock_keeping_unit: formData.stockUnit,
       cost_price: formData.costPrice,
       discounted_price: formData.discountedPrice,
     };
     try {
-      const res = await addProduct(product);
+      const res = await axios.post(`${BASE_URL}product/`, product, { headers: { Authorization: `Bearer ${userData.access}`} });
+      console.log(res);
       if (!res.statusText === "OK") return;
       console.log(res);
     } catch (err) {
