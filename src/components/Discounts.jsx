@@ -1,7 +1,10 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import { noDiscounts } from '../assets';
 import {styles} from '../constants/index';
 import UserData from './UserData';
+import { UserContext } from "../context/UserContext";
+import axios from "axios";
+import { BASE_URL } from "../services/services";
 
 const details = ["Discount status", "Method", "Status", "Type", "Usage", "Action"];
 const Discounts = () => {
@@ -13,11 +16,12 @@ const Discounts = () => {
         discountMethod: "",
         discountTitle: "",
         discountValue: "",
-        value: "",
+        value: 0,
         startDate: "",
         endDate: "",
-        minPurValue: ""
+        minPurValue: 0
     });
+
 
     // Function to update the state to the next five or so discount details gotten from the API.
     const handleNext = () => {
@@ -31,6 +35,7 @@ const Discounts = () => {
         // alert(searchValue);
     }
 
+    const { userData } = useContext(UserContext);
     const toggleAddDiscount = () => {
         if(isVisible === true) {
             setDiscountInfo((prev) => {
@@ -44,6 +49,42 @@ const Discounts = () => {
         setVisisble((prev) => {
             return prev = !prev;
         });
+    }
+
+    async function fetchDiscounts() {
+        try {
+            const res = await axios.get(`${BASE_URL}marketing/view_list`, { headers: { Authorization: `Bearer ${userData.access}`} });
+            setDiscounts(res.data.data);
+            if(!res.statusText === "OK") return;
+            console.log(res);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    useEffect(() => {
+        fetchDiscounts();
+    }, []);
+
+    const addDiscount = async () => {
+        let discountInfo = {
+            "discount_type": newDiscountInfo.discountType,
+            "discount_method": newDiscountInfo.discountMethod,
+            "discount_code": newDiscountInfo.discountTitle,
+            "discount_value": newDiscountInfo.discountValue,
+            "value": newDiscountInfo.value,
+            "start_date": newDiscountInfo.startDate,
+            "end_date": newDiscountInfo.endDate,
+            "minimum_purchase_value": newDiscountInfo.minPurValue
+        }
+
+        try {
+            const res = axios.post(`${BASE_URL}marketing/create_discount`, discountInfo, { headers: { Authorization: `Bearer ${userData.access}`} });
+            if((await res).statusText !== "OK") return;
+            console.log(res);
+        } catch(err) {
+            console.log(err);
+        }
     }
 
     const handleChange = (event) => {

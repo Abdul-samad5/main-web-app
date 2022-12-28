@@ -95,8 +95,8 @@ const UserData = ({
           // Displays the details of each collection if the type of the component equals Collections.
           if (type === "Collections") {
             return (
-              <div className="mb-3">
-                <Children key={index + 1} id={index + 1} collectionName={"What"} product={"This"} />
+              <div className="mb-3" key={index + 1}>
+                <Children key={index + 1} id={index + 1} collectionName={children.name} product={"This"} />
               </div>
             );
             // Displays the details of each customer if the type of the component equals Customer.
