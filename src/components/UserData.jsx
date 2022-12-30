@@ -95,8 +95,8 @@ const UserData = ({
           // Displays the details of each collection if the type of the component equals Collections.
           if (type === "Collections") {
             return (
-              <div className="mb-3">
-                <Children key={index + 1} id={index + 1} collectionName={"What"} product={"This"} />
+              <div className="mb-3" key={index + 1}>
+                <Children id={index} collectionName={children.name} product={"This"} />
               </div>
             );
             // Displays the details of each customer if the type of the component equals Customer.
@@ -130,30 +130,28 @@ const UserData = ({
             );
           } else if (type === "Transaction History") {
             return (
-              <div className="mb-3">
+              <div className="mb-3" key={index}>
                 <Children
-                  id={index + 1}
-                  key={index + 1}
-                  name={"Alex Ikenna"}
-                  order={"Alex@gmail.com"}
-                  date={"29"}
-                  amount={"#10100"}
-                  paymentMethod={"Stripe"}
-                  status={"Completed"}
+                  id={children.id}
+                  name={children.product}
+                  // order={"Alex@gmail.com"}
+                  date={children.date_created}
+                  amount={children.amount}
+                  paymentMethod={children.purchase_type}
+                  status={children.status}
                 />
               </div>
             );
           } else if (type === "Discounts") {
             return (
-              <div className="mb-3">
+              <div className="mb-3" key={index + 1}>
                 <Children
-                  id={index + 1}
-                  key={index + 1}
-                  discountStatus={"Alex Ikenna"}
-                  method={"Alex@gmail.com"}
-                  type={"29"}
-                  status={"Active"}
-                  usage={"Stripe"}
+                  id={index}
+                  discountCode={children.discount_code}
+                  method={children.discount_method}
+                  type={children.discount_type}
+                  discount_value={children.discount_value}
+                  value={children.value}
                   // id, discountStatus, method, status, type, usage
                 />
               </div>
@@ -184,7 +182,7 @@ const UserData = ({
                   />
                 </div>
               )
-          }
+          } else {}
         })}
       </div>
 

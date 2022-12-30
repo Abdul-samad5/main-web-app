@@ -1,9 +1,12 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { noDiscounts } from '../assets';
 import {styles} from '../constants/index';
 import UserData from './UserData';
+import { UserContext } from "../context/UserContext";
+import axios from "axios";
+import { BASE_URL } from "../services/services";
 
-const details = ["Discount status", "Method", "Status", "Type", "Usage", "Action"];
+const details = ["Discount Code", "Method", "Discount Type", "Discount Value", "Value", "Action"];
 const Discounts = () => {
     // State to store the collections gotten from the API
     const [discounts, setDiscounts] = useState([]);
@@ -13,11 +16,12 @@ const Discounts = () => {
         discountMethod: "",
         discountTitle: "",
         discountValue: "",
-        value: "",
+        value: 0,
         startDate: "",
         endDate: "",
-        minPurValue: ""
+        minPurValue: 0
     });
+
 
     // Function to update the state to the next five or so discount details gotten from the API.
     const handleNext = () => {
@@ -31,6 +35,7 @@ const Discounts = () => {
         // alert(searchValue);
     }
 
+    const { userData } = useContext(UserContext);
     const toggleAddDiscount = () => {
         if(isVisible === true) {
             setDiscountInfo((prev) => {
@@ -46,6 +51,42 @@ const Discounts = () => {
         });
     }
 
+    async function fetchDiscounts() {
+        try {
+            const res = await axios.get(`${BASE_URL}marketing/view_list`, { headers: { Authorization: `Bearer ${userData.access}`} });
+            setDiscounts(res.data.data);
+            if(!res.statusText === "OK") return;
+            console.log(res);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    useEffect(() => {
+        fetchDiscounts();
+    }, []);
+
+    const addDiscount = async () => {
+        let discountInfo = {
+            "discount_type": newDiscountInfo.discountType,
+            "discount_method": newDiscountInfo.discountMethod,
+            "discount_code": newDiscountInfo.discountTitle,
+            "discount_value": newDiscountInfo.discountValue,
+            "value": newDiscountInfo.value,
+            "start_date": newDiscountInfo.startDate.toString(),
+            "end_date": newDiscountInfo.endDate.toString(),
+            "minimum_purchase_value": newDiscountInfo.minPurValue
+        }
+
+        try {
+            const res = axios.post(`${BASE_URL}marketing/create_discount`, discountInfo, { headers: { Authorization: `Bearer ${userData.access}`} });
+            if(res.statusText !== "OK") return;
+            console.log(res);
+        } catch(err) {
+            console.log(err);
+        }
+    }
+
     const handleChange = (event) => {
         const {name, value} = event.target;
         setDiscountInfo((prev) => {
@@ -54,10 +95,6 @@ const Discounts = () => {
                 [name]: value
             }
         });
-    }
-
-    const handleCreateButton = () => {
-
     }
 
     return (
@@ -88,13 +125,19 @@ const Discounts = () => {
 
                         <span className='mt-5 block'>
                             <h4 className='text-sm'>Discount type</h4>
-                            <input 
+                            {/* <input 
                                 className={`${styles.inputBox} w-full mt-1 px-3`} 
-                                value={newDiscountInfo.collectionName} 
+                                value={newDiscountInfo.discountType} 
                                 placeholder="Eg. Boots, Shoes..." 
                                 type="text"
                                 name="discountType"
-                                onChange={handleChange}/>
+                                onChange={handleChange}/> */}
+                            <select name="discountType" className={`${styles.inputBox} w-full mt-1 px-3`} value={newDiscountInfo.discountType} onChange={handleChange}>
+                                <option>Product Discount</option>
+                                <option>Order Discount</option>
+                                <option>Shipping Discount</option>
+                                <option>Buy and Get One Discount</option>
+                            </select>
                         </span>
 
                         <span className='mt-5 block'>
@@ -104,11 +147,11 @@ const Discounts = () => {
                                     <input 
                                         type="radio"
                                         name="discountMethod"
-                                        value="Discount code"
+                                        value="Discount Code"
                                         id='discountCode' 
                                         onChange={handleChange}/>
 
-                                    <label htmlFor="discountCode"> Discount code</label>
+                                    <label htmlFor="discountCode"> Discount Code</label>
                                 </div>
 
                                 <div>
@@ -125,7 +168,7 @@ const Discounts = () => {
                         </span>
                         
                         <span className='mt-5 block'>
-                            <h4 className='text-sm'>Discount title</h4>
+                            <h4 className='text-sm'>Discount Code</h4>
                             <input 
                                 className={`${styles.inputBox} w-full mt-1 px-3`} 
                                 value={newDiscountInfo.discountTitle} 
@@ -142,11 +185,11 @@ const Discounts = () => {
                                     <input 
                                         type="radio"
                                         name="discountValue"
-                                        value="Fixed amount"
+                                        value="Fixed Amount"
                                         id='discountCode' 
                                         onChange={handleChange}/>
 
-                                    <label htmlFor="discountCode"> Fixed amount </label>
+                                    <label htmlFor="discountCode"> Fixed Amount </label>
                                 </div>
 
                                 <div>
@@ -212,7 +255,7 @@ const Discounts = () => {
                                 onChange={handleChange}/>
                         </span>
 
-                        <button className={`${styles.button} mt-7 w-full ${newDiscountInfo.discountTitle === "" ? "opacity-50" : "opacity-100"}`} onClick={handleCreateButton}> Create discount </button>
+                        <button className={`${styles.button} mt-7 w-full ${newDiscountInfo.discountTitle === "" ? "opacity-50" : "opacity-100"}`} onClick={addDiscount}> Create discount </button>
                     </div>
                 </div>
             </div>
@@ -220,26 +263,49 @@ const Discounts = () => {
     )
 };
 
-const Children = ({id, discountStatus, method, status, type, usage}) => {
+const Children = ({id, discountCode, method, type, discount_value, value}) => {
     const [currentState, setCurrentState] = useState(false);
 
     const handleClick = () => {
         setCurrentState(prevValue => !prevValue);
     }
 
+    const { userData } = useContext(UserContext);
+    const deleteDiscount = async () => {
+        try {
+            const response = await axios.delete(`${BASE_URL}marketing/delete/${id}`, { headers: { Authorization: `Bearer ${userData.access}`} });
+            if(response.status !== 204) return;
+            console.log(response);
+        } catch (err) {
+            console.log(err);
+        }
+        // console.log(id);/
+    }
+
+    const deactivateDiscount = async () => {
+        try {
+            const response = await axios.put(`${BASE_URL}marketing/deactivate/${id}`, {"active" : false}, { headers: { Authorization: `Bearer ${userData.access}`} });
+            if(response.status !== 200) return;
+            console.log(response);
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
     return (
         <div className="flex justify-between">
             <p className={`${styles.valueStyle}`}>{id}</p>
-            <p className={`${styles.valueStyle}`}>{discountStatus}</p>
+            <p className={`${styles.valueStyle}`}>{discountCode}</p>
             <p className={`${styles.valueStyle}`}>{method}</p>
-            <Status value={status}/>
             <p className={`${styles.valueStyle}`}>{type}</p>
-            <p className={`${styles.valueStyle}`}>{usage}</p>
+            {/* <Status value={status}/> */}
+            <p className={`${styles.valueStyle}`}>{discount_value}</p>
+            <p className={`${styles.valueStyle}`}>{value}</p>
             <span onClick={handleClick} className="flex justify-between w-2 h-4">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 512" className='w-4 fixed h-4 fill-slate-400'><path d="M64 360c30.9 0 56 25.1 56 56s-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56zm0-160c30.9 0 56 25.1 56 56s-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56zM120 96c0 30.9-25.1 56-56 56S8 126.9 8 96S33.1 40 64 40s56 25.1 56 56z"/></svg>
-                <div className={currentState ?'rounded bg-white shadow-lg relative px-5 top-8 h-20 w-30' : 'hidden'}>
-                    <p className='text-xs'>Deactivte discount</p>
-                    <p className='text-xs my-auto text-red-400 my-2'>Delete discount</p>
+                <div className={currentState ? 'rounded bg-white shadow-lg relative px-5 top-8 h-20 w-30' : 'hidden'}>
+                    <p className='text-xs' onClick={deactivateDiscount}>Deactivte discount</p>
+                    <p className='text-xs my-auto text-red-400 my-2' onClick={deleteDiscount}>Delete discount</p>
                 </div>
             </span>
         </div>

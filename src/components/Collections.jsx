@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { noCollections } from '../assets';
 import { styles } from "../constants/index";
 import { addCollection } from "../services/services";
 import UserData from "./UserData";
+import { UserContext } from "../context/UserContext";
+import axios from "axios";
+import { BASE_URL } from "../services/services";
 
 const details = ["Collection name", "Product", "Action"];
 const Collections = () => {
@@ -21,26 +24,49 @@ const Collections = () => {
     });
   };
 
+  const { userData } = useContext(UserContext);
+  const fetchCollections = async ()  => {
+    try {
+      const res = await axios.get(`${BASE_URL}product/collections/list`, { headers: { Authorization: `Bearer ${userData.access}`} });
+      console.log(res);
+      setCollections(res.data.data);
+      if(!res.statusText === "OK") return;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    fetchCollections();
+  }, [isVisible]);
+
   const handleCollectionSearch = (searchValue) => {
     // Logic for searching for a specific transaction history by setting the transaction history state to the data gotten from the API following the users prompt.
     // alert(searchValue);
   };
 
- async function handleAddCollection(event){
-  event.preventDefault();
-  let collection = {
-    name: newCollectionInfo.collectionName,
-    image: newCollectionInfo.collectionImage,
-  };
-  try {
-    const res = await addCollection(collection);
-    if (!res.statusText === "OK") return;
-    console.log(res);
-  } catch (err) {
-    console.log(err);
-  }
+  
+  // To add the collections to the backend.
+  async function handleAddCollection(event){
+    event.preventDefault();
+    let collection = {
+      name: newCollectionInfo.collectionName,
+      image: newCollectionInfo.collectionImage,
+    };
 
- }
+    try {
+      const res = await axios.post(`${BASE_URL}product/collection`, collection, { headers: { Authorization: `Bearer ${userData.access}`} });
+      if (!res.statusText === "OK") return;
+      console.log(res);
+      setCollectionInfo(prev => {
+        // Object.keys(prev).forEach(key => prev[key] = "");
+        return prev = {collectionName: "", collectionImage: ""};
+      });
+      setVisisble(prev => !prev);
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   const toggleAddCollection = () => {
     if (isVisible === true) {
@@ -59,7 +85,19 @@ const Collections = () => {
 
   const onImageSelected = (event) => {
     const selectedFileArray = Array.from(event.target.files);
+    console.log(selectedFileArray);
     const imageUri = URL.createObjectURL(selectedFileArray[0]);
+    // const reader = new FileReader();
+    // reader.readAsDataURL(imageUri);
+    // console.log(reader);
+
+    let reader = new FileReader();
+    reader.onloadend = () => { 
+      // data.image = reader.result ;
+      
+    };
+    reader.readAsDataURL(event.target.files[0]);
+    console.log(reader.result);
 
     setCollectionInfo((prev) => {
       return {
@@ -67,6 +105,8 @@ const Collections = () => {
         collectionImage: imageUri,
       };
     });
+    
+    // console.log(imageUri.toString());
   };
 
   const handleChange = (event) => {
@@ -182,12 +222,24 @@ const Collections = () => {
 };
 
 const Children = ({ id, collectionName, product }) => {
+  const { userData } = useContext(UserContext);
+
+  const deleteCollections = async () => {
+    try {
+      const res = await axios.delete(`${BASE_URL}product/collection/delete/${id}`, { headers: { Authorization: `Bearer ${userData.access}`} });
+      if(res.status != 204) return;
+      console.log(res);
+    } catch(err) {
+      console.log(err);
+    }
+  }
+
   return (
     <div className="flex justify-between" key={id}>
       <p className={`${styles.valueStyle}`}>{id}</p>
       <p className={`${styles.valueStyle}`}>{collectionName}</p>
       <p className={`${styles.valueStyle}`}>{product}</p>
-      <div className="flex h-auto mt-2 group hover:cursor-pointer w-auto justify-between">
+      <div className="flex h-auto mt-2 group hover:cursor-pointer w-auto justify-between" onClick={deleteCollections}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 448 512"
