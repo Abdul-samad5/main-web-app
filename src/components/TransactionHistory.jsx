@@ -1,12 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { noReviews } from '../assets'
 import { styles } from "../constants/index";
 import UserData from "./UserData";
+import { UserContext } from "../context/UserContext";
+import axios from "axios";
+import { BASE_URL } from "../services/services";
 
-const details = ["Customer's name", "Order", "Date", "Amount", "Payment Method", "Status"];
+const details = ["Product", "Date", "Amount", "Payment Method", "Status"];
 const TransactionHistory = () => {
   // State to store the histories gotten from the API.
   const [transactionHistory, setTransactionHistory] = useState([]);
+
+  const {userData} = useContext(UserContext);
 
   // Function to update the state to the next five or so transaction histories gotten from the API.
   const handleNext = () => {
@@ -19,6 +24,21 @@ const TransactionHistory = () => {
     // Logic to retrieve the details the user requires from the
     // API and change the state to that affect
   };
+
+  // async function fetchTransactions() {
+  //     try {
+  //       const res = await axios.get(`${BASE_URL}buyer/order_history/records`, { headers: { Authorization: `Bearer ${userData.access}`} });
+  //       if(res.statusText !== "OK") return;
+  //       console.log(res);
+  //       setTransactionHistory(res.data.data);
+  //     } catch(error) {
+  //       console.log(error);
+  //     }
+  // }
+
+  // useEffect(() => {
+  //   fetchTransactions();
+  // }, []);
 
   return (
     <div>
@@ -37,12 +57,12 @@ const TransactionHistory = () => {
 };
 
 // Child component of the transaction history meant to display each review and the date it was made.
-const Children = ({ id, name, order, date, amount, paymentMethod, status }) => {
+const Children = ({ id, name, date, amount, paymentMethod, status }) => {
   return (
     <div className="flex justify-between">
       <p className={`${styles.valueStyle}`}>{id}</p>
       <p className={`${styles.valueStyle}`}>{name}</p>
-      <p className={`${styles.valueStyle}`}>{order}</p>
+      {/* <p className={`${styles.valueStyle}`}>{order}</p> */}
       <p className={`${styles.valueStyle}`}>{date}</p>
       <p className={`${styles.valueStyle}`}>{amount}</p>
       <p className={`${styles.valueStyle}`}>{paymentMethod}</p>
@@ -53,9 +73,11 @@ const Children = ({ id, name, order, date, amount, paymentMethod, status }) => {
 
 // Component that displays the current status of a transaction based on the value gotten from the API.
 const Status = ({ value }) => {
-  if (value === "Completed") {
-    return <div className="rounded text-blue-800 bg-blue-100 text-sm px-2 py-1">{value}</div>;
+  if (value === "Delivered") {
+    return <div className="rounded text-green-800 bg-green-100 text-sm px-2 py-1">{value}</div>;
   } else if (value === "Cancelled") {
+    return <div className="rounded text-red-800 bg-red-100 text-sm px-2 py-1">{value}</div>;
+  } else {
     return <div className="rounded text-yellow-800 bg-yellow-100 text-sm px-2 py-1">{value}</div>;
   }
 };

@@ -38,7 +38,7 @@ const Collections = () => {
 
   useEffect(() => {
     fetchCollections();
-  }, []);
+  }, [isVisible]);
 
   const handleCollectionSearch = (searchValue) => {
     // Logic for searching for a specific transaction history by setting the transaction history state to the data gotten from the API following the users prompt.
@@ -46,6 +46,7 @@ const Collections = () => {
   };
 
   
+  // To add the collections to the backend.
   async function handleAddCollection(event){
     event.preventDefault();
     let collection = {
@@ -57,6 +58,11 @@ const Collections = () => {
       const res = await axios.post(`${BASE_URL}product/collection`, collection, { headers: { Authorization: `Bearer ${userData.access}`} });
       if (!res.statusText === "OK") return;
       console.log(res);
+      setCollectionInfo(prev => {
+        // Object.keys(prev).forEach(key => prev[key] = "");
+        return prev = {collectionName: "", collectionImage: ""};
+      });
+      setVisisble(prev => !prev);
     } catch (err) {
       console.log(err);
     }
@@ -216,12 +222,24 @@ const Collections = () => {
 };
 
 const Children = ({ id, collectionName, product }) => {
+  const { userData } = useContext(UserContext);
+
+  const deleteCollections = async () => {
+    try {
+      const res = await axios.delete(`${BASE_URL}product/collection/delete/${id}`, { headers: { Authorization: `Bearer ${userData.access}`} });
+      if(res.status != 204) return;
+      console.log(res);
+    } catch(err) {
+      console.log(err);
+    }
+  }
+
   return (
     <div className="flex justify-between" key={id}>
       <p className={`${styles.valueStyle}`}>{id}</p>
       <p className={`${styles.valueStyle}`}>{collectionName}</p>
       <p className={`${styles.valueStyle}`}>{product}</p>
-      <div className="flex h-auto mt-2 group hover:cursor-pointer w-auto justify-between">
+      <div className="flex h-auto mt-2 group hover:cursor-pointer w-auto justify-between" onClick={deleteCollections}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 448 512"
