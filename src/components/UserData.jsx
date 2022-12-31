@@ -36,7 +36,7 @@ const UserData = ({
   };
 
   return (
-    <div className="rounded shadow-xl w-full px-5 py-3 mx-auto my-auto h-auto ">
+    <div className="rounded shadow-xl w-full lg:px-5 px-2 py-3 lg:mx-auto my-auto h-auto">
       {/* Search Bar */}
       <div className="flex justify-between">
         <span className="w-2/5">
