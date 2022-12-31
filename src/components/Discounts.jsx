@@ -263,7 +263,7 @@ const Discounts = () => {
     )
 };
 
-const Children = ({id, discountCode, method, type, discount_value, value}) => {
+const Children = ({id, discountCode, method, type, discount_value, value, no, end_date }) => {
     const [currentState, setCurrentState] = useState(false);
 
     const handleClick = () => {
@@ -294,11 +294,11 @@ const Children = ({id, discountCode, method, type, discount_value, value}) => {
 
     return (
         <div className="flex justify-between">
-            <p className={`${styles.valueStyle}`}>{id}</p>
+            <p className={`${styles.valueStyle}`}>{no}</p>
             <p className={`${styles.valueStyle}`}>{discountCode}</p>
             <p className={`${styles.valueStyle}`}>{method}</p>
             <p className={`${styles.valueStyle}`}>{type}</p>
-            {/* <Status value={status}/> */}
+            <Status value={new Date(end_date).getTime() > new Date().getTime() ? "Active" : "Expired"}/>
             <p className={`${styles.valueStyle}`}>{discount_value}</p>
             <p className={`${styles.valueStyle}`}>{value}</p>
             <span onClick={handleClick} className="flex justify-between w-2 h-4">

@@ -15,6 +15,11 @@ const UserData = ({
 }) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [searchValue, setSearchValue] = useState("");
+  const [reRender, setReRender] = useState(false);
+
+  // const render = () => {
+  //   setReRender(prev => prev = !prev);
+  // }
 
   const handleClick = () => {
     setCurrentPage((prev) => {
@@ -96,7 +101,7 @@ const UserData = ({
           if (type === "Collections") {
             return (
               <div className="mb-3" key={index + 1}>
-                <Children id={index} collectionName={children.name} product={"This"} />
+                <Children id={children.id} no={index} collectionName={children.name} product={children.image}/>
               </div>
             );
             // Displays the details of each customer if the type of the component equals Customer.
@@ -146,12 +151,14 @@ const UserData = ({
             return (
               <div className="mb-3" key={index + 1}>
                 <Children
-                  id={index}
+                  id={children.id}
+                  no={index}
                   discountCode={children.discount_code}
                   method={children.discount_method}
                   type={children.discount_type}
                   discount_value={children.discount_value}
                   value={children.value}
+                  end_date={children.end_date}
                   // id, discountStatus, method, status, type, usage
                 />
               </div>
