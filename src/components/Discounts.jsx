@@ -102,7 +102,7 @@ const Discounts = () => {
         });
     }
 
-    const Children = ({id, discountCode, method, type, discount_value, value, no, end_date }) => {
+    const Children = ({id, discountCode, method, type, discount_value, value, no, end_date, active }) => {
         const [currentState, setCurrentState] = useState(false);
     
         const handleClick = () => {
@@ -135,7 +135,8 @@ const Discounts = () => {
                 <p className={`${styles.valueStyle} `}>{discountCode}</p>
                 <p className={`${styles.valueStyle}`}>{method}</p>
                 <p className={`${styles.valueStyle} relative lg:right-6`}>{type}</p>
-                <Status value={new Date(end_date).getTime() > new Date().getTime() ? "Active" : "Expired"}/>
+                {/* <Status value={new Date(end_date).getTime() > new Date().getTime() ? "Active" : "Expired"}/> */}
+                <Status value={active ? "Active" : "Expired"}/>
                 <p className={`${styles.valueStyle} relative lg:right-14`}>{discount_value}</p>
                 <p className={`${styles.valueStyle} relative lg:right-10`}>{value}</p>
                 <div onClick={handleClick} className="flex w-2 h-4 relative lg:right-4">
