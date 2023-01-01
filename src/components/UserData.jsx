@@ -159,6 +159,7 @@ const UserData = ({
                   discount_value={children.discount_value}
                   value={children.value}
                   end_date={children.end_date}
+                  active={children.active}
                   // id, discountStatus, method, status, type, usage
                 />
               </div>

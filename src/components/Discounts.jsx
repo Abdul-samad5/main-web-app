@@ -80,13 +80,21 @@ const Discounts = () => {
         }
 
         try {
-            const res = axios.post(`${BASE_URL}marketing/create_discount`, discountInfo, { headers: { Authorization: `Bearer ${userData.access}`} });
-            // if(res.PromiseState !== "fulfilled") {
-            //     return;
-            // }
-            // setVisisble(prev => prev = !prev);
+            const res = await axios.post(`${BASE_URL}marketing/create_discount`, discountInfo, { headers: { Authorization: `Bearer ${userData.access}`} });
             setVisisble(prev => prev = !prev);
-            console.log(res.PromiseState);
+            console.log(res);
+            setDiscountInfo((prev) => {
+                return prev = {
+                    discountType: "",
+                    discountMethod: "",
+                    discountTitle: "",
+                    discountValue: "",
+                    value: 0,
+                    startDate: "",
+                    endDate: "",
+                    minPurValue: 0
+                }
+            });
         } catch(err) {
             console.log(err);
         }
@@ -102,7 +110,7 @@ const Discounts = () => {
         });
     }
 
-    const Children = ({id, discountCode, method, type, discount_value, value, no, end_date }) => {
+    const Children = ({id, discountCode, method, type, discount_value, value, no, end_date, active }) => {
         const [currentState, setCurrentState] = useState(false);
     
         const handleClick = () => {
@@ -135,7 +143,8 @@ const Discounts = () => {
                 <p className={`${styles.valueStyle} `}>{discountCode}</p>
                 <p className={`${styles.valueStyle}`}>{method}</p>
                 <p className={`${styles.valueStyle} relative lg:right-6`}>{type}</p>
-                <Status value={new Date(end_date).getTime() > new Date().getTime() ? "Active" : "Expired"}/>
+                {/* <Status value={new Date(end_date).getTime() > new Date().getTime() ? "Active" : "Expired"}/> */}
+                <Status value={active ? "Active" : "Expired"}/>
                 <p className={`${styles.valueStyle} relative lg:right-14`}>{discount_value}</p>
                 <p className={`${styles.valueStyle} relative lg:right-10`}>{value}</p>
                 <div onClick={handleClick} className="flex w-2 h-4 relative lg:right-4">

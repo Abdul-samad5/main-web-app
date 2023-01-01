@@ -7,15 +7,43 @@ import { UserContext } from "../context/UserContext";
 
 const Login = ({ handleClick }) => {
   // Initialize state for the login to enable user login
-  const { isLoggedIn, userLoggedIn, userLoggedOut } = useContext(LoginContext);
+  const { userLoggedIn } = useContext(LoginContext);
+  const { onUserLogin } = useContext(UserContext);
+  const [message, setMessage] = useState({ text: true });
+
+  function changeMessage(status) {
+    if (status) {
+      setMessage({
+        color: "text-brand-secondary",
+        text: "Submitting...",
+      });
+    }
+    if (status === 200 || status === 201) {
+      setMessage({
+        color: "text-green-500",
+        text: "Login successful!",
+      });
+    }
+    if (status === 401) {
+        setMessage({
+          color: "text-red-500",
+          text: "Email or Password Incorrect. Try again.",
+        });
+        return;
+    }
+    if (status >= 400) {
+      setMessage({
+        color: "text-red-500",
+        text: "Login Failed!",
+      });
+    }
+  }
 
   const [formData, setFormData] = useState({
     email: "",
     password: "",
     remember: false,
   });
-
-  const { onUserLogin } = useContext(UserContext);
 
   const navigate = useNavigate();
 
@@ -31,6 +59,7 @@ const Login = ({ handleClick }) => {
 
   async function formSubmit(e) {
     e.preventDefault();
+    changeMessage(true);
 
     let user = {
       email: formData.email,
@@ -41,11 +70,13 @@ const Login = ({ handleClick }) => {
       const res = await userLogin(user);
       if (!res.statusText === "OK") return;
       console.log(res);
+      changeMessage(res.status);
       onUserLogin(res.data.data);
       userLoggedIn();
       navigate("/dashboard");
     } catch (err) {
       console.log(err);
+      changeMessage(err.response.status);
     }
   }
 
@@ -91,6 +122,11 @@ const Login = ({ handleClick }) => {
           />
           <label htmlFor="remember">Remember me</label>
         </div>
+        {message.text && (
+          <p className={`${message.color} text-sm text-center`}>
+            {message?.text}
+          </p>
+        )}
         <button className={`${styles.button} w-full`}>Login to store</button>
         <div className="w-full flex justify-between items-center mt-2">
           <button
