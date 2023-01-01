@@ -256,7 +256,7 @@ function AddEditProduct() {
                 </svg>
               </span>
 
-              <span className="flex-col w-full block lg:w-1/2 mt-3 lg:mt-0">
+              <span className="flex-col flex w-full block lg:w-1/2 mt-3 lg:mt-0">
                 <label className="lg:text-base text-sm lg:ml-3">
                   Discounted Price
                 </label>
