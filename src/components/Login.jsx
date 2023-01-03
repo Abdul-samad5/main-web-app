@@ -43,7 +43,7 @@ const Login = ({ handleClick }) => {
       console.log(res);
       onUserLogin(res.data.data);
       userLoggedIn();
-      navigate("/dashboard");
+      handleClick("createStore");
     } catch (err) {
       console.log(err);
     }
@@ -91,7 +91,7 @@ const Login = ({ handleClick }) => {
           />
           <label htmlFor="remember">Remember me</label>
         </div>
-        <button className={`${styles.button} w-full`}>Login to store</button>
+        <button className={`${styles.button} w-full`}>Proceed</button>
         <div className="w-full flex justify-between items-center mt-2">
           <button
             type="button"
@@ -103,7 +103,7 @@ const Login = ({ handleClick }) => {
           <button
             className="text-brand-gray font-normal text-[14px]"
             type="button"
-            onClick={() => handleClick("createStore")}
+            onClick={() => handleClick("signUp")}
           >
             Register
           </button>
