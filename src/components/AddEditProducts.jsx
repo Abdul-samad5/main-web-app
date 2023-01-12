@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import axios from "axios";
-import { addProduct, BASE_URL, updateProduct } from "../services/services";
+import { BASE_URL, updateProduct } from "../services/services";
 import { UserContext } from "../context/UserContext";
 
 function AddEditProduct() {
@@ -33,7 +33,7 @@ function AddEditProduct() {
     costPrice: "",
     stockCount: 0,
     stockUnit: "",
-    itemUnit: new Number(0),
+    itemUnit: "",
     productCollections: 0,
     productStatus: "",
     storeTheme: "",
@@ -56,6 +56,7 @@ function AddEditProduct() {
   };
 
   const { userData } = useContext(UserContext);
+
   async function handleSubmit(event) {
     event.preventDefault();
 
@@ -69,12 +70,13 @@ function AddEditProduct() {
       collection: formData.status,
       color: formData.status,
       size: formData.size,
-      item_unit: Number("5"),
+      item_unit: formData.itemUnit,
       stock_count: formData.stockCount,
       stock_keeping_unit: formData.stockUnit,
       cost_price: formData.costPrice,
       discounted_price: formData.discountedPrice,
     };
+
     try {
       const res = await axios.post(`${BASE_URL}product/`, product, { headers: { Authorization: `Bearer ${userData.access}`} });
       console.log(res);
@@ -353,7 +355,7 @@ function AddEditProduct() {
                 className="border border-slate-700 border-opacity-50 rounded-lg text-sm shadow-sm px-3 py-3 placeholder-slate-300"
               >
                 {itemUnits.map((item, index) => (
-                  <option key={index} className="hover:bg-red-700 list-none">
+                  <option key={index} className="hover:bg-red-700 list-none" value={index + 1}>
                     {item}
                   </option>
                 ))}
