@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { styles } from "../constants/index";
 import sortImage from "../assets/images/sort.png";
+import { product } from "../assets";
 
 // Structural template for the components such as the My Customers, Collections, etc.
 const UserData = ({
@@ -179,14 +180,14 @@ const UserData = ({
             )
           } else if (type === "Products") {
               return (
-                <div className="mb-3">
+                <div className="mb-3" key={index}>
                   <Children
-                    id={index + 1}
+                    id={children.id}
                     key={index + 1}
-                    productName={"Nike Sneakers"}
-                    price={"#500000"}
-                    status={"Active"}
-                    inventory={10}
+                    productName={children.title}
+                    price={children.price}
+                    status={children.status}
+                    inventory={children.stock_count}
                   />
                 </div>
               )
