@@ -74,6 +74,7 @@ const Login = ({ handleClick }) => {
       onUserLogin(res.data.data);
       userLoggedIn();
       handleClick("createStore");
+      navigate("/dashboard");
     } catch (err) {
       console.log(err);
       changeMessage(err.response.status);
@@ -122,7 +123,6 @@ const Login = ({ handleClick }) => {
           />
           <label htmlFor="remember">Remember me</label>
         </div>
-        <button className={`${styles.button} w-full`}>Proceed</button>
         {message.text && (
           <p className={`${message.color} text-sm text-center`}>
             {message?.text}
