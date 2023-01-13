@@ -30,12 +30,12 @@ const MyStore = () => {
     yesterdayProfit: 5000,
   });
 
-    Chart.register(
-        LineElement,
-        CategoryScale,
-        PointElement,
-        LinearScale
-    );
+    // Chart.register(
+    //     LineElement,
+    //     CategoryScale,
+    //     PointElement,
+    //     LinearScale
+    // );
 
     // Stores the amount of sales of the previous days of the week and is to be rendered on the line graph below.
     const [historySales, setHistorySales] = useState([3, 6, 3, 5, 4, 5, 5]);
@@ -79,47 +79,45 @@ const MyStore = () => {
         </p>
 
         <div className="flex justify-between w-full">
-            <div className="w-1/2">
-            <div className="flex justify-between">
-                {/* To display the setup status of the store */}
-                <div className="flex items-center gap-3 bg-blue-600 shadow-lg rounded-lg p-4 mx-1 w-1/2 mb-3">
-                <div className="rounded-full bg-blue-100 w-[32px] h-[32px] flex justify-center items-center">
-                    <img src={chartStore} alt="" className="w-4 h-4" />
-                </div>
+            <div className="w-full">
+              <div className="lg:flex justify-between">
+                  {/* To display the setup status of the store */}
+                  <div className="flex items-center gap-3 bg-blue-600 shadow-lg rounded-lg p-4 mx-1 w-full lg:w-1/4 mb-3">
+                    <div className="rounded-full bg-blue-100 w-[32px] h-[32px] flex justify-center items-center">
+                        <img src={chartStore} alt="" className="w-4 h-4" />
+                    </div>
 
-                <div>
-                    <p className="text-xs text-white">Store setup status</p>
-                    <p className="font-bold text-white text-xl">Impressive</p>
-                </div>
-                </div>
+                    <div>
+                        <p className="text-xs text-white">Store setup status</p>
+                        <p className="font-bold text-white text-xl">Impressive</p>
+                    </div>
+                  </div>
 
-                {/* Displays the total sales of the store so far */}
-                <Total
-                image={chartStore}
-                type={"sales"}
-                number={storeData.totalSales}
-                ></Total>
-            </div>
+                  {/* Displays the total sales of the store so far */}
+                  <Total
+                    image={chartStore}
+                    type={"sales"}
+                    number={storeData.totalSales}
+                  ></Total>
 
-            <div className="flex justify-between">
-                {/* Displays the total customers of the store so far */}
-                <Total
-                image={today_customer}
-                type={"customers"}
-                number={storeData.totalCustomers}
-                ></Total>
+                  {/* Displays the total customers of the store so far */}
+                  <Total
+                    image={today_customer}
+                    type={"customers"}
+                    number={storeData.totalCustomers}
+                  ></Total>
 
-                {/* Displays the total orders of the store so far */}
-                <Total
-                image={total_orders}
-                type={"orders"}
-                number={storeData.totalOrders}
-                ></Total>
-            </div>
+                  {/* Displays the total orders of the store so far */}
+                  <Total
+                    image={total_orders}
+                    type={"orders"}
+                    number={storeData.totalOrders}
+                  ></Total>
+              </div>
             </div>
 
             {/* Activity box of the My Store Component */}
-            <div className="w-1/2 bg-white rounded-lg shadow-lg h-[200px] px-3 py-3 mb-3">
+            {/* <div className="w-1/2 bg-white rounded-lg shadow-lg h-[200px] px-3 py-3 mb-3">
                 <div className="flex justify-between pr-8">
                     <p className="text-black font-bold text-base">Activity</p>
 
@@ -187,40 +185,40 @@ const MyStore = () => {
                         options={options}
                     />
                 </div>
-            </div>
+            </div> */}
         </div>
 
-        <div className="flex justify-between">
-            <span className="flex justify-between w-1/2">
-            {/* Displays the total number of customers for the day */}
-            <Today
-                image={today_customer}
-                type={"customers"}
-                number={storeData.todayCustomers}
-                storeData={storeData}
-            />
+        <div className="lg:flex justify-between">
+            <span className="lg:flex justify-between my-3 lg:my-0 w-full lg:w-1/2">
+              {/* Displays the total number of customers for the day */}
+              <Today
+                  image={today_customer}
+                  type={"customers"}
+                  number={storeData.todayCustomers}
+                  storeData={storeData}
+              />
 
-            {/* Displays the profit made for the day */}
-            <Today
-                image={wallet}
-                type={"profit"}
-                number={storeData.todayProfit}
-                storeData={storeData}
-            />
+              {/* Displays the profit made for the day */}
+              <Today
+                  image={wallet}
+                  type={"profit"}
+                  number={storeData.todayProfit}
+                  storeData={storeData}
+              />
 
-            {/* Displays the sales made for the day */}
-            <Today
-                image={chartStore}
-                type={"sales"}
-                number={storeData.todaySales}
-                storeData={storeData}
-            />
-            </span>
+              {/* Displays the sales made for the day */}
+              <Today
+                  image={chartStore}
+                  type={"sales"}
+                  number={storeData.todaySales}
+                  storeData={storeData}
+              />
+              </span>
 
-            <span className="bg-white rounded w-1/2 shadow-lg px-3 py-3">
-            <p className="text-2xl font-bold text-black-800">
-                Total conversion rates
-            </p>
+            <span className="bg-white rounded lg:w-1/2 shadow-lg px-3 py-3">
+              <p className="text-2xl font-bold text-black-800">
+                  Total conversion rates
+              </p>
             </span>
         </div>
 
@@ -308,7 +306,7 @@ const MyStore = () => {
 
 const Today = ({ image, type, number, storeData }) => {
   return (
-    <div className="flex flex-col gap-2 bg-white shadow-lg rounded-lg py-4 px-2 mx-1 w-1/3">
+    <div className="flex flex-col gap-2 bg-white shadow-lg rounded-lg py-4 px-2 mx-1 w-full lg:w-1/3">
       <div className="rounded-full bg-blue-100 w-[32px] h-[32px] flex justify-center items-center">
         <img src={image} alt="" className="w-4 h-4 mx-auto" />
       </div>
@@ -416,7 +414,7 @@ const Status = ({ value }) => {
 
 const Total = ({ image, type, number }) => {
     return (
-      <div className="flex items-center bg-white shadow-lg rounded-lg px-4 py-6 mx-1 w-1/2 mb-3 gap-3">
+      <div className="flex items-center bg-white shadow-lg w-full rounded-lg px-4 py-6 mx-1 lg:w-1/4 mb-3 gap-3">
         <div className="rounded-full bg-blue-100 w-[32px] h-[32px] flex justify-center items-center">
           <img src={image} alt="" className=" w-4 h-4 mx-auto" />
         </div>
