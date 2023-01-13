@@ -69,7 +69,7 @@ const StoreDetails = () => {
         <>
             <p className={`${styles.componentHeader}`}>Store Settings</p>
             <div className='overflow-hidden w-full shadow-2xl'>
-                <form className='rounded shadow-2xl w-full pl-10 pr-3 py-3 mx-auto my-auto h-screen' onSubmit={handleSubmit}>
+                <form className='rounded shadow-2xl w-full pl-10 pr-3 py-3 mx-auto my-auto h-auto' onSubmit={handleSubmit}>
                     <p className='text-sm text-brand-primary'>Store details</p>
                     
                     <div className='my-5 flex jusfity-between'>
