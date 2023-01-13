@@ -1,4 +1,5 @@
 import Login from "./Login";
+import SignUp from "./SignUp";
 import CreateStore from "./CreateStore";
 import GetStarted from "./GetStarted";
 import ResetPassword from "./ResetPassword";
@@ -24,6 +25,7 @@ import BankInformation from "./BankInformation";
 
 export {
   Login,
+  SignUp,
   CreateStore,
   GetStarted,
   ResetPassword,
@@ -45,5 +47,5 @@ export {
   Profile,
   Payments,
   Invoice,
-  BankInformation
+  BankInformation,
 };
