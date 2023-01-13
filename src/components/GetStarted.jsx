@@ -24,10 +24,10 @@ function Radio({ name, id, value, handleChange, formData }) {
 const GetStarted = ({ handleClick }) => {
   // Slider
   const [count, setCount] = useState(0);
-  let form = document.querySelector("form");
   const size = 100 / document.querySelectorAll(".gs_slide").length;
 
   useEffect(() => {
+    let form = document.querySelector("form");
     form.style.transform = `translateX(-${count * size}%)`;
     window.scrollTo(0, 0);
   }, [count]);
@@ -80,10 +80,14 @@ const GetStarted = ({ handleClick }) => {
                 Let's help create your store beautifully
               </h1>
               <p className="leading-[1.3] text-[20px] mb-8">
-                Answer a few questions to get started on your store creation/customization with our
-                tools specially made for you.
+                Answer a few questions to get started on your store
+                creation/customization with our tools specially made for you.
               </p>
-              <button type="button" className={`${styles.button}`} onClick={nextSlide}>
+              <button
+                type="button"
+                className={`${styles.button}`}
+                onClick={nextSlide}
+              >
                 Get started now
               </button>
             </div>
@@ -92,7 +96,9 @@ const GetStarted = ({ handleClick }) => {
           {/* {Slide 1} */}
           <div className={`${styles.stepFormCont} text-center`}>
             <p className="font-normal text-[14px] mb-4">Step 1 of 4</p>
-            <h2 className={`${styles.stepFormHeading}`}>Which best describes you?</h2>
+            <h2 className={`${styles.stepFormHeading}`}>
+              Which best describes you?
+            </h2>
             <div className={`${styles.stepFormHBox}`}>
               <div className={`${styles.radioLabel}`}>
                 <input
@@ -103,7 +109,10 @@ const GetStarted = ({ handleClick }) => {
                   checked={formData.description}
                   value="New business"
                 />
-                <label htmlFor="newBusiness" className="font-normal text-[16px]">
+                <label
+                  htmlFor="newBusiness"
+                  className="font-normal text-[16px]"
+                >
                   I am a new business owner
                 </label>
               </div>
@@ -116,7 +125,10 @@ const GetStarted = ({ handleClick }) => {
                   checked={formData.description}
                   value="Exisitig business"
                 />
-                <label htmlFor="existingBusiness" className="font-normal text-[16px]">
+                <label
+                  htmlFor="existingBusiness"
+                  className="font-normal text-[16px]"
+                >
                   I have a business already
                 </label>
               </div>
@@ -129,7 +141,11 @@ const GetStarted = ({ handleClick }) => {
               >
                 Skip
               </button>
-              <button type="button" className={`${styles.button}`} onClick={nextSlide}>
+              <button
+                type="button"
+                className={`${styles.button}`}
+                onClick={nextSlide}
+              >
                 Next
               </button>
             </div>
@@ -138,7 +154,9 @@ const GetStarted = ({ handleClick }) => {
           {/* {Slide 2} */}
           <div className={`${styles.stepFormCont} text-center`}>
             <p className="font-normal text-[14px] mb-4">Step 2 of 4</p>
-            <h2 className={`${styles.stepFormHeading}`}>What industry are you in?</h2>
+            <h2 className={`${styles.stepFormHeading}`}>
+              What industry are you in?
+            </h2>
             <div className={`${styles.stepFormVBox}`}>
               <div className={`${styles.radioGroup}`}>
                 <Radio
@@ -295,7 +313,11 @@ const GetStarted = ({ handleClick }) => {
               >
                 Skip
               </button>
-              <button type="button" className={`${styles.button}`} onClick={nextSlide}>
+              <button
+                type="button"
+                className={`${styles.button}`}
+                onClick={nextSlide}
+              >
                 Next
               </button>
             </div>
@@ -352,7 +374,11 @@ const GetStarted = ({ handleClick }) => {
               >
                 Skip
               </button>
-              <button type="button" className={`${styles.button}`} onClick={nextSlide}>
+              <button
+                type="button"
+                className={`${styles.button}`}
+                onClick={nextSlide}
+              >
                 Next
               </button>
             </div>
@@ -360,13 +386,17 @@ const GetStarted = ({ handleClick }) => {
 
           {/* {Slide 4} */}
           <div className={`${styles.stepFormCont}`}>
-            <p className="font-normal text-[14px] mb-4 text-center">Step 4 of 4</p>
+            <p className="font-normal text-[14px] mb-4 text-center">
+              Step 4 of 4
+            </p>
             <h2 className={`${styles.stepFormHeading} text-center`}>
               Where will your business be located??
             </h2>
             <div className={`${styles.stepFormHBox}`}>
               <div className="px-[40px]">
-                <h3 className="font-normal text-[16px]">Choose country/region</h3>
+                <h3 className="font-normal text-[16px]">
+                  Choose country/region
+                </h3>
                 <select
                   name="country"
                   onChange={handleChange}
@@ -394,14 +424,20 @@ const GetStarted = ({ handleClick }) => {
               >
                 Skip
               </button>
-              <button type="button" className={`${styles.button}`} onClick={nextSlide}>
+              <button
+                type="button"
+                className={`${styles.button}`}
+                onClick={nextSlide}
+              >
                 Next
               </button>
             </div>
           </div>
 
           {/* {Slide 5} */}
-          <div className={`${styles.stepFormCont} flex flex-col md:flex-row md:justify-between`}>
+          <div
+            className={`${styles.stepFormCont} flex flex-col md:flex-row md:justify-between`}
+          >
             <div className="w-full md:w-[40%] mb-[40px] md:mb-0">
               <h1 className="text-[14px]">Final step to your dashboard!</h1>
               <h1 className="font-bold leading-[1.3] text-[28px] my-3">

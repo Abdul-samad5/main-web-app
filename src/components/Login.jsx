@@ -73,7 +73,7 @@ const Login = ({ handleClick }) => {
       changeMessage(res.status);
       onUserLogin(res.data.data);
       userLoggedIn();
-      navigate("/dashboard");
+      handleClick("createStore");
     } catch (err) {
       console.log(err);
       changeMessage(err.response.status);
@@ -122,6 +122,7 @@ const Login = ({ handleClick }) => {
           />
           <label htmlFor="remember">Remember me</label>
         </div>
+        <button className={`${styles.button} w-full`}>Proceed</button>
         {message.text && (
           <p className={`${message.color} text-sm text-center`}>
             {message?.text}
@@ -139,7 +140,7 @@ const Login = ({ handleClick }) => {
           <button
             className="text-brand-gray font-normal text-[14px]"
             type="button"
-            onClick={() => handleClick("createStore")}
+            onClick={() => handleClick("signUp")}
           >
             Register
           </button>

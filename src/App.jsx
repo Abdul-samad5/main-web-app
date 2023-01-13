@@ -1,31 +1,47 @@
-import { BrowserRouter as Router, Route, Routes , Navigate} from "react-router-dom";
-import { Register, Dashboard, StoreFront} from "./pages";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
+import { Register, Dashboard, StoreFront } from "./pages";
 import { LoginContext } from "./context/LoginContext";
 import React, { useContext } from "react";
 import { Cart, Checkout } from "./store-components";
-import { cartContext } from "./context/CartContext"
+import { cartContext } from "./context/CartContext";
+import { GetStarted, Login } from "./components";
 
 function App() {
-  const {isLoggedIn} = useContext(LoginContext);
-  const PreventLogin = ({children}) => {
-    return isLoggedIn ? children : <Navigate to="/"/>
-  }
-  const { cart, deleteFromCart, clearCart, changeQuantity } = useContext(cartContext);
+  const { isLoggedIn } = useContext(LoginContext);
+  const PreventLogin = ({ children }) => {
+    return isLoggedIn ? children : <Navigate to="/" />;
+  };
+  const { cart, deleteFromCart, clearCart, changeQuantity } =
+    useContext(cartContext);
   return (
-      <Router>
-        <Routes>
-          <Route path="/" element={<Register />} />
-          <Route path="/dashboard" element={
+    <Router>
+      <Routes>
+        <Route path="/" element={<Register />} />
+        <Route
+          path="/dashboard"
+          element={
             <PreventLogin>
               <Dashboard />
             </PreventLogin>
-          } />
-          <Route path="/store-front" element={
+          }
+        />
+        <Route
+          path="/store-front"
+          element={
             <PreventLogin>
-              <StoreFront/>
+              <StoreFront />
             </PreventLogin>
-          }/>
-          <Route path="/store-front/view-cart" element={
+          }
+        />
+        <Route path="/getStarted" element={<GetStarted />} />
+        <Route
+          path="/store-front/view-cart"
+          element={
             <PreventLogin>
               <Cart
                 cart={cart}
@@ -34,14 +50,18 @@ function App() {
                 changeQuantity={changeQuantity}
               />
             </PreventLogin>
-          }/>
-          <Route path="/store-front/checkout" element={
+          }
+        />
+        <Route
+          path="/store-front/checkout"
+          element={
             <PreventLogin>
-              <Checkout cart={cart}/>
+              <Checkout cart={cart} />
             </PreventLogin>
-          }/>
-        </Routes>
-      </Router>
+          }
+        />
+      </Routes>
+    </Router>
   );
 }
 

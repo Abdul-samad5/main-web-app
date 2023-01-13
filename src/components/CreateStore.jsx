@@ -1,11 +1,13 @@
 import { useState, useContext } from "react";
-import { User, Store } from "../constants/config";
-import { postUser, postStore, userLogin } from "../services/services";
-// import { UserContext } from "../context/UserContext";
+import axios from "axios";
+import { BASE_URL } from "../services/services";
+import { UserContext } from "../context/UserContext";
 
 const CreateStore = ({ handleClick }) => {
   // Initialize state for submit button textContent
   const [message, setMessage] = useState({ text: true });
+
+  const { userData } = useContext(UserContext);
 
   function changeMessage(status) {
     if (status) {
@@ -32,9 +34,6 @@ const CreateStore = ({ handleClick }) => {
   // Collect form data
   const [formData, setFormData] = useState({
     storeName: "",
-    fullName: "",
-    email: "",
-    password: "",
     storeDomain: "",
     agreeToTerms: false,
   });
@@ -51,27 +50,29 @@ const CreateStore = ({ handleClick }) => {
 
   async function formSubmit(e) {
     e.preventDefault();
-    let user = new User(formData.email, formData.password, formData.fullName, "seller");
-    let store = new Store(formData.storeName, formData.storeDomain);
-    // let userLog = {email: formData.email, password: formData.password}
+    const store = {
+      store_name: formData.storeName,
+      store_domain: formData.storeDomain,
+    };
+
     changeMessage(true);
+    const config = {
+      headers: { Authorization: `Bearer ${userData.access}` },
+      "Content-Type": "application/json",
+    };
 
     try {
-      const res = await Promise.all([postUser(user), postStore(store)]);
-      // const res = await postUser(user);
-      console.log(res);
+      const res = await axios.post(
+        `${BASE_URL}store/create_store`,
+        store,
+        config
+      );
       changeMessage(res.status);
-      // console.log(res.status);
+
       if (res.status === 201 || res.status === 200) {
-          // const response = await userLogin(userLog);
-          // if(response.status === 201 || response.status === 200) {
-          //   onUserLogin(response.data.data);
-          //   const store_res = await postStore(store);
-          //   console.log(store_res);
-          // }
-          return;
-      };
-      handleClick("getStarted");
+        handleClick("getStarted");
+        return;
+      }
     } catch (err) {
       changeMessage(err.response.status);
       console.log(err);
@@ -80,8 +81,8 @@ const CreateStore = ({ handleClick }) => {
 
   return (
     <div className="max-w-[400px] w-full mx-auto mb-20">
-      <h1 className="text-center text-[28px] mb-[40px] font-normal">
-        Register
+      <h1 className="text-center text-[28px] mb-[15px] font-normal">
+        Create Store
       </h1>
       <form className="w-full" onSubmit={formSubmit}>
         <div className="mb-4 w-full">
@@ -97,45 +98,7 @@ const CreateStore = ({ handleClick }) => {
             className="w-full border border-brand-stroke rounded-lg p-3"
           />
         </div>
-        <div className="mb-4 w-full">
-          <label htmlFor="storeName" className="w-full mb-3 ml-2">
-            Full name
-          </label>
-          <input
-            type="text"
-            name="fullName"
-            value={formData.fullName}
-            placeholder="Enter your full name"
-            onChange={handleChange}
-            className="w-full border border-brand-stroke rounded-lg p-3"
-          />
-        </div>
-        <div className="mb-4 w-full">
-          <label htmlFor="storeName" className="w-full mb-3 ml-2">
-            Email
-          </label>
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            placeholder="Enter your email address"
-            onChange={handleChange}
-            className="w-full border border-brand-stroke rounded-lg p-3"
-          />
-        </div>
-        <div className="w-full mb-4">
-          <label htmlFor="password" className="w-full mb-3 ml-2">
-            Password
-          </label>
-          <input
-            type="password"
-            name="password"
-            value={formData.password}
-            placeholder="Password"
-            onChange={handleChange}
-            className="w-full border border-brand-stroke rounded-lg p-3"
-          />
-        </div>
+
         <div className="w-full mb-4">
           <label htmlFor="password" className="w-full mb-3 ml-2">
             Store domain
@@ -176,23 +139,11 @@ const CreateStore = ({ handleClick }) => {
         )}
         <button
           type="submit"
-          //onClick={() => handleClick("getStarted")}
+          // onClick={() => handleClick("getStarted")}
           className="w-full py-3 bg-brand-primary text-white font-normal rounded-lg hover:bg-brand-secondary transition-colors duration-500"
         >
-          Register
+          Create Store
         </button>
-        <div className="w-full flex justify-between items-center mt-2">
-          <p className="text-brand-gray font-normal text-[14px]">
-            Already have an account?
-          </p>
-          <button
-            className="text-brand-gray font-normal text-[14px]"
-            type="button"
-            onClick={() => handleClick("login")}
-          >
-            Login
-          </button>
-        </div>
       </form>
     </div>
   );
