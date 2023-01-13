@@ -183,7 +183,7 @@ const UserData = ({
                 <div className="mb-3" key={index}>
                   <Children
                     id={children.id}
-                    key={index + 1}
+                    keys={index + 1}
                     productName={children.title}
                     price={children.price}
                     status={children.status}

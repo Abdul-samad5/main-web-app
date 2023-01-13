@@ -33,7 +33,7 @@ const MyOrders = () => {
     }
 
 
-    const Children = ({id, productName, price, status, inventory, key}) => {
+    const Children = ({id, productName, price, status, inventory, keys}) => {
         const [currentState, setCurrentState] = React.useState(false);
     
         const handleClick = () => {
@@ -51,24 +51,24 @@ const MyOrders = () => {
         }
     
         return (
-            <div className='pr-10 flex justify-between'>
+            <div className='flex justify-between wrap items-center'>
                 <div className="flex justify-between w-full sticky">
-                    <p className={`${styles.valueStyle} sticky`}>{key}</p>
-                    <p className={`${styles.valueStyle} sticky `}>{productName}</p>
-                    <p className={`${styles.valueStyle} sticky ml-12`}>{price}</p>
+                    <p className={`${styles.valueStyle} sticky`}>{keys}</p>
+                    <p className={`${styles.valueStyle} relative lg:left-8`}>{productName}</p>
+                    <p className={`${styles.valueStyle} relative lg:left-8`}>{price}</p>
                     <Status value={status}/>
                     <p 
-                        className={inventory === 0 ? `${styles.valueStyle} text-red-600` : `${styles.valueStyle}`}>
+                        className={inventory === 0 ? `${styles.valueStyle} text-red-600 relative lg:right-14` : `${styles.valueStyle} relative lg:right-8`}>
                         {inventory + " in stock"}
                     </p>
-                    <span onClick={handleClick} className="justify-between flex block sticky">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 512" className='w-4 h-4 fill-slate-400'><path d="M64 360c30.9 0 56 25.1 56 56s-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56zm0-160c30.9 0 56 25.1 56 56s-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56zM120 96c0 30.9-25.1 56-56 56S8 126.9 8 96S33.1 40 64 40s56 25.1 56 56z"/></svg>
-                        <div className={currentState ? 'rounded bg-white shadow-lg relative px-3 h-20 w-26' : 'hidden'}>
-                            <p className='text-xs my-2'>Edit product</p>
-                            <p className='text-xs my-2'>Preview</p>
-                            <p className='text-xs text-red-400 mt-2' onClick={handleDeleteProduct}>Delete</p>
+                    <div onClick={handleClick} className="flex w-2 h-4 relative lg:right-4">
+                        <div className={currentState ? 'rounded bg-white shadow-lg relative top-4 px-3 h-24 w-26' : 'hidden'}>
+                            <p className='text-xs cursor-pointer hover:opacity-70 my-2'>Edit product</p>
+                            <p className='text-xs cursor-pointer hover:opacity-70 my-2'>Preview</p>
+                            <p className='text-xs cursor-pointer hover:opacity-70 hover:text-red-300 text-red-400 my-2' onClick={handleDeleteProduct}>Delete</p>
                         </div>
-                    </span>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 512" className='w-4 h-4 fill-slate-400'><path d="M64 360c30.9 0 56 25.1 56 56s-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56zm0-160c30.9 0 56 25.1 56 56s-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56zM120 96c0 30.9-25.1 56-56 56S8 126.9 8 96S33.1 40 64 40s56 25.1 56 56z"/></svg>
+                    </div>
                 </div>
             </div>
         )
@@ -92,11 +92,11 @@ const MyOrders = () => {
 
 const Status = ({ value }) => {
     if (value === "draft") {
-        return <div className="rounded text-black-800 bg-gray-300 text-xs px-6 py-1 ">{value}</div>;
+        return <div className="rounded text-black-800 bg-gray-300 text-xs relative lg:right-10 px-6 py-1 ">{value}</div>;
     } else if (value === "archived") {
-        return <div className="rounded text-purple-800 bg-purple-200 text-xs px-3 py-1">{value}</div>;
+        return <div className="rounded text-purple-800 bg-purple-200 text-xs relative lg:right-8 px-3 py-1">{value}</div>;
     } else if(value === "active") {
-        return <div className="rounded text-green-900 bg-green-200 mr-10 relative left-10 text-sm px-2">{value}</div>;
+        return <div className="rounded text-green-900 bg-green-200 mr-10 relative lg:left-4 text-sm px-2">{value}</div>;
     }
 };
 
