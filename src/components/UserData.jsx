@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { styles } from "../constants/index";
 import sortImage from "../assets/images/sort.png";
+import { product } from "../assets";
 
 // Structural template for the components such as the My Customers, Collections, etc.
 const UserData = ({
@@ -15,6 +16,11 @@ const UserData = ({
 }) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [searchValue, setSearchValue] = useState("");
+  const [reRender, setReRender] = useState(false);
+
+  // const render = () => {
+  //   setReRender(prev => prev = !prev);
+  // }
 
   const handleClick = () => {
     setCurrentPage((prev) => {
@@ -31,7 +37,7 @@ const UserData = ({
   };
 
   return (
-    <div className="rounded shadow-xl w-full px-5 py-3 mx-auto my-auto h-auto ">
+    <div className="rounded shadow-xl w-full lg:px-5 px-2 py-3 lg:mx-auto my-auto h-auto">
       {/* Search Bar */}
       <div className="flex justify-between">
         <span className="w-2/5">
@@ -96,7 +102,7 @@ const UserData = ({
           if (type === "Collections") {
             return (
               <div className="mb-3" key={index + 1}>
-                <Children id={index} collectionName={children.name} product={"This"} />
+                <Children id={children.id} no={index} collectionName={children.name} product={children.image}/>
               </div>
             );
             // Displays the details of each customer if the type of the component equals Customer.
@@ -146,12 +152,15 @@ const UserData = ({
             return (
               <div className="mb-3" key={index + 1}>
                 <Children
-                  id={index}
+                  id={children.id}
+                  no={index}
                   discountCode={children.discount_code}
                   method={children.discount_method}
                   type={children.discount_type}
                   discount_value={children.discount_value}
                   value={children.value}
+                  end_date={children.end_date}
+                  active={children.active}
                   // id, discountStatus, method, status, type, usage
                 />
               </div>
@@ -171,14 +180,14 @@ const UserData = ({
             )
           } else if (type === "Products") {
               return (
-                <div className="mb-3">
+                <div className="mb-3" key={index}>
                   <Children
-                    id={index + 1}
-                    key={index + 1}
-                    productName={"Nike Sneakers"}
-                    price={"#500000"}
-                    status={"Active"}
-                    inventory={10}
+                    id={children.id}
+                    keys={index + 1}
+                    productName={children.title}
+                    price={children.price}
+                    status={children.status}
+                    inventory={children.stock_count}
                   />
                 </div>
               )

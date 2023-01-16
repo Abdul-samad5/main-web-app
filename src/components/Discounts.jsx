@@ -6,7 +6,7 @@ import { UserContext } from "../context/UserContext";
 import axios from "axios";
 import { BASE_URL } from "../services/services";
 
-const details = ["Discount Code", "Method", "Discount Type", "Discount Value", "Value", "Action"];
+const details = ["Discount Code", "Method", "Discount Type", "Status", "Discount Value", "Value", "Action"];
 const Discounts = () => {
     // State to store the collections gotten from the API
     const [discounts, setDiscounts] = useState([]);
@@ -22,6 +22,7 @@ const Discounts = () => {
         minPurValue: 0
     });
 
+    const [reRender, setRender] = useState(false);
 
     // Function to update the state to the next five or so discount details gotten from the API.
     const handleNext = () => {
@@ -64,9 +65,9 @@ const Discounts = () => {
 
     useEffect(() => {
         fetchDiscounts();
-    }, []);
+    }, [reRender, isVisible]);
 
-    const addDiscount = async () => {
+    async function addDiscount() {
         let discountInfo = {
             "discount_type": newDiscountInfo.discountType,
             "discount_method": newDiscountInfo.discountMethod,
@@ -79,9 +80,21 @@ const Discounts = () => {
         }
 
         try {
-            const res = axios.post(`${BASE_URL}marketing/create_discount`, discountInfo, { headers: { Authorization: `Bearer ${userData.access}`} });
-            if(res.statusText !== "OK") return;
+            const res = await axios.post(`${BASE_URL}marketing/create_discount`, discountInfo, { headers: { Authorization: `Bearer ${userData.access}`} });
+            setVisisble(prev => prev = !prev);
             console.log(res);
+            setDiscountInfo((prev) => {
+                return prev = {
+                    discountType: "",
+                    discountMethod: "",
+                    discountTitle: "",
+                    discountValue: "",
+                    value: 0,
+                    startDate: "",
+                    endDate: "",
+                    minPurValue: 0
+                }
+            });
         } catch(err) {
             console.log(err);
         }
@@ -96,6 +109,55 @@ const Discounts = () => {
             }
         });
     }
+
+    const Children = ({id, discountCode, method, type, discount_value, value, no, end_date, active }) => {
+        const [currentState, setCurrentState] = useState(false);
+    
+        const handleClick = () => {
+            setCurrentState(prevValue => !prevValue);
+        }
+    
+        const deleteDiscount = async () => {
+            try {
+                const response = await axios.delete(`${BASE_URL}marketing/delete/${id}`, { headers: { Authorization: `Bearer ${userData.access}`} });
+                // console.log(response);
+                setRender(prev => prev = !prev);
+            } catch (err) {
+                console.log(err);
+            }
+        }
+    
+        const deactivateDiscount = async () => {
+            try {
+                const response = await axios.put(`${BASE_URL}marketing/deactivate/${id}`, {active : false}, { headers: { Authorization: `Bearer ${userData.access}`} });
+                // console.log(response);
+                setRender(prev => prev = !prev);
+            } catch (err) {
+                console.log(err);
+            }
+        }
+    
+        return (
+            <div className="flex justify-between wrap items-center">
+                <p className={`${styles.valueStyle} ` }>{no}</p>
+                <p className={`${styles.valueStyle} `}>{discountCode}</p>
+                <p className={`${styles.valueStyle}`}>{method}</p>
+                <p className={`${styles.valueStyle} relative lg:right-6`}>{type}</p>
+                {/* <Status value={new Date(end_date).getTime() > new Date().getTime() ? "Active" : "Expired"}/> */}
+                <Status value={active ? "Active" : "Expired"}/>
+                <p className={`${styles.valueStyle} relative lg:right-14`}>{discount_value}</p>
+                <p className={`${styles.valueStyle} relative lg:right-10`}>{value}</p>
+                <div onClick={handleClick} className="flex w-2 h-4 relative lg:right-4">
+                    <div className={currentState ? 'rounded bg-white shadow-lg top-6 relative px-1 z-10 h-20 w-auto' : 'hidden'}>
+                        <p className='text-xs cursor-pointer' onClick={deactivateDiscount}>Deactivte discount</p>
+                        <p className='text-xs cursor-pointer my-auto text-red-400 my-2' onClick={deleteDiscount}>Delete discount</p>
+                    </div>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 512" className='w-4 h-4 fill-slate-400'><path d="M64 360c30.9 0 56 25.1 56 56s-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56zm0-160c30.9 0 56 25.1 56 56s-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56zM120 96c0 30.9-25.1 56-56 56S8 126.9 8 96S33.1 40 64 40s56 25.1 56 56z"/></svg>
+                    
+                </div>
+            </div>
+        )
+    };
 
     return (
         <div className='w-full'>
@@ -125,13 +187,6 @@ const Discounts = () => {
 
                         <span className='mt-5 block'>
                             <h4 className='text-sm'>Discount type</h4>
-                            {/* <input 
-                                className={`${styles.inputBox} w-full mt-1 px-3`} 
-                                value={newDiscountInfo.discountType} 
-                                placeholder="Eg. Boots, Shoes..." 
-                                type="text"
-                                name="discountType"
-                                onChange={handleChange}/> */}
                             <select name="discountType" className={`${styles.inputBox} w-full mt-1 px-3`} value={newDiscountInfo.discountType} onChange={handleChange}>
                                 <option>Product Discount</option>
                                 <option>Order Discount</option>
@@ -263,64 +318,15 @@ const Discounts = () => {
     )
 };
 
-const Children = ({id, discountCode, method, type, discount_value, value}) => {
-    const [currentState, setCurrentState] = useState(false);
-
-    const handleClick = () => {
-        setCurrentState(prevValue => !prevValue);
-    }
-
-    const { userData } = useContext(UserContext);
-    const deleteDiscount = async () => {
-        try {
-            const response = await axios.delete(`${BASE_URL}marketing/delete/${id}`, { headers: { Authorization: `Bearer ${userData.access}`} });
-            if(response.status !== 204) return;
-            console.log(response);
-        } catch (err) {
-            console.log(err);
-        }
-        // console.log(id);/
-    }
-
-    const deactivateDiscount = async () => {
-        try {
-            const response = await axios.put(`${BASE_URL}marketing/deactivate/${id}`, {"active" : false}, { headers: { Authorization: `Bearer ${userData.access}`} });
-            if(response.status !== 200) return;
-            console.log(response);
-        } catch (err) {
-            console.log(err);
-        }
-    }
-
-    return (
-        <div className="flex justify-between">
-            <p className={`${styles.valueStyle}`}>{id}</p>
-            <p className={`${styles.valueStyle}`}>{discountCode}</p>
-            <p className={`${styles.valueStyle}`}>{method}</p>
-            <p className={`${styles.valueStyle}`}>{type}</p>
-            {/* <Status value={status}/> */}
-            <p className={`${styles.valueStyle}`}>{discount_value}</p>
-            <p className={`${styles.valueStyle}`}>{value}</p>
-            <span onClick={handleClick} className="flex justify-between w-2 h-4">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 512" className='w-4 fixed h-4 fill-slate-400'><path d="M64 360c30.9 0 56 25.1 56 56s-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56zm0-160c30.9 0 56 25.1 56 56s-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56zM120 96c0 30.9-25.1 56-56 56S8 126.9 8 96S33.1 40 64 40s56 25.1 56 56z"/></svg>
-                <div className={currentState ? 'rounded bg-white shadow-lg relative px-5 top-8 h-20 w-30' : 'hidden'}>
-                    <p className='text-xs' onClick={deactivateDiscount}>Deactivte discount</p>
-                    <p className='text-xs my-auto text-red-400 my-2' onClick={deleteDiscount}>Delete discount</p>
-                </div>
-            </span>
-        </div>
-    )
-};
-
 // Component that displays the current status of a discount based on the value gotten from the API.
 const Status = ({value}) => {
     if(value === "Active") {
         return (
-            <div className="rounded text-blue-800 bg-blue-100 text-sm px-5 py-1">{value}</div>
+            <div className="rounded text-blue-800 bg-blue-100 relative lg:right-10 text-sm px-5 py-1">{value}</div>
         )
     } else if(value === "Expired") {
         return (
-            <div className="rounded text-yellow-800 bg-yellow-100 text-sm px-5 py-1">{value}</div>
+            <div className="rounded text-yellow-800 bg-yellow-100 text-sm px-4 relative lg:right-10 py-1">{value}</div>
         )
     }
 }
