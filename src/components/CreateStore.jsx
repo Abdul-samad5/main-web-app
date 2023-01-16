@@ -2,12 +2,14 @@ import { useState, useContext } from "react";
 import axios from "axios";
 import { BASE_URL } from "../services/services";
 import { UserContext } from "../context/UserContext";
+import { useNavigate } from "react-router-dom";
 
 const CreateStore = ({ handleClick }) => {
   // Initialize state for submit button textContent
   const [message, setMessage] = useState({ text: true });
 
   const { userData } = useContext(UserContext);
+  const navigate = useNavigate();
 
   function changeMessage(status) {
     if (status) {
@@ -57,7 +59,7 @@ const CreateStore = ({ handleClick }) => {
 
     changeMessage(true);
     const config = {
-      headers: { Authorization: `Bearer ${userData.access}` },
+      headers: { Authorization: `Bearer ${userData}` },
       "Content-Type": "application/json",
     };
 
@@ -68,14 +70,17 @@ const CreateStore = ({ handleClick }) => {
         config
       );
       changeMessage(res.status);
+      console.log(res);
 
       if (res.status === 201 || res.status === 200) {
-        handleClick("getStarted");
+        navigate("/dashboard");
         return;
       }
     } catch (err) {
       changeMessage(err.response.status);
-      console.log(err);
+      if (err.response.data.message.includes("exists")) {
+        alert("Store already exists, Please choose a different name");
+      }
     }
   }
 

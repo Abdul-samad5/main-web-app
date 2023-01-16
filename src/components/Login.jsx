@@ -1,13 +1,14 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { LoginContext } from "../context/LoginContext";
 import { styles } from "../constants";
-import { userLogin } from "../services/services";
+import { BASE_URL, userLogin } from "../services/services";
 import { UserContext } from "../context/UserContext";
+import axios from "axios";
 
 const Login = ({ handleClick }) => {
   // Initialize state for the login to enable user login
-  const { isLoggedIn, userLoggedIn, userLoggedOut } = useContext(LoginContext);
+  const { userLoggedIn } = useContext(LoginContext);
 
   const [formData, setFormData] = useState({
     email: "",
@@ -15,7 +16,9 @@ const Login = ({ handleClick }) => {
     remember: false,
   });
 
-  const { onUserLogin } = useContext(UserContext);
+  const [store, setStore] = useState("");
+
+  const { getUserToken, userData } = useContext(UserContext);
 
   const navigate = useNavigate();
 
@@ -40,10 +43,20 @@ const Login = ({ handleClick }) => {
     try {
       const res = await userLogin(user);
       if (!res.statusText === "OK") return;
-      console.log(res);
-      onUserLogin(res.data.data);
-      userLoggedIn();
-      handleClick("createStore");
+      // console.log(res);
+      if (res.status === 200 || res.status === 201) {
+        const token = res.data.data.access;
+        // console.log(res.data.data.refresh);
+
+        window.localStorage.setItem("token", JSON.stringify(token));
+        window.localStorage.setItem("isLoggedIn", true);
+
+        getUserToken(token);
+        console.log(res);
+
+        userLoggedIn();
+        navigate("/dashboard");
+      }
     } catch (err) {
       console.log(err);
     }
