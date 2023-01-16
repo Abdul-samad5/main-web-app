@@ -20,7 +20,9 @@ const ResetPassword = ({ handleClick }) => {
 
   return (
     <div className="max-w-[400px] w-full mx-auto">
-      <h1 className="text-center text-[28px] mb-[40px] font-normal">Reset Password</h1>
+      <h1 className="text-center text-[28px] mb-[40px] font-normal">
+        Reset Password
+      </h1>
       <form className="w-full" onSubmit={formSubmit}>
         <div className="mb-4 w-full">
           <label htmlFor="email" className="w-full mb-3 ml-2">
@@ -36,7 +38,8 @@ const ResetPassword = ({ handleClick }) => {
           />
         </div>
         <p className="text-brand-gray text-[12px] font-normal leading-[1.5] mb-10">
-          A link with a code will be sent to the email provided above to enable a password reset.
+          A link with a code will be sent to the email provided above to enable
+          a password reset.
         </p>
         <button className="w-full py-3 bg-brand-primary text-white font-normal rounded-lg hover:bg-brand-secondary transition-colors duration-500">
           Get password reset link
@@ -52,9 +55,9 @@ const ResetPassword = ({ handleClick }) => {
           <button
             className="text-brand-gray font-normal text-[14px]"
             type="button"
-            onClick={() => handleClick("createStore")}
+            onClick={() => handleClick("signUp")}
           >
-            Create new store
+            Sign Up
           </button>
         </div>
       </form>

@@ -10,11 +10,14 @@ import React, { useContext } from "react";
 import { Cart, Checkout } from "./store-components";
 import { cartContext } from "./context/CartContext";
 import { GetStarted, Login } from "./components";
+import { UserContext } from "./context/UserContext";
 
 function App() {
-  const { isLoggedIn } = useContext(LoginContext);
+  // const { isLoggedIn } = useContext(UserContext);
+
+  const isLoggedIn = window.localStorage.getItem("isLoggedIn");
   const PreventLogin = ({ children }) => {
-    return isLoggedIn ? children : <Navigate to="/" />;
+    return isLoggedIn ? children : <Navigate to={"/"} />;
   };
   const { cart, deleteFromCart, clearCart, changeQuantity } =
     useContext(cartContext);
@@ -38,7 +41,14 @@ function App() {
             </PreventLogin>
           }
         />
-        <Route path="/getStarted" element={<GetStarted />} />
+        <Route
+          path="/getStarted"
+          element={
+            <PreventLogin>
+              <GetStarted />
+            </PreventLogin>
+          }
+        />
         <Route
           path="/store-front/view-cart"
           element={

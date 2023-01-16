@@ -1,30 +1,87 @@
 import { useState, useEffect, useRef } from "react";
 import { styles } from "../constants";
+import { useNavigate } from "react-router-dom";
 import { countries } from "../services/services";
 import { arrow_left, my_store } from "../assets";
-
-function Radio({ name, id, value, handleChange, formData }) {
-  return (
-    <div className={`${styles.radioLabel3}`}>
-      <input
-        type="radio"
-        name={name}
-        id={id}
-        onChange={handleChange}
-        checked={formData.name}
-        value={value}
-      />
-      <label htmlFor={id} className="font-normal text-[16px]">
-        {value}
-      </label>
-    </div>
-  );
-}
+import axios from "axios";
+import { BASE_URL } from "../services/services";
+import { useContext } from "react";
+import { UserContext } from "../context/UserContext";
+import { LoginContext } from "../context/LoginContext";
 
 const GetStarted = ({ handleClick }) => {
   // Slider
   const [count, setCount] = useState(0);
   const size = 100 / document.querySelectorAll(".gs_slide").length;
+  const { isLoggedIn, userLoggedIn } = useContext(LoginContext);
+
+  const { userData } = useContext(UserContext);
+  const navigate = useNavigate();
+  // Form data
+  const [formData, setFormData] = useState({
+    description: "",
+    industry: "",
+    products: "",
+    country: "",
+  });
+
+  const config = {
+    headers: { Authorization: `Bearer ${userData.access}` },
+    "Content-Type": "application/json",
+  };
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    let industry = {
+      industry_name: formData.industry,
+    };
+
+    let products = {
+      product_name: formData.products,
+    };
+    let country = {
+      business_location: formData.country,
+    };
+
+    // const indRes = await axios.post(
+    //   `${BASE_URL}store/industry`,
+    //   industry,
+    //   config
+    // );
+
+    // const prodRes = await axios.post(
+    //   `${BASE_URL}store/product`,
+    //   products,
+    //   config
+    // );
+
+    // const countryRes = await axios.post(
+    //   `${BASE_URL}store/preference`,
+    //   country,
+    //   config
+    // );
+    // const allreq = new Promise.all([indRes, prodRes, countryRes]);
+
+    // if (allreq.status === 200 || allreq.status === 201) {
+    // alert("success");
+    userLoggedIn();
+    navigate("/dashboard");
+    //   }
+    // } catch (error) {
+    //   console.log(error);
+    // }
+  }
+
+  function handleChange(e) {
+    const { name, value, checked, type } = e.target;
+    setFormData((prev) => {
+      return {
+        ...prev,
+        [name]: type === "radio" ? checked : value,
+      };
+    });
+  }
 
   useEffect(() => {
     let form = document.querySelector("form");
@@ -42,24 +99,6 @@ const GetStarted = ({ handleClick }) => {
     setCount((count) => count - 1);
   }
 
-  // Form data
-  const [formData, setFormData] = useState({
-    description: "",
-    industry: "",
-    products: "",
-    country: "",
-  });
-
-  function handleChange(e) {
-    const { name, value, checked, type } = e.target;
-    setFormData((prev) => {
-      return {
-        ...prev,
-        [name]: type === "radio" ? checked : value,
-      };
-    });
-  }
-
   return (
     <div className="relative w-full mb-20">
       {/* {Slide Back Arrow} */}
@@ -72,7 +111,10 @@ const GetStarted = ({ handleClick }) => {
         </div>
       )}
       <div className="w-full overflow-hidden">
-        <form className="flex transition-transform duration-500 w-[600%] mt-10 md:mt-0">
+        <form
+          className="flex transition-transform duration-500 w-[600%] mt-10 md:mt-0"
+          onSubmit={handleSubmit}
+        >
           {/* {Slide 0} */}
           <div className={`${styles.stepFormCont}`}>
             <div className="text-center max-w-[700px] mx-auto">
@@ -443,9 +485,9 @@ const GetStarted = ({ handleClick }) => {
               <h1 className="font-bold leading-[1.3] text-[28px] my-3">
                 Proceed to dashboard to complete your store setup.
               </h1>
-              <a className={`${styles.button}`} href="/dashboard">
+              <button className={`${styles.button}`} type="submit">
                 Proceed to dashboard
-              </a>
+              </button>
             </div>
             <div className="w-full md:w-1/2">
               <img src={my_store} alt="Dashboard Image" />
@@ -456,5 +498,23 @@ const GetStarted = ({ handleClick }) => {
     </div>
   );
 };
+
+function Radio({ name, id, value, handleChange, formData }) {
+  return (
+    <div className={`${styles.radioLabel3}`}>
+      <input
+        type="radio"
+        name={name}
+        id={id}
+        onChange={handleChange}
+        checked={formData.name}
+        value={value}
+      />
+      <label htmlFor={id} className="font-normal text-[16px]">
+        {value}
+      </label>
+    </div>
+  );
+}
 
 export default GetStarted;

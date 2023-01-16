@@ -11,9 +11,9 @@ import {
 const Register = () => {
   // Initialize state for the login, forgotPassword, and createStore to determine the component to show.
   const [getStarted, setGetStarted] = useState({
-    login: false,
+    login: true,
     forgotPassword: false,
-    signUp: true,
+    signUp: false,
     createStore: false,
     getStarted: false,
   });

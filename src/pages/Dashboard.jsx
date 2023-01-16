@@ -27,7 +27,7 @@ import {
   subscription,
   storeDetails,
   finances,
-  websiteSettings
+  websiteSettings,
 } from "../assets";
 
 import {
@@ -45,9 +45,13 @@ import {
   Finances,
   UserAccount,
 } from "../components";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { LoginContext } from "../context/LoginContext";
 import { UserContext } from "../context/UserContext";
+import { useEffect } from "react";
+import { BASE_URL } from "../services/services";
+import axios from "axios";
+import StoreFront from "./StoreFront";
 
 function DbIcon({ src }) {
   return <img src={src} className="w-[16px]" alt="Icon" />;
@@ -56,6 +60,7 @@ function DbIcon({ src }) {
 const Dashboard = () => {
   // Sidebar
   const [isNavOpen, setIsNavOpen] = useState(false);
+  const [storeName, setStoreName] = useState("");
 
   // Component to be rendered on the main
   const [activeComponent, setActiveComponent] = useState([<MyStore />]);
@@ -70,10 +75,10 @@ const Dashboard = () => {
     setIsNavOpen((prev) => !prev);
   }
   const { userLoggedOut } = useContext(LoginContext);
-  const { onUserLogOut } = useContext(UserContext);
+  const { userData, onUserLogOut } = useContext(UserContext);
 
   const navigate = useNavigate();
-  
+
   function handleLogOut() {
     userLoggedOut();
     onUserLogOut();
@@ -89,6 +94,20 @@ const Dashboard = () => {
     e.stopPropagation();
     handler((prev) => !prev);
   }
+
+  useEffect(() => {
+    async function fetchData() {
+      const config = {
+        headers: { Authorization: `Bearer ${userData}` },
+        "Content-Type": "application/json",
+      };
+      const res = await axios.get(`${BASE_URL}store/list`, config);
+      if (res) {
+        setStoreName(res.data.stores[0].store_name);
+      }
+    }
+    fetchData();
+  }, []);
 
   return (
     <div className="w-full overflow-hidden">
@@ -109,7 +128,7 @@ const Dashboard = () => {
             />
           </div>
           <div className="border-b flex items-center justify-between p-4 mb-[10px]">
-            <h1 className="font-bold text-[16px] ">Micheline</h1>
+            <h1 className="font-bold text-[16px] ">{`${storeName}'s`} Store</h1>
             <DbIcon src={edit} />
           </div>
           <div
@@ -305,7 +324,7 @@ const Dashboard = () => {
                 alt="Icon"
                 onClick={handleClick}
               />
-              <Link to="/store-front">
+              <Link to={"/store-front"}>
                 <button className={`${styles.buttonOutline}`}>
                   Go to store front
                 </button>
@@ -327,14 +346,30 @@ const Dashboard = () => {
               <div className="mr-[24px] ml-2">
                 <img src={bell} alt="Icon" className="w-[18px]" />
               </div>
-              <div className="flex items-center gap-2" onClick={() => setIsLogOpen(!isLogOpen)}>
+              <div
+                className="flex items-center gap-2"
+                onClick={() => setIsLogOpen(!isLogOpen)}
+              >
                 <img src={user_img} alt="Profile Image" className="w-[32px]" />
                 <img src={arrow_down} alt="Icon" className="w-[13px]" />
                 {/* <Link to="/"> */}
-                  <div onClick={handleLogOut} className={`absolute flex px-2 py-2 ${isLogOpen ? "flex" : "hidden"} top-20 right-10 rounded-sm shadow-lg hover:bg-gray-200 bg-white flex group`}>
-                    <svg xmlns="http://www.w3.org/2000/svg" className="fill-black my-auto group-hover:fill-brand-secondary h-3 w-3" viewBox="0 0 512 512"><path d="M160 96c17.7 0 32-14.3 32-32s-14.3-32-32-32H96C43 32 0 75 0 128V384c0 53 43 96 96 96h64c17.7 0 32-14.3 32-32s-14.3-32-32-32H96c-17.7 0-32-14.3-32-32l0-256c0-17.7 14.3-32 32-32h64zM504.5 273.4c4.8-4.5 7.5-10.8 7.5-17.4s-2.7-12.9-7.5-17.4l-144-136c-7-6.6-17.2-8.4-26-4.6s-14.5 12.5-14.5 22v72H192c-17.7 0-32 14.3-32 32l0 64c0 17.7 14.3 32 32 32H320v72c0 9.6 5.7 18.2 14.5 22s19 2 26-4.6l144-136z"/></svg>
-                    <p className="text-xs text-black text-black my-auto mx-3 opacity-60 group-hover:opacity-100">Sign out</p>
-                  </div>
+                <div
+                  onClick={handleLogOut}
+                  className={`absolute flex px-2 py-2 ${
+                    isLogOpen ? "flex" : "hidden"
+                  } top-20 right-10 rounded-sm shadow-lg hover:bg-gray-200 bg-white flex group`}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="fill-black my-auto group-hover:fill-brand-secondary h-3 w-3"
+                    viewBox="0 0 512 512"
+                  >
+                    <path d="M160 96c17.7 0 32-14.3 32-32s-14.3-32-32-32H96C43 32 0 75 0 128V384c0 53 43 96 96 96h64c17.7 0 32-14.3 32-32s-14.3-32-32-32H96c-17.7 0-32-14.3-32-32l0-256c0-17.7 14.3-32 32-32h64zM504.5 273.4c4.8-4.5 7.5-10.8 7.5-17.4s-2.7-12.9-7.5-17.4l-144-136c-7-6.6-17.2-8.4-26-4.6s-14.5 12.5-14.5 22v72H192c-17.7 0-32 14.3-32 32l0 64c0 17.7 14.3 32 32 32H320v72c0 9.6 5.7 18.2 14.5 22s19 2 26-4.6l144-136z" />
+                  </svg>
+                  <p className="text-xs text-black text-black my-auto mx-3 opacity-60 group-hover:opacity-100">
+                    Sign out
+                  </p>
+                </div>
                 {/* </Link> */}
               </div>
             </div>

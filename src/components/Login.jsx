@@ -1,9 +1,10 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { LoginContext } from "../context/LoginContext";
 import { styles } from "../constants";
-import { userLogin } from "../services/services";
+import { BASE_URL, userLogin } from "../services/services";
 import { UserContext } from "../context/UserContext";
+import axios from "axios";
 
 const Login = ({ handleClick }) => {
   // Initialize state for the login to enable user login
@@ -25,11 +26,11 @@ const Login = ({ handleClick }) => {
       });
     }
     if (status === 401) {
-        setMessage({
-          color: "text-red-500",
-          text: "Email or Password Incorrect. Try again.",
-        });
-        return;
+      setMessage({
+        color: "text-red-500",
+        text: "Email or Password Incorrect. Try again.",
+      });
+      return;
     }
     if (status >= 400) {
       setMessage({

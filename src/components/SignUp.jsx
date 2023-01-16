@@ -37,27 +37,31 @@ const SignUp = ({ handleClick }) => {
         user_type: formData.accountType,
       };
       const res = await postUser(user);
-
+      console.log(res.data.message);
       // changeMessage(true);
       if (res.status === 201 || res.status === 200) {
         setShowModal(true);
+        setMessage("Registration Success, Please Check your Email");
 
-        setTimeout(() => {
+        if (user.user_type === "seller") {
+          setTimeout(() => {
+            handleClick("createStore");
+          }, 5000);
+        } else {
           handleClick("login");
-        }, 5000);
+        }
 
         return;
       }
     } catch (err) {
       console.log(err);
     }
+    setFormData("");
   }
 
   return (
     <div className="max-w-[400px] w-full mx-auto mb-20">
-      {showModal && (
-        <Modal text={"Registration Success, Please Check your Email"} />
-      )}
+      {showModal && <Modal text={message} />}
 
       <h1 className="text-center text-[28px] mb-[15px] font-normal">
         Register
@@ -139,7 +143,7 @@ const SignUp = ({ handleClick }) => {
         <button
           type="submit"
           // onClick={() => handleClick("getStarted")}
-          className="w-full py-3 bg-brand-primary text-white font-normal rounded-lg hover:bg-brand-secondary transition-colors duration-500"
+          className={`w-full py-3 bg-brand-primary text-white font-normal rounded-lg hover:bg-brand-secondary transition-colors duration-500`}
         >
           Register
         </button>
