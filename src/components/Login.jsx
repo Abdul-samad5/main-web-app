@@ -9,8 +9,6 @@ import axios from "axios";
 const Login = ({ handleClick }) => {
   // Initialize state for the login to enable user login
   const { userLoggedIn } = useContext(LoginContext);
-<<<<<<< HEAD
-=======
   const { onUserLogin } = useContext(UserContext);
   const [message, setMessage] = useState({ text: true });
 
@@ -28,11 +26,11 @@ const Login = ({ handleClick }) => {
       });
     }
     if (status === 401) {
-        setMessage({
-          color: "text-red-500",
-          text: "Email or Password Incorrect. Try again.",
-        });
-        return;
+      setMessage({
+        color: "text-red-500",
+        text: "Email or Password Incorrect. Try again.",
+      });
+      return;
     }
     if (status >= 400) {
       setMessage({
@@ -41,7 +39,6 @@ const Login = ({ handleClick }) => {
       });
     }
   }
->>>>>>> 454647e33158d773f752fb2da813e10f0c409458
 
   const [formData, setFormData] = useState({
     email: "",
@@ -49,13 +46,6 @@ const Login = ({ handleClick }) => {
     remember: false,
   });
 
-<<<<<<< HEAD
-  const [store, setStore] = useState("");
-
-  const { getUserToken, userData } = useContext(UserContext);
-
-=======
->>>>>>> 454647e33158d773f752fb2da813e10f0c409458
   const navigate = useNavigate();
 
   function handleChange(e) {
@@ -80,29 +70,12 @@ const Login = ({ handleClick }) => {
     try {
       const res = await userLogin(user);
       if (!res.statusText === "OK") return;
-<<<<<<< HEAD
-      // console.log(res);
-      if (res.status === 200 || res.status === 201) {
-        const token = res.data.data.access;
-        // console.log(res.data.data.refresh);
-
-        window.localStorage.setItem("token", JSON.stringify(token));
-        window.localStorage.setItem("isLoggedIn", true);
-
-        getUserToken(token);
-        console.log(res);
-
-        userLoggedIn();
-        navigate("/dashboard");
-      }
-=======
       console.log(res);
       changeMessage(res.status);
       onUserLogin(res.data.data);
       userLoggedIn();
       handleClick("createStore");
       navigate("/dashboard");
->>>>>>> 454647e33158d773f752fb2da813e10f0c409458
     } catch (err) {
       console.log(err);
       changeMessage(err.response.status);
