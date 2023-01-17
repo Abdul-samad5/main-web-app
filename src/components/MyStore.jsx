@@ -41,16 +41,7 @@ const MyStore = () => {
     yesterdayProfit: 5000,
   });
 
-<<<<<<< HEAD
   const [name, setName] = useState("");
-=======
-    // Chart.register(
-    //     LineElement,
-    //     CategoryScale,
-    //     PointElement,
-    //     LinearScale
-    // );
->>>>>>> 454647e33158d773f752fb2da813e10f0c409458
 
   const { userData } = useContext(UserContext);
   Chart.register(LineElement, CategoryScale, PointElement, LinearScale);
@@ -112,7 +103,6 @@ const MyStore = () => {
         Welcome to your dashboard, {name}
       </p>
 
-<<<<<<< HEAD
       <div className="flex justify-between w-full">
         <div className="w-1/2">
           <div className="flex justify-between">
@@ -306,150 +296,6 @@ const MyStore = () => {
             </svg>
           </span>
           <p className="text-sm">Status</p>
-=======
-        <div className="flex justify-between w-full">
-            <div className="w-full">
-              <div className="lg:flex justify-between">
-                  {/* To display the setup status of the store */}
-                  <div className="flex items-center gap-3 bg-blue-600 shadow-lg rounded-lg p-4 mx-1 w-full lg:w-1/4 mb-3">
-                    <div className="rounded-full bg-blue-100 w-[32px] h-[32px] flex justify-center items-center">
-                        <img src={chartStore} alt="" className="w-4 h-4" />
-                    </div>
-
-                    <div>
-                        <p className="text-xs text-white">Store setup status</p>
-                        <p className="font-bold text-white text-xl">Impressive</p>
-                    </div>
-                  </div>
-
-                  {/* Displays the total sales of the store so far */}
-                  <Total
-                    image={chartStore}
-                    type={"sales"}
-                    number={storeData.totalSales}
-                  ></Total>
-
-                  {/* Displays the total customers of the store so far */}
-                  <Total
-                    image={today_customer}
-                    type={"customers"}
-                    number={storeData.totalCustomers}
-                  ></Total>
-
-                  {/* Displays the total orders of the store so far */}
-                  <Total
-                    image={total_orders}
-                    type={"orders"}
-                    number={storeData.totalOrders}
-                  ></Total>
-              </div>
-            </div>
-
-            {/* Activity box of the My Store Component */}
-            {/* <div className="w-1/2 bg-white rounded-lg shadow-lg h-[200px] px-3 py-3 mb-3">
-                <div className="flex justify-between pr-8">
-                    <p className="text-black font-bold text-base">Activity</p>
-
-                    <div className="flex justify-between my-auto">
-                    <div className="flex justify-between mx-2">
-                        <span className="rounded-full w-3 h-3 bg-blue-400 mx-1"></span>
-                        <p className="text-xs mx-1">Sales</p>
-                    </div>
-                    <div className="flex justify-between mx-2">
-                        <span className="rounded-full w-3 h-3 mx-1 bg-yellow-600"></span>
-                        <p className="text-xs mx-1">Profit</p>
-                    </div>
-                    <div className="flex justify-between mx-2">
-                        <span className="rounded-full mx-1 w-3 h-3 bg-green-400"></span>
-                        <p className="text-xs mx-1">Growth</p>
-                    </div>
-                    <select className="bg-gray-100 rounded mx-1 my-auto w-20 text-xs">
-                        <option>This week</option>
-                        <option>Last week</option>
-                        <option>This month</option>
-                        <option>Last month</option>
-                    </select>
-                    </div>
-                </div>
-
-                <div className='w-full scale-y-[0.60] my-auto relative bottom-10'>
-                    <Line
-                        datasetIdKey='id'
-                        data={{
-                            labels: ['Mon', 'Tue', 'Wed', "Thu", "Fri", "Sat", "Sun"],
-                            datasets: [
-                                {
-                                    id: 1,
-                                    label: 'profit',
-                                    data: historyProfit,
-                                    borderColor: '#E07B02',
-                                    backgroundColor: '#E07B02',
-                                    tension: 0.4,
-                                    pointRadius: 0,
-                                    borderWidth: 2,
-                                },
-                                {
-                                    id: 2,
-                                    label: 'sales',
-                                    data: historySales,
-                                    borderColor: '#02A9F7',
-                                    backgroundColor: '#02A9F7',
-                                    tension: 0.4,
-                                    pointRadius: 0,
-                                    borderWidth: 2
-                                },
-                                {
-                                    id: 3,
-                                    label: 'growth',
-                                    data: historyGrowth,
-                                    borderColor: '#0DE0B1',
-                                    backgroundColor: '#0DE0B1',
-                                    tension: 0.4,
-                                    pointRadius: 0,
-                                    fill: '#0DE0B1',
-                                    borderWidth: 2
-                                },
-                            ],
-                        }}
-                        options={options}
-                    />
-                </div>
-            </div> */}
-        </div>
-
-        <div className="lg:flex justify-between">
-            <span className="lg:flex justify-between my-3 lg:my-0 w-full lg:w-1/2">
-              {/* Displays the total number of customers for the day */}
-              <Today
-                  image={today_customer}
-                  type={"customers"}
-                  number={storeData.todayCustomers}
-                  storeData={storeData}
-              />
-
-              {/* Displays the profit made for the day */}
-              <Today
-                  image={wallet}
-                  type={"profit"}
-                  number={storeData.todayProfit}
-                  storeData={storeData}
-              />
-
-              {/* Displays the sales made for the day */}
-              <Today
-                  image={chartStore}
-                  type={"sales"}
-                  number={storeData.todaySales}
-                  storeData={storeData}
-              />
-              </span>
-
-            <span className="bg-white rounded lg:w-1/2 shadow-lg px-3 py-3">
-              <p className="text-2xl font-bold text-black-800">
-                  Total conversion rates
-              </p>
-            </span>
->>>>>>> 454647e33158d773f752fb2da813e10f0c409458
         </div>
 
         <div className="mt-8">
@@ -594,7 +440,6 @@ const Status = ({ value }) => {
 };
 
 const Total = ({ image, type, number }) => {
-<<<<<<< HEAD
   return (
     <div className="flex items-center bg-white shadow-lg rounded-lg px-4 py-6 mx-1 w-1/2 mb-3 gap-3">
       <div className="rounded-full bg-blue-100 w-[32px] h-[32px] flex justify-center items-center">
@@ -616,30 +461,6 @@ const Total = ({ image, type, number }) => {
         <div className={type === "sales" ? "flex" : "hidden invisible"}>
           <img src={naira} alt="" className="w-4 h-4 my-auto" />
           <p className="font-semibold text-brand-black text-xl"> {number} </p>
-=======
-    return (
-      <div className="flex items-center bg-white shadow-lg w-full rounded-lg px-4 py-6 mx-1 lg:w-1/4 mb-3 gap-3">
-        <div className="rounded-full bg-blue-100 w-[32px] h-[32px] flex justify-center items-center">
-          <img src={image} alt="" className=" w-4 h-4 mx-auto" />
-        </div>
-  
-        <div>
-          <p className="text-sm opacity-50">{`Total ${type}`}</p>
-          <p
-            className={
-              type === "sales"
-                ? "hidden"
-                : "font-semibold text-brand-black text-xl"
-            }
-          >
-            {number}
-          </p>
-  
-          <div className={type === "sales" ? "flex" : "hidden invisible"}>
-            <img src={naira} alt="" className="w-4 h-4 my-auto" />
-            <p className="font-semibold text-brand-black text-xl"> {number} </p>
-          </div>
->>>>>>> 454647e33158d773f752fb2da813e10f0c409458
         </div>
       </div>
     </div>

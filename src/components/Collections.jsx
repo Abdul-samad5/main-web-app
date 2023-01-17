@@ -92,7 +92,8 @@ const Collections = () => {
 
   const onImageSelected = (event) => {
     const file = event.target.files[0];
-    console.log(file);
+    const formData = new FormData().append("file", file);
+    console.log(formData);
     const imageUri = URL.createObjectURL(file);
     // const reader = new FileReader();
     // reader.readAsDataURL(imageUri);
