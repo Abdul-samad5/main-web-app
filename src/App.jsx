@@ -10,12 +10,10 @@ import React, { useContext } from "react";
 import { Cart, Checkout } from "./store-components";
 import { cartContext } from "./context/CartContext";
 import { GetStarted, Login } from "./components";
-import { UserContext } from "./context/UserContext";
 
 function App() {
-  // const { isLoggedIn } = useContext(UserContext);
+  const { isLoggedIn } = useContext(LoginContext);
 
-  const isLoggedIn = window.localStorage.getItem("isLoggedIn");
   const PreventLogin = ({ children }) => {
     return isLoggedIn ? children : <Navigate to={"/"} />;
   };

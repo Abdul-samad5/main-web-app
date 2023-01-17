@@ -19,9 +19,8 @@ import {
   down_trend,
 } from "../assets";
 import axios from "axios";
-import { BASE_URL } from "../services/services";
-import { useContext } from "react";
-import { UserContext } from "../context/UserContext";
+import { getStoreInfo } from "../services/services";
+
 import { useEffect } from "react";
 
 function Icon({ icon }) {
@@ -43,7 +42,6 @@ const MyStore = () => {
 
   const [name, setName] = useState("");
 
-  const { userData } = useContext(UserContext);
   Chart.register(LineElement, CategoryScale, PointElement, LinearScale);
 
   // Stores the amount of sales of the previous days of the week and is to be rendered on the line graph below.
@@ -84,13 +82,9 @@ const MyStore = () => {
 
   useEffect(() => {
     async function fetchData() {
-      const config = {
-        headers: { Authorization: `Bearer ${userData}` },
-        "Content-Type": "application/json",
-      };
-      const res = await axios.get(`${BASE_URL}store/list`, config);
-      if (res) {
-        setName(res.data.stores[0].store_name);
+      const response = await getStoreInfo();
+      if (response) {
+        setName(response.data.stores[0].store_name);
       }
     }
     fetchData();
