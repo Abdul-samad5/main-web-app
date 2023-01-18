@@ -5,7 +5,7 @@ import { BASE_URL } from "../services/services";
 import { UserContext } from "../context/UserContext";
 
 const StoreDetails = () => {
-  const str = localStorage.getItem("data");
+  const str = sessionStorage.getItem("data");
   const data = JSON.parse(str);
   const [storeDetails, setStoreDetails] = React.useState({
     storeName: "",

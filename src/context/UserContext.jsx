@@ -7,7 +7,7 @@ const UserContextProvider = ({ children }) => {
 
   const onUserLogin = (token, data) => {
     window.localStorage.setItem("token", JSON.stringify(token));
-    window.localStorage.setItem("data", JSON.stringify(data));
+    window.sessionStorage.setItem("data", JSON.stringify(data));
   };
 
   const onUserLogOut = () => {

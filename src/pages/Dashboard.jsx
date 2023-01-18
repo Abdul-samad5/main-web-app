@@ -75,7 +75,7 @@ const Dashboard = () => {
     setIsNavOpen((prev) => !prev);
   }
   const { userLoggedOut } = useContext(LoginContext);
-  const { userData, onUserLogOut } = useContext(UserContext);
+  const { onUserLogOut } = useContext(UserContext);
 
   const navigate = useNavigate();
 

@@ -1,8 +1,7 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { noCollections } from "../assets";
 import { styles } from "../constants/index";
 import UserData from "./UserData";
-import { UserContext } from "../context/UserContext";
 import axios from "axios";
 import {
   getCollectionList,
@@ -15,6 +14,7 @@ const Collections = () => {
   // State to store the collections gotten from the API
   const [collections, setCollections] = useState([]);
   const [isVisible, setVisisble] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [newCollectionInfo, setCollectionInfo] = useState({
     collectionName: "",
     collectionImage: "",
@@ -31,7 +31,7 @@ const Collections = () => {
   const fetchCollections = async () => {
     try {
       const response = await getCollectionList();
-      console.log(response);
+      // console.log(response);
       setCollections(response.data.data);
       if (!response.statusText === "OK") return;
     } catch (error) {
@@ -60,9 +60,7 @@ const Collections = () => {
     try {
       const res = await addCollection(collection);
       if (!res.statusText === "OK") return;
-      console.log(res);
       setCollectionInfo((prev) => {
-        // Object.keys(prev).forEach(key => prev[key] = "");
         return (prev = { collectionName: "", collectionImage: "" });
       });
       setVisisble((prev) => !prev);
@@ -91,13 +89,9 @@ const Collections = () => {
     const formData = new FormData();
     formData.append("file", file);
     formData.append("upload_preset", "ktjtewmf");
-    // console.log(formData.getAll("file"));
     let reader = new FileReader();
-    reader.onloadend = () => {
-      // data.image = reader.result ;
-    };
+
     reader.readAsDataURL(event.target.files[0]);
-    // console.log(reader.result);
 
     async function uploadImg() {
       try {
@@ -105,23 +99,25 @@ const Collections = () => {
           "https://api.Cloudinary.com/v1_1/doqnvybu5/upload",
           formData
         );
-
-        const imageUri = res.data.secure_url;
-        console.log(imageUri);
-        setCollectionInfo((prev) => {
-          return {
-            ...prev,
-            collectionImage: imageUri,
-          };
-        });
+        if (!res) {
+          setLoading(true);
+          return;
+        } else {
+          setLoading(false);
+          const imageUri = res.data.secure_url;
+          setCollectionInfo((prev) => {
+            return {
+              ...prev,
+              collectionImage: imageUri,
+            };
+          });
+        }
       } catch (error) {
         console.log(error);
       }
     }
 
     uploadImg();
-
-    // console.log(imageUri.toString());
   };
 
   const handleChange = (event) => {
@@ -134,8 +130,6 @@ const Collections = () => {
   };
 
   const Children = ({ id, collectionName, product, no }) => {
-    const { userData } = useContext(UserContext);
-
     const deleteCollections = async () => {
       try {
         const res = await deleteCollection(id);
@@ -265,13 +259,17 @@ const Collections = () => {
               id="selected-image"
               src={newCollectionInfo.collectionImage}
             />
+
             <button
-              className={`${styles.button} mt-7 w-full ${
+              className={`${
+                loading ? "border p-4" : styles.button
+              } mt-7 w-full ${
                 newCollectionInfo.collectionName === ""
                   ? "opacity-50"
                   : "opacity-100"
               }`}
               onClick={handleAddCollection}
+              disabled={loading ? true : false}
             >
               Add new collection
             </button>

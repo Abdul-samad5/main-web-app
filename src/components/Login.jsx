@@ -72,8 +72,8 @@ const Login = ({ handleClick }) => {
       const data = response.data.data.user;
       console.log(data);
       const token = response.data.data.access;
-      onUserLogin(token, data);
       userLoggedIn();
+      onUserLogin(token, data);
       navigate("/dashboard");
     } catch (err) {
       console.log(err);
