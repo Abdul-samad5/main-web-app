@@ -9,10 +9,41 @@ import {
   createOrder,
   BASE_URL,
 } from "../services/services";
+import { logo } from "../assets";
 
 const Products = ({ handleAdd, handleDelete, cart }) => {
-  const [products, setProducts] = useState([]);
-  const { useData } = useContext(UserContext);
+  // const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState([
+    {
+      id: 1,
+      productLogo: logo,
+      productPrice: 2000,
+      productName: "Cloth",
+      productDescription: "A fine and sublime product for the ages."
+    },
+    {
+      id: 2,
+      productLogo: logo,
+      productPrice: 4000,
+      productName: "Indomie",
+      productDescription: "A fine and sublime product for the ages."
+    },
+    {
+      id: 3,
+      productLogo: logo,
+      productPrice: 10000,
+      productName: "Bedsheets",
+      productDescription: "A fine and sublime product for the ages."
+    },
+    {
+      id: 4,
+      productLogo: logo,
+      productPrice: 5000,
+      productName: "Tv Remote",
+      productDescription: "A fine and sublime product for the ages."
+    },
+  ]);
+  const { userData } = useContext(UserContext);
   async function fetchProducts() {
     const token = window.localStorage.getItem("token");
     const config = {
@@ -34,7 +65,7 @@ const Products = ({ handleAdd, handleDelete, cart }) => {
       purchase_type: "paystack",
     };
     try {
-      const res = await createOrder(data);
+      const res = await axios.post(`${BASE_URL}buyer/order_history/create/`, data, `${userData.access}`);
       if (!res.status === "OK") return;
       console.log(res);
     } catch (err) {
@@ -46,8 +77,8 @@ const Products = ({ handleAdd, handleDelete, cart }) => {
     fetchProducts();
   }, []);
   return (
-    <div className="w-full lg:px-10 md:px-5 px-10 z-1 py-5 text-center">
-      <p className="text-black text-2xl">OUR PR0DUCTS</p>
+    <div className="w-full lg:px-0 mt-8 md:px-5 px-10 z-1 py-5">
+      <p className="text-black font-bold text-2xl">OUR PR0DUCTS</p>
       <div className="flex flex-wrap justify-between mt-10 w-full">
         {products.map((product, index) => {
           return (
@@ -59,6 +90,7 @@ const Products = ({ handleAdd, handleDelete, cart }) => {
                 productLogo={product.productLogo}
                 productName={product.productName}
                 productPrice={product.productPrice}
+                productDescription={product.productDescription}
                 id={product.id}
                 addToCart={handleAdd}
                 deleteFromCart={handleDelete}
@@ -82,6 +114,7 @@ const DisplayProducts = ({
   deleteFromCart,
   cart,
   dataAdd,
+  productDescription
 }) => {
   const [displayToggled, setDisplayToggled] = React.useState(false);
   const [added, setAdded] = React.useState(false);
@@ -95,17 +128,18 @@ const DisplayProducts = ({
     dataAdd();
     setAdded(true);
   };
+
   return (
-    <div className="shadow-lg group rounded w-full border z-1 border-slate-200 mb-5">
-      <div className={`w-full h-[300px]`}>
-        <img src={productLogo} alt="Logo" className="w-full h-full" />
+    <div className="group rounded w-full z-1 mb-10">
+      <div className={`w-full h-[250px] flex justify-center align-center rounded shadow-base border border-slate-100 bg-gray-100`}>
+        <img src={productLogo} alt="Logo" className="w-20 my-auto h-20 relative" />
       </div>
 
       <div
         onClick={() => {
           setDisplayToggled((prev) => !prev);
         }}
-        className="invisible group-hover:visible relative group bottom-[280px] left-5 shadow-lg grid place-content-center bg-white hover:bg-brand-primary w-10 h-10 rounded-full"
+        className="group-hover:visible relative group bottom-[240px] left-[200px] shadow-lg grid place-content-center bg-white hover:bg-brand-primary w-8 h-8 rounded-full"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -116,7 +150,7 @@ const DisplayProducts = ({
         </svg>
       </div>
 
-      <div
+      {/* <div
         className={
           displayToggled
             ? "h-full grid overflow-hidden place-content-center w-full top-0 right-0 left-0 bottom-0 z-30 outline-none fixed"
@@ -137,6 +171,8 @@ const DisplayProducts = ({
             </svg>
           </div>
 
+
+          Product Details 
           <div className="flex justify-between w-full">
             <div className="w-2/5 mx-auto text-center ">
               <img
@@ -163,8 +199,9 @@ const DisplayProducts = ({
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
+        {/* Product added pop-up */}
       <div
         className={
           added
@@ -219,28 +256,29 @@ const DisplayProducts = ({
         </div>
       </div>
 
-      <div className="bg-gray-100 py-3 px-6">
-        <div className="text-center bg-gray-100 w-full mb-3">
-          <p className="text-sm text-black">{productName}</p>
+      <div className="">
+        <div className="w-full flex justify-between px-2">
+          <p className="text-xl font-bold text-black">{productName}</p>
           {/* <p className='text-base text-brand-primary font-semibold'>{`#${productPrice}`}</p> */}
-          <span className="flex my-2 lg:my-auto mx-auto w-full items-center justify-center">
+          <div className="flex lg:my-auto ">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="w-3 h-3 fill-black my-auto"
+              className="w-3 h-3 fill-black relative top-1.5"
               viewBox="0 0 448 512"
             >
               <path d="M122.6 46.3c-7.8-11.7-22.4-17-35.9-12.9S64 49.9 64 64V256H32c-17.7 0-32 14.3-32 32s14.3 32 32 32H64V448c0 17.7 14.3 32 32 32s32-14.3 32-32V320H228.2l97.2 145.8c7.8 11.7 22.4 17 35.9 12.9s22.7-16.5 22.7-30.6V320h32c17.7 0 32-14.3 32-32s-14.3-32-32-32H384V64c0-17.7-14.3-32-32-32s-32 14.3-32 32V256H262.5L122.6 46.3zM305.1 320H320v22.3L305.1 320zM185.5 256H128V169.7L185.5 256z" />
             </svg>
-            <p className="text-sm my-auto">{productPrice}</p>
-          </span>
+            <p className="text-lg font-bold text-black">{productPrice}</p>
+            <p  className="text-sm text-black font-bold relative top-0.5">.00</p>
+          </div>
         </div>
-
+        <p className="text-black flex justify-start ml-2 opacity-60 text-xs my-2">{productDescription}</p>
         {cart.filter((item) => item.id === id).length === 0 ? (
           <button
             onClick={add}
-            className="w-full grid place-content-center text-white mx-auto py-3 text-center px-4 bg-brand-primary hover:bg-brand-secondary"
+            className="w-auto ml-1 flex transition-all duration-400 justify-start my-3 border border-black rounded-full text-black py-1 text-center px-4 hover:border-none hover:bg-brand-primary hover:text-white"
           >
-            <div className="flex mx-auto pl-3">
+            {/* <div className="flex mx-auto">
               <div className="my-auto mr-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -251,7 +289,8 @@ const DisplayProducts = ({
                 </svg>
               </div>
               <span className="my-auto">Add to cart</span>
-            </div>
+            </div> */}
+            <span className="my-auto">Add to cart</span>
           </button>
         ) : (
           <button

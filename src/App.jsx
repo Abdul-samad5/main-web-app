@@ -13,14 +13,18 @@ import { GetStarted, Login } from "./components";
 import { UserContext } from "./context/UserContext";
 
 function App() {
-  // const { isLoggedIn } = useContext(UserContext);
+  const { isLoggedIn } = useContext(LoginContext);
 
-  const isLoggedIn = window.localStorage.getItem("isLoggedIn");
+  // const isLoggedIn = window.localStorage.getItem("isLoggedIn");
+  console.log(isLoggedIn);
   const PreventLogin = ({ children }) => {
+    console.log(isLoggedIn);
     return isLoggedIn ? children : <Navigate to={"/"} />;
   };
   const { cart, deleteFromCart, clearCart, changeQuantity } =
     useContext(cartContext);
+
+
   return (
     <Router>
       <Routes>
@@ -36,9 +40,9 @@ function App() {
         <Route
           path="/store-front"
           element={
-            <PreventLogin>
+            
               <StoreFront />
-            </PreventLogin>
+            
           }
         />
         <Route
@@ -52,27 +56,29 @@ function App() {
         <Route
           path="/store-front/view-cart"
           element={
-            <PreventLogin>
+            
               <Cart
                 cart={cart}
                 deleteFromCart={deleteFromCart}
                 clearCart={clearCart}
                 changeQuantity={changeQuantity}
               />
-            </PreventLogin>
+            
           }
         />
         <Route
           path="/store-front/checkout"
           element={
-            <PreventLogin>
-              <Checkout cart={cart} />
-            </PreventLogin>
+            <Checkout cart={cart} />
           }
         />
       </Routes>
     </Router>
   );
 }
+
+{/* <PreventLogin>
+              <Checkout cart={cart} />
+            </PreventLogin> */}
 
 export default App;

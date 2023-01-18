@@ -2,9 +2,8 @@ import { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { LoginContext } from "../context/LoginContext";
 import { styles } from "../constants";
-import { BASE_URL, userLogin } from "../services/services";
+import { userLogin } from "../services/services";
 import { UserContext } from "../context/UserContext";
-import axios from "axios";
 
 const Login = ({ handleClick }) => {
   // Initialize state for the login to enable user login
@@ -74,7 +73,7 @@ const Login = ({ handleClick }) => {
       changeMessage(res.status);
       onUserLogin(res.data.data);
       userLoggedIn();
-      handleClick("createStore");
+      // handleClick("createStore");
       navigate("/dashboard");
     } catch (err) {
       console.log(err);

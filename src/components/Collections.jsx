@@ -53,7 +53,7 @@ const Collections = () => {
     event.preventDefault();
     let collection = {
       name: newCollectionInfo.collectionName,
-      image: newCollectionInfo.collectionImage,
+      image: JSON.stringify(newCollectionInfo.collectionImage),
     };
     console.log();
 
@@ -66,7 +66,6 @@ const Collections = () => {
       if (!res.statusText === "OK") return;
       console.log(res);
       setCollectionInfo((prev) => {
-        // Object.keys(prev).forEach(key => prev[key] = "");
         return (prev = { collectionName: "", collectionImage: "" });
       });
       setVisisble((prev) => !prev);
@@ -92,17 +91,13 @@ const Collections = () => {
 
   const onImageSelected = (event) => {
     const file = event.target.files[0];
-    console.log(file);
     const imageUri = URL.createObjectURL(file);
-    // const reader = new FileReader();
-    // reader.readAsDataURL(imageUri);
-    // console.log(reader);
 
     let reader = new FileReader();
     reader.onloadend = () => {
-      // data.image = reader.result ;
+      // data.image = reader.result;
     };
-    reader.readAsDataURL(event.target.files[0]);
+    reader.readAsDataURL(file);
     console.log(reader.result);
 
     setCollectionInfo((prev) => {
@@ -111,8 +106,6 @@ const Collections = () => {
         collectionImage: imageUri,
       };
     });
-
-    // console.log(imageUri.toString());
   };
 
   const handleChange = (event) => {
