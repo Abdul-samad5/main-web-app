@@ -63,7 +63,7 @@ const updateProduct = (id, product) =>
   axios.put(`${BASE_URL}product/update/${id}`, product, config);
 
 const addCollection = (collection) =>
-  axios.post(`${BASE_URL}product/collection/`, collection, config);
+  axios.post(`${BASE_URL}product/collection`, collection, config);
 
 const deleteCollection = (id) =>
   axios.delete(`${BASE_URL}product/collection/delete/${id}`, config);
@@ -75,7 +75,7 @@ const getCollection = (id) =>
   axios.get(`${BASE_URL}product/collection/${id}`, config);
 
 const getCollectionList = () =>
-  axios.get(`${BASE_URL}product/collection/`, config);
+  axios.get(`${BASE_URL}product/collections/list`, config);
 
 const getProductItemUnit = () =>
   axios.get(`${BASE_URL}product/itemunit/`, config);

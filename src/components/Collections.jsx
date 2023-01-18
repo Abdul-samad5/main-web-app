@@ -4,7 +4,11 @@ import { styles } from "../constants/index";
 import UserData from "./UserData";
 import { UserContext } from "../context/UserContext";
 import axios from "axios";
-import { BASE_URL } from "../services/services";
+import {
+  getCollectionList,
+  addCollection,
+  deleteCollection,
+} from "../services/services";
 
 const details = ["Collection name", "Product", "Action"];
 const Collections = () => {
@@ -24,16 +28,12 @@ const Collections = () => {
     });
   };
 
-  const { userData } = useContext(UserContext);
-
   const fetchCollections = async () => {
     try {
-      const res = await axios.get(`${BASE_URL}product/collections/list`, {
-        headers: { Authorization: `Bearer ${userData.access}` },
-      });
-      console.log(res);
-      setCollections(res.data.data);
-      if (!res.statusText === "OK") return;
+      const response = await getCollectionList();
+      console.log(response);
+      setCollections(response.data.data);
+      if (!response.statusText === "OK") return;
     } catch (error) {
       console.log(error);
     }
@@ -58,11 +58,7 @@ const Collections = () => {
     console.log();
 
     try {
-      const res = await axios.post(
-        `${BASE_URL}product/collection`,
-        collection,
-        { headers: { Authorization: `Bearer ${userData.access}` } }
-      );
+      const res = await addCollection(collection);
       if (!res.statusText === "OK") return;
       console.log(res);
       setCollectionInfo((prev) => {
@@ -92,26 +88,38 @@ const Collections = () => {
 
   const onImageSelected = (event) => {
     const file = event.target.files[0];
-    const formData = new FormData().append("file", file);
-    console.log(formData);
-    const imageUri = URL.createObjectURL(file);
-    // const reader = new FileReader();
-    // reader.readAsDataURL(imageUri);
-    // console.log(reader);
-
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "ktjtewmf");
+    // console.log(formData.getAll("file"));
     let reader = new FileReader();
     reader.onloadend = () => {
       // data.image = reader.result ;
     };
     reader.readAsDataURL(event.target.files[0]);
-    console.log(reader.result);
+    // console.log(reader.result);
 
-    setCollectionInfo((prev) => {
-      return {
-        ...prev,
-        collectionImage: imageUri,
-      };
-    });
+    async function uploadImg() {
+      try {
+        const res = await axios.post(
+          "https://api.Cloudinary.com/v1_1/doqnvybu5/upload",
+          formData
+        );
+
+        const imageUri = res.data.secure_url;
+        console.log(imageUri);
+        setCollectionInfo((prev) => {
+          return {
+            ...prev,
+            collectionImage: imageUri,
+          };
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    uploadImg();
 
     // console.log(imageUri.toString());
   };
@@ -130,10 +138,7 @@ const Collections = () => {
 
     const deleteCollections = async () => {
       try {
-        const res = await axios.delete(
-          `${BASE_URL}product/collection/delete/${id}`,
-          { headers: { Authorization: `Bearer ${userData.access}` } }
-        );
+        const res = await deleteCollection(id);
         console.log(res);
         setRender((prev) => (prev = !prev));
       } catch (err) {
@@ -194,7 +199,7 @@ const Collections = () => {
         data={collections}
         children={Children}
         handleNext={handleNext}
-      ></UserData>
+      />
 
       <div
         className={
@@ -258,11 +263,7 @@ const Collections = () => {
                   : "block w-full h-30 rounded"
               }
               id="selected-image"
-              src={
-                newCollectionInfo.collectionImage === ""
-                  ? ""
-                  : newCollectionInfo.collectionImage
-              }
+              src={newCollectionInfo.collectionImage}
             />
             <button
               className={`${styles.button} mt-7 w-full ${
