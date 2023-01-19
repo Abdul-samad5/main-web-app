@@ -136,8 +136,8 @@ const Collections = () => {
     return (
       <div className="flex justify-between">
         <p className={`${styles.valueStyle}`}>{no}</p>
-        <p className={`${styles.valueStyle}`}>{collectionName}</p>
-        <p className={`${styles.valueStyle}`}>{product}</p>
+        <p className={`${styles.valueStyle} relative left-6`}>{collectionName}</p>
+        <img src={product} alt="product" className="w-8 rounded h-8 relative left-16"/>
         <div
           className="flex h-auto mt-2 group hover:cursor-pointer w-auto justify-between"
           onClick={deleteCollections}
