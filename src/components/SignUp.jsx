@@ -45,12 +45,9 @@ const SignUp = ({ handleClick }) => {
 
         if (user.user_type === "seller") {
           setTimeout(() => {
-            handleClick("createStore");
+            handleClick("login");
           }, 5000);
-        } else {
-          handleClick("login");
         }
-
         return;
       }
     } catch (err) {

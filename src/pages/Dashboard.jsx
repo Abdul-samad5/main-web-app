@@ -99,7 +99,8 @@ const Dashboard = () => {
     async function fetchData() {
       const response = await getStoreInfo();
       if (response) {
-        setStoreName(response.data.stores[0].store_name);
+        const store_name = response.data["Store Details"][0].store_name;
+        setStoreName(store_name);
       }
     }
     fetchData();
@@ -124,7 +125,9 @@ const Dashboard = () => {
             />
           </div>
           <div className="border-b flex items-center justify-between p-4 mb-[10px]">
-            <h1 className="font-bold text-[16px] ">{`${storeName}'s`} Store</h1>
+            <h1 className="font-bold text-[16px] ">
+              {`${storeName}'s Store`}{" "}
+            </h1>
             <DbIcon src={edit} />
           </div>
           <div

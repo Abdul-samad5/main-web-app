@@ -36,6 +36,10 @@ const UserData = ({
     });
   };
 
+  const handleSearchChange = (e) => {
+    setSearchValue(e.target.value);
+  };
+
   return (
     <div className="rounded shadow-xl w-full lg:px-5 px-2 py-3 lg:mx-auto my-auto h-auto">
       {/* Search Bar */}
@@ -46,7 +50,7 @@ const UserData = ({
             className={`${styles.inputBox} pl-9 pr-3 w-full`}
             type="text"
             value={searchValue}
-            onChange={search}
+            onChange={handleSearchChange}
           />
           <svg
             xmlns="http://www.w3.org/2000/svg"

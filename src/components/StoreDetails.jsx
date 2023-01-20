@@ -1,19 +1,17 @@
 import axios from "axios";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { styles } from "../constants/index";
-import { BASE_URL } from "../services/services";
+import { BASE_URL, getStoreInfo } from "../services/services";
 import { UserContext } from "../context/UserContext";
 
 const StoreDetails = () => {
-  const str = sessionStorage.getItem("data");
-  const data = JSON.parse(str);
   const [storeDetails, setStoreDetails] = React.useState({
     storeName: "",
     tagLine: "",
     storeDesc: "",
     storeLogo: "",
     storeCurrency: "",
-    storeEmail: data.email,
+    storeEmail: "",
     storeContactNumber: "",
   });
 
@@ -71,6 +69,20 @@ const StoreDetails = () => {
     saveSettings();
   }
 
+  useEffect(() => {
+    async function fetchData() {
+      const response = await getStoreInfo();
+      if (response) {
+        const store_name = response.data["Store Details"][0].store_name;
+        const store_email = response.data["Email"];
+        setStoreDetails((prev) => {
+          return { ...prev, storeName: store_name, storeEmail: store_email };
+        });
+      }
+    }
+    fetchData();
+  }, []);
+
   return (
     <>
       <p className={`${styles.componentHeader}`}>Store Settings</p>
@@ -87,6 +99,7 @@ const StoreDetails = () => {
               <input
                 placeholder="Michelline"
                 onChange={handleChange}
+                disabled={storeDetails.storeName ? true : false}
                 value={storeDetails.storeName}
                 className={`${styles.inputBox} px-3 w-11/12`}
                 type="text"
