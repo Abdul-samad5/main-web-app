@@ -14,6 +14,7 @@ const BankInformation = () => {
     });
     const { userData } = useContext(UserContext);
     const [added, setAdded] = useState(false);
+    const [banks, setBanks] = useState([]);
 
     const handleChange = (event) => {
         const { value, name } = event.target;
@@ -62,6 +63,16 @@ const BankInformation = () => {
             console.log(error);
         }
     }
+
+    useEffect(() => {
+        axios.get("https://raw.githubusercontent.com/tomiiide/nigerian-banks/master/banks.json")
+            .then((res) => {
+                console.log(res);
+                setBanks(res.data);
+            }).catch(err => {
+                console.log(err);
+            });
+    }, []);
     
     useEffect(() => {
         fetchBankDetails();
@@ -117,9 +128,12 @@ const BankInformation = () => {
                         <div className='my-4'>
                             <label htmlFor='bankName' className='text-base text-black opacity-60 mb-3'>Bank Name</label>
                             <select className={`${styles.inputBox} w-full`} name="bankName" id="bankName" onChange={handleChange}>
-                                <option>
+                                <option disabled>
                                     Choose an option
                                 </option>
+                                {banks.map((bank, index) => {
+                                    return <option key={index} value={bank.name}>{bank.name}</option>
+                                })}
                             </select>
                         </div>
                         <div className='my-6 lg:flex w-full'>
