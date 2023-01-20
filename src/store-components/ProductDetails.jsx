@@ -66,9 +66,6 @@ const ProductDetails = () => {
         <div>
             <Navbar product_details={cart} amount_in_cart={cartLength} handleDelete={deleteFromCart} storeName={"emmystore"}/>
             <div className='px-20 py-10 lg:flex lg:justify-between lg:gap-10 w-full h-auto'>
-                {/* <div className='lg:w-1/2 w-full'>
-                    <img src={logo} className="rounded-lg shadow-sm w-10/12 border border-gray-200 h-[450px]"/>
-                </div> */}
 
                 <div className={`lg:w-1/2 w-full h-[450px] flex justify-center align-center rounded-lg shadow-lg border border-slate-100 bg-gray-100`}>
                     

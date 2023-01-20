@@ -28,9 +28,9 @@ const TransactionHistory = () => {
   // async function fetchTransactions() {
   //     try {
   //       const res = await axios.get(`${BASE_URL}buyer/order_history/records`, { headers: { Authorization: `Bearer ${userData.access}`} });
-  //       if(res.statusText !== "OK") return;
   //       console.log(res);
   //       setTransactionHistory(res.data.data);
+  //       if(res.statusText !== "OK") return;
   //     } catch(error) {
   //       console.log(error);
   //     }

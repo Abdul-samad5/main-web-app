@@ -17,15 +17,15 @@ function Icon({ icon }) {
 
 const MyStore = () => {
   const [storeData, setStoreData] = React.useState({
-    totalSales: "2,300",
-    totalCustomers: 15,
-    totalOrders: 21,
-    todayCustomers: 12,
-    yesterdayCustomers: 10,
-    todaySales: 100,
-    yesterdaySales: 50,
-    todayProfit: 20000,
-    yesterdayProfit: 5000,
+    totalSales: 0,
+    totalCustomers: 0,
+    totalOrders: 0,
+    todayCustomers: 0,
+    yesterdayCustomers: 0,
+    todaySales: 0,
+    yesterdaySales: 0,
+    todayProfit: 0,
+    yesterdayProfit: 0,
   });
 
     // Stores the amount of sales of the previous days of the week and is to be rendered on the line graph below.
@@ -37,7 +37,7 @@ const MyStore = () => {
     // Stores the amount of sales of the previous days of the week and is to be rendered on the line graph below.
     const [historyGrowth, setHistoryGrowth] = useState([6, 5, 4, 6, 9, 3, 2]);
 
-    const [productSales, setProductSales] = React.useState([0, 3, 4, 5, 6, 7, 8, 9, 8]);
+    const [productSales, setProductSales] = React.useState([]);
 
   return (
     <div>
@@ -173,10 +173,10 @@ const MyStore = () => {
               <img
                   src={product}
                   alt="No customer found"
-                  className={productSales === 0 ? "mx-auto w-auto h-auto" : "hidden"}
+                  className={productSales.length === 0 ? "mx-auto w-auto h-auto" : "hidden"}
               />
               <p
-                  className={productSales === 0 ? "text-base text-center" : "hidden"}
+                  className={productSales.length === 0 ? "text-base text-center" : "hidden"}
               >
                   You have no product sales yet!
               </p>
@@ -251,6 +251,7 @@ const Today = ({ image, type, number, storeData }) => {
 
 const Rate = ({ yesterday_value, today_value }) => {
   const calculateRate = () => {
+    if(yesterday_value === 0 && today_value === 0) return 0;
     let change = today_value - yesterday_value;
     var rate = change / yesterday_value;
     return rate * 100;
