@@ -35,12 +35,12 @@ const CartContextProvider = ({ children }) => {
     const addToCart = (id) => {
         const item = cart.find(p => p.id === id);
         if(typeof item === 'undefined') {
-        const product = products.find(p => p.id === id);
-        product.quantity = 1;
-        cart.push(product)
-        console.log(product);
-        setCart(cart);
-        setCartLength(() => cart.length);
+            const product = products.find(p => p.id === id);
+            product.quantity = 1;
+            cart.push(product)
+            console.log(product);
+            setCart(cart);
+            setCartLength(() => cart.length);
         } else {
             alert("Already added to cart.");
         }

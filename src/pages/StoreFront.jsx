@@ -14,7 +14,7 @@ const StoreFront = () => {
   useEffect(() => {
     async function fetchData() {
       const config = {
-        headers: { Authorization: `Bearer ${userData}` },
+        headers: { Authorization: `Bearer ${userData.access}` },
         "Content-Type": "application/json",
       };
       const res = await axios.get(`${BASE_URL}store/list`, config);
@@ -33,13 +33,15 @@ const StoreFront = () => {
         handleDelete={deleteFromCart}
         storeName={name}
       />
-      <Hero storeLogo={logo} storeName={name} />
-      <Products
-        products={products}
-        handleAdd={addToCart}
-        cart={cart}
-        handleDelete={deleteFromCart}
-      />
+      <div className="lg:px-16 px-3">
+        <Hero storeLogo={logo} storeName={name} />
+        <Products
+          products={products}
+          handleAdd={addToCart}
+          cart={cart}
+          handleDelete={deleteFromCart}
+        />
+      </div>
       <Footer />
     </div>
   );

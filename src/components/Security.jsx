@@ -23,8 +23,8 @@ const Security = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        if(changePassword === repeatPassword) {
-            axios.put(`${BASE_URL}auth/reset-password-confirm/${userData.id}/${userData.access}`, {
+        if(securityData.changePassword === securityData.repeatPassword) {
+            axios.put(`${BASE_URL}auth/reset-password-confirm/${userData.user.user_id}/${userData.access}`, {
                 'password': securityData.changePassword
             }).then((response) => {
                 console.log(response);

@@ -10,15 +10,22 @@ import React, { useContext } from "react";
 import { Cart, Checkout } from "./store-components";
 import { cartContext } from "./context/CartContext";
 import { GetStarted, Login } from "./components";
+import ProductDetails from "./store-components/ProductDetails";
 
 function App() {
   const { isLoggedIn } = useContext(LoginContext);
 
+
+  // const isLoggedIn = window.localStorage.getItem("isLoggedIn");
+  console.log(isLoggedIn);
   const PreventLogin = ({ children }) => {
+    console.log(isLoggedIn);
     return isLoggedIn ? children : <Navigate to={"/"} />;
   };
   const { cart, deleteFromCart, clearCart, changeQuantity } =
     useContext(cartContext);
+
+
   return (
     <Router>
       <Routes>
@@ -34,9 +41,9 @@ function App() {
         <Route
           path="/store-front"
           element={
-            <PreventLogin>
+            
               <StoreFront />
-            </PreventLogin>
+            
           }
         />
         <Route
@@ -50,27 +57,35 @@ function App() {
         <Route
           path="/store-front/view-cart"
           element={
-            <PreventLogin>
+            
               <Cart
                 cart={cart}
                 deleteFromCart={deleteFromCart}
                 clearCart={clearCart}
                 changeQuantity={changeQuantity}
               />
-            </PreventLogin>
+            
           }
         />
         <Route
           path="/store-front/checkout"
           element={
-            <PreventLogin>
-              <Checkout cart={cart} />
-            </PreventLogin>
+            <Checkout cart={cart} />
+          }
+        />
+        <Route
+          path="/store-front/:productId"
+          element={
+            <ProductDetails />
           }
         />
       </Routes>
     </Router>
   );
 }
+
+{/* <PreventLogin>
+              <Checkout cart={cart} />
+            </PreventLogin> */}
 
 export default App;

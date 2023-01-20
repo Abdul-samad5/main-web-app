@@ -8,9 +8,15 @@ const LoginProvider = ({ children }) => {
 
   function userLoggedIn() {
     setIsLoggedIn(true);
+    window.localStorage.setItem("isLoggedIn", true);
   }
 
   function userLoggedOut() {
+
+    window.localStorage.clear("isLoggedIn");
+    window.localStorage.clear("token");
+    setIsLoggedIn(false);
+    window.localStorage.setItem("isLoggedIn", false);
     setIsLoggedIn(false);
     Cookies.remove("_tksr");
   }

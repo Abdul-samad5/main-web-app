@@ -1,14 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { useEffect } from 'react';
 import { styles } from '../constants';
-// import { plus } from '../assets';
+import { BASE_URL } from '../services/services';
+import { UserContext } from "../context/UserContext";
+import axios from 'axios';
 
 const BankInformation = () => {
-    const [acctDetails, setAcctDetails] = useState([1]);
+    const [acctDetails, setAcctDetails] = useState();
     const [formDetails, setFormDetails] = useState({
         bankName: "",
         accoutNumber: "",
         accountName: ""
     });
+    const { userData } = useContext(UserContext);
+    const [added, setAdded] = useState(false);
 
     const handleChange = (event) => {
         const { value, name } = event.target;
@@ -17,19 +22,68 @@ const BankInformation = () => {
         });
     }
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-    }
 
-    const [added, setAdded] = useState(false);
+        const data = {
+            bank_name: formDetails.bankName,
+            account_number: Number(formDetails.accoutNumber),
+            account_name: formDetails.accountName
+        }
+
+        try {
+            const res = await axios.post(`${BASE_URL}store_settings/bank_info/`, data, {
+                headers: { Authorization: `Bearer ${userData.access}` },
+            });
+            console.log(res);
+            setAdded(false);
+            setFormDetails((prev) => {
+                return prev = {
+                    bankName: "",
+                    accoutNumber: "",
+                    accountName: ""
+                }
+            });
+            if (!res.statusText === "OK") return;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    
+    async function fetchBankDetails() {
+        try {
+            const res = await axios.get(`${BASE_URL}store_settings/bank_info/list`, {
+                headers: { Authorization: `Bearer ${userData.access}` },
+            });
+            console.log(res);
+            setAcctDetails(res.data.data);
+            if (!res.statusText === "OK") return;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    
+    useEffect(() => {
+        fetchBankDetails();
+    }, [added]);
+
+    const handleDelete = async (id) =>{
+        try {
+            const res = await axios.delete(`${BASE_URL}store_settings/bank_info/delete/${id}`, {
+                headers: { Authorization: `Bearer ${userData.access}` },
+            });
+            console.log(res);
+            setAdded(false);
+            if (!res.statusText === "OK") return;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    
     return (
         <div className='px-10 py-10'>
-            
             <button className={`${styles.button} w-auto float-right`} onClick={() => setAdded(!added)}>
-                {/* <span className='flex'> */}
-                    {/* <img src={plus} alt="" className='w-4 h-5'/> */}
-                    <p className='text-white text-xs w-auto'>New account</p>
-                {/* </span> */}
+                <p className='text-white text-xs w-auto'>New account</p>
             </button>
             <div className='py-20'>
                 <div className='flex justify-between px-4 py-4 bg-gray-100 border-b border-black'>
@@ -38,19 +92,15 @@ const BankInformation = () => {
                     <p className='font-semibold text-lg text-black'>Account name</p>
                     <p className='font-semibold text-lg text-black invisible'>Action</p>
                 </div>
-                {acctDetails.map((item) => {
-                    return (
-                        <div className='flex justify-between px-4 py-4 '>
-                            <p className='text-base text-black opacity-70'>GT Bank Plc.</p>
-                            <p className='text-base text-black opacity-70'>0123456789</p>
-                            <p className='text-base text-black opacity-70'>Omole Daniel</p>
-                            <div className='my-auto flex hover:cursor-pointer group'>
-                                <p className="text-xs mx-2 group-hover:text-brand-secondary">Delete bank details</p>
-                                <svg xmlns="http://www.w3.org/2000/svg" className='w-3 h-3 group-hover:fill-brand-secondary fill-brand-primary hover:fill-brand-secondary' viewBox="0 0 448 512"><path d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0H284.2c12.1 0 23.2 6.8 28.6 17.7L320 32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 96 0 81.7 0 64S14.3 32 32 32h96l7.2-14.3zM32 128H416V448c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V128zm96 64c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16z"/></svg>
-                            </div>
-                        </div>
-                    )
-                })}
+                <div className='flex justify-between px-4 py-4'>
+                    <p className='text-base text-black opacity-70'>{acctDetails?.bank_name}</p>
+                    <p className='text-base text-black opacity-70'>{acctDetails?.account_number}</p>
+                    <p className='text-base text-black opacity-70'>{acctDetails?.account_name}</p>
+                    <div className='my-auto flex hover:cursor-pointer group' onClick={() => handleDelete(acctDetails?.id)}>
+                        <p className="text-xs mx-2 group-hover:text-brand-secondary">Delete bank details</p>
+                        <svg xmlns="http://www.w3.org/2000/svg" className='w-3 h-3 group-hover:fill-brand-secondary fill-brand-primary hover:fill-brand-secondary' viewBox="0 0 448 512"><path d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0H284.2c12.1 0 23.2 6.8 28.6 17.7L320 32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 96 0 81.7 0 64S14.3 32 32 32h96l7.2-14.3zM32 128H416V448c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V128zm96 64c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16z"/></svg>
+                    </div>
+                </div>
             </div>
             
             <div className={added ? 'h-full grid overflow-hidden place-content-center w-full top-0 right-0 left-0 bottom-0 z-30 outline-none fixed' : ' -translate-x-full hidden'}>
@@ -83,10 +133,8 @@ const BankInformation = () => {
                             </div>
                         </div>
 
-                        <button  className={`${styles.button} w-auto`}>Add bank account</button>
+                        <button  className={`${styles.button} w-auto`} type="submit">Add bank account</button>
                     </form>
-
-                    
                 </div>
             </div>
         </div>

@@ -2,7 +2,7 @@ import React from 'react';
 
 const Hero = ({storeLogo, storeName}) => {
   return (
-    <div className='w-full z-1 py-12 grid place-content-center bg-brand-primary h-auto'>
+    <div className='w-full z-1 rounded-lg mt-4 py-12 grid place-content-center bg-brand-primary h-auto'>
       <div className='w-auto lg:flex lg:justify-between grid place-content-center'>
         <img src={storeLogo} alt="Store Logo" className='rounded-full mx-auto shadow-lg h-[200px] md:w-1/2 lg:h-[200px] lg:mx-3 w-1/2 lg:w-1/3'/>
 

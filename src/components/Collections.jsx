@@ -53,7 +53,7 @@ const Collections = () => {
     event.preventDefault();
     let collection = {
       name: newCollectionInfo.collectionName,
-      image: newCollectionInfo.collectionImage,
+      image: JSON.stringify(newCollectionInfo.collectionImage),
     };
     console.log();
 
@@ -86,6 +86,7 @@ const Collections = () => {
 
   const onImageSelected = (event) => {
     const file = event.target.files[0];
+
     const formData = new FormData();
     formData.append("file", file);
     formData.append("upload_preset", "ktjtewmf");
@@ -143,8 +144,8 @@ const Collections = () => {
     return (
       <div className="flex justify-between">
         <p className={`${styles.valueStyle}`}>{no}</p>
-        <p className={`${styles.valueStyle}`}>{collectionName}</p>
-        <p className={`${styles.valueStyle}`}>{product}</p>
+        <p className={`${styles.valueStyle} relative left-6`}>{collectionName}</p>
+        <img src={product} alt="product" className="w-8 rounded h-8 relative left-16"/>
         <div
           className="flex h-auto mt-2 group hover:cursor-pointer w-auto justify-between"
           onClick={deleteCollections}

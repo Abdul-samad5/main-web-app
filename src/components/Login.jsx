@@ -6,6 +6,7 @@ import { userLogin } from "../services/services";
 import { UserContext } from "../context/UserContext";
 import Cookies from "js-cookie";
 
+
 const Login = ({ handleClick }) => {
   // Initialize state for the login to enable user login
   const { userLoggedIn } = useContext(LoginContext);
@@ -76,6 +77,9 @@ const Login = ({ handleClick }) => {
       console.log(sr);
 
       userLoggedIn();
+
+      // handleClick("createStore");
+
       onUserLogin(token);
       navigate("/dashboard");
     } catch (err) {
