@@ -1,16 +1,20 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { noCollections } from "../assets";
 import { styles } from "../constants/index";
 import UserData from "./UserData";
-import { UserContext } from "../context/UserContext";
 import axios from "axios";
-import { BASE_URL } from "../services/services";
+import {
+  getCollectionList,
+  addCollection,
+  deleteCollection,
+} from "../services/services";
 
 const details = ["Collection name", "Product", "Action"];
 const Collections = () => {
   // State to store the collections gotten from the API
   const [collections, setCollections] = useState([]);
   const [isVisible, setVisisble] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [newCollectionInfo, setCollectionInfo] = useState({
     collectionName: "",
     collectionImage: "",
@@ -24,16 +28,12 @@ const Collections = () => {
     });
   };
 
-  const { userData } = useContext(UserContext);
-
   const fetchCollections = async () => {
     try {
-      const res = await axios.get(`${BASE_URL}product/collections/list`, {
-        headers: { Authorization: `Bearer ${userData.access}` },
-      });
-      console.log(res);
-      setCollections(res.data.data);
-      if (!res.statusText === "OK") return;
+      const response = await getCollectionList();
+      // console.log(response);
+      setCollections(response.data.data);
+      if (!response.statusText === "OK") return;
     } catch (error) {
       console.log(error);
     }
@@ -58,15 +58,9 @@ const Collections = () => {
     console.log();
 
     try {
-      const res = await axios.post(
-        `${BASE_URL}product/collection`,
-        collection,
-        { headers: { Authorization: `Bearer ${userData.access}` } }
-      );
+      const res = await addCollection(collection);
       if (!res.statusText === "OK") return;
-      console.log(res);
       setCollectionInfo((prev) => {
-        // Object.keys(prev).forEach(key => prev[key] = "");
         return (prev = { collectionName: "", collectionImage: "" });
       });
       setVisisble((prev) => !prev);
@@ -92,27 +86,38 @@ const Collections = () => {
 
   const onImageSelected = (event) => {
     const file = event.target.files[0];
-    console.log(file);
-    const imageUri = URL.createObjectURL(file);
-    // const reader = new FileReader();
-    // reader.readAsDataURL(imageUri);
-    // console.log(reader);
-
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "ktjtewmf");
     let reader = new FileReader();
-    reader.onloadend = () => {
-      // data.image = reader.result ;
-    };
+
     reader.readAsDataURL(event.target.files[0]);
-    console.log(reader.result);
 
-    setCollectionInfo((prev) => {
-      return {
-        ...prev,
-        collectionImage: imageUri,
-      };
-    });
+    async function uploadImg() {
+      try {
+        const res = await axios.post(
+          "https://api.Cloudinary.com/v1_1/doqnvybu5/upload",
+          formData
+        );
+        if (!res) {
+          setLoading(true);
+          return;
+        } else {
+          setLoading(false);
+          const imageUri = res.data.secure_url;
+          setCollectionInfo((prev) => {
+            return {
+              ...prev,
+              collectionImage: imageUri,
+            };
+          });
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
 
-    // console.log(imageUri.toString());
+    uploadImg();
   };
 
   const handleChange = (event) => {
@@ -125,14 +130,9 @@ const Collections = () => {
   };
 
   const Children = ({ id, collectionName, product, no }) => {
-    const { userData } = useContext(UserContext);
-
     const deleteCollections = async () => {
       try {
-        const res = await axios.delete(
-          `${BASE_URL}product/collection/delete/${id}`,
-          { headers: { Authorization: `Bearer ${userData.access}` } }
-        );
+        const res = await deleteCollection(id);
         console.log(res);
         setRender((prev) => (prev = !prev));
       } catch (err) {
@@ -193,7 +193,7 @@ const Collections = () => {
         data={collections}
         children={Children}
         handleNext={handleNext}
-      ></UserData>
+      />
 
       <div
         className={
@@ -257,19 +257,19 @@ const Collections = () => {
                   : "block w-full h-30 rounded"
               }
               id="selected-image"
-              src={
-                newCollectionInfo.collectionImage === ""
-                  ? ""
-                  : newCollectionInfo.collectionImage
-              }
+              src={newCollectionInfo.collectionImage}
             />
+
             <button
-              className={`${styles.button} mt-7 w-full ${
+              className={`${
+                loading ? "border p-4" : styles.button
+              } mt-7 w-full ${
                 newCollectionInfo.collectionName === ""
                   ? "opacity-50"
                   : "opacity-100"
               }`}
               onClick={handleAddCollection}
+              disabled={loading ? true : false}
             >
               Add new collection
             </button>

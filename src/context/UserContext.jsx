@@ -3,23 +3,19 @@ import { useEffect } from "react";
 export const UserContext = createContext();
 
 const UserContextProvider = ({ children }) => {
-  const [userData, setUserData] = useState(null);
+  //   const [userToken, setUserToken] = useState("");
 
-  const getUserToken = (data) => {
-    if (userData === undefined) {
-      window.localStorage.setItem("isLoggedIn", false);
-      setUserData(null);
-    } else {
-      setUserData(data);
-    }
+  const onUserLogin = (token, data) => {
+    window.localStorage.setItem("token", JSON.stringify(token));
+    window.sessionStorage.setItem("data", JSON.stringify(data));
   };
 
   const onUserLogOut = () => {
-    setUserData(null);
+    window.localStorage.clear("token");
   };
 
   return (
-    <UserContext.Provider value={{ onUserLogOut, getUserToken, userData }}>
+    <UserContext.Provider value={{ onUserLogOut, onUserLogin }}>
       {children}
     </UserContext.Provider>
   );

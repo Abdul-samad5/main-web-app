@@ -49,8 +49,8 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 import { LoginContext } from "../context/LoginContext";
 import { UserContext } from "../context/UserContext";
 import { useEffect } from "react";
-import { BASE_URL } from "../services/services";
-import axios from "axios";
+import { getStoreInfo } from "../services/services";
+
 import StoreFront from "./StoreFront";
 
 function DbIcon({ src }) {
@@ -75,7 +75,7 @@ const Dashboard = () => {
     setIsNavOpen((prev) => !prev);
   }
   const { userLoggedOut } = useContext(LoginContext);
-  const { userData, onUserLogOut } = useContext(UserContext);
+  const { onUserLogOut } = useContext(UserContext);
 
   const navigate = useNavigate();
 
@@ -97,13 +97,9 @@ const Dashboard = () => {
 
   useEffect(() => {
     async function fetchData() {
-      const config = {
-        headers: { Authorization: `Bearer ${userData}` },
-        "Content-Type": "application/json",
-      };
-      const res = await axios.get(`${BASE_URL}store/list`, config);
-      if (res) {
-        setStoreName(res.data.stores[0].store_name);
+      const response = await getStoreInfo();
+      if (response) {
+        setStoreName(response.data.stores[0].store_name);
       }
     }
     fetchData();

@@ -2,9 +2,8 @@ import { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { LoginContext } from "../context/LoginContext";
 import { styles } from "../constants";
-import { BASE_URL, userLogin } from "../services/services";
+import { userLogin } from "../services/services";
 import { UserContext } from "../context/UserContext";
-import axios from "axios";
 
 const Login = ({ handleClick }) => {
   // Initialize state for the login to enable user login
@@ -68,13 +67,13 @@ const Login = ({ handleClick }) => {
     };
 
     try {
-      const res = await userLogin(user);
-      if (!res.statusText === "OK") return;
-      console.log(res);
-      changeMessage(res.status);
-      onUserLogin(res.data.data);
+      const response = await userLogin(user);
+      if (!response.statusText === "OK") return;
+      const data = response.data.data.user;
+      console.log(data);
+      const token = response.data.data.access;
       userLoggedIn();
-      handleClick("createStore");
+      onUserLogin(token, data);
       navigate("/dashboard");
     } catch (err) {
       console.log(err);

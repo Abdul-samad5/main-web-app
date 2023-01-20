@@ -1,6 +1,5 @@
 import React, { createContext, useState } from "react";
-import { useContext } from "react";
-import { UserContext } from "./UserContext";
+
 export const LoginContext = createContext();
 
 const LoginProvider = ({ children }) => {
@@ -11,9 +10,7 @@ const LoginProvider = ({ children }) => {
   }
 
   function userLoggedOut() {
-    window.localStorage.clear("isLoggedIn");
-    window.localStorage.clear("token");
-    // setIsLoggedIn(false);
+    setIsLoggedIn(false);
   }
 
   return (
