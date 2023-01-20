@@ -84,7 +84,9 @@ const MyStore = () => {
     async function fetchData() {
       const response = await getStoreInfo();
       if (response) {
-        setName(response.data.stores[0].store_name);
+        const store_name = response.data["Store Details"][0].store_name;
+
+        setName(store_name);
       }
     }
     fetchData();
@@ -92,9 +94,11 @@ const MyStore = () => {
 
   return (
     <div>
-      {/* <p className={`${styles.componentHeader}`}>{`Welcome to your dashboard, ${name}`}</p> */}
+      <p
+        className={`${styles.componentHeader}`}
+      >{`Welcome to your dashboard, ${name}`}</p>
       <p className="text-xl text-black-800 font-bold w-full mx-auto mb-10">
-        Welcome to your dashboard, {name}
+        {/* Welcome to your dashboard, {name} */}
       </p>
 
       <div className="flex justify-between w-full">

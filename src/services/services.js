@@ -1,9 +1,9 @@
 import axios from "axios";
+import Cookies from "js-cookie";
 
 export const BASE_URL = "https://yetti-backend.herokuapp.com/api/v1/";
 
-const token = localStorage.getItem("token");
-const tokenStr = JSON.parse(token);
+const token = Cookies.get("_tksr");
 
 // Load ALL countries from countries endpoint
 let countries = [];
@@ -19,7 +19,7 @@ axios.get("https://restcountries.com/v3.1/all").then(function (response) {
 });
 
 const config = {
-  headers: { Authorization: `Bearer ${tokenStr}` },
+  headers: { Authorization: `Bearer ${token}` },
   "Content-Type": "application/json",
 };
 
@@ -91,14 +91,7 @@ const getProductItemUnitById = (id) =>
 
 const getProductList = () => axios.get(`${BASE_URL}product/list`, config);
 
-const getProducts = (access) => {
-  return axios.get(`${BASE_URL}product/list`, {
-    headers: {
-      Authorization: `Bearer ${access}`,
-      "Content-Type": "application/json",
-    },
-  });
-};
+const getProducts = axios.get(`${BASE_URL}product/list`, config);
 
 // Buyer endpoints
 const createOrder = (order) =>
