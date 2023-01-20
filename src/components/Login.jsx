@@ -4,12 +4,15 @@ import { LoginContext } from "../context/LoginContext";
 import { styles } from "../constants";
 import { userLogin } from "../services/services";
 import { UserContext } from "../context/UserContext";
+import Cookies from "js-cookie";
+
 
 const Login = ({ handleClick }) => {
   // Initialize state for the login to enable user login
   const { userLoggedIn } = useContext(LoginContext);
   const { onUserLogin } = useContext(UserContext);
   const [message, setMessage] = useState({ text: true });
+  const navigate = useNavigate();
 
   function changeMessage(status) {
     if (status) {
@@ -45,8 +48,6 @@ const Login = ({ handleClick }) => {
     remember: false,
   });
 
-  const navigate = useNavigate();
-
   function handleChange(e) {
     const { name, value, type, checked } = e.target;
     setFormData((prev) => {
@@ -67,13 +68,19 @@ const Login = ({ handleClick }) => {
     };
 
     try {
-      const res = await userLogin(user);
-      if (!res.statusText === "OK") return;
-      console.log(res);
-      changeMessage(res.status);
-      onUserLogin(res.data.data);
+      const response = await userLogin(user);
+      if (!response.statusText === "OK") return;
+      console.log(response.data);
+      const token = response.data.data.access;
+
+      const sr = Cookies.get("_tksr");
+      console.log(sr);
+
       userLoggedIn();
+
       // handleClick("createStore");
+
+      onUserLogin(token);
       navigate("/dashboard");
     } catch (err) {
       console.log(err);

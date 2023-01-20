@@ -15,6 +15,7 @@ import ProductDetails from "./store-components/ProductDetails";
 function App() {
   const { isLoggedIn } = useContext(LoginContext);
 
+
   // const isLoggedIn = window.localStorage.getItem("isLoggedIn");
   console.log(isLoggedIn);
   const PreventLogin = ({ children }) => {

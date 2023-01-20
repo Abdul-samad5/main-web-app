@@ -10,6 +10,9 @@ import {
   up_trend,
   down_trend,
 } from "../assets";
+import axios from "axios";
+import { getStoreInfo } from "../services/services";
+import { useEffect } from "react";
 
 function Icon({ icon }) {
   return <div className="rounded-full p-4 h-[32px] w-[32px]"></div>;
@@ -28,20 +31,38 @@ const MyStore = () => {
     yesterdayProfit: 5000,
   });
 
+
     // Stores the amount of sales of the previous days of the week and is to be rendered on the line graph below.
-    const [historySales, setHistorySales] = useState([3, 6, 3, 5, 4, 5, 5]);
+  const [historySales, setHistorySales] = useState([3, 6, 3, 5, 4, 5, 5]);
+
+  const [name, setName] = useState("");
+
+  // Stores the amount of sales of the previous days of the week and is to be rendered on the line graph below.
+  const [historySales, setHistorySales] = useState([3, 6, 3, 5, 4, 5, 5]);
+
 
     // Stores the amount of sales of the previous days of the week and is to be rendered on the line graph below.
     const [historyProfit, setHistoryProfit] = useState([5, 6, 7, 6, 7, 7, 3]);
 
     // Stores the amount of sales of the previous days of the week and is to be rendered on the line graph below.
-    const [historyGrowth, setHistoryGrowth] = useState([6, 5, 4, 6, 9, 3, 2]);
-
+    const [historyGrowth, setHistoryGrowth] = useState([6, 5, 4, 6, 9, 3, 2])
     const [productSales, setProductSales] = React.useState([0, 3, 4, 5, 6, 7, 8, 9, 8]);
+    
+     useEffect(() => {
+      async function fetchData() {
+        const response = await getStoreInfo();
+        if (response) {
+          const store_name = response.data["Store Details"][0].store_name;
+
+          setName(store_name);
+        }
+      }
+      fetchData();
+    }, []);
 
   return (
     <div>
-        {/* <p className={`${styles.componentHeader}`}>{`Welcome to your dashboard, ${name}`}</p> */}
+        <p className={`${styles.componentHeader}`}>{`Welcome to your dashboard, ${name}`}</p>
         <p className="text-xl text-black-800 font-bold w-full mx-auto mb-10">
             Welcome to your dashboard, Micheal
         </p>
@@ -117,6 +138,7 @@ const MyStore = () => {
                   Total conversion rates
               </p>
             </span>
+
         </div>
 
         {/* Product sales box of the My Store component */}
