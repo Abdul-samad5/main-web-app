@@ -10,7 +10,7 @@ import React, { useContext } from "react";
 import { Cart, Checkout } from "./store-components";
 import { cartContext } from "./context/CartContext";
 import { GetStarted, Login } from "./components";
-import { UserContext } from "./context/UserContext";
+import ProductDetails from "./store-components/ProductDetails";
 
 function App() {
   const { isLoggedIn } = useContext(LoginContext);
@@ -70,6 +70,12 @@ function App() {
           path="/store-front/checkout"
           element={
             <Checkout cart={cart} />
+          }
+        />
+        <Route
+          path="/store-front/:productId"
+          element={
+            <ProductDetails />
           }
         />
       </Routes>

@@ -92,19 +92,6 @@ const BankInformation = () => {
                     <p className='font-semibold text-lg text-black'>Account name</p>
                     <p className='font-semibold text-lg text-black invisible'>Action</p>
                 </div>
-                {/* {acctDetails.map((item, index) => {
-                    return (
-                        <div className='flex justify-between px-4 py-4' key={index}>
-                            <p className='text-base text-black opacity-70'>{item.bank_name}</p>
-                            <p className='text-base text-black opacity-70'>{item.account_number}</p>
-                            <p className='text-base text-black opacity-70'>{item.account_name}</p>
-                            <div className='my-auto flex hover:cursor-pointer group' onClick={() => handleDelete(item.id)}>
-                                <p className="text-xs mx-2 group-hover:text-brand-secondary">Delete bank details</p>
-                                <svg xmlns="http://www.w3.org/2000/svg" className='w-3 h-3 group-hover:fill-brand-secondary fill-brand-primary hover:fill-brand-secondary' viewBox="0 0 448 512"><path d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0H284.2c12.1 0 23.2 6.8 28.6 17.7L320 32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 96 0 81.7 0 64S14.3 32 32 32h96l7.2-14.3zM32 128H416V448c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V128zm96 64c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16z"/></svg>
-                            </div>
-                        </div>
-                    )
-                })} */}
                 <div className='flex justify-between px-4 py-4'>
                     <p className='text-base text-black opacity-70'>{acctDetails?.bank_name}</p>
                     <p className='text-base text-black opacity-70'>{acctDetails?.account_number}</p>

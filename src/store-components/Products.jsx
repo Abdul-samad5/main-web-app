@@ -45,7 +45,8 @@ const Products = ({ handleAdd, handleDelete, cart }) => {
   ]);
   const { userData } = useContext(UserContext);
   async function fetchProducts() {
-    const token = window.localStorage.getItem("token");
+    // const token = window.localStorage.getItem("token");
+    const token = userData.access;
     const config = {
       headers: { Authorization: `Bearer ${token}` },
       "Content-Type": "application/json",
@@ -76,6 +77,7 @@ const Products = ({ handleAdd, handleDelete, cart }) => {
   useEffect(() => {
     fetchProducts();
   }, []);
+
   return (
     <div className="w-full lg:px-0 mt-8 md:px-5 px-10 z-1 py-5">
       <p className="text-black font-bold text-2xl">OUR PR0DUCTS</p>
@@ -87,11 +89,12 @@ const Products = ({ handleAdd, handleDelete, cart }) => {
               className="lg:w-1/5 lg:mx-2 md:w-2/5 md:mx-2 w-full"
             >
               <DisplayProducts
-                productLogo={product.productLogo}
-                productName={product.productName}
-                productPrice={product.productPrice}
-                productDescription={product.productDescription}
+                productLogo={product.media}
+                productName={product.title}
+                productPrice={product.price}
+                productDescription={product.description}
                 id={product.id}
+                stock_count={product.stock_count}
                 addToCart={handleAdd}
                 deleteFromCart={handleDelete}
                 cart={cart}
@@ -114,7 +117,8 @@ const DisplayProducts = ({
   deleteFromCart,
   cart,
   dataAdd,
-  productDescription
+  productDescription,
+  stock_count
 }) => {
   const [displayToggled, setDisplayToggled] = React.useState(false);
   const [added, setAdded] = React.useState(false);
@@ -124,6 +128,7 @@ const DisplayProducts = ({
       alert("You need to login first!");
       return;
     }
+
     // addToCart(id);
     dataAdd();
     setAdded(true);
@@ -135,20 +140,22 @@ const DisplayProducts = ({
         <img src={productLogo} alt="Logo" className="w-20 my-auto h-20 relative" />
       </div>
 
-      <div
-        onClick={() => {
-          setDisplayToggled((prev) => !prev);
-        }}
-        className="group-hover:visible relative group bottom-[240px] left-[200px] shadow-lg grid place-content-center bg-white hover:bg-brand-primary w-8 h-8 rounded-full"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="fill-black w-5 h-5"
-          viewBox="0 0 576 512"
+      <Link to={`/store-front/${id}`}>
+        <div
+          onClick={() => {
+            setDisplayToggled((prev) => !prev);
+          }}
+          className="group-hover:visible relative group bottom-[240px] left-[200px] shadow-lg grid place-content-center bg-white hover:bg-brand-primary w-8 h-8 rounded-full"
         >
-          <path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z" />
-        </svg>
-      </div>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="fill-black w-5 h-5"
+            viewBox="0 0 576 512"
+          >
+            <path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z" />
+          </svg>
+        </div>
+      </Link>
 
       {/* <div
         className={
@@ -273,23 +280,12 @@ const DisplayProducts = ({
           </div>
         </div>
         <p className="text-black flex justify-start ml-2 opacity-60 text-xs my-2">{productDescription}</p>
+        <p className="my-2 text-sm font-semibold text-black opacity-60">{`(${stock_count})`}</p>
         {cart.filter((item) => item.id === id).length === 0 ? (
           <button
             onClick={add}
             className="w-auto ml-1 flex transition-all duration-400 justify-start my-3 border border-black rounded-full text-black py-1 text-center px-4 hover:border-none hover:bg-brand-primary hover:text-white"
           >
-            {/* <div className="flex mx-auto">
-              <div className="my-auto mr-2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="w-4 h-4 fill-white"
-                  viewBox="0 0 576 512"
-                >
-                  <path d="M24 0C10.7 0 0 10.7 0 24S10.7 48 24 48H76.1l60.3 316.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24-10.7 24-24s-10.7-24-24-24H179.9l-9.1-48h317c14.3 0 26.9-9.5 30.8-23.3l54-192C578.3 52.3 563 32 541.8 32H122l-2.4-12.5C117.4 8.2 107.5 0 96 0H24zM176 512c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm336-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48z" />
-                </svg>
-              </div>
-              <span className="my-auto">Add to cart</span>
-            </div> */}
             <span className="my-auto">Add to cart</span>
           </button>
         ) : (
