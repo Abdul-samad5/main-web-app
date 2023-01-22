@@ -13,9 +13,10 @@ import { GetStarted, Login } from "./components";
 
 function App() {
   const { isLoggedIn } = useContext(LoginContext);
+  const tk = window.sessionStorage.getItem("_tksr");
 
   const PreventLogin = ({ children }) => {
-    return isLoggedIn ? children : <Navigate to={"/"} />;
+    return tk ? children : <Navigate to={"/"} />;
   };
   const { cart, deleteFromCart, clearCart, changeQuantity } =
     useContext(cartContext);
