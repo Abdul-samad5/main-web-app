@@ -3,7 +3,8 @@ import Cookies from "js-cookie";
 
 export const BASE_URL = "https://yetti-backend.herokuapp.com/api/v1/";
 
-const token = Cookies.get("_tksr");
+const tk = window.sessionStorage.getItem("_tksr");
+const token = JSON.parse(tk);
 
 // Load ALL countries from countries endpoint
 let countries = [];

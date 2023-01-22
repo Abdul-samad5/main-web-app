@@ -7,11 +7,11 @@ const UserContextProvider = ({ children }) => {
   //   const [userToken, setUserToken] = useState("");
 
   const onUserLogin = (token) => {
-    Cookies.set("_tksr", token);
+    window.sessionStorage.setItem("_tksr", JSON.stringify(token));
   };
 
   const onUserLogOut = () => {
-    Cookies.remove("token");
+    window.sessionStorage.removeItem("_tksr");
   };
 
   return (

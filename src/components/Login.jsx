@@ -69,14 +69,12 @@ const Login = ({ handleClick }) => {
     try {
       const response = await userLogin(user);
       if (!response.statusText === "OK") return;
-      console.log(response.data);
       const token = response.data.data.access;
+      window.sessionStorage.setItem("_tksr", JSON.stringify(token));
 
-      const sr = Cookies.get("_tksr");
-      console.log(sr);
-
+      // onUserLogin(token);
       userLoggedIn();
-      onUserLogin(token);
+
       navigate("/dashboard");
     } catch (err) {
       console.log(err);
