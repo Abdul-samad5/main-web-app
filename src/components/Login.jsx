@@ -1,10 +1,9 @@
 import { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { LoginContext } from "../context/LoginContext";
+import { UserContext } from "../context/UserContext";
 import { styles } from "../constants";
 import { userLogin } from "../services/services";
-import { UserContext } from "../context/UserContext";
-import Cookies from "js-cookie";
 
 const Login = ({ handleClick }) => {
   // Initialize state for the login to enable user login
@@ -70,9 +69,8 @@ const Login = ({ handleClick }) => {
       const response = await userLogin(user);
       if (!response.statusText === "OK") return;
       const token = response.data.data.access;
-      window.sessionStorage.setItem("_tksr", JSON.stringify(token));
 
-      // onUserLogin(token);
+      onUserLogin(token);
       userLoggedIn();
 
       navigate("/dashboard");

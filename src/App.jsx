@@ -10,10 +10,11 @@ import React, { useContext } from "react";
 import { Cart, Checkout } from "./store-components";
 import { cartContext } from "./context/CartContext";
 import { GetStarted, Login } from "./components";
+import Cookies from "js-cookie";
 
 function App() {
   const { isLoggedIn } = useContext(LoginContext);
-  const tk = window.sessionStorage.getItem("_tksr");
+  const tk = Cookies.get("_tksr");
 
   const PreventLogin = ({ children }) => {
     return tk ? children : <Navigate to={"/"} />;
