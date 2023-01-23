@@ -86,7 +86,7 @@ const MyStore = () => {
       if (response) {
         const store_name = response.data["Store Details"][0].store_name;
 
-        setName(store_name);
+        setName(`Welcome to your Store, ${store_name}`);
       }
     }
     fetchData();
@@ -94,12 +94,7 @@ const MyStore = () => {
 
   return (
     <div>
-      <p
-        className={`${styles.componentHeader}`}
-      >{`Welcome to your dashboard, ${name}`}</p>
-      <p className="text-xl text-black-800 font-bold w-full mx-auto mb-10">
-        {/* Welcome to your dashboard, {name} */}
-      </p>
+      <p className={`${styles.componentHeader} mt-10`}>{name}</p>
 
       <div className="flex justify-between w-full">
         <div className="w-1/2">
@@ -142,8 +137,8 @@ const MyStore = () => {
         </div>
 
         {/* Activity box of the My Store Component */}
-        <div className="w-1/2 bg-white rounded-lg shadow-lg h-[200px] px-3 py-3 mb-3">
-          <div className="flex justify-between pr-8">
+        {/* <div className="w-1/2 bg-white rounded-lg shadow-lg h-[200px] px-3 py-3 mb-3"> */}
+        {/* <div className="flex justify-between pr-8">
             <p className="text-black font-bold text-base">Activity</p>
 
             <div className="flex justify-between my-auto">
@@ -166,9 +161,9 @@ const MyStore = () => {
                 <option>Last month</option>
               </select>
             </div>
-          </div>
+          </div> */}
 
-          <div className="w-full scale-y-[0.60] my-auto relative bottom-10">
+        {/* <div className="w-full scale-y-[0.60] my-auto relative bottom-10">
             <Line
               datasetIdKey="id"
               data={{
@@ -209,8 +204,8 @@ const MyStore = () => {
               }}
               options={options}
             />
-          </div>
-        </div>
+          </div> */}
+        {/* </div> */}
       </div>
 
       <div className="flex justify-between">
@@ -240,11 +235,11 @@ const MyStore = () => {
           />
         </span>
 
-        <span className="bg-white rounded w-1/2 shadow-lg px-3 py-3">
+        {/* <span className="bg-white rounded w-1/2 shadow-lg px-3 py-3">
           <p className="text-2xl font-bold text-black-800">
             Total conversion rates
           </p>
-        </span>
+        </span> */}
       </div>
 
       {/* Product sales box of the My Store component */}
