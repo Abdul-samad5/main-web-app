@@ -29,13 +29,13 @@ const MyStore = () => {
   });
 
     // Stores the amount of sales of the previous days of the week and is to be rendered on the line graph below.
-    const [historySales, setHistorySales] = useState([3, 6, 3, 5, 4, 5, 5]);
+    const [historySales, setHistorySales] = useState([]);
 
     // Stores the amount of sales of the previous days of the week and is to be rendered on the line graph below.
-    const [historyProfit, setHistoryProfit] = useState([5, 6, 7, 6, 7, 7, 3]);
+    const [historyProfit, setHistoryProfit] = useState([]);
 
     // Stores the amount of sales of the previous days of the week and is to be rendered on the line graph below.
-    const [historyGrowth, setHistoryGrowth] = useState([6, 5, 4, 6, 9, 3, 2]);
+    const [historyGrowth, setHistoryGrowth] = useState([]);
 
     const [productSales, setProductSales] = React.useState([]);
 
@@ -186,11 +186,11 @@ const MyStore = () => {
                     <div className="mb-3" key={index}>
                         <Children
                           id={1}
-                          productName={"Nike Sneakers"}
-                          sales={100}
-                          price={"#500000"}
-                          stock={"500"}
-                          status={"Out of Stock"}
+                          productName={""}
+                          sales={0}
+                          price={""}
+                          stock={""}
+                          status={""}
                         />
                     </div>
                   );
