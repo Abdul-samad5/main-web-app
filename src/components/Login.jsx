@@ -1,10 +1,9 @@
 import { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { LoginContext } from "../context/LoginContext";
+import { UserContext } from "../context/UserContext";
 import { styles } from "../constants";
 import { userLogin } from "../services/services";
-import { UserContext } from "../context/UserContext";
-import Cookies from "js-cookie";
 
 
 const Login = ({ handleClick }) => {
@@ -70,9 +69,9 @@ const Login = ({ handleClick }) => {
     try {
       const response = await userLogin(user);
       if (!response.statusText === "OK") return;
-      console.log(response.data);
       const token = response.data.data.access;
 
+<<<<<<< HEAD
       const sr = Cookies.get("_tksr");
       console.log(sr);
 
@@ -80,7 +79,11 @@ const Login = ({ handleClick }) => {
 
       // handleClick("createStore");
 
+=======
+>>>>>>> 1eb59eb9a046d55f1fce68e3ac0b0374fe9d3286
       onUserLogin(token);
+      userLoggedIn();
+
       navigate("/dashboard");
     } catch (err) {
       console.log(err);

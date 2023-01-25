@@ -1,5 +1,6 @@
 import axios from "axios";
 import Cookies from "js-cookie";
+import { cookies } from "../assets";
 
 export const BASE_URL = "https://yetti-backend.herokuapp.com/api/v1/";
 

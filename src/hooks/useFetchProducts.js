@@ -15,7 +15,8 @@ const useFetchData = (url) => {
     try {
       const res = await url;
       if (!res.statusText === "OK") return;
-      setData(res);
+      setData(res.data.data);
+      // console.log(res.data.data);
       setIsLoading(false);
     } catch (err) {
       console.log(err);

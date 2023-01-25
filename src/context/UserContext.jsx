@@ -1,6 +1,5 @@
 import React, { useState, createContext } from "react";
 import Cookies from "js-cookie";
-import { useEffect } from "react";
 export const UserContext = createContext();
 
 const UserContextProvider = ({ children }) => {
@@ -20,11 +19,11 @@ const UserContextProvider = ({ children }) => {
     // window.localStorage.setItem("isLoggedIn", false);
     
   const onUserLogin = (token) => {
-    Cookies.set("_tksr", token);
+    Cookies.set("_tksr", token, { secure: true });
   };
 
   const onUserLogOut = () => {
-    Cookies.remove("token");
+    Cookies.remove("_tksr", { path: "" });
   };
 
   // const onUserLogin = (data) => {

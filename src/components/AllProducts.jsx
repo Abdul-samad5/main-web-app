@@ -18,10 +18,9 @@ const MyOrders = () => {
   };
 
   const { data } = useFetchData(getProducts);
-
-  useCallback(() => {
+  useEffect(() => {
     setMyProducts(data);
-  }, [reRender]);
+  }, [reRender, data]);
 
   const Children = ({ id, productName, price, status, inventory, keys }) => {
     const [currentState, setCurrentState] = React.useState(false);
