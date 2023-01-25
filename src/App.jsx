@@ -10,16 +10,17 @@ import React, { useContext } from "react";
 import { Cart, Checkout } from "./store-components";
 import { cartContext } from "./context/CartContext";
 import { GetStarted, Login } from "./components";
-import ProductDetails from "./store-components/ProductDetails";
+import Cookies from "js-cookie";
 
 function App() {
   const { isLoggedIn } = useContext(LoginContext);
+  const tk = Cookies.get("_tksr");
+
 
   // const isLoggedIn = window.localStorage.getItem("isLoggedIn");
   console.log(isLoggedIn);
   const PreventLogin = ({ children }) => {
-    console.log(isLoggedIn);
-    return isLoggedIn ? children : <Navigate to={"/"} />;
+    return tk ? children : <Navigate to={"/"} />;
   };
   const { cart, deleteFromCart, clearCart, changeQuantity } =
     useContext(cartContext);

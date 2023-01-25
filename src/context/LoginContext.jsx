@@ -1,6 +1,6 @@
 import React, { createContext, useState } from "react";
-import { useContext } from "react";
-import { UserContext } from "./UserContext";
+import Cookies from "js-cookie";
+
 export const LoginContext = createContext();
 
 const LoginProvider = ({ children }) => {
@@ -8,14 +8,17 @@ const LoginProvider = ({ children }) => {
 
   function userLoggedIn() {
     setIsLoggedIn(true);
-    // window.localStorage.setItem("isLoggedIn", true);
+    window.localStorage.setItem("isLoggedIn", true);
   }
 
   function userLoggedOut() {
-    // window.localStorage.clear("isLoggedIn");
-    // window.localStorage.clear("token");
+
+    window.localStorage.clear("isLoggedIn");
+    window.localStorage.clear("token");
     setIsLoggedIn(false);
-    // window.localStorage.setItem("isLoggedIn", false);
+    window.localStorage.setItem("isLoggedIn", false);
+    setIsLoggedIn(false);
+    Cookies.remove("_tksr");
   }
 
   return (

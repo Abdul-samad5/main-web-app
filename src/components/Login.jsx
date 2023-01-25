@@ -1,15 +1,17 @@
 import { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { LoginContext } from "../context/LoginContext";
+import { UserContext } from "../context/UserContext";
 import { styles } from "../constants";
 import { userLogin } from "../services/services";
-import { UserContext } from "../context/UserContext";
+
 
 const Login = ({ handleClick }) => {
   // Initialize state for the login to enable user login
   const { userLoggedIn } = useContext(LoginContext);
   const { onUserLogin } = useContext(UserContext);
   const [message, setMessage] = useState({ text: true });
+  const navigate = useNavigate();
 
   function changeMessage(status) {
     if (status) {
@@ -45,8 +47,6 @@ const Login = ({ handleClick }) => {
     remember: false,
   });
 
-  const navigate = useNavigate();
-
   function handleChange(e) {
     const { name, value, type, checked } = e.target;
     setFormData((prev) => {
@@ -67,13 +67,23 @@ const Login = ({ handleClick }) => {
     };
 
     try {
-      const res = await userLogin(user);
-      if (!res.statusText === "OK") return;
-      console.log(res);
-      changeMessage(res.status);
-      onUserLogin(res.data.data);
+      const response = await userLogin(user);
+      if (!response.statusText === "OK") return;
+      const token = response.data.data.access;
+
+<<<<<<< HEAD
+      const sr = Cookies.get("_tksr");
+      console.log(sr);
+
       userLoggedIn();
+
       // handleClick("createStore");
+
+=======
+>>>>>>> 1eb59eb9a046d55f1fce68e3ac0b0374fe9d3286
+      onUserLogin(token);
+      userLoggedIn();
+
       navigate("/dashboard");
     } catch (err) {
       console.log(err);

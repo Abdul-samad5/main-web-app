@@ -1,11 +1,11 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
+import { addProduct, updateProduct } from "../services/services";
 import axios from "axios";
-import { BASE_URL, updateProduct } from "../services/services";
-import { UserContext } from "../context/UserContext";
 
 function AddEditProduct() {
   // Records if the user has clicked the toggle button in the last form element and accordingly records it
   const [isToggled, setIsToggled] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const itemUnits = [
     "Box",
@@ -55,8 +55,6 @@ function AddEditProduct() {
     setIsToggled((prevValue) => !prevValue);
   };
 
-  const { userData } = useContext(UserContext);
-
   async function handleSubmit(event) {
     event.preventDefault();
 
@@ -78,7 +76,7 @@ function AddEditProduct() {
     };
 
     try {
-      const res = await axios.post(`${BASE_URL}product/`, product, { headers: { Authorization: `Bearer ${userData.access}`} });
+      const res = await addProduct(product);
       console.log(res);
       if (!res.statusText === "OK") return;
       console.log(res);
@@ -87,34 +85,52 @@ function AddEditProduct() {
     }
   }
 
-  async function handleUpdateProduct(event, id)  {
+  async function handleUpdateProduct(event, id) {
     event.preventDefault();
-     try
-      {
-        const res = await updateProduct(1)
-        if (!res.statusText === "OK") return;
-        console.log(res);
-      } catch (err) {
-        console.log(err);
-      }
-  };
+    try {
+      const res = await updateProduct(id);
+      if (!res.statusText === "OK") return;
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   // Gets Image selected by user and updates the selectedImage state to the url of the image selected.
-  const onFileSelected = (event) => {
-    const selectedFiles = event.target.files;
-    const selectedFilesArray = Array.from(selectedFiles);
+  const onImageSelected = (event) => {
+    const file = event.target.files[0];
+    const formInfo = new FormData();
+    formInfo.append("file", file);
+    formInfo.append("upload_preset", "ktjtewmf");
+    let reader = new FileReader();
 
-    // Turns the selected file into a url that can be passed into the src attribute of the img element in HTML.
-    const url = URL.createObjectURL(selectedFilesArray[0]);
+    reader.readAsDataURL(event.target.files[0]);
 
-    setFormData((prev) => {
-      return {
-        ...prev,
-        productImg: url,
-      };
-    });
+    async function uploadImg() {
+      try {
+        const res = await axios.post(
+          "https://api.Cloudinary.com/v1_1/doqnvybu5/upload",
+          formInfo
+        );
+        if (!res) {
+          setLoading(true);
+          return;
+        } else {
+          setLoading(false);
+          const imageUri = res.data.secure_url;
+          setFormData((prev) => {
+            return {
+              ...prev,
+              productImg: imageUri,
+            };
+          });
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    uploadImg();
   };
-
   const deleteImage = () => {
     setFormData((prev) => {
       return {
@@ -218,7 +234,7 @@ function AddEditProduct() {
                 id="image-selector"
                 className="invisible border-dashed border-blue-500 border-2 rounded-md block border-black-500 bg-white"
                 accept="image/*"
-                onChange={onFileSelected}
+                onChange={onImageSelected}
               ></input>
               <label
                 htmlFor="image-selector"
@@ -355,7 +371,11 @@ function AddEditProduct() {
                 className="border border-slate-700 border-opacity-50 rounded-lg text-sm shadow-sm px-3 py-3 placeholder-slate-300"
               >
                 {itemUnits.map((item, index) => (
-                  <option key={index} className="hover:bg-red-700 list-none" value={index + 1}>
+                  <option
+                    key={index}
+                    className="hover:bg-red-700 list-none"
+                    value={index + 1}
+                  >
                     {item}
                   </option>
                 ))}
@@ -448,7 +468,8 @@ function AddEditProduct() {
         <input
           type="button"
           value="Save"
-          className="bg-blue-400 rounded-lg px-9 text-white text-sm py-2 opacity-50"
+          disabled={loading ? true : false}
+          className="bg-blue-400 rounded-lg px-9 text-white text-sm py-2"
           onClick={handleSubmit}
         ></input>
       </div>

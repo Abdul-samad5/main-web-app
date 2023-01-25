@@ -47,10 +47,7 @@ const SignUp = ({ handleClick }) => {
           setTimeout(() => {
             handleClick("createStore");
           }, 5000);
-        } else {
-          handleClick("login");
         }
-
         return;
       }
     } catch (err) {

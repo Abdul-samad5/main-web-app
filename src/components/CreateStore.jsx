@@ -1,6 +1,6 @@
 import { useState, useContext } from "react";
 import axios from "axios";
-import { BASE_URL } from "../services/services";
+import { BASE_URL, postStore } from "../services/services";
 import { UserContext } from "../context/UserContext";
 import { useNavigate } from "react-router-dom";
 
@@ -58,17 +58,9 @@ const CreateStore = ({ handleClick }) => {
     };
 
     changeMessage(true);
-    const config = {
-      headers: { Authorization: `Bearer ${userData}` },
-      "Content-Type": "application/json",
-    };
 
     try {
-      const res = await axios.post(
-        `${BASE_URL}store/create_store`,
-        store,
-        config
-      );
+      const res = postStore(store);
       changeMessage(res.status);
       console.log(res);
 

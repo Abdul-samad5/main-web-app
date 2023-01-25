@@ -36,6 +36,10 @@ const UserData = ({
     });
   };
 
+  const handleSearchChange = (e) => {
+    setSearchValue(e.target.value);
+  };
+
   return (
     <div className="rounded shadow-xl w-full lg:px-5 px-2 py-3 lg:mx-auto my-auto h-auto">
       {/* Search Bar */}
@@ -46,7 +50,7 @@ const UserData = ({
             className={`${styles.inputBox} pl-9 pr-3 w-full`}
             type="text"
             value={searchValue}
-            onChange={search}
+            onChange={handleSearchChange}
           />
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -90,11 +94,9 @@ const UserData = ({
           alt="No customer found"
           className={data.length === 0 ? "mx-auto w-auto h-auto" : "hidden"}
         />
-        <p
-          className={data.length === 0 ? "text-base text-center" : "hidden"}
-        >{
-          type === "My Orders" ? "No orders found" : `No ${type} found`
-        }</p>
+        <p className={data.length === 0 ? "text-base text-center" : "hidden"}>
+          {type === "My Orders" ? "No orders found" : `No ${type} found`}
+        </p>
 
         {/* Structure of the children passed into the component and to be mapped into each of the data also passed into the component. } */}
         {data.map((children, index) => {
@@ -102,7 +104,12 @@ const UserData = ({
           if (type === "Collections") {
             return (
               <div className="mb-3" key={index + 1}>
-                <Children id={children.id} no={index} collectionName={children.name} product={children.image}/>
+                <Children
+                  id={children.id}
+                  no={index}
+                  collectionName={children.name}
+                  product={children.image}
+                />
               </div>
             );
             // Displays the details of each customer if the type of the component equals Customer.
@@ -176,21 +183,22 @@ const UserData = ({
                   total={"Stripe"}
                 />
               </div>
-            )
+            );
           } else if (type === "Products") {
-              return (
-                <div className="mb-3" key={index}>
-                  <Children
-                    id={children.id}
-                    keys={index + 1}
-                    productName={children.title}
-                    price={children.price}
-                    status={children.status}
-                    inventory={children.stock_count}
-                  />
-                </div>
-              )
-          } else {}
+            return (
+              <div className="mb-3" key={index}>
+                <Children
+                  id={children.id}
+                  keys={index + 1}
+                  productName={children.title}
+                  price={children.price}
+                  status={children.status}
+                  inventory={children.stock_count}
+                />
+              </div>
+            );
+          } else {
+          }
         })}
       </div>
 
@@ -209,14 +217,18 @@ const UserData = ({
         <span className="flex justify-between">
           <p
             className={
-              data.length === 0 ? "text-xs text-slate-400 hidden" : "text-xs text-slate-400"
+              data.length === 0
+                ? "text-xs text-slate-400 hidden"
+                : "text-xs text-slate-400"
             }
           >
             Showing 1 to 5 of 5 entries
           </p>
           <p
             className={
-              data.length === 0 ? "text-xs text-slate-400" : "text-xs text-slate-400 hidden"
+              data.length === 0
+                ? "text-xs text-slate-400"
+                : "text-xs text-slate-400 hidden"
             }
           >
             Showing 0 to 0 of 0 entries
