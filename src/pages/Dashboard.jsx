@@ -50,7 +50,6 @@ import { LoginContext } from "../context/LoginContext";
 import { UserContext } from "../context/UserContext";
 import { useEffect } from "react";
 import { getStoreInfo } from "../services/services";
-
 import StoreFront from "./StoreFront";
 
 function DbIcon({ src }) {
@@ -99,7 +98,7 @@ const Dashboard = () => {
     async function fetchData() {
       const response = await getStoreInfo();
       if (response) {
-        const store_name = response.data["Store Details"][0].store_name;
+        const store_name = response.data["Store Details"].length === 0 ? "" : response.data["Store Details"][0].store_name;
         setStoreName(`${store_name}'s store`);
       }
     }

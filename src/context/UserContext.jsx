@@ -32,7 +32,7 @@ const UserContextProvider = ({ children }) => {
  // }
 
   return (
-    <UserContext.Provider value={{ onUserLogOut, onUserLogin }}
+    <UserContext.Provider value={{ onUserLogOut, onUserLogin }}>
       {children}
     </UserContext.Provider>
   );

@@ -4,6 +4,7 @@ import { styles } from '../constants';
 import { BASE_URL } from '../services/services';
 import { UserContext } from "../context/UserContext";
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 const BankInformation = () => {
     const [acctDetails, setAcctDetails] = useState(null);
@@ -12,7 +13,8 @@ const BankInformation = () => {
         accoutNumber: 0,
         accountName: ""
     });
-    const { userData } = useContext(UserContext);
+    const tk = Cookies.get("_tksr");
+    // const { userData } = useContext(UserContext);
     const [added, setAdded] = useState(false);
     const [banks, setBanks] = useState([]);
 
@@ -33,8 +35,11 @@ const BankInformation = () => {
         }
 
         try {
+            // const res = await axios.post(`${BASE_URL}store_settings/bank_info/`, data, {
+            //     headers: { Authorization: `Bearer ${userData.access}` },
+            // });
             const res = await axios.post(`${BASE_URL}store_settings/bank_info/`, data, {
-                headers: { Authorization: `Bearer ${userData.access}` },
+                headers: { Authorization: `Bearer ${tk}` },
             });
             console.log(res);
             setAdded(false);
@@ -51,8 +56,11 @@ const BankInformation = () => {
     
     async function fetchBankDetails() {
         try {
+            // const res = await axios.get(`${BASE_URL}store_settings/bank_info/list`, {
+            //     headers: { Authorization: `Bearer ${userData.access}` },
+            // });
             const res = await axios.get(`${BASE_URL}store_settings/bank_info/list`, {
-                headers: { Authorization: `Bearer ${userData.access}` },
+                headers: { Authorization: `Bearer ${tk}` },
             });
             console.log(res);
             setAcctDetails(res.data.data);
@@ -78,8 +86,11 @@ const BankInformation = () => {
 
     const handleDelete = async (id) =>{
         try {
+            // const res = await axios.delete(`${BASE_URL}store_settings/bank_info/delete/${id}`, {
+            //     headers: { Authorization: `Bearer ${userData.access}` },
+            // });
             const res = await axios.delete(`${BASE_URL}store_settings/bank_info/delete/${id}`, {
-                headers: { Authorization: `Bearer ${userData.access}` },
+                headers: { Authorization: `Bearer ${tk}` },
             });
             console.log(res);
             // setAdded(false);

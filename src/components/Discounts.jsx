@@ -5,6 +5,7 @@ import UserData from './UserData';
 import { UserContext } from "../context/UserContext";
 import axios from "axios";
 import { BASE_URL } from "../services/services";
+import Cookies from 'js-cookie';
 
 const details = ["Discount Code", "Method", "Discount Type", "Status", "Discount Value", "Value", "Action"];
 const Discounts = () => {
@@ -21,6 +22,7 @@ const Discounts = () => {
         endDate: "",
         minPurValue: 0
     });
+    const tk = Cookies.get("_tksr");
 
     const [reRender, setRender] = useState(false);
 
@@ -54,7 +56,10 @@ const Discounts = () => {
 
     async function fetchDiscounts() {
         try {
-            const res = await axios.get(`${BASE_URL}marketing/view_list`, { headers: { Authorization: `Bearer ${userData.access}`} });
+            // const res = await axios.get(`${BASE_URL}marketing/view_list`, 
+            // { headers: { Authorization: `Bearer ${userData.access}`} });
+            const res = await axios.get(`${BASE_URL}marketing/view_list`, 
+            { headers: { Authorization: `Bearer ${tk}`} });
             setDiscounts(res.data.data);
             if(!res.statusText === "OK") return;
             console.log(res);
@@ -80,7 +85,10 @@ const Discounts = () => {
         }
 
         try {
-            const res = await axios.post(`${BASE_URL}marketing/create_discount`, discountInfo, { headers: { Authorization: `Bearer ${userData.access}`} });
+            // const res = await axios.post(`${BASE_URL}marketing/create_discount`, discountInfo, 
+            // { headers: { Authorization: `Bearer ${userData.access}`} });
+            const res = await axios.post(`${BASE_URL}marketing/create_discount`, discountInfo, 
+            { headers: { Authorization: `Bearer ${tk}`} });
             setVisisble(prev => prev = !prev);
             console.log(res);
             setDiscountInfo((prev) => {
@@ -119,8 +127,12 @@ const Discounts = () => {
     
         const deleteDiscount = async () => {
             try {
-                const response = await axios.delete(`${BASE_URL}marketing/delete/${id}`, { headers: { Authorization: `Bearer ${userData.access}`} });
+                // const response = await axios.delete(`${BASE_URL}marketing/delete/${id}`, 
+                // { headers: { Authorization: `Bearer ${userData.access}`} });
+                const response = await axios.delete(`${BASE_URL}marketing/delete/${id}`, 
+                { headers: { Authorization: `Bearer ${tk}`} });
                 // console.log(response);
+                if(!response.statusText === "OK") return;
                 setRender(prev => prev = !prev);
             } catch (err) {
                 console.log(err);
@@ -129,7 +141,10 @@ const Discounts = () => {
     
         const deactivateDiscount = async () => {
             try {
-                const response = await axios.put(`${BASE_URL}marketing/deactivate/${id}`, {active : false}, { headers: { Authorization: `Bearer ${userData.access}`} });
+                // const response = await axios.put(`${BASE_URL}marketing/deactivate/${id}`, {active : false}, 
+                // { headers: { Authorization: `Bearer ${userData.access}`} });
+                const response = await axios.put(`${BASE_URL}marketing/deactivate/${id}`, {active : false}, 
+                { headers: { Authorization: `Bearer ${tk}`} });
                 // console.log(response);
                 setRender(prev => prev = !prev);
             } catch (err) {
@@ -139,14 +154,14 @@ const Discounts = () => {
     
         return (
             <div className="flex justify-between wrap items-center">
-                <p className={`${styles.valueStyle} ` }>{no}</p>
-                <p className={`${styles.valueStyle} `}>{discountCode}</p>
-                <p className={`${styles.valueStyle}`}>{method}</p>
-                <p className={`${styles.valueStyle} relative lg:right-6`}>{type}</p>
+                <p className={`${styles.valueStyle} relative lg:left-2`}>{no}</p>
+                <p className={`${styles.valueStyle} relative lg:left-6`}>{discountCode}</p>
+                <p className={`${styles.valueStyle} relative lg:left-8`}>{method}</p>
+                <p className={`${styles.valueStyle} relative lg:left-2`}>{type}</p>
                 {/* <Status value={new Date(end_date).getTime() > new Date().getTime() ? "Active" : "Expired"}/> */}
                 <Status value={active ? "Active" : "Expired"}/>
-                <p className={`${styles.valueStyle} relative lg:right-14`}>{discount_value}</p>
-                <p className={`${styles.valueStyle} relative lg:right-10`}>{value}</p>
+                <p className={`${styles.valueStyle} relative lg:right-8`}>{discount_value}</p>
+                <p className={`${styles.valueStyle} relative lg:right-6`}>{value}</p>
                 <div onClick={handleClick} className="flex w-2 h-4 relative lg:right-4">
                     <div className={currentState ? 'rounded bg-white shadow-lg top-6 relative px-1 z-10 h-20 w-auto' : 'hidden'}>
                         <p className='text-xs cursor-pointer' onClick={deactivateDiscount}>Deactivte discount</p>
@@ -322,11 +337,11 @@ const Discounts = () => {
 const Status = ({value}) => {
     if(value === "Active") {
         return (
-            <div className="rounded text-blue-800 bg-blue-100 relative lg:right-10 text-sm px-5 py-1">{value}</div>
+            <div className="rounded text-blue-800 bg-blue-100 relative lg:right-4 text-sm px-5 py-1">{value}</div>
         )
     } else if(value === "Expired") {
         return (
-            <div className="rounded text-yellow-800 bg-yellow-100 text-sm px-4 relative lg:right-10 py-1">{value}</div>
+            <div className="rounded text-yellow-800 bg-yellow-100 text-sm px-4 relative lg:right-4 py-1">{value}</div>
         )
     }
 }
