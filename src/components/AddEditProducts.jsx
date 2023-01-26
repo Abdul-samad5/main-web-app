@@ -101,7 +101,11 @@ function AddEditProduct() {
     const file = event.target.files[0];
     const formInfo = new FormData();
     formInfo.append("file", file);
-    formInfo.append("upload_preset", "ktjtewmf");
+    formInfo.append('upload_preset', 'ktjtewmf');
+    // for (var [key, value] of formInfo.entries()) { 
+    //   console.log(key, value);
+    // }
+    // console.log(formInfo);
     let reader = new FileReader();
 
     reader.readAsDataURL(event.target.files[0]);
@@ -131,6 +135,7 @@ function AddEditProduct() {
     }
     uploadImg();
   };
+
   const deleteImage = () => {
     setFormData((prev) => {
       return {

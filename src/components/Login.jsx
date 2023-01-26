@@ -71,16 +71,6 @@ const Login = ({ handleClick }) => {
       if (!response.statusText === "OK") return;
       const token = response.data.data.access;
 
-<<<<<<< HEAD
-      const sr = Cookies.get("_tksr");
-      console.log(sr);
-
-      userLoggedIn();
-
-      // handleClick("createStore");
-
-=======
->>>>>>> 1eb59eb9a046d55f1fce68e3ac0b0374fe9d3286
       onUserLogin(token);
       userLoggedIn();
 

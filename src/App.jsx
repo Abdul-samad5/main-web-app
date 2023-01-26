@@ -11,11 +11,11 @@ import { Cart, Checkout } from "./store-components";
 import { cartContext } from "./context/CartContext";
 import { GetStarted, Login } from "./components";
 import Cookies from "js-cookie";
+import ProductDetails from "./store-components/ProductDetails";
 
 function App() {
   const { isLoggedIn } = useContext(LoginContext);
   const tk = Cookies.get("_tksr");
-
 
   // const isLoggedIn = window.localStorage.getItem("isLoggedIn");
   console.log(isLoggedIn);
@@ -82,7 +82,7 @@ function App() {
       </Routes>
     </Router>
   );
-}
+};
 
 {/* <PreventLogin>
               <Checkout cart={cart} />

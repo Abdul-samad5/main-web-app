@@ -4,16 +4,19 @@ import { styles } from '../constants';
 import { BASE_URL } from '../services/services';
 import { UserContext } from "../context/UserContext";
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 const BankInformation = () => {
-    const [acctDetails, setAcctDetails] = useState();
+    const [acctDetails, setAcctDetails] = useState(null);
     const [formDetails, setFormDetails] = useState({
         bankName: "",
-        accoutNumber: "",
+        accoutNumber: 0,
         accountName: ""
     });
-    const { userData } = useContext(UserContext);
+    const tk = Cookies.get("_tksr");
+    // const { userData } = useContext(UserContext);
     const [added, setAdded] = useState(false);
+    const [banks, setBanks] = useState([]);
 
     const handleChange = (event) => {
         const { value, name } = event.target;
@@ -27,23 +30,24 @@ const BankInformation = () => {
 
         const data = {
             bank_name: formDetails.bankName,
-            account_number: Number(formDetails.accoutNumber),
+            account_number: formDetails.accoutNumber,
             account_name: formDetails.accountName
         }
 
         try {
+            // const res = await axios.post(`${BASE_URL}store_settings/bank_info/`, data, {
+            //     headers: { Authorization: `Bearer ${userData.access}` },
+            // });
             const res = await axios.post(`${BASE_URL}store_settings/bank_info/`, data, {
-                headers: { Authorization: `Bearer ${userData.access}` },
+                headers: { Authorization: `Bearer ${tk}` },
             });
             console.log(res);
             setAdded(false);
-            setFormDetails((prev) => {
-                return prev = {
+            setFormDetails({
                     bankName: "",
                     accoutNumber: "",
                     accountName: ""
-                }
-            });
+                });
             if (!res.statusText === "OK") return;
         } catch (error) {
             console.log(error);
@@ -52,8 +56,11 @@ const BankInformation = () => {
     
     async function fetchBankDetails() {
         try {
+            // const res = await axios.get(`${BASE_URL}store_settings/bank_info/list`, {
+            //     headers: { Authorization: `Bearer ${userData.access}` },
+            // });
             const res = await axios.get(`${BASE_URL}store_settings/bank_info/list`, {
-                headers: { Authorization: `Bearer ${userData.access}` },
+                headers: { Authorization: `Bearer ${tk}` },
             });
             console.log(res);
             setAcctDetails(res.data.data);
@@ -62,6 +69,16 @@ const BankInformation = () => {
             console.log(error);
         }
     }
+
+    useEffect(() => {
+        axios.get("https://raw.githubusercontent.com/tomiiide/nigerian-banks/master/banks.json")
+            .then((res) => {
+                console.log(res);
+                setBanks(res.data);
+            }).catch(err => {
+                console.log(err);
+            });
+    }, []);
     
     useEffect(() => {
         fetchBankDetails();
@@ -69,11 +86,20 @@ const BankInformation = () => {
 
     const handleDelete = async (id) =>{
         try {
+            // const res = await axios.delete(`${BASE_URL}store_settings/bank_info/delete/${id}`, {
+            //     headers: { Authorization: `Bearer ${userData.access}` },
+            // });
             const res = await axios.delete(`${BASE_URL}store_settings/bank_info/delete/${id}`, {
-                headers: { Authorization: `Bearer ${userData.access}` },
+                headers: { Authorization: `Bearer ${tk}` },
             });
             console.log(res);
-            setAdded(false);
+            // setAdded(false);
+            setFormDetails({
+                bankName: "",
+                accoutNumber: "",
+                accountName: ""
+            });
+            setAcctDetails(null);
             if (!res.statusText === "OK") return;
         } catch (error) {
             console.log(error);
@@ -92,10 +118,10 @@ const BankInformation = () => {
                     <p className='font-semibold text-lg text-black'>Account name</p>
                     <p className='font-semibold text-lg text-black invisible'>Action</p>
                 </div>
-                <div className='flex justify-between px-4 py-4'>
+                <div className={acctDetails === null ? "hidden" : 'flex justify-between px-4 py-4'}>
                     <p className='text-base text-black opacity-70'>{acctDetails?.bank_name}</p>
                     <p className='text-base text-black opacity-70'>{acctDetails?.account_number}</p>
-                    <p className='text-base text-black opacity-70'>{acctDetails?.account_name}</p>
+                    <p className='text-base text-black opacity-70 relative left-8'>{acctDetails?.account_name}</p>
                     <div className='my-auto flex hover:cursor-pointer group' onClick={() => handleDelete(acctDetails?.id)}>
                         <p className="text-xs mx-2 group-hover:text-brand-secondary">Delete bank details</p>
                         <svg xmlns="http://www.w3.org/2000/svg" className='w-3 h-3 group-hover:fill-brand-secondary fill-brand-primary hover:fill-brand-secondary' viewBox="0 0 448 512"><path d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0H284.2c12.1 0 23.2 6.8 28.6 17.7L320 32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 96 0 81.7 0 64S14.3 32 32 32h96l7.2-14.3zM32 128H416V448c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V128zm96 64c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16z"/></svg>
@@ -117,19 +143,22 @@ const BankInformation = () => {
                         <div className='my-4'>
                             <label htmlFor='bankName' className='text-base text-black opacity-60 mb-3'>Bank Name</label>
                             <select className={`${styles.inputBox} w-full`} name="bankName" id="bankName" onChange={handleChange}>
-                                <option>
+                                <option disabled>
                                     Choose an option
                                 </option>
+                                {banks.map((bank, index) => {
+                                    return <option key={index} value={bank.name}>{bank.name}</option>
+                                })}
                             </select>
                         </div>
                         <div className='my-6 lg:flex w-full'>
                             <div className='lg:w-1/2 w-full lg:mr-2'>
                                 <label htmlFor='' className='text-base text-black opacity-60 mb-3'>Account Number</label>
-                                <input type="number" onChange={handleChange} placeholder="0123456789" name="accountNumber" className={`${styles.inputBox} w-full px-3`}/>
+                                <input type="number" onChange={handleChange} value={formDetails.accoutNumber} placeholder="0123456789" name="accoutNumber" className={`${styles.inputBox} w-full px-3`}/>
                             </div>
                             <div className='lg:w-1/2 w-full lg:ml-2'>
                                 <label htmlFor='' className='text-base text-black opacity-60 mb-3'>Account Name</label>
-                                <input type="text" onChange={handleChange} placeholder="Account name" name="accountNumber" className={`${styles.inputBox} w-full px-3`}/>
+                                <input type="text" onChange={handleChange} value={formDetails.accountName} placeholder="Account name" name="accountName" className={`${styles.inputBox} w-full px-3`}/>
                             </div>
                         </div>
 

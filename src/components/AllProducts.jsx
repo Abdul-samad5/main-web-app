@@ -32,7 +32,8 @@ const MyOrders = () => {
     const handleDeleteProduct = async () => {
       try {
         const res = await deleteProduct(id);
-        if (res) return res;
+        console.log(res);
+        if (!res.statusText === "OK") return;
         setRender((prev) => (prev = !prev));
       } catch (error) {
         console.log(error);

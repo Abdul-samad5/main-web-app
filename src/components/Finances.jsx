@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {Invoice, Payments} from "./index";
 
 const Finances = () => {
-    const [currentPage, setCurrentPage] = React.useState(0);
+    const [currentPage, setCurrentPage] = useState(0);
 
     const handleClick = (value) => {
         setCurrentPage((prev) => {

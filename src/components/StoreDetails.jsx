@@ -3,6 +3,7 @@ import React, { useContext, useEffect } from "react";
 import { styles } from "../constants/index";
 import { BASE_URL, getStoreInfo } from "../services/services";
 import { UserContext } from "../context/UserContext";
+import Cookies from "js-cookie";
 
 const StoreDetails = () => {
   const [storeDetails, setStoreDetails] = React.useState({
@@ -15,6 +16,7 @@ const StoreDetails = () => {
     storeContactNumber: "",
   });
 
+  const tk = Cookies.get("_tksr");
   const { userData } = useContext(UserContext);
 
   const saveSettings = async () => {
@@ -29,10 +31,15 @@ const StoreDetails = () => {
     };
 
     try {
+      // const res = await axios.post(
+      //   `${BASE_URL}store_settings/store`,
+      //   formDetails,
+      //   { headers: { Authorization: `Bearer ${userData.access}` } }
+      // );
       const res = await axios.post(
         `${BASE_URL}store_settings/store`,
         formDetails,
-        { headers: { Authorization: `Bearer ${userData.access}` } }
+        { headers: { Authorization: `Bearer ${tk}` } }
       );
       if (!res.statusText === "OK") return;
       console.log(res);
@@ -73,7 +80,7 @@ const StoreDetails = () => {
     async function fetchData() {
       const response = await getStoreInfo();
       if (response) {
-        const store_name = response.data["Store Details"][0].store_name;
+        const store_name = response.data["Store Details"].length === 0 ? "" : response.data["Store Details"][0].store_name;
         const store_email = response.data["Email"];
         setStoreDetails((prev) => {
           return { ...prev, storeName: store_name, storeEmail: store_email };
@@ -99,10 +106,11 @@ const StoreDetails = () => {
               <input
                 placeholder="Michelline"
                 onChange={handleChange}
-                disabled={storeDetails.storeName ? true : false}
+                disabled={storeDetails.storeName === "" ? false : true}
                 value={storeDetails.storeName}
                 className={`${styles.inputBox} px-3 w-11/12`}
                 type="text"
+                name="storeName"
               />
             </span>
 
@@ -113,6 +121,7 @@ const StoreDetails = () => {
                 onChange={handleChange}
                 value={storeDetails.tagLine}
                 type="text"
+                name="tagLine"
               />
             </span>
           </div>

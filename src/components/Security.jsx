@@ -3,6 +3,7 @@ import { styles } from '../constants';
 import axios from 'axios';
 import { BASE_URL } from '../services/services';
 import { UserContext } from '../context/UserContext';
+import Cookies from 'js-cookie';
 
 const Security = () => {
     const [securityData, setSecurityData] = useState({
@@ -18,6 +19,8 @@ const Security = () => {
             return {...prev, [name]: value}
         });
     }
+
+    const tk = Cookies.get("_tksr");
 
     const { userData } = useContext(UserContext);
     const handleSubmit = (event) => {

@@ -20,47 +20,31 @@ function Icon({ icon }) {
 
 const MyStore = () => {
   const [storeData, setStoreData] = React.useState({
-    totalSales: "2,300",
-    totalCustomers: 15,
-    totalOrders: 21,
-    todayCustomers: 12,
-    yesterdayCustomers: 10,
-    todaySales: 100,
-    yesterdaySales: 50,
-    todayProfit: 20000,
-    yesterdayProfit: 5000,
+    totalSales: 0,
+    totalCustomers: 0,
+    totalOrders: 0,
+    todayCustomers: 0,
+    yesterdayCustomers: 0,
+    todaySales: 0,
+    yesterdaySales: 0,
+    todayProfit: 0,
+    yesterdayProfit: 0,
   });
 
 
     // Stores the amount of sales of the previous days of the week and is to be rendered on the line graph below.
-  const [historySales, setHistorySales] = useState([3, 6, 3, 5, 4, 5, 5]);
+  const [historySales, setHistorySales] = useState([]);
 
   const [name, setName] = useState("");
 
+
   // Stores the amount of sales of the previous days of the week and is to be rendered on the line graph below.
-  const [historySales, setHistorySales] = useState([3, 6, 3, 5, 4, 5, 5]);
+  const [historyProfit, setHistoryProfit] = useState([]);
 
-
-    // Stores the amount of sales of the previous days of the week and is to be rendered on the line graph below.
-    const [historyProfit, setHistoryProfit] = useState([5, 6, 7, 6, 7, 7, 3]);
-
-    // Stores the amount of sales of the previous days of the week and is to be rendered on the line graph below.
-    const [historyGrowth, setHistoryGrowth] = useState([6, 5, 4, 6, 9, 3, 2])
-    const [productSales, setProductSales] = React.useState([0, 3, 4, 5, 6, 7, 8, 9, 8]);
+  // Stores the amount of sales of the previous days of the week and is to be rendered on the line graph below.
+  const [historyGrowth, setHistoryGrowth] = useState([])
+  const [productSales, setProductSales] = React.useState([]);
     
-     useEffect(() => {
-      async function fetchData() {
-        const response = await getStoreInfo();
-        if (response) {
-          const store_name = response.data["Store Details"][0].store_name;
-
-<<<<<<< HEAD
-          setName(store_name);
-        }
-=======
-  const [productSales, setProductSales] = React.useState([
-    0, 3, 4, 5, 6, 7, 8, 9, 8,
-  ]);
 
   useEffect(() => {
     async function fetchData() {
@@ -69,21 +53,14 @@ const MyStore = () => {
         const store_name = response.data["Store Details"][0].store_name;
 
         setName(`Welcome to your Store, ${store_name}`);
->>>>>>> 1eb59eb9a046d55f1fce68e3ac0b0374fe9d3286
       }
       fetchData();
-    }, []);
+    }
+  }, []);
 
   return (
     <div>
-<<<<<<< HEAD
-        <p className={`${styles.componentHeader}`}>{`Welcome to your dashboard, ${name}`}</p>
-        <p className="text-xl text-black-800 font-bold w-full mx-auto mb-10">
-            Welcome to your dashboard, Micheal
-        </p>
-=======
       <p className={`${styles.componentHeader} mt-10`}>{name}</p>
->>>>>>> 1eb59eb9a046d55f1fce68e3ac0b0374fe9d3286
 
         <div className="flex justify-between w-full">
             <div className="w-full">
@@ -124,7 +101,6 @@ const MyStore = () => {
             </div>
         </div>
 
-<<<<<<< HEAD
         <div className="lg:flex justify-between">
             <span className="lg:flex justify-between my-3 lg:my-0 w-full lg:w-1/2">
               {/* Displays the total number of customers for the day */}
@@ -134,12 +110,6 @@ const MyStore = () => {
                   number={storeData.todayCustomers}
                   storeData={storeData}
               />
-=======
-        {/* Activity box of the My Store Component */}
-        {/* <div className="w-1/2 bg-white rounded-lg shadow-lg h-[200px] px-3 py-3 mb-3"> */}
-        {/* <div className="flex justify-between pr-8">
-            <p className="text-black font-bold text-base">Activity</p>
->>>>>>> 1eb59eb9a046d55f1fce68e3ac0b0374fe9d3286
 
               {/* Displays the profit made for the day */}
               <Today
@@ -214,17 +184,16 @@ const MyStore = () => {
               </span>
               <p className="text-sm">Status</p>
             </div>
-<<<<<<< HEAD
 
             <div className="mt-8">
               {/* Image and text to be displayed if no data is found */}
               <img
                   src={product}
                   alt="No customer found"
-                  className={productSales === 0 ? "mx-auto w-auto h-auto" : "hidden"}
+                  className={productSales.length === 0 ? "mx-auto w-auto h-auto" : "hidden"}
               />
               <p
-                  className={productSales === 0 ? "text-base text-center" : "hidden"}
+                  className={productSales.length === 0 ? "text-base text-center" : "hidden"}
               >
                   You have no product sales yet!
               </p>
@@ -234,178 +203,17 @@ const MyStore = () => {
                     <div className="mb-3" key={index}>
                         <Children
                           id={1}
-                          productName={"Nike Sneakers"}
-                          sales={100}
-                          price={"#500000"}
-                          stock={"500"}
-                          status={"Out of Stock"}
+                          productName={""}
+                          sales={0}
+                          price={""}
+                          stock={""}
+                          status={""}
                         />
                     </div>
                   );
               })}
             </div>
         </div>
-=======
-          </div> */}
-
-        {/* <div className="w-full scale-y-[0.60] my-auto relative bottom-10">
-            <Line
-              datasetIdKey="id"
-              data={{
-                labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-                datasets: [
-                  {
-                    id: 1,
-                    label: "profit",
-                    data: historyProfit,
-                    borderColor: "#E07B02",
-                    backgroundColor: "#E07B02",
-                    tension: 0.4,
-                    pointRadius: 0,
-                    borderWidth: 2,
-                  },
-                  {
-                    id: 2,
-                    label: "sales",
-                    data: historySales,
-                    borderColor: "#02A9F7",
-                    backgroundColor: "#02A9F7",
-                    tension: 0.4,
-                    pointRadius: 0,
-                    borderWidth: 2,
-                  },
-                  {
-                    id: 3,
-                    label: "growth",
-                    data: historyGrowth,
-                    borderColor: "#0DE0B1",
-                    backgroundColor: "#0DE0B1",
-                    tension: 0.4,
-                    pointRadius: 0,
-                    fill: "#0DE0B1",
-                    borderWidth: 2,
-                  },
-                ],
-              }}
-              options={options}
-            />
-          </div> */}
-        {/* </div> */}
-      </div>
-
-      <div className="flex justify-between">
-        <span className="flex justify-between w-1/2">
-          {/* Displays the total number of customers for the day */}
-          <Today
-            image={today_customer}
-            type={"customers"}
-            number={storeData.todayCustomers}
-            storeData={storeData}
-          />
-
-          {/* Displays the profit made for the day */}
-          <Today
-            image={wallet}
-            type={"profit"}
-            number={storeData.todayProfit}
-            storeData={storeData}
-          />
-
-          {/* Displays the sales made for the day */}
-          <Today
-            image={chartStore}
-            type={"sales"}
-            number={storeData.todaySales}
-            storeData={storeData}
-          />
-        </span>
-
-        {/* <span className="bg-white rounded w-1/2 shadow-lg px-3 py-3">
-          <p className="text-2xl font-bold text-black-800">
-            Total conversion rates
-          </p>
-        </span> */}
-      </div>
-
-      {/* Product sales box of the My Store component */}
-      <div className="rounded shadow-xl w-full px-5 py-3 mx-auto my-auto h-auto">
-        <p className={`${styles.componentHeader}`}>Product sales</p>
-
-        <div className="flex justify-between mt-10 align-center">
-          <p className="text-sm mr-1">#</p>
-          <span className="flex justify-between">
-            <p className="text-sm mr-1">Product name</p>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 320 512"
-              className="w-2 h-3 my-auto fill-slate-400"
-            >
-              <path d="M137.4 41.4c12.5-12.5 32.8-12.5 45.3 0l128 128c9.2 9.2 11.9 22.9 6.9 34.9s-16.6 19.8-29.6 19.8H32c-12.9 0-24.6-7.8-29.6-19.8s-2.2-25.7 6.9-34.9l128-128zm0 429.3l-128-128c-9.2-9.2-11.9-22.9-6.9-34.9s16.6-19.8 29.6-19.8H288c12.9 0 24.6 7.8 29.6 19.8s2.2 25.7-6.9 34.9l-128 128c-12.5 12.5-32.8 12.5-45.3 0z" />
-            </svg>
-          </span>
-          <span className="flex justify-between">
-            <p className="text-sm mr-1">Sales</p>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 320 512"
-              className="w-2 h-3 my-auto fill-slate-400"
-            >
-              <path d="M137.4 41.4c12.5-12.5 32.8-12.5 45.3 0l128 128c9.2 9.2 11.9 22.9 6.9 34.9s-16.6 19.8-29.6 19.8H32c-12.9 0-24.6-7.8-29.6-19.8s-2.2-25.7 6.9-34.9l128-128zm0 429.3l-128-128c-9.2-9.2-11.9-22.9-6.9-34.9s16.6-19.8 29.6-19.8H288c12.9 0 24.6 7.8 29.6 19.8s2.2 25.7-6.9 34.9l-128 128c-12.5 12.5-32.8 12.5-45.3 0z" />
-            </svg>
-          </span>
-          <span className="flex justify-between">
-            <p className="text-sm mr-1">Price</p>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 320 512"
-              className="w-2 h-3 my-auto fill-slate-400"
-            >
-              <path d="M137.4 41.4c12.5-12.5 32.8-12.5 45.3 0l128 128c9.2 9.2 11.9 22.9 6.9 34.9s-16.6 19.8-29.6 19.8H32c-12.9 0-24.6-7.8-29.6-19.8s-2.2-25.7 6.9-34.9l128-128zm0 429.3l-128-128c-9.2-9.2-11.9-22.9-6.9-34.9s16.6-19.8 29.6-19.8H288c12.9 0 24.6 7.8 29.6 19.8s2.2 25.7-6.9 34.9l-128 128c-12.5 12.5-32.8 12.5-45.3 0z" />
-            </svg>
-          </span>
-          <span className="flex justify-between">
-            <p className="text-sm mr-1">Stock</p>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 320 512"
-              className="w-2 h-3 my-auto fill-slate-400"
-            >
-              <path d="M137.4 41.4c12.5-12.5 32.8-12.5 45.3 0l128 128c9.2 9.2 11.9 22.9 6.9 34.9s-16.6 19.8-29.6 19.8H32c-12.9 0-24.6-7.8-29.6-19.8s-2.2-25.7 6.9-34.9l128-128zm0 429.3l-128-128c-9.2-9.2-11.9-22.9-6.9-34.9s16.6-19.8 29.6-19.8H288c12.9 0 24.6 7.8 29.6 19.8s2.2 25.7-6.9 34.9l-128 128c-12.5 12.5-32.8 12.5-45.3 0z" />
-            </svg>
-          </span>
-          <p className="text-sm">Status</p>
-        </div>
-
-        <div className="mt-8">
-          {/* Image and text to be displayed if no data is found */}
-          <img
-            src={product}
-            alt="No customer found"
-            className={productSales === 0 ? "mx-auto w-auto h-auto" : "hidden"}
-          />
-          <p
-            className={productSales === 0 ? "text-base text-center" : "hidden"}
-          >
-            You have no product sales yet!
-          </p>
-
-          {productSales.map((data, index) => {
-            return (
-              <div className="mb-3" key={index}>
-                <Children
-                  id={1}
-                  productName={"Nike Sneakers"}
-                  sales={100}
-                  price={"#500000"}
-                  stock={"500"}
-                  status={"Out of Stock"}
-                />
-              </div>
-            );
-          })}
-        </div>
-      </div>
->>>>>>> 1eb59eb9a046d55f1fce68e3ac0b0374fe9d3286
     </div>
   );
 };
@@ -460,6 +268,7 @@ const Today = ({ image, type, number, storeData }) => {
 
 const Rate = ({ yesterday_value, today_value }) => {
   const calculateRate = () => {
+    if(yesterday_value === 0 && today_value === 0) return 0;
     let change = today_value - yesterday_value;
     var rate = change / yesterday_value;
     return rate * 100;

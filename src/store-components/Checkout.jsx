@@ -66,18 +66,14 @@ const Checkout = ({cart}) => {
         changeForm(event.currentTarget.elements.submit.name);
     }
 
-    const [currentForm, setCurrentForm] = useState({
-        contact: true,
-        shipping: false,
-        payment: false,
-    });
+    
 
     const changeForm = (value) => {
         setCurrentForm({
                 contact: false,
                 shipping: false,
                 payment: false
-            });
+        });
         setCurrentForm((prev) => {
             return {...prev, [value] : true}
         });

@@ -147,7 +147,6 @@ const UserData = ({
                 <Children
                   id={children.id}
                   name={children.product}
-                  // order={"Alex@gmail.com"}
                   date={children.date_created}
                   amount={children.amount}
                   paymentMethod={children.purchase_type}

@@ -53,7 +53,7 @@ const Collections = () => {
     event.preventDefault();
     let collection = {
       name: newCollectionInfo.collectionName,
-      image: JSON.stringify(newCollectionInfo.collectionImage),
+      image: newCollectionInfo.collectionImage,
     };
     console.log();
 

@@ -4,6 +4,7 @@ import axios from "axios";
 import { facebook, instagram } from "../assets";
 import { BASE_URL, getStoreInfo } from "../services/services";
 import { UserContext } from "../context/UserContext";
+import Cookies from "js-cookie";
 
 const WebsiteSettings = () => {
   const [websiteSettings, setWebsiteSettings] = React.useState({
@@ -12,6 +13,7 @@ const WebsiteSettings = () => {
     instagramUsername: "",
   });
 
+  const tk = Cookies.get("_tksr");
   const { userData } = useContext(UserContext);
   async function handleSubmit(event) {
     event.preventDefault();
@@ -24,15 +26,14 @@ const WebsiteSettings = () => {
 
     try {
       const res = await axios.post(
-        `${BASE_URL}store_settings/store`,
+        `${BASE_URL}store_settings/website/`,
         formDetails,
-        { headers: { Authorization: `Bearer ${userData.access}` } }
+        { headers: { Authorization: `Bearer ${tk}` } }
       );
       if (!res.statusText === "OK") return;
       console.log(res);
       setWebsiteSettings((prev) => {
         return {
-          ...prev,
           storeURL: "",
           facebookUsername: "",
           instagramUsername: "",
@@ -44,10 +45,11 @@ const WebsiteSettings = () => {
   }
 
   function handleChange(event) {
+    const {name, value} = event.target;
     setWebsiteSettings((prev) => {
       return {
         ...prev,
-        [event.target.name]: event.target.value,
+        [name]: value,
       };
     });
   }
@@ -55,7 +57,7 @@ const WebsiteSettings = () => {
   useEffect(() => {
     async function fetchData() {
       const response = await getStoreInfo();
-      const store_link = response.data["Store Details"][0].store_domain;
+      const store_link = response.data["Store Details"].length === 0 ? "" : response.data["Store Details"][0].store_domain;
 
       setWebsiteSettings((...prev) => {
         return { ...prev, storeURL: store_link };
@@ -77,7 +79,7 @@ const WebsiteSettings = () => {
           <div className="my-8">
             <p>Store URL</p>
             <input
-              disabled
+              disabled={websiteSettings.storeURL === "" ? false : true}
               type="text"
               className={`${styles.inputBox} w-full mt-1 px-3`}
               onChange={handleChange}
