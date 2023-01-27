@@ -40,8 +40,7 @@ const SignUp = ({ handleClick }) => {
       };
       const res = await postUser(user);
       console.log(res.data.message);
-      // changeMessage(true);
-      // if (!res.status === 201 || res.status === 200) return;
+      if (!res.status === 201 || res.status === 200) return;
 
       if (user.user_type === "seller") {
         setShowModal(true);
@@ -54,7 +53,7 @@ const SignUp = ({ handleClick }) => {
     } catch (err) {
       console.log(err);
     }
-    setFormData("");
+    setFormData({});
   }
 
   return (
