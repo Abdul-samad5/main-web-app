@@ -49,8 +49,7 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 import { LoginContext } from "../context/LoginContext";
 import { UserContext } from "../context/UserContext";
 import { useEffect } from "react";
-import { getStoreInfo } from "../services/services";
-import StoreFront from "./StoreFront";
+import { getStoreInfo, userLogout } from "../services/services";
 
 function DbIcon({ src }) {
   return <img src={src} className="w-[16px]" alt="Icon" />;
@@ -79,9 +78,16 @@ const Dashboard = () => {
   const navigate = useNavigate();
 
   function handleLogOut() {
-    userLoggedOut();
-    onUserLogOut();
-    navigate("/");
+    async function logUserOut() {
+      const res = await userLogout();
+      console.log(res);
+      if (res) {
+        userLoggedOut();
+        onUserLogOut();
+        navigate("/");
+      }
+    }
+    logUserOut();
   }
 
   function showActiveComponent(e, comp) {
@@ -98,7 +104,7 @@ const Dashboard = () => {
     async function fetchData() {
       const response = await getStoreInfo();
       if (response) {
-        const store_name = response.data["Store Details"].length === 0 ? "" : response.data["Store Details"][0].store_name;
+        const store_name = response.data["Store Details"][0].store_name;
         setStoreName(`${store_name}'s store`);
       }
     }

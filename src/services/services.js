@@ -151,4 +151,5 @@ export {
   getProductList,
   deleteProduct,
   updateProduct,
+  userLogout,
 };

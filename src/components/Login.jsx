@@ -4,13 +4,18 @@ import { LoginContext } from "../context/LoginContext";
 import { UserContext } from "../context/UserContext";
 import { styles } from "../constants";
 import { userLogin } from "../services/services";
-
+import Modal from "./Modal";
 
 const Login = ({ handleClick }) => {
   // Initialize state for the login to enable user login
   const { userLoggedIn } = useContext(LoginContext);
   const { onUserLogin } = useContext(UserContext);
+
   const [message, setMessage] = useState({ text: true });
+  const [modalContent, setModalContent] = useState(null);
+  const [showButton, setShowButton] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+
   const navigate = useNavigate();
 
   function changeMessage(status) {
@@ -73,8 +78,12 @@ const Login = ({ handleClick }) => {
 
       onUserLogin(token);
       userLoggedIn();
-
-      navigate("/dashboard");
+      setModalContent("Login Successful! Please wait...");
+      setShowModal(true);
+      setTimeout(() => {
+        setShowModal(false);
+        navigate("/dashboard");
+      }, 5000);
     } catch (err) {
       console.log(err);
       changeMessage(err.response.status);
@@ -146,6 +155,7 @@ const Login = ({ handleClick }) => {
           </button>
         </div>
       </form>
+      {showModal && <Modal text={modalContent} showButton={showButton} />};
     </div>
   );
 };
