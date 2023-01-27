@@ -3,6 +3,7 @@ import { styles } from '../constants';
 import axios from 'axios';
 import { BASE_URL } from '../services/services';
 import { UserContext } from '../context/UserContext';
+import Cookies from 'js-cookie';
 
 const Security = () => {
     const [securityData, setSecurityData] = useState({
@@ -19,12 +20,14 @@ const Security = () => {
         });
     }
 
+    const tk = Cookies.get("_tksr");
+
     const { userData } = useContext(UserContext);
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        if(changePassword === repeatPassword) {
-            axios.put(`${BASE_URL}auth/reset-password-confirm/${userData.id}/${userData.access}`, {
+        if(securityData.changePassword === securityData.repeatPassword) {
+            axios.put(`${BASE_URL}auth/reset-password-confirm/${userData.user.user_id}/${userData.access}`, {
                 'password': securityData.changePassword
             }).then((response) => {
                 console.log(response);

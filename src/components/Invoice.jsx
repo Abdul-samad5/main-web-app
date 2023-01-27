@@ -14,18 +14,18 @@ const Invoice = ({}) => {
     const [invoiceDetails, setInvoiceDetails] = useState({
         logo: "",
         invoiceNo: "#000001",
-        dueDate: "29th July, 2022",
-        invoiceDate: "29th July, 2022",
-        customerEmail: "omoledaniel13@gmail.com",
-        customerAddress: "Nigeria",
-        customerName: "Michellina",
+        dueDate: "",
+        invoiceDate: "",
+        customerEmail: "",
+        customerAddress: "",
+        customerName: "",
         items: [],
         unitPrice: "",
         quantity: "",
         itemName: "",
-        vat: 8,
-        discount: 1000,
-        subTotal: 100000
+        vat: 0,
+        discount: 0,
+        subTotal: 0
     });
 
     const handleToggle = (value) => {

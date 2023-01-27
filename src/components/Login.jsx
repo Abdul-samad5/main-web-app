@@ -6,6 +6,7 @@ import { styles } from "../constants";
 import { userLogin } from "../services/services";
 import Modal from "./Modal";
 
+
 const Login = ({ handleClick }) => {
   // Initialize state for the login to enable user login
   const { userLoggedIn } = useContext(LoginContext);
