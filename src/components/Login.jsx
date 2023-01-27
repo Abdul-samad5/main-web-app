@@ -155,7 +155,7 @@ const Login = ({ handleClick }) => {
           </button>
         </div>
       </form>
-      {showModal && <Modal text={modalContent} showButton={showButton} />};
+      {showModal && <Modal text={modalContent} showButton={showButton} />}
     </div>
   );
 };
