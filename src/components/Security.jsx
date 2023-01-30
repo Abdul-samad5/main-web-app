@@ -21,13 +21,14 @@ const Security = () => {
     }
 
     const tk = Cookies.get("_tksr");
-
+    const id = Cookies.get("_id");
+    // const tk = Cookies.get("_tksr");
     const { userData } = useContext(UserContext);
     const handleSubmit = (event) => {
         event.preventDefault();
 
         if(securityData.changePassword === securityData.repeatPassword) {
-            axios.put(`${BASE_URL}auth/reset-password-confirm/${userData.user.user_id}/${userData.access}`, {
+            axios.put(`${BASE_URL}auth/reset-password-confirm/${id}/${tk}`, {
                 'password': securityData.changePassword
             }).then((response) => {
                 console.log(response);

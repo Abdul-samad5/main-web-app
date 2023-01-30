@@ -3,7 +3,6 @@ import { UserData } from "./index";
 import { noProducts } from "../assets";
 import { getProducts, deleteProduct } from "../services/services";
 import { styles } from "../constants/index";
-import { UserContext } from "../context/UserContext";
 import useFetchData from "../hooks/useFetchProducts";
 
 const details = ["Product name", "Price", "Status:", "Inventory:", "Action"];

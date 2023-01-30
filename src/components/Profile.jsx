@@ -5,6 +5,8 @@ import usePostImg from "../hooks/usePostImage";
 import { getStoreInfo } from "../services/services";
 import { useEffect } from "react";
 import axios from "axios";
+import Cookies from "js-cookie";
+import { BASE_URL } from "../services/services";
 
 const Profile = () => {
   const [profileData, setProfileData] = useState({
@@ -59,18 +61,27 @@ const Profile = () => {
     postImg();
   };
 
+  const tk = Cookies.get("_tksr");
+  const id = Cookies.get("_id");
+
   useEffect(() => {
     async function fetchData() {
-      const response = await getStoreInfo();
-      const full_name = response.data["Name"];
-      const email = response.data["Email"];
+      // const response = await getStoreInfo();
+      const response = await axios.get(`${BASE_URL}store_settings/store/${id}`, { headers: { Authorization: `Bearer ${tk}`} });
+      const full_name = response.data.data["store_name"];
+      const email = response.data.data["store_email"];
+      const profileLogo = response.data.data["store_logo"];
+      const phone = response.data.data["store_phone_number"];
+
+      console.log(response);
 
       setProfileData((...prev) => {
-        return { ...prev, fullName: full_name, emailAddress: email };
+        return { ...prev, fullName: full_name, emailAddress: email, profileImage: profileLogo, phoneNumber: phone };
       });
     }
     fetchData();
   }, []);
+  
   return (
     <div className="px-6 py-4">
       <p className="text-sm opacity-50">

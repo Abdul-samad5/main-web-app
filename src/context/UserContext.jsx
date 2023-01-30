@@ -3,33 +3,18 @@ import Cookies from "js-cookie";
 export const UserContext = createContext();
 
 const UserContextProvider = ({ children }) => {
-  //   const [userToken, setUserToken] = useState("");
-  
-  // const getUserToken = (data) => {
-  //   if (userData === undefined) {
-  //     window.localStorage.setItem("isLoggedIn", false);
-  //     setUserData(null);
-  //   } else {
-  //     setUserData(data);
-  //   }
-  // };
-
-  //const onUserLogOut = () => {
-    // setUserData(null);
-    // window.localStorage.setItem("isLoggedIn", false);
     
-  const onUserLogin = (token) => {
+  const onUserLogin = (token, email, user_id) => {
     Cookies.set("_tksr", token, { secure: true });
+    Cookies.set("_email", email, { secure: true });
+    Cookies.set("_id", user_id, { secure: true });
   };
 
   const onUserLogOut = () => {
     Cookies.remove("_tksr", { path: "" });
+    Cookies.remove("_email", { path: "" });
+    Cookies.remove("_id", { path: "" });
   };
-
-  // const onUserLogin = (data) => {
-   // setUserData(data);
-   // window.localStorage.setItem("isLoggedIn", true);
- // }
 
   return (
     <UserContext.Provider value={{ onUserLogOut, onUserLogin }}>

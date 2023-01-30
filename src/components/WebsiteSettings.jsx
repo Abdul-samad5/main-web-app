@@ -14,7 +14,7 @@ const WebsiteSettings = () => {
   });
 
   const tk = Cookies.get("_tksr");
-  const { userData } = useContext(UserContext);
+  const id = Cookies.get("_id");
   async function handleSubmit(event) {
     event.preventDefault();
 
@@ -55,13 +55,25 @@ const WebsiteSettings = () => {
   }
 
   useEffect(() => {
-    async function fetchData() {
-      const response = await getStoreInfo();
-      const store_link = response.data["Store Details"].length === 0 ? "" : response.data["Store Details"][0].store_domain;
+    // async function fetchData() {
+    //   const response = await getStoreInfo();
+    //   const store_link = response.data["Store Details"].length === 0 ? "" : response.data["Store Details"][0].store_domain;
 
-      setWebsiteSettings((...prev) => {
-        return { ...prev, storeURL: store_link };
-      });
+    //   setWebsiteSettings((...prev) => {
+    //     return { ...prev, storeURL: store_link };
+    //   });
+    // }
+    async function fetchData() {
+      try {
+        const response = await axios.get(`${BASE_URL}store_settings/website/${id}`, { headers: { Authorization: `Bearer ${tk}`} });
+        // if (response) {
+        //   const data = response.data.data;
+        // }
+        console.log(response);
+        if(!response.statusText === "OK") return;
+      } catch(err) {
+        console.log(err);
+      }
     }
     fetchData();
   }, []);

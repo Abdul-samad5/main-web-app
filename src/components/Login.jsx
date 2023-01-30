@@ -70,8 +70,14 @@ const Login = ({ handleClick }) => {
       const response = await userLogin(user);
       if (!response.statusText === "OK") return;
       const token = response.data.data.access;
+      const email = response.data.data.user.email;
+      const user_id = response.data.data.user.user_id;
+      console.log(token);
+      console.log(email);
+      console.log(user_id);
+      console.log(response);
 
-      onUserLogin(token);
+      onUserLogin(token, email, user_id);
       userLoggedIn();
 
       navigate("/dashboard");

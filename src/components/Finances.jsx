@@ -2,13 +2,13 @@ import React, {useState} from 'react';
 import {Invoice, Payments} from "./index";
 
 const Finances = () => {
-    const [currentPage, setCurrentPage] = useState(0);
+    const [currentPage, setCurrentPage] = useState(1);
 
-    const handleClick = (value) => {
-        setCurrentPage((prev) => {
-            return prev = value;
-        });
-    }
+    // const handleClick = (value) => {
+    //     setCurrentPage((prev) => {
+    //         return prev = value;
+    //     });
+    // }
 
     return (
         <div>
@@ -18,14 +18,15 @@ const Finances = () => {
             <div className='w-full rounded-lg shadow-lg h-auto mt-3'>
                 <div className='border-b-2 py-7 border-brand-primary h-20 w-full px-10'>
                     <div className='flex justify-between w-1/4'>
-                        <p 
+                        {/* <p 
                             onClick={() => handleClick(0)}
                             className={currentPage === 0 ? 'opacity-50 border-t-2 px-4 py-3 hover:cursor-pointer border-l-2 border-b-white border-brand-primary border-r-2' : "px-4 py-3 hover:cursor-pointer opacity-50"}>
                             Payment
-                        </p>
+                        </p> */}
                         <p 
-                            onClick={() => handleClick(1)}
-                            className={currentPage === 1 ? 'opacity-50 border-t-2 px-4 py-3 border-l-2 border-b-white hover:cursor-pointer border-brand-primary border-r-2' : "px-4 hover:cursor-pointer py-3 opacity-50"}>
+                            // onClick={() => handleClick(1)}
+                            // className={currentPage === 1 ? 'opacity-50 border-t-2 px-4 py-3 border-l-2 border-b-white hover:cursor-pointer border-brand-primary border-r-2' : "px-4 hover:cursor-pointer py-3 opacity-50"}
+                            className={'opacity-50 border-t-2 px-4 py-3 border-l-2 border-b-white hover:cursor-pointer border-brand-primary border-r-2'}>
                             Invoice
                         </p>
                         {/* <p 
@@ -36,9 +37,9 @@ const Finances = () => {
                     </div>
                 </div>
 
-                {currentPage === 0 && <Payments/>}
-                {currentPage === 1 && <Invoice/>}
-                {/* {currentPage === 2 && <Invoice/>} */}
+                <Invoice/>
+                {/* {currentPage === 0 && <Payments/>} */}
+                {/* {currentPage === 1 && <Invoice/>} */}
             </div>
         </div>
     ) 

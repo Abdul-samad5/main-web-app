@@ -17,8 +17,6 @@ function App() {
   const { isLoggedIn } = useContext(LoginContext);
   const tk = Cookies.get("_tksr");
 
-  // const isLoggedIn = window.localStorage.getItem("isLoggedIn");
-  console.log(isLoggedIn);
   const PreventLogin = ({ children }) => {
     return tk ? children : <Navigate to={"/"} />;
   };
