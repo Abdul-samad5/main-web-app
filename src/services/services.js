@@ -65,7 +65,6 @@ const updateProduct = (id, product) =>
 
 const addCollection = (collection) => {
   axios.post(`${BASE_URL}product/collection`, collection, config);
-  return token;
 }
   
 
