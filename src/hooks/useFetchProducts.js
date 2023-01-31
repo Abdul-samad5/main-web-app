@@ -14,8 +14,9 @@ const useFetchData = (url) => {
   async function fetchProducts() {
     try {
       const res = await url;
-      if (!res.statusText === "OK") return;
-      setData(res.data.data);
+      if (res) {
+        setData(res.data.data);
+      }
       // console.log(res.data.data);
       setIsLoading(false);
     } catch (err) {

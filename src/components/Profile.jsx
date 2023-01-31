@@ -41,8 +41,7 @@ const Profile = () => {
           formInfo
         );
         if (!res) {
-          // setLoading(true);
-          return;
+          setLoading(false);
           return;
         } else {
           // setLoading(false);

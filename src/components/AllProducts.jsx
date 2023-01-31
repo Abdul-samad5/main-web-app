@@ -17,7 +17,7 @@ const MyOrders = () => {
     });
   };
 
-  const { data } = useFetchData(getProducts);
+  const { data } = useFetchData(getProducts());
   useEffect(() => {
     setMyProducts(data);
   }, [reRender, data]);

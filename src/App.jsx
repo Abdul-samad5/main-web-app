@@ -16,9 +16,9 @@ import ProductDetails from "./store-components/ProductDetails";
 function App() {
   const { cart, deleteFromCart, clearCart, changeQuantity } =
     useContext(cartContext);
-  const tk = Cookies.get("_tksr");
 
   const PreventLogin = ({ children }) => {
+    const tk = Cookies.get("_tksr");
     return tk ? children : <Navigate to={"/"} />;
   };
 

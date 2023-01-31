@@ -4,10 +4,8 @@ import Cookies from "js-cookie";
 export const UserContext = createContext();
 
 const UserContextProvider = ({ children }) => {
-  //   const [userToken, setUserToken] = useState("");
-
   const onUserLogin = (token) => {
-    Cookies.set("_tksr", token);
+    Cookies.set("_tksr", token, { secure: true });
   };
 
   const onUserLogOut = () => {

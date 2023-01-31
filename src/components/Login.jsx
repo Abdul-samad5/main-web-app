@@ -8,7 +8,6 @@ import Modal from "./Modal";
 
 const Login = ({ handleClick }) => {
   // Initialize state for the login to enable user login
-  const { userLoggedIn } = useContext(LoginContext);
   const { onUserLogin } = useContext(UserContext);
 
   const [message, setMessage] = useState({ text: true });
@@ -25,13 +24,11 @@ const Login = ({ handleClick }) => {
     }
     if (status === 401) {
       setModalContent("Email or Password Incorrect!");
-      return;
     }
     if (status >= 400) {
       setModalContent(
         "There might be a problem with your Internet Connection! Please try again"
       );
-      return;
     }
   }
 
@@ -52,24 +49,28 @@ const Login = ({ handleClick }) => {
   }
 
   async function formSubmit(e) {
+    const user = {
+      email: formData.email,
+      password: formData.password,
+    };
     e.preventDefault();
-    changeMessage(true);
     setLoading(true);
     try {
-      const response = await userLogin(formData);
-
-      const token = response.data.data.access;
-      setLoading(false);
-      onUserLogin(token);
-      navigate("dashboard");
+      const response = await userLogin(user);
+      if (response) {
+        const token = response.data.data.access;
+        onUserLogin(token);
+        setLoading(false);
+        navigate("/dashboard");
+      }
     } catch (err) {
+      setLoading(false);
       changeMessage(err.response.status);
       console.log(err);
       setShowModal(true);
-      // setTimeout(() => {
-      //   setShowModal(false);
-      // }, 2000);
-      setLoading(false);
+      setTimeout(() => {
+        setShowModal(false);
+      }, 2000);
     }
   }
 
@@ -120,12 +121,21 @@ const Login = ({ handleClick }) => {
             {message?.text}
           </p>
         )}
-        <button className={`${styles.button}`}>
+        <button
+          className={`${styles.button}`}
+          disabled={loading ? true : false}
+        >
           {loading && (
-            <svg
-              className="animate-spin h-5 w-5 mr-3"
-              viewBox="0 0 24 24"
-            ></svg>
+            <svg className="animate-spin spin h-5 w-5 mr-3" viewBox="0 0 50 50">
+              <circle
+                className="path"
+                cx="25"
+                cy="25"
+                r="20"
+                fill="none"
+                strokeWidth="5"
+              ></circle>
+            </svg>
           )}
           {loading ? "Processing..." : "Login to account"}
         </button>
