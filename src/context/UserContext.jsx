@@ -7,7 +7,7 @@ const UserContextProvider = ({ children }) => {
   //   const [userToken, setUserToken] = useState("");
 
   const onUserLogin = (token) => {
-    Cookies.set("_tksr", token, { secure: true });
+    Cookies.set("_tksr", token);
   };
 
   const onUserLogOut = () => {

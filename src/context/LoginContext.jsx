@@ -12,12 +12,6 @@ const LoginProvider = ({ children }) => {
   }
 
   function userLoggedOut() {
-
-    window.localStorage.clear("isLoggedIn");
-    window.localStorage.clear("token");
-    setIsLoggedIn(false);
-    window.localStorage.setItem("isLoggedIn", false);
-    setIsLoggedIn(false);
     Cookies.remove("_tksr");
   }
 
