@@ -61,7 +61,12 @@ const Login = ({ handleClick }) => {
         const token = response.data.data.access;
         onUserLogin(token);
         setLoading(false);
-        navigate("/dashboard");
+        changeMessage(response.status);
+        setShowModal(true);
+        setTimeout(() => {
+          setShowModal(false);
+          navigate("/dashboard");
+        }, 3000);
       }
     } catch (err) {
       setLoading(false);
