@@ -36,7 +36,7 @@ const SignUp = ({ handleClick }) => {
       console.log(res.data.message);
       if (!res.status === 201 || res.status === 200) return;
 
-      if (user.user_type === "seller") {
+      if (formData.accountType === "seller") {
         setShowModal(true);
         setModalContent("Registration Successful! Please Check Your email");
         setTimeout(() => {
