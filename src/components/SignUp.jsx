@@ -32,13 +32,7 @@ const SignUp = ({ handleClick }) => {
     e.preventDefault();
 
     try {
-      const user = {
-        full_name: formData.fullName,
-        email: formData.email,
-        password: formData.password,
-        user_type: formData.accountType,
-      };
-      const res = await postUser(user);
+      const res = await postUser(formData);
       console.log(res.data.message);
       if (!res.status === 201 || res.status === 200) return;
 
