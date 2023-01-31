@@ -82,7 +82,7 @@ const Login = ({ handleClick }) => {
             setShowModal(false);
             navigate("/dashboard");
           }, 3000);
-        
+        }
       
     } catch (err) {
       setLoading(false);
