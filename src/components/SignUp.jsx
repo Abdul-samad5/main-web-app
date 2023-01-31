@@ -36,14 +36,14 @@ const SignUp = ({ handleClick }) => {
       console.log(res.data.message);
       if (!res.status === 201 || res.status === 200) return;
 
-      if (formData.accountType === "seller") {
+  
         setShowModal(true);
         setModalContent("Registration Successful! Please Check Your email");
         setTimeout(() => {
           setShowModal(false);
           handleClick("login");
         }, 5000);
-      }
+  
     } catch (err) {
       console.log(err);
     }
