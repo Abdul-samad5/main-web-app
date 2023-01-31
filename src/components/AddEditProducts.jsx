@@ -79,7 +79,6 @@ function AddEditProduct() {
       const res = await addProduct(product);
       console.log(res);
       if (!res.statusText === "OK") return;
-      console.log(res);
     } catch (err) {
       console.log(err);
     }
@@ -101,14 +100,8 @@ function AddEditProduct() {
     const file = event.target.files[0];
     const formInfo = new FormData();
     formInfo.append("file", file);
-    formInfo.append("upload_preset", "images");
-    // for (var [key, value] of formInfo.entries()) {
-    //   console.log(key, value);
-    // }
-    // console.log(formInfo);
-    let reader = new FileReader();
-
-    reader.readAsDataURL(event.target.files[0]);
+    formInfo.append('upload_preset', 'images');
+    
 
     async function uploadImg() {
       setLoading(true);

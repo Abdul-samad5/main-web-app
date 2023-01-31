@@ -146,10 +146,10 @@ const UserData = ({
               <div className="mb-3" key={index}>
                 <Children
                   id={children.id}
-                  name={children.product}
-                  date={children.date_created}
+                  userEmail={children.userEmail}
+                  refCode={children.ref_code}
                   amount={children.amount}
-                  paymentMethod={children.purchase_type}
+                  paymentID={children.uuid}
                   status={children.status}
                 />
               </div>

@@ -216,13 +216,13 @@ const Dashboard = () => {
                 <DbIcon src={discounts} />
                 <h2>Discounts</h2>
               </div>
-              <div
+              {/* <div
                 className={`${styles.dbNavItemDrop}`}
                 onClick={(e) => showActiveComponent(e, <AddEditProducts />)}
               >
                 <DbIcon src={marketing} />
                 <h2>Campaign</h2>
-              </div>
+              </div> */}
             </div>
           </div>
           <div

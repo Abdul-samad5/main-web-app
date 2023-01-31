@@ -57,9 +57,15 @@ const Login = ({ handleClick }) => {
     setLoading(true);
     try {
       const response = await userLogin(user);
+
+      if (!response.statusText === "OK") return;
+    
       if (response) {
         const token = response.data.data.access;
-        onUserLogin(token);
+        const email = response.data.data.user.email;
+        const user_id = response.data.data.user.user_id;
+        
+        onUserLogin(token, email, user_id);
         setLoading(false);
         changeMessage(response.status);
         setShowModal(true);
