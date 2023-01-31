@@ -60,13 +60,18 @@ const Login = ({ handleClick }) => {
       if (response) {
         const token = response.data.data.access;
         onUserLogin(token);
-        setLoading(false);
+        const checkStore = response.data.data.user.has_store;
         changeMessage(response.status);
-        setShowModal(true);
-        setTimeout(() => {
-          setShowModal(false);
-          navigate("/dashboard");
-        }, 3000);
+        if (checkStore === false) {
+          setLoading(false);
+          handleClick("createStore");
+        } else {
+          setShowModal(true);
+          setTimeout(() => {
+            setShowModal(false);
+            navigate("/dashboard");
+          }, 3000);
+        }
       }
     } catch (err) {
       setLoading(false);
