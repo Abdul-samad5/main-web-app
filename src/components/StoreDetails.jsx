@@ -1,23 +1,23 @@
 import axios from "axios";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { styles } from "../constants/index";
 import { BASE_URL, getStoreInfo } from "../services/services";
 import { UserContext } from "../context/UserContext";
 import Cookies from "js-cookie";
 
 const StoreDetails = () => {
-  const [storeDetails, setStoreDetails] = React.useState({
+  const [storeDetails, setStoreDetails] = useState({
     storeName: "",
     tagLine: "",
     storeDesc: "",
     storeLogo: "",
-    storeCurrency: "",
+    storeCurrency: "Naira",
     storeEmail: "",
     storeContactNumber: "",
   });
-
+  const [loading, setLoading] = useState(false);
   const tk = Cookies.get("_tksr");
-  const { userData } = useContext(UserContext);
+  const id = Cookies.get("_id");
 
   const saveSettings = async () => {
     let formDetails = {
@@ -31,22 +31,31 @@ const StoreDetails = () => {
     };
 
     try {
-      // const res = await axios.post(
-      //   `${BASE_URL}store_settings/store`,
-      //   formDetails,
-      //   { headers: { Authorization: `Bearer ${userData.access}` } }
-      // );
-      const res = await axios.post(
-        `${BASE_URL}store_settings/store`,
+      const res = await axios.put(
+        `${BASE_URL}store_settings/store/update/${id}/`,
         formDetails,
         { headers: { Authorization: `Bearer ${tk}` } }
       );
       if (!res.statusText === "OK") return;
       console.log(res);
+      makeEmpty();
     } catch (error) {
       console.log(error);
     }
   };
+
+  function makeEmpty() {
+      setStoreDetails((prev) => {
+        return { ...prev, 
+          store_name: "",
+          tag_line: "",
+          store_description: "",
+          store_logo: "",
+          store_currency: "Naira",
+          store_email: prev.storeEmail,
+          store_phone_number: "" };
+      });
+  }
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -60,15 +69,41 @@ const StoreDetails = () => {
   };
 
   const handleSelectedImage = (event) => {
-    const selectedFilesArray = Array.from(event.target.files);
+    const file = event.target.files[0];
+    const formInfo = new FormData();
+    formInfo.append("file", file);
+    formInfo.append('upload_preset', 'images');
 
-    const imageUri = URL.createObjectURL(selectedFilesArray[0]);
-    setStoreDetails((prev) => {
-      return {
-        ...prev,
-        storeLogo: imageUri,
-      };
-    });
+    async function uploadImg() {
+      try {
+        const res = await axios.post(
+          "https://api.Cloudinary.com/v1_1/doqnvybu5/upload",
+          formInfo
+        );
+        if (!res) {
+          setLoading(true);
+          return;
+        } else {
+          setLoading(false);
+          const imageUri = res.data.secure_url;
+          setStoreDetails((prev) => {
+            return {
+              ...prev,
+              storeLogo: imageUri,
+            };
+          });
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    uploadImg();
+    // setStoreDetails((prev) => {
+    //   return {
+    //     ...prev,
+    //     storeLogo: imageUri,
+    //   };
+    // });
   };
 
   function handleSubmit(event) {
@@ -78,13 +113,28 @@ const StoreDetails = () => {
 
   useEffect(() => {
     async function fetchData() {
-      const response = await getStoreInfo();
-      if (response) {
-        const store_name = response.data["Store Details"].length === 0 ? "" : response.data["Store Details"][0].store_name;
-        const store_email = response.data["Email"];
-        setStoreDetails((prev) => {
-          return { ...prev, storeName: store_name, storeEmail: store_email };
-        });
+      try {
+        const response = await axios.get(`${BASE_URL}store_settings/store/${id}`, { headers: { Authorization: `Bearer ${tk}`} });
+        if (response) {
+          const data = response.data.data;
+          // const store_name = response.data["Store Details"].length === 0 ? "" : response.data["Store Details"][0].store_name;
+          // const store_email = response.data["Email"];
+          setStoreDetails((prev) => {
+            return { ...prev, 
+              storeName: data.store_name, 
+              storeEmail: data.store_email,
+              tagLine: data.tag_line,
+              storeDesc: data.store_description,
+              storeLogo: data.store_logo,
+              storeCurrency: "Naira",
+              storeContactNumber: data.store_phone_number
+            };
+          });
+        }
+        // console.log(response);
+        if(!response.statusText === "OK") return;
+      } catch(err) {
+        console.log(err);
       }
     }
     fetchData();
@@ -106,8 +156,8 @@ const StoreDetails = () => {
               <input
                 placeholder="Michelline"
                 onChange={handleChange}
-                disabled={storeDetails.storeName === "" ? false : true}
-                value={storeDetails.storeName}
+                disabled={storeDetails?.storeName === "" || storeDetails?.storeName === null ? false : true}
+                value={storeDetails?.storeName}
                 className={`${styles.inputBox} px-3 w-11/12`}
                 type="text"
                 name="storeName"
@@ -140,7 +190,7 @@ const StoreDetails = () => {
 
               <div className="relative flex left-3/4 bottom-10">
                 <span className="text-xs text-slate-300">
-                  {storeDetails.storeDesc.length}
+                  {storeDetails.storeDesc === null ? 0 : storeDetails.storeDesc?.length }
                 </span>
                 <span className="text-xs text-slate-300">/100</span>
               </div>
@@ -180,14 +230,23 @@ const StoreDetails = () => {
           <div className="flex justify-between my-6">
             <span className="w-1/3">
               <p className="mb-1">Store currency</p>
-              <select
+              {/* <select
                 name="storeCurrency"
                 className={`${styles.inputBox} px-3 w-11/12`}
                 value={storeDetails.storeCurrency}
                 onChange={handleChange}
               >
                 <option>Nigerian naira</option>
-              </select>
+              </select> */}
+              <input
+                // placeholder="Nigerian"
+                onChange={handleChange}
+                disabled={true}
+                value={storeDetails.storeCurrency}
+                className={`${styles.inputBox} px-3 w-11/12`}
+                type="text"
+                name="storeCurrency"
+              />
             </span>
 
             <span className="w-1/3">

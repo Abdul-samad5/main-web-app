@@ -57,22 +57,33 @@ const Login = ({ handleClick }) => {
     setLoading(true);
     try {
       const response = await userLogin(user);
+
+      if (!response.statusText === "OK") return;
+    
       if (response) {
         const token = response.data.data.access;
-        onUserLogin(token);
-        const checkStore = response.data.data.user.has_store;
+
+
+
+
+        const email = response.data.data.user.email;
+        const user_id = response.data.data.user.user_id;
+        
+        onUserLogin(token, email, user_id);
+        setLoading(false);
+
         changeMessage(response.status);
-        if (checkStore === false) {
-          setLoading(false);
-          handleClick("createStore");
-        } else {
+       
+
+
+
           setShowModal(true);
           setTimeout(() => {
             setShowModal(false);
             navigate("/dashboard");
           }, 3000);
-        }
-      }
+        
+      
     } catch (err) {
       setLoading(false);
       changeMessage(err.response.status);

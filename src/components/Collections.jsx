@@ -89,7 +89,7 @@ const Collections = () => {
 
     const formData = new FormData();
     formData.append("file", file);
-    formData.append("upload_preset", "ktjtewmf");
+    formData.append("upload_preset", "images");
     let reader = new FileReader();
 
     reader.readAsDataURL(event.target.files[0]);
