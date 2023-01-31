@@ -101,22 +101,17 @@ function AddEditProduct() {
     const formInfo = new FormData();
     formInfo.append("file", file);
     formInfo.append('upload_preset', 'images');
-    // for (var [key, value] of formInfo.entries()) { 
-    //   console.log(key, value);
-    // }
-    // console.log(formInfo);
-    // let reader = new FileReader();
-
-    // reader.readAsDataURL(event.target.files[0]);
+    
 
     async function uploadImg() {
+      setLoading(true);
       try {
         const res = await axios.post(
           "https://api.Cloudinary.com/v1_1/doqnvybu5/upload",
           formInfo
         );
         if (!res) {
-          setLoading(true);
+          setLoading(false);
           return;
         } else {
           setLoading(false);
@@ -200,16 +195,20 @@ function AddEditProduct() {
             {/* For selecting and adding images of products */}
             <span className="flex justify-between lg:flex-row flex-col">
               <span>
-                <img
-                  alt="Image Chosen"
-                  className={
-                    formData.productImg === ""
-                      ? "block w-1/2 invisible"
-                      : "block w-1/2 h-full"
-                  }
-                  id="selected-image"
-                  src={formData.productImg === "" ? "" : formData.productImg}
-                />
+                {loading ? (
+                  "Loading please wait..."
+                ) : (
+                  <img
+                    alt="Image Chosen"
+                    className={
+                      formData.productImg === ""
+                        ? "block w-1/2 invisible"
+                        : "block w-1/2 h-full"
+                    }
+                    id="selected-image"
+                    src={formData.productImg === "" ? "" : formData.productImg}
+                  />
+                )}
 
                 {/* Displays when an image is selected and enable the user to delete already selected image */}
                 <div
@@ -469,13 +468,14 @@ function AddEditProduct() {
 
       {/* Submit button of the entire form. */}
       <div className="w-full flex justify-center">
-        <input
+        <button
           type="button"
-          value="Save"
           disabled={loading ? true : false}
           className="bg-blue-400 rounded-lg px-9 text-white text-sm py-2"
           onClick={handleSubmit}
-        ></input>
+        >
+          Save
+        </button>
       </div>
     </div>
   );

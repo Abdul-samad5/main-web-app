@@ -1,9 +1,9 @@
-import React, { useState, createContext } from "react";
+import React, { createContext } from "react";
 import Cookies from "js-cookie";
+
 export const UserContext = createContext();
 
 const UserContextProvider = ({ children }) => {
-    
   const onUserLogin = (token, email, user_id) => {
     Cookies.set("_tksr", token, { secure: true });
     Cookies.set("_email", email, { secure: true });

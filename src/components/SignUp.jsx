@@ -6,6 +6,8 @@ const SignUp = ({ handleClick }) => {
   // Initialize state for submit button textContent
   const [message, setMessage] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const [modalContent, setModalContent] = useState(null);
+  const [showButton, setShowButton] = useState(false);
 
   // Collect form data
   const [formData, setFormData] = useState({
@@ -30,30 +32,22 @@ const SignUp = ({ handleClick }) => {
     e.preventDefault();
 
     try {
-      const user = {
-        full_name: formData.fullName,
-        email: formData.email,
-        password: formData.password,
-        user_type: formData.accountType,
-      };
-      const res = await postUser(user);
+      const res = await postUser(formData);
       console.log(res.data.message);
-      // changeMessage(true);
-      if (res.status === 201 || res.status === 200) {
-        setShowModal(true);
-        setMessage("Registration Success, Please Check your Email");
+      if (!res.status === 201 || res.status === 200) return;
 
-        if (user.user_type === "seller") {
-          setTimeout(() => {
-            handleClick("createStore");
-          }, 5000);
-        }
-        return;
+      if (user.user_type === "seller") {
+        setShowModal(true);
+        setModalContent("Registration Successful! Please Check Your email");
+        setTimeout(() => {
+          setShowModal(false);
+          handleClick("login");
+        }, 5000);
       }
     } catch (err) {
       console.log(err);
     }
-    setFormData("");
+    setFormData({});
   }
 
   return (
@@ -157,6 +151,7 @@ const SignUp = ({ handleClick }) => {
           </button>
         </div>
       </form>
+      {showModal && <Modal text={modalContent} s howButton={showButton} />}
     </div>
   );
 };

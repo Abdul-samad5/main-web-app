@@ -49,8 +49,7 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 import { LoginContext } from "../context/LoginContext";
 import { UserContext } from "../context/UserContext";
 import { useEffect } from "react";
-import { getStoreInfo } from "../services/services";
-import StoreFront from "./StoreFront";
+import { getStoreInfo, userLogout } from "../services/services";
 
 function DbIcon({ src }) {
   return <img src={src} className="w-[16px]" alt="Icon" />;
@@ -79,13 +78,20 @@ const Dashboard = () => {
   const navigate = useNavigate();
 
   function handleLogOut() {
-    userLoggedOut();
-    onUserLogOut();
-    navigate("/");
+    async function logUserOut() {
+      const res = await userLogout();
+      console.log(res);
+      if (res) {
+        userLoggedOut();
+        onUserLogOut();
+        navigate("/");
+      }
+    }
+    logUserOut();
   }
 
   function showActiveComponent(e, comp) {
-    e.stopPropagation();
+    // e.stopPropagation();
     setActiveComponent([comp]);
   }
 
@@ -98,7 +104,7 @@ const Dashboard = () => {
     async function fetchData() {
       const response = await getStoreInfo();
       if (response) {
-        const store_name = response.data["Store Details"].length === 0 ? "" : response.data["Store Details"][0].store_name;
+        const store_name = response.data["Store Details"][0].store_name;
         setStoreName(`${store_name}'s store`);
       }
     }
@@ -112,7 +118,7 @@ const Dashboard = () => {
         <div
           className={`w-full lg:w-1/5 shrink-0 fixed left-0 top-0 h-screen border-r border-brand-gray-300 ${
             isNavOpen ? "-translate-x-[0]" : "-translate-x-[100%]"
-          } lg:-translate-x-[0] z-10 bg-white transition-transform duration-500 overflow-y-scroll no-scrollbar`}
+          } lg:-translate-x-[0] z-10 bg-white transition-transform duration-500 overflow-y-scroll`}
         >
           <div className="border-b p-5 flex w-full justify-between items-center">
             <img src={logo} className="w-[50px]" alt="Yetti Logo" />
