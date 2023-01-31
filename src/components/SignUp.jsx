@@ -30,20 +30,25 @@ const SignUp = ({ handleClick }) => {
 
   async function formSubmit(e) {
     e.preventDefault();
-
+    const user = {
+     email: formData.email,
+     full_name: formData.fullName,
+     password: formData.password,
+     user_type: formData.accountType,
+    }
     try {
-      const res = await postUser(formData);
+      const res = await postUser(user);
       console.log(res.data.message);
       if (!res.status === 201 || res.status === 200) return;
 
-      if (user.user_type === "seller") {
+  
         setShowModal(true);
         setModalContent("Registration Successful! Please Check Your email");
         setTimeout(() => {
           setShowModal(false);
           handleClick("login");
         }, 5000);
-      }
+  
     } catch (err) {
       console.log(err);
     }
