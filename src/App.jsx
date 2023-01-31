@@ -5,7 +5,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import { Register, Dashboard, StoreFront } from "./pages";
-import { LoginContext } from "./context/LoginContext";
+
 import React, { useContext } from "react";
 import { Cart, Checkout } from "./store-components";
 import { cartContext } from "./context/CartContext";
@@ -14,17 +14,13 @@ import Cookies from "js-cookie";
 import ProductDetails from "./store-components/ProductDetails";
 
 function App() {
-  const { isLoggedIn } = useContext(LoginContext);
-  const tk = Cookies.get("_tksr");
-
-  // const isLoggedIn = window.localStorage.getItem("isLoggedIn");
-  console.log(isLoggedIn);
-  const PreventLogin = ({ children }) => {
-    return tk ? children : <Navigate to={"/"} />;
-  };
   const { cart, deleteFromCart, clearCart, changeQuantity } =
     useContext(cartContext);
 
+  const PreventLogin = ({ children }) => {
+    const tk = Cookies.get("_tksr");
+    return tk ? children : <Navigate to={"/"} />;
+  };
 
   return (
     <Router>
@@ -41,9 +37,9 @@ function App() {
         <Route
           path="/store-front"
           element={
-            
+            <PreventLogin>
               <StoreFront />
-            
+            </PreventLogin>
           }
         />
         <Route
@@ -57,35 +53,35 @@ function App() {
         <Route
           path="/store-front/view-cart"
           element={
-            
+            <PreventLogin>
               <Cart
                 cart={cart}
                 deleteFromCart={deleteFromCart}
                 clearCart={clearCart}
                 changeQuantity={changeQuantity}
               />
-            
+            </PreventLogin>
           }
         />
         <Route
           path="/store-front/checkout"
           element={
-            <Checkout cart={cart} />
+            <PreventLogin>
+              <Checkout cart={cart} />
+            </PreventLogin>
           }
         />
         <Route
           path="/store-front/:productId"
           element={
-            <ProductDetails />
+            <PreventLogin>
+              <ProductDetails />
+            </PreventLogin>
           }
         />
       </Routes>
     </Router>
   );
-};
-
-{/* <PreventLogin>
-              <Checkout cart={cart} />
-            </PreventLogin> */}
+}
 
 export default App;

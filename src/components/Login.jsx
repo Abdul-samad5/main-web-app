@@ -8,10 +8,10 @@ import Modal from "./Modal";
 
 const Login = ({ handleClick }) => {
   // Initialize state for the login to enable user login
-  const { userLoggedIn } = useContext(LoginContext);
   const { onUserLogin } = useContext(UserContext);
 
   const [message, setMessage] = useState({ text: true });
+  const [loading, setLoading] = useState(false);
   const [modalContent, setModalContent] = useState(null);
   const [showButton, setShowButton] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -19,30 +19,16 @@ const Login = ({ handleClick }) => {
   const navigate = useNavigate();
 
   function changeMessage(status) {
-    if (status) {
-      setMessage({
-        color: "text-brand-secondary",
-        text: "Submitting...",
-      });
-    }
     if (status === 200 || status === 201) {
-      setMessage({
-        color: "text-green-500",
-        text: "Login successful!",
-      });
+      setModalContent("Login Successful! Please wait");
     }
     if (status === 401) {
-      setMessage({
-        color: "text-red-500",
-        text: "Email or Password Incorrect. Try again.",
-      });
-      return;
+      setModalContent("Email or Password Incorrect!");
     }
     if (status >= 400) {
-      setMessage({
-        color: "text-red-500",
-        text: "Login Failed!",
-      });
+      setModalContent(
+        "There might be a problem with your Internet Connection! Please try again"
+      );
     }
   }
 
@@ -63,30 +49,33 @@ const Login = ({ handleClick }) => {
   }
 
   async function formSubmit(e) {
-    e.preventDefault();
-    changeMessage(true);
-
-    let user = {
+    const user = {
       email: formData.email,
       password: formData.password,
     };
-
+    e.preventDefault();
+    setLoading(true);
     try {
       const response = await userLogin(user);
-      if (!response.statusText === "OK") return;
-      const token = response.data.data.access;
-
-      onUserLogin(token);
-      userLoggedIn();
-      setModalContent("Login Successful! Please wait...");
+      if (response) {
+        const token = response.data.data.access;
+        onUserLogin(token);
+        setLoading(false);
+        changeMessage(response.status);
+        setShowModal(true);
+        setTimeout(() => {
+          setShowModal(false);
+          navigate("/dashboard");
+        }, 3000);
+      }
+    } catch (err) {
+      setLoading(false);
+      changeMessage(err.response.status);
+      console.log(err);
       setShowModal(true);
       setTimeout(() => {
         setShowModal(false);
-        navigate("/dashboard");
-      }, 5000);
-    } catch (err) {
-      console.log(err);
-      changeMessage(err.response.status);
+      }, 2000);
     }
   }
 
@@ -137,7 +126,24 @@ const Login = ({ handleClick }) => {
             {message?.text}
           </p>
         )}
-        <button className={`${styles.button} w-full`}>Login to store</button>
+        <button
+          className={`${styles.button}`}
+          disabled={loading ? true : false}
+        >
+          {loading && (
+            <svg className="animate-spin spin h-5 w-5 mr-3" viewBox="0 0 50 50">
+              <circle
+                className="path"
+                cx="25"
+                cy="25"
+                r="20"
+                fill="none"
+                strokeWidth="5"
+              ></circle>
+            </svg>
+          )}
+          {loading ? "Processing..." : "Login to account"}
+        </button>
         <div className="w-full flex justify-between items-center mt-2">
           <button
             type="button"

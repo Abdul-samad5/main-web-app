@@ -92,7 +92,7 @@ const getProductItemUnitById = (id) =>
 
 const getProductList = () => axios.get(`${BASE_URL}product/list`, config);
 
-const getProducts = axios.get(`${BASE_URL}product/list`, config);
+const getProducts = () => axios.get(`${BASE_URL}product/list`, config);
 
 // Buyer endpoints
 const createOrder = (order) =>
