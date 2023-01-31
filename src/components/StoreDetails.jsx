@@ -31,8 +31,8 @@ const StoreDetails = () => {
     };
 
     try {
-      const res = await axios.post(
-        `${BASE_URL}store_settings/store`,
+      const res = await axios.put(
+        `${BASE_URL}store_settings/store/update/${id}/`,
         formDetails,
         { headers: { Authorization: `Bearer ${tk}` } }
       );
