@@ -62,18 +62,28 @@ const Login = ({ handleClick }) => {
     
       if (response) {
         const token = response.data.data.access;
+
+
+
+
         const email = response.data.data.user.email;
         const user_id = response.data.data.user.user_id;
         
         onUserLogin(token, email, user_id);
         setLoading(false);
+
         changeMessage(response.status);
-        setShowModal(true);
-        setTimeout(() => {
-          setShowModal(false);
-          navigate("/dashboard");
-        }, 3000);
-      }
+       
+
+
+
+          setShowModal(true);
+          setTimeout(() => {
+            setShowModal(false);
+            navigate("/dashboard");
+          }, 3000);
+        
+      
     } catch (err) {
       setLoading(false);
       changeMessage(err.response.status);
