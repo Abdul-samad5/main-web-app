@@ -1,6 +1,7 @@
 import React, {useState}from 'react';
 import {styles} from '../constants/index';
 import { noCollections, naira, invoice_styles} from '../assets';
+import html2canvas from 'html2canvas';
 
 const Invoice = ({}) => {
     const [getStarted, setGetStarted] = useState(true);
@@ -65,6 +66,20 @@ const Invoice = ({}) => {
         setInvoiceDetails((prev) => {
             return {...prev, [name]: value}
         });
+    }
+
+    function downloadInvoice() {
+        const screenshotTarget = document.getElementById("invoice");
+
+        html2canvas(screenshotTarget).then((canvas) => {
+            const base64image = canvas.toDataURL("image/png");
+            var anchor = document.createElement("a");
+            anchor.setAttribute("href", base64image);
+            anchor.setAttribute("download", "invoice.png");
+            anchor.click();
+            anchor.remove();
+        });
+
     }
 
     return (
@@ -289,7 +304,7 @@ const Invoice = ({}) => {
                     </div>
 
                     {/* Displays the look of the invoice as the user enters the values */}
-                    <div className='lg:w-3/5 w-full px-3 py-4'>
+                    <div className='lg:w-3/5 w-full px-3 py-4' id="invoice">
                         <img src={invoice_styles} alt="Styles" className='relative top-0 left-0 w-full h-20'/>
                         <div className="shadow-lg rounded w-full h-auto px-3 py-5">
                             {/* Displays the header of the invoice */}
@@ -403,6 +418,7 @@ const Invoice = ({}) => {
                         </div>
                     </div>
                 </div>
+                <div className={`${styles.button}`} onClick={downloadInvoice}>Download Incoice</div>
             </div>
         </div>
     )
