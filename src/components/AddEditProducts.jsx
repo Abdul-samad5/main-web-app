@@ -34,7 +34,7 @@ function AddEditProduct() {
     stockCount: 0,
     stockUnit: "",
     itemUnit: "",
-    productCollections: 0,
+    productCollections: "",
     productStatus: "",
     storeTheme: "",
   });
@@ -57,6 +57,10 @@ function AddEditProduct() {
 
   async function handleSubmit(event) {
     event.preventDefault();
+    if(formData.productCollections === "") {
+      window.alert("The product collections must not be empty!");
+      return;
+    }
 
     let product = {
       description: formData.productDesc,
@@ -65,7 +69,7 @@ function AddEditProduct() {
       price: formData.price,
       theme: formData.storeTheme,
       status: formData.status,
-      collection: formData.status,
+      collection: formData.productCollections,
       color: formData.status,
       size: formData.size,
       item_unit: formData.itemUnit,

@@ -4,12 +4,6 @@ import {Invoice, Payments} from "./index";
 const Finances = () => {
     const [currentPage, setCurrentPage] = useState(1);
 
-    // const handleClick = (value) => {
-    //     setCurrentPage((prev) => {
-    //         return prev = value;
-    //     });
-    // }
-
     return (
         <div>
             <p className="text-2xl text-black-800 font-bold w-full mx-auto mb-1">Finances</p>
