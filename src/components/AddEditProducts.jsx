@@ -57,10 +57,10 @@ function AddEditProduct() {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    if(formData.productCollections === "") {
-      window.alert("The product collections must not be empty!");
-      return;
-    }
+    // if(formData.productCollections === "") {
+    //   window.alert("The product collections must not be empty!");
+    //   return;
+    // }
 
     let product = {
       description: formData.productDesc,

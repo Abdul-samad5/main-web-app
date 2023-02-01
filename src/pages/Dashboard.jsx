@@ -1,5 +1,7 @@
 import { useState, useContext } from "react";
 import { styles } from "../constants";
+import axios from "axios";
+import { BASE_URL } from "../services/services";
 import {
   logo,
   all_prods,
@@ -50,6 +52,7 @@ import { LoginContext } from "../context/LoginContext";
 import { UserContext } from "../context/UserContext";
 import { useEffect } from "react";
 import { getStoreInfo, userLogout } from "../services/services";
+import Cookies from "js-cookie";
 
 function DbIcon({ src }) {
   return <img src={src} className="w-[16px]" alt="Icon" />;
@@ -59,9 +62,12 @@ const Dashboard = () => {
   // Sidebar
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [storeName, setStoreName] = useState("");
+  const [storeLogo, setStoreLogo] = useState("");
 
   // Component to be rendered on the main
   const [activeComponent, setActiveComponent] = useState([<MyStore />]);
+  const tk = Cookies.get("_tksr");
+  const id = Cookies.get("_id");
 
   // Dropdowns on the sidebar
   const [isProdOpen, setIsProdOpen] = useState(false);
@@ -101,12 +107,21 @@ const Dashboard = () => {
   }
 
   useEffect(() => {
+    // async function fetchData() {
+    //   const response = await getStoreInfo();
+    //   if (response) {
+    //     const store_name = response.data["Store Details"][0].store_name;
+    //     setStoreName(`${store_name}'s store`);
+    //   }
+    // }
     async function fetchData() {
-      const response = await getStoreInfo();
-      if (response) {
-        const store_name = response.data["Store Details"][0].store_name;
-        setStoreName(`${store_name}'s store`);
-      }
+      const response = await axios.get(`${BASE_URL}store_settings/store/${id}`, { headers: { Authorization: `Bearer ${tk}`} });
+      const store_name = response.data.data["store_name"];
+      const profileLogo = response.data.data["store_logo"];
+
+      console.log(response);
+      setStoreName(`${store_name}`);
+      setStoreLogo(profileLogo);
     }
     fetchData();
   }, []);
@@ -352,7 +367,7 @@ const Dashboard = () => {
                 className="flex items-center gap-2"
                 onClick={() => setIsLogOpen(!isLogOpen)}
               >
-                <img src={user_img} alt="Profile Image" className="w-[32px]" />
+                <img src={storeLogo === "" ? user_img : storeLogo} alt="Profile Image" className={storeLogo === "" ? "w-[32px]" : "w-[40px] h-[40px] rounded-full"} />
                 <img src={arrow_down} alt="Icon" className="w-[13px]" />
                 {/* <Link to="/"> */}
                 <div

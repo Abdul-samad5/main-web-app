@@ -207,7 +207,7 @@ const StoreDetails = () => {
               <label
                 htmlFor="image-selector"
                 className={
-                  storeDetails.storeLogo === ""
+                  storeDetails.storeLogo === "" || storeDetails.storeLogo === null
                     ? "border border-dotted border-slate-300 text-slate-300 h-40 pt-16 block w-11/12 text-center rounded-lg text-sm"
                     : "hidden"
                 }
@@ -218,7 +218,7 @@ const StoreDetails = () => {
               <img
                 src={storeDetails.storeLogo}
                 className={
-                  storeDetails.storeLogo === ""
+                  storeDetails.storeLogo === "" || storeDetails.storeLogo === null
                     ? "hidden"
                     : "border border-dotted border-slate-300 text-slate-300 h-40 block w-11/12 text-center rounded-lg text-sm"
                 }
