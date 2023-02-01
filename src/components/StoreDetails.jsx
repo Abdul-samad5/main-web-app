@@ -19,6 +19,7 @@ const StoreDetails = () => {
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [modalContent, setModalContent] = useState(null);
+  const [showButton, setShowButton] = useState(null);
   const tk = Cookies.get("_tksr");
   const id = Cookies.get("_id");
   
@@ -55,7 +56,7 @@ const StoreDetails = () => {
       );
       if (!res.statusText === "OK") return;
       console.log(res);
-      changeMessage(response.status);
+      changeMessage(res.status);
        
       setShowModal(true);
       setTimeout(() => {
@@ -64,6 +65,13 @@ const StoreDetails = () => {
       makeEmpty();
     } catch (error) {
       console.log(error);
+      changeMessage(res.status);
+       
+      setShowModal(true);
+      setTimeout(() => {
+        setShowModal(false);
+      }, 1000);
+      makeEmpty();
     }
   };
 
