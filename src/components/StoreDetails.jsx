@@ -253,7 +253,7 @@ const StoreDetails = () => {
               <input
                 placeholder="Enter store email"
                 name="storeEmail"
-                disabled={storeDetails.storeEmail ? true : false}
+
                 className={`${styles.inputBox} px-3 w-11/12`}
                 value={storeDetails.storeEmail}
                 onChange={handleChange}
