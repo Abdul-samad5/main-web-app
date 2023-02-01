@@ -83,7 +83,7 @@ const StoreDetails = () => {
           store_description: "",
           store_logo: "",
           store_currency: "Naira",
-          store_email: prev.storeEmail,
+          store_email: "",
           store_phone_number: "" };
       });
   }
@@ -238,7 +238,7 @@ const StoreDetails = () => {
               <label
                 htmlFor="image-selector"
                 className={
-                  storeDetails.storeLogo === ""
+                  storeDetails.storeLogo === "" || storeDetails.storeLogo === null
                     ? "border border-dotted border-slate-300 text-slate-300 h-40 pt-16 block w-11/12 text-center rounded-lg text-sm"
                     : "hidden"
                 }
