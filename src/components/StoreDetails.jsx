@@ -4,6 +4,7 @@ import { styles } from "../constants/index";
 import { BASE_URL, getStoreInfo } from "../services/services";
 import { UserContext } from "../context/UserContext";
 import Cookies from "js-cookie";
+import Modal from "./Modal";
 
 const StoreDetails = () => {
   const [storeDetails, setStoreDetails] = useState({
@@ -16,8 +17,24 @@ const StoreDetails = () => {
     storeContactNumber: "",
   });
   const [loading, setLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [modalContent, setModalContent] = useState(null);
   const tk = Cookies.get("_tksr");
   const id = Cookies.get("_id");
+  
+   function changeMessage(status) {
+    if (status === 200 || status === 201) {
+      setModalContent("Settings saved!");
+    }
+    if (status === 401) {
+      setModalContent("Email or Password Incorrect!");
+    }
+    if (status >= 400) {
+      setModalContent(
+        "There might be a problem with your Internet Connection! Please try again"
+      );
+    }
+  }
 
   const saveSettings = async () => {
     let formDetails = {
@@ -38,6 +55,12 @@ const StoreDetails = () => {
       );
       if (!res.statusText === "OK") return;
       console.log(res);
+      changeMessage(response.status);
+       
+      setShowModal(true);
+      setTimeout(() => {
+        setShowModal(false);
+      }, 1000);
       makeEmpty();
     } catch (error) {
       console.log(error);
