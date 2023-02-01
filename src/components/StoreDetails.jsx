@@ -305,6 +305,7 @@ const StoreDetails = () => {
             />
           </div>
         </form>
+        {showModal && <Modal text={modalContent} showButton={showButton} />}
       </div>
     </>
   );
