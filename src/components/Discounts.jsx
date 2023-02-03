@@ -13,7 +13,7 @@ const Discounts = () => {
     const [discounts, setDiscounts] = useState([]);
     const [isVisible, setVisisble] = useState(false);
     const [newDiscountInfo, setDiscountInfo] = useState({
-        discountType: "",
+        discountType: "Product Discount",
         discountMethod: "",
         discountTitle: "",
         discountValue: "",
@@ -85,8 +85,6 @@ const Discounts = () => {
         }
 
         try {
-            // const res = await axios.post(`${BASE_URL}marketing/create_discount`, discountInfo, 
-            // { headers: { Authorization: `Bearer ${userData.access}`} });
             const res = await axios.post(`${BASE_URL}marketing/create_discount`, discountInfo, 
             { headers: { Authorization: `Bearer ${tk}`} });
             setVisisble(prev => prev = !prev);
@@ -127,11 +125,9 @@ const Discounts = () => {
     
         const deleteDiscount = async () => {
             try {
-                // const response = await axios.delete(`${BASE_URL}marketing/delete/${id}`, 
-                // { headers: { Authorization: `Bearer ${userData.access}`} });
                 const response = await axios.delete(`${BASE_URL}marketing/delete/${id}`, 
                 { headers: { Authorization: `Bearer ${tk}`} });
-                // console.log(response);
+                console.log(response);
                 if(!response.statusText === "OK") return;
                 setRender(prev => prev = !prev);
             } catch (err) {

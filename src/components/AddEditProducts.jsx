@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { addProduct, updateProduct } from "../services/services";
 import axios from "axios";
+import Cookies from "js-cookie";
+import { BASE_URL } from "../services/services";
 
 function AddEditProduct() {
   // Records if the user has clicked the toggle button in the last form element and accordingly records it
@@ -54,6 +56,7 @@ function AddEditProduct() {
   const handleToggle = () => {
     setIsToggled((prevValue) => !prevValue);
   };
+  const tk = Cookies.get("_tksr");
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -80,7 +83,8 @@ function AddEditProduct() {
     };
 
     try {
-      const res = await addProduct(product);
+      // const res = await addProduct(product);
+      const res = await axios.post(`${BASE_URL}product/`, product, { headers: { Authorization: `Bearer ${tk}` } }) 
       console.log(res);
       if (!res.statusText === "OK") return;
     } catch (err) {

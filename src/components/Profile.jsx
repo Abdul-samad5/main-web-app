@@ -5,10 +5,16 @@ import usePostImg from "../hooks/usePostImage";
 import { getStoreInfo } from "../services/services";
 import { useEffect } from "react";
 import axios from "axios";
+import Modal from "./Modal";
 import Cookies from "js-cookie";
 import { BASE_URL } from "../services/services";
 
 const Profile = () => {
+  const [showModal, setShowModal] = useState(false);
+  const [modalContent, setModalContent] = useState(null);
+  const [showButton, setShowButton] = useState(null);
+  const tk = Cookies.get("_tksr");
+  const id = Cookies.get("_id");
   const [profileData, setProfileData] = useState({
     fullName: "",
     emailAddress: "",
@@ -23,8 +29,71 @@ const Profile = () => {
     });
   };
 
+  function changeMessage(status) {
+    if (status === 200 || status === 201) {
+      setModalContent("Settings saved!");
+    }
+    if (status === 401) {
+      setModalContent("Email or Password Incorrect!");
+    }
+    if (status >= 400) {
+      setModalContent(
+        "There might be a problem with your Internet Connection! Please try again"
+      );
+    }
+  }
+
+  const saveSettings = async () => {
+    // let formDetails = {
+    //   store_name: storeDetails.storeName,
+    //   tag_line: storeDetails.tagLine,
+    //   store_description: storeDetails.storeDesc,
+    //   store_logo: storeDetails.storeLogo,
+    //   store_currency: storeDetails.storeCurrency,
+    //   store_email: storeDetails.storeEmail,
+    //   store_phone_number: storeDetails.storeContactNumber,
+    // };
+
+    // try {
+    //   const res = await axios.put(
+    //     `${BASE_URL}store_settings/store/update/${id}/`,
+    //     formDetails,
+    //     { headers: { Authorization: `Bearer ${tk}` } }
+    //   );
+    //   if (!res.statusText === "OK") return;
+    //   console.log(res);
+    //   changeMessage(res.status);
+       
+    //   setShowModal(true);
+    //   setTimeout(() => {
+    //     setShowModal(false);
+    //   }, 1500);
+    //   makeEmpty();
+    // } catch (error) {
+    //   console.log(error);
+    //   changeMessage(res.status);
+       
+    //   setShowModal(true);
+    //   setTimeout(() => {
+    //     setShowModal(false);
+    //   }, 1500);
+    //   makeEmpty();
+    // }
+  };
+
+  function makeEmpty() {
+      setStoreDetails((prev) => {
+        return { ...prev, 
+                fullName: "",
+                emailAddress: "",
+                phoneNumber: "",
+                profileImage: "",};
+      });
+  }
+
   const handleSubmit = (event) => {
     event.preventDefault();
+    saveSettings();
   };
 
   //   const { loading, data, postImg } = usePostImg();
@@ -60,13 +129,10 @@ const Profile = () => {
     postImg();
   };
 
-  const tk = Cookies.get("_tksr");
-  const id = Cookies.get("_id");
-
   useEffect(() => {
     async function fetchData() {
       // const response = await getStoreInfo();
-      const response = await axios.get(`${BASE_URL}store_settings/store/${id}`, { headers: { Authorization: `Bearer ${tk}`} });
+      const response = await axios.get(`${BASE_URL}store_settings/store_details`, { headers: { Authorization: `Bearer ${tk}`} });
       const full_name = response.data.data["store_name"];
       const email = response.data.data["store_email"];
       const profileLogo = response.data.data["store_logo"];
@@ -173,6 +239,7 @@ const Profile = () => {
           />
         </div>
       </form>
+      {showModal && <Modal text={modalContent} showButton={showButton} />}
     </div>
   );
 };

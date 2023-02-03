@@ -115,7 +115,7 @@ const Dashboard = () => {
     //   }
     // }
     async function fetchData() {
-      const response = await axios.get(`${BASE_URL}store_settings/store/${id}`, { headers: { Authorization: `Bearer ${tk}`} });
+      const response = await axios.get(`${BASE_URL}store_settings/store_details`, { headers: { Authorization: `Bearer ${tk}`} });
       const store_name = response.data.data["store_name"];
       const profileLogo = response.data.data["store_logo"];
 

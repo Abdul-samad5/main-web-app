@@ -1,8 +1,7 @@
 import axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { styles } from "../constants/index";
 import { BASE_URL, getStoreInfo } from "../services/services";
-import { UserContext } from "../context/UserContext";
 import Cookies from "js-cookie";
 import Modal from "./Modal";
 
@@ -16,6 +15,7 @@ const StoreDetails = () => {
     storeEmail: "",
     storeContactNumber: "",
   });
+  let storeId;
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [modalContent, setModalContent] = useState(null);
@@ -23,7 +23,7 @@ const StoreDetails = () => {
   const tk = Cookies.get("_tksr");
   const id = Cookies.get("_id");
   
-   function changeMessage(status) {
+  function changeMessage(status) {
     if (status === 200 || status === 201) {
       setModalContent("Settings saved!");
     }
@@ -49,11 +49,22 @@ const StoreDetails = () => {
     };
 
     try {
-      const res = await axios.put(
-        `${BASE_URL}store_settings/store/update/${id}/`,
-        formDetails,
-        { headers: { Authorization: `Bearer ${tk}` } }
-      );
+      let res;
+      if(storeId) {
+        res = await axios.put(
+          `${BASE_URL}store_settings/store/update/`,
+          formDetails,
+          { headers: { Authorization: `Bearer ${tk}` } }
+        );
+        console.log(storeId);
+      } else {
+        res = await axios.post(
+          `${BASE_URL}store_settings/store`,
+          formDetails,
+          { headers: { Authorization: `Bearer ${tk}` } }
+        );
+      }
+      
       if (!res.statusText === "OK") return;
       console.log(res);
       changeMessage(res.status);
@@ -65,8 +76,7 @@ const StoreDetails = () => {
       makeEmpty();
     } catch (error) {
       console.log(error);
-      changeMessage(res.status);
-       
+     
       setShowModal(true);
       setTimeout(() => {
         setShowModal(false);
@@ -145,7 +155,7 @@ const StoreDetails = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await axios.get(`${BASE_URL}store_settings/store/${id}`, { headers: { Authorization: `Bearer ${tk}`} });
+        const response = await axios.get(`${BASE_URL}store_settings/store_details`, { headers: { Authorization: `Bearer ${tk}`} });
         if (response) {
           const data = response.data.data;
           // const store_name = response.data["Store Details"].length === 0 ? "" : response.data["Store Details"][0].store_name;
@@ -161,6 +171,8 @@ const StoreDetails = () => {
               storeContactNumber: data.store_phone_number
             };
           });
+          storeId = data.id;
+          console.log(storeId);
         }
         // console.log(response);
         if(!response.statusText === "OK") return;
