@@ -107,13 +107,6 @@ const Dashboard = () => {
   }
 
   useEffect(() => {
-    // async function fetchData() {
-    //   const response = await getStoreInfo();
-    //   if (response) {
-    //     const store_name = response.data["Store Details"][0].store_name;
-    //     setStoreName(`${store_name}'s store`);
-    //   }
-    // }
     async function fetchData() {
       const response = await axios.get(`${BASE_URL}store_settings/store_details`, { headers: { Authorization: `Bearer ${tk}`} });
       const store_name = response.data.data["store_name"];

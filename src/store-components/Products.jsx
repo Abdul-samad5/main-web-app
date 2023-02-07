@@ -2,18 +2,18 @@ import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { LoginContext } from "../context/LoginContext";
-import { UserContext } from "../context/UserContext";
 import {
   BASE_URL,
 } from "../services/services";
+import Cookies from "js-cookie";
 
 const Products = ({ handleAdd, handleDelete, cart }) => {
   // const [products, setProducts] = useState([]);
   const [products, setProducts] = useState([]);
-  const { userData } = useContext(UserContext);
+
+  const token = Cookies.get("_tksr");
+
   async function fetchProducts() {
-    // const token = window.localStorage.getItem("token");
-    const token = userData.access;
     const config = {
       headers: { Authorization: `Bearer ${token}` },
       "Content-Type": "application/json",
@@ -21,8 +21,9 @@ const Products = ({ handleAdd, handleDelete, cart }) => {
 
     const res = await axios.get(`${BASE_URL}product/list`, config);
     if (res) {
-      setProducts(res.data);
+      setProducts(res.data.data);
     }
+    console.log(res);
   }
 
   async function dataAdd(id, amount) {
@@ -48,6 +49,7 @@ const Products = ({ handleAdd, handleDelete, cart }) => {
   return (
     <div className="w-full lg:px-0 mt-8 md:px-5 px-10 z-1 py-5">
       <p className="text-black font-bold text-2xl">OUR PR0DUCTS</p>
+      {products.length === 0 && <p className="text-lg flex justify-center align-center my-20">No products found!</p>}
       <div className="flex flex-wrap justify-between mt-10 w-full">
         {products.map((product, index) => {
           return (
