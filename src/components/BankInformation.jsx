@@ -1,10 +1,10 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { styles } from '../constants';
 import { BASE_URL } from '../services/services';
-import { UserContext } from "../context/UserContext";
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import Modal from "./Modal";
 
 const BankInformation = () => {
     const [acctDetails, setAcctDetails] = useState(null);
@@ -17,6 +17,23 @@ const BankInformation = () => {
     // const { userData } = useContext(UserContext);
     const [added, setAdded] = useState(false);
     const [banks, setBanks] = useState([]);
+    const [showModal, setShowModal] = useState(false);
+    const [modalContent, setModalContent] = useState(null);
+    const [showButton, setShowButton] = useState(null);
+
+    function changeMessage(status) {
+        if (status === 200 || status === 201) {
+          setModalContent("Bank Information saved!");
+        }
+        if (status === 401) {
+          setModalContent("Incorrect!");
+        }
+        if (status >= 400) {
+          setModalContent(
+            "There might be a problem with your Internet Connection! Please try again"
+          );
+        }
+    }
 
     const handleChange = (event) => {
         const { value, name } = event.target;
@@ -27,7 +44,12 @@ const BankInformation = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-
+        
+        if(formDetails.accoutNumber.toString().length !== 10) {
+            window.alert("Enter a valid account number!");
+            return;
+        }
+        
         const data = {
             bank_name: formDetails.bankName,
             account_number: formDetails.accoutNumber,
@@ -35,9 +57,6 @@ const BankInformation = () => {
         }
 
         try {
-            // const res = await axios.post(`${BASE_URL}store_settings/bank_info/`, data, {
-            //     headers: { Authorization: `Bearer ${userData.access}` },
-            // });
             const res = await axios.post(`${BASE_URL}store_settings/bank_info/`, data, {
                 headers: { Authorization: `Bearer ${tk}` },
             });
@@ -48,9 +67,19 @@ const BankInformation = () => {
                     accoutNumber: "",
                     accountName: ""
                 });
+            changeMessage(res.status);
+    
+            setShowModal(true);
+            setTimeout(() => {
+                setShowModal(false);
+            }, 1000);
             if (!res.statusText === "OK") return;
         } catch (error) {
             console.log(error);
+            setShowModal(true);
+            setTimeout(() => {
+                setShowModal(false);
+            }, 1000);
         }
     }
     
@@ -154,7 +183,7 @@ const BankInformation = () => {
                         <div className='my-6 lg:flex w-full'>
                             <div className='lg:w-1/2 w-full lg:mr-2'>
                                 <label htmlFor='' className='text-base text-black opacity-60 mb-3'>Account Number</label>
-                                <input type="number" onChange={handleChange} value={formDetails.accoutNumber} placeholder="0123456789" name="accoutNumber" className={`${styles.inputBox} w-full px-3`}/>
+                                <input type="number" onChange={handleChange} maxLength="10" minLength={10} value={formDetails.accoutNumber} placeholder="0123456789" name="accoutNumber" className={`${styles.inputBox} w-full px-3`}/>
                             </div>
                             <div className='lg:w-1/2 w-full lg:ml-2'>
                                 <label htmlFor='' className='text-base text-black opacity-60 mb-3'>Account Name</label>
@@ -166,6 +195,7 @@ const BankInformation = () => {
                     </form>
                 </div>
             </div>
+            {showModal && <Modal text={modalContent} showButton={showButton} />}
         </div>
     )
 }

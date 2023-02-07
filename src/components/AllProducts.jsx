@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { UserData } from "./index";
 import { noProducts } from "../assets";
 import { getProducts, deleteProduct } from "../services/services";
@@ -7,7 +7,7 @@ import useFetchData from "../hooks/useFetchProducts";
 
 const details = ["Product name", "Price", "Status:", "Inventory:", "Action"];
 const MyOrders = () => {
-  const [myProducts, setMyProducts] = React.useState([]);
+  const [myProducts, setMyProducts] = useState([]);
   const [reRender, setRender] = useState(false);
 
   const handleNext = () => {

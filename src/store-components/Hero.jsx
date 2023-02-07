@@ -10,7 +10,7 @@ const Hero = ({storeLogo, storeName}) => {
 
         <span className='mx-3 lg:my-auto mt-5 text-center'>
           <p className='text-white text-4xl font-extrabold'>Welcome to</p>
-          <p className='text-3xl text-black opacity-50 font-extrabold animate-pulse animate-bounce duratioon-1000'>{storeName}</p>
+          <p className='text-3xl text-black mt-10 opacity-50 font-extrabold animate-pulse animate-bounce duratioon-1000'>{storeName}</p>
         </span>
       </div>
     </div>

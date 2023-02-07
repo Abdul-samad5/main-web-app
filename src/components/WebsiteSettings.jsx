@@ -26,8 +26,13 @@ const WebsiteSettings = () => {
     };
 
     try {
-      const res = await axios.put(
-        `${BASE_URL}store_settings/website/update/${id}/`,
+      // const res = await axios.put(
+      //   `${BASE_URL}store_settings/website/update/${id}/`,
+      //   formDetails,
+      //   { headers: { Authorization: `Bearer ${tk}` } }
+      // );
+      const res = await axios.post(
+        `${BASE_URL}store_settings/website/`,
         formDetails,
         { headers: { Authorization: `Bearer ${tk}` } }
       );
