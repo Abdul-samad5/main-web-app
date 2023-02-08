@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { addProduct, updateProduct } from "../services/services";
+import React, { useState, useEffect } from "react";
+import { addProduct, updateProduct, getCollectionList } from "../services/services";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { BASE_URL } from "../services/services";
@@ -8,6 +8,7 @@ function AddEditProduct() {
   // Records if the user has clicked the toggle button in the last form element and accordingly records it
   const [isToggled, setIsToggled] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [collections, setCollections] = useState([]);
 
   const itemUnits = [
     "Box",
@@ -57,6 +58,17 @@ function AddEditProduct() {
     setIsToggled((prevValue) => !prevValue);
   };
   const tk = Cookies.get("_tksr");
+
+  const fetchCollections = async () => {
+    try {
+      const response = await getCollectionList();
+      setCollections(response.data.data);
+      console.log(response);
+      if (!response.statusText === "OK") return;
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -146,6 +158,10 @@ function AddEditProduct() {
       };
     });
   };
+
+  useEffect(() => {
+    fetchCollections();
+  }, []);
 
   return (
     <div className="py-2 w-full">
@@ -427,14 +443,27 @@ function AddEditProduct() {
           {/* Product Collections Input Box */}
           <div className="px-4 py-7 bg-white-900 w-full shadow-xl rounded-lg mb-4">
             <h3 className="text-black opacity-50 mb-5">Product Collections</h3>
-            <input
+            {/* <input
               type="text"
               name="productCollections"
               value={formData.productCollections}
               onChange={handleChange}
               placeholder="E.g. Shoes, Boots..."
               className="border border-slate-700 border-opacity-50 mr-2 w-full rounded-lg text-sm shadow-sm px-3 py-3 placeholder-slate-300"
-            ></input>
+            ></input> */}
+            <select
+              name="productCollections"
+              onChange={handleChange}
+              value={formData.productCollections}
+              className="border border-slate-700 border-opacity-50 w-full rounded-lg text-sm shadow-sm px-3 py-3 placeholder-slate-300"
+            >
+              <option disabled>
+                  Choose an option
+              </option>
+              {collections.map((collection, index) => {
+                return <option key={index} value={collection.id}>{collection.name}</option>
+              })}
+            </select>
           </div>
 
           {/* Product Status Input Box */}

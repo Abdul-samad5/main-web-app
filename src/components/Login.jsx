@@ -57,15 +57,16 @@ const Login = ({ handleClick }) => {
     setLoading(true);
     try {
       const response = await userLogin(user);
+      console.log(response);
+      // if(!response.data.data.user.has_store) {
+      //   navigate("/getStarted");
+      //   return;
+      // }
 
       if (!response.statusText === "OK") return;
     
       if (response) {
         const token = response.data.data.access;
-
-
-
-
         const email = response.data.data.user.email;
         const user_id = response.data.data.user.user_id;
         
@@ -73,17 +74,13 @@ const Login = ({ handleClick }) => {
         setLoading(false);
 
         changeMessage(response.status);
-       
 
-
-
-          setShowModal(true);
-          setTimeout(() => {
-            setShowModal(false);
-            navigate("/dashboard");
-          }, 3000);
-        }
-      
+        setShowModal(true);
+        setTimeout(() => {
+          setShowModal(false);
+          navigate("/dashboard");
+        }, 3000);
+      }
     } catch (err) {
       setLoading(false);
       changeMessage(err.response.status);
