@@ -59,22 +59,30 @@ const Login = ({ handleClick }) => {
       const response = await userLogin(user);
       console.log(response);
       if (!response.statusText === "OK") return;
-    
+
       if (response) {
         const token = response.data.data.access;
+
         const email = response.data.data.user.email;
         const user_id = response.data.data.user.user_id;
-        
+        const has_store = response.data.data.user.has_store;
         onUserLogin(token, email, user_id);
-        setLoading(false);
 
-        changeMessage(response.status);
-
-        setShowModal(true);
-        setTimeout(() => {
-          setShowModal(false);
-          navigate("/dashboard");
-        }, 3000);
+        if (has_store === false) {
+          changeMessage(response.status);
+          setShowModal(true);
+          setTimeout(() => {
+            setShowModal(false);
+          }, 3000);
+          handleClick("createStore");
+        } else {
+          changeMessage(response.status);
+          setShowModal(true);
+          setTimeout(() => {
+            setShowModal(false);
+          }, 3000);
+            navigate("/dashboard");
+        }
       }
     } catch (err) {
       setLoading(false);
