@@ -72,14 +72,10 @@ const CreateStore = ({ handleClick }) => {
       if (res.status === 201 || res.status === 200) {
         navigate("/dashboard");
       }
-<<<<<<< HEAD
       // if (res.status === 400) {
       //   navigate("/dashboard");
       //   console.log("Store already exists, Please choose a different name");
       // }
-=======
-      
->>>>>>> fcc87e08f5996b8a37012da1216f42f52e5a8e55
     } catch (err) {
       changeMessage(err.code);
     }
