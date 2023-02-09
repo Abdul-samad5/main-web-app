@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { postUser } from "../services/services";
 import Modal from "./Modal";
+import { Link } from "react-router-dom";
 
 const SignUp = ({ handleClick }) => {
   // Initialize state for submit button textContent
@@ -147,16 +148,16 @@ const SignUp = ({ handleClick }) => {
           <p className="text-brand-gray font-normal text-[14px]">
             Already have an account?
           </p>
-          <button
-            className="text-brand-gray font-normal text-[14px]"
-            type="button"
-            onClick={() => handleClick("login")}
-          >
-            Login
-          </button>
+          <Link to="/login">
+            <button
+              className="text-brand-gray font-normal text-[14px]"
+              type="button">
+              Login
+            </button>
+          </Link>
         </div>
       </form>
-      {showModal && <Modal text={modalContent} s howButton={showButton} />}
+      {showModal && <Modal text={modalContent} showButton={showButton} />}
     </div>
   );
 };
