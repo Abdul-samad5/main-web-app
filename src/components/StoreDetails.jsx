@@ -199,7 +199,7 @@ const StoreDetails = () => {
               <input
                 placeholder="Michelline"
                 onChange={handleChange}
-                value={storeDetails?.storeName}
+                value={storeDetails.storeName}
                 className={`${styles.inputBox} px-3 w-11/12`}
                 type="text"
                 name="storeName"
