@@ -32,24 +32,22 @@ const SignUp = ({ handleClick }) => {
   async function formSubmit(e) {
     e.preventDefault();
     const user = {
-     email: formData.email,
-     full_name: formData.fullName,
-     password: formData.password,
-     user_type: formData.accountType,
-    }
+      email: formData.email,
+      full_name: formData.fullName,
+      password: formData.password,
+      user_type: formData.accountType,
+    };
     try {
       const res = await postUser(user);
       console.log(res.data.message);
       console.log(res);
       if (!res.status === 201 || res.status === 200) return;
-  
       setShowModal(true);
       setModalContent("Registration Successful! Please Check Your email");
       setTimeout(() => {
         setShowModal(false);
         handleClick("login");
-      }, 3000);
-  
+      }, 5000);
     } catch (err) {
       console.log(err);
     }
@@ -151,7 +149,8 @@ const SignUp = ({ handleClick }) => {
           <Link to="/login">
             <button
               className="text-brand-gray font-normal text-[14px]"
-              type="button">
+              type="button"
+            >
               Login
             </button>
           </Link>

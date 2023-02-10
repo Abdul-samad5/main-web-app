@@ -36,14 +36,35 @@ const Login = ({ handleClick }) => {
       email: formData.email,
       password: formData.password,
     };
-
+    e.preventDefault();
+    setLoading(true);
     try {
-      const res = await userLogin(user);
-      if (!res.statusText === "OK") return;
-      console.log(res);
-      onUserLogin(res.data.dgata);
-      userLoggedIn();
-      navigate("/dashboard");
+      const response = await userLogin(user);
+
+      if (!response.statusText === "OK") return;
+
+      if (response) {
+        const token = response.data.data.access;
+
+        const email = response.data.data.user.email;
+        const user_id = response.data.data.user.user_id;
+
+        onUserLogin(token, email, user_id);
+        setLoading(false);
+
+        console.log(response);
+        if (response.data.data.user.has_store === false) {
+          handleClick("createStore");
+        } else {
+          changeMessage(response.status);
+
+          setShowModal(true);
+          setTimeout(() => {
+            setShowModal(false);
+            navigate("/dashboard");
+          }, 3000);
+        }
+      }
     } catch (err) {
       console.log(err);
     }
