@@ -9,7 +9,7 @@ import React, { useContext } from "react";
 import { Cart, Checkout } from "./store-components";
 import { cartContext } from "./context/CartContext";
  
-import { GetStarted, Login, ResetPassword } from "./components";
+import { GetStarted,Register,CreateStore Login, ResetPassword } from "./components";
 
 
 import Cookies from "js-cookie";
