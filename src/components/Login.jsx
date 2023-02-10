@@ -64,16 +64,20 @@ const Login = ({ handleClick }) => {
           setModalText("Login Success! Please create a store to continue");
           setTimeout(() => {
             setShowModal(false);
+
             handleClick("createStore");
           }, 3000);
+
         } else {
           setLoading(false);
           setShowModal(true);
           setModalText("Login Success! Please wait...");
           setTimeout(() => {
             setShowModal(false);
+
             navigate("/dashboard");
           }, 3000);
+
         }
       }
     } catch (err) {
