@@ -36,6 +36,42 @@ function App() {
             </PreventLogin>
           }
         />
+            
+            <Route
+
+          path="/login"
+
+          element={
+
+            <Login />
+
+          }
+
+        />
+
+        <Route
+
+          path="/register"
+
+          element={
+
+            <Register />
+
+          }
+
+        />
+
+        <Route
+
+          path="/create-store"
+
+          element={
+
+            <CreateStore />
+
+          }
+
+        />
         <Route
 
           path="/store-front"
