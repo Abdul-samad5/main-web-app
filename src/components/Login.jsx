@@ -74,15 +74,15 @@ const Login = ({ handleClick }) => {
           setShowModal(true);
           setTimeout(() => {
             setShowModal(false);
-          }, 3000);
-          handleClick("createStore");
+          }, 2000);
+          navigate("/create-store");
         } else {
           changeMessage(response.status);
           setShowModal(true);
           setTimeout(() => {
             setShowModal(false);
-          }, 3000);
-            navigate("/dashboard");
+          }, 2000);
+          navigate("/dashboard");
         }
       }
     } catch (err) {
