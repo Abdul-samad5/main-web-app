@@ -8,7 +8,7 @@ import { Register, Dashboard, StoreFront } from "./pages";
 import React, { useContext } from "react";
 import { Cart, Checkout } from "./store-components";
 import { cartContext } from "./context/CartContext";
-import { GetStarted, Login } from "./components";
+import { GetStarted, Login, ResetPassword } from "./components";
 import Cookies from "js-cookie";
 import ProductDetails from "./store-components/ProductDetails";
 
@@ -24,29 +24,13 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route 
-        path="/" 
-        element={
-            <Register />
-        } />
+        <Route path="/" element={<Register />} />
         <Route
           path="/dashboard"
           element={
             <PreventLogin>
               <Dashboard />
             </PreventLogin>
-          }
-        />
-        <Route
-          path="/login"
-          element={
-            <Login />
-          }
-        />
-        <Route
-          path="/register"
-          element={
-            <Register />
           }
         />
         <Route
