@@ -24,7 +24,7 @@ const CreateStore = ({ handleClick }) => {
         text: "Registration successful!",
       });
     }
-    if(status === 400) {
+    if (status === 400) {
       setMessage({
         color: "text-red-500",
         text: "Store already exists, Please choose a different name",
@@ -60,7 +60,7 @@ const CreateStore = ({ handleClick }) => {
     e.preventDefault();
     const store = {
       store_name: formData.storeName,
-      store_domain: formData.storeDomain + ".myyetti.co",
+      store_domain: "https://" + formData.storeDomain + ".myyetti.co",
     };
 
     changeMessage(true);
