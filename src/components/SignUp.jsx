@@ -2,13 +2,14 @@ import { useState } from "react";
 import { postUser } from "../services/services";
 import Modal from "./Modal";
 import { Link } from "react-router-dom";
+import { isArray } from "lodash";
 
 const SignUp = ({ handleClick }) => {
   // Initialize state for submit button textContent
   const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [modalContent, setModalContent] = useState(null);
-  const [showButton, setShowButton] = useState(false);
+  const [modalContent, setModalText] = useState(null);
 
   // Collect form data
   const [formData, setFormData] = useState({
@@ -32,33 +33,46 @@ const SignUp = ({ handleClick }) => {
   async function formSubmit(e) {
     e.preventDefault();
     const user = {
-     email: formData.email,
-     full_name: formData.fullName,
-     password: formData.password,
-     user_type: formData.accountType,
-    }
+      email: formData.email,
+      full_name: formData.fullName,
+      password: formData.password,
+      user_type: formData.accountType,
+    };
     try {
+      setLoading(true);
       const res = await postUser(user);
       console.log(res.data.message);
       console.log(res);
       if (!res.status === 201 || res.status === 200) return;
-  
       setShowModal(true);
-      setModalContent("Registration Successful! Please Check Your email");
+      setModalText("Registration Successful! Please Check Your email");
       setTimeout(() => {
         setShowModal(false);
         handleClick("login");
       }, 3000);
-  
     } catch (err) {
+      setLoading(false);
+      if (
+        err.response.data.email &&
+        err.response.data.full_name &&
+        err.response.data.password
+      ) {
+        setShowModal(true);
+        setModalText("Empty Field(s)!");
+      } else if (err.code === "ERR_NETWORK") {
+        setShowModal(true);
+        setModalText("There might be a problem with your network connection!");
+      }
+      setTimeout(() => {
+        setShowModal(false);
+      }, 3000);
       console.log(err);
     }
-    setFormData({});
   }
 
   return (
     <div className="max-w-[400px] w-full mx-auto mb-20">
-      {showModal && <Modal text={message} />}
+      {showModal && <Modal text={modalContent} />}
 
       <h1 className="text-center text-[28px] mb-[15px] font-normal">
         Register
@@ -148,16 +162,17 @@ const SignUp = ({ handleClick }) => {
           <p className="text-brand-gray font-normal text-[14px]">
             Already have an account?
           </p>
-          <Link to="/login">
-            <button
-              className="text-brand-gray font-normal text-[14px]"
-              type="button">
-              Login
-            </button>
-          </Link>
+
+          <button
+            className="text-brand-gray font-normal text-[14px]"
+            type="button"
+            onClick={() => handleClick("login")}
+          >
+            Login
+          </button>
         </div>
       </form>
-      {showModal && <Modal text={modalContent} showButton={showButton} />}
+      {showModal && <Modal text={modalContent} />}
     </div>
   );
 };

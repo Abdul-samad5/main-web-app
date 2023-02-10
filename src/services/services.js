@@ -66,8 +66,6 @@ const updateProduct = (id, product) =>
 const addCollection = (collection) =>
   axios.post(`${BASE_URL}product/collection`, collection, config);
 
-  
-
 const deleteCollection = (id) =>
   axios.delete(`${BASE_URL}product/collection/delete/${id}`, config);
 
