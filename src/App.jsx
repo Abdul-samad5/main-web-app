@@ -8,7 +8,7 @@ import { Register, Dashboard, StoreFront } from "./pages";
 import React, { useContext } from "react";
 import { Cart, Checkout } from "./store-components";
 import { cartContext } from "./context/CartContext";
-import { GetStarted, Login } from "./components";
+import { CreateStore, GetStarted, Login } from "./components";
 import Cookies from "js-cookie";
 import ProductDetails from "./store-components/ProductDetails";
 
@@ -47,6 +47,12 @@ function App() {
           path="/register"
           element={
             <Register />
+          }
+        />
+        <Route
+          path="/create-store"
+          element={
+            <CreateStore />
           }
         />
         <Route
