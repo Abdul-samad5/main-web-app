@@ -8,6 +8,8 @@ import {
   addCollection,
   deleteCollection,
 } from "../services/services";
+import Cookies from "js-cookie";
+import { BASE_URL } from "../services/services";
 
 const details = ["Collection name", "Product", "Action"];
 const Collections = () => {
@@ -42,6 +44,7 @@ const Collections = () => {
   useEffect(() => {
     fetchCollections();
   }, [isVisible, reRender]);
+  const tk = Cookies.get("_tksr");
 
   const handleCollectionSearch = (searchValue) => {
     // Logic for searching for a specific transaction history by setting the transaction history state to the data gotten from the API following the users prompt.
@@ -55,10 +58,12 @@ const Collections = () => {
       name: newCollectionInfo.collectionName,
       image: newCollectionInfo.collectionImage,
     };
-    console.log();
 
     try {
-      const res = await addCollection(collection);
+      // const res = await addCollection(collection);
+      const res = await axios.post(`${BASE_URL}product/collection`, collection, 
+      { headers: { Authorization: `Bearer ${tk}`} });
+      console.log(res);
       if (!res.statusText === "OK") return;
       setCollectionInfo((prev) => {
         return (prev = { collectionName: "", collectionImage: "" });
@@ -132,6 +137,7 @@ const Collections = () => {
 
   const Children = ({ id, collectionName, product, no }) => {
     const deleteCollections = async () => {
+      console.log(id);
       try {
         const res = await deleteCollection(id);
         console.log(res);

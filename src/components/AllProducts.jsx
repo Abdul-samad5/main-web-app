@@ -3,7 +3,9 @@ import { UserData } from "./index";
 import { noProducts } from "../assets";
 import { getProducts, deleteProduct } from "../services/services";
 import { styles } from "../constants/index";
-import useFetchData from "../hooks/useFetchProducts";
+import { BASE_URL } from "../services/services";
+import Cookies from "js-cookie";
+import axios from "axios";
 
 const details = ["Product name", "Price", "Status:", "Inventory:", "Action"];
 const MyOrders = () => {
@@ -16,10 +18,30 @@ const MyOrders = () => {
     });
   };
 
-  const { data } = useFetchData(getProducts());
+  // const { data } = useFetchData(getProducts());
+
+  const token = Cookies.get("_tksr");
+
+  async function fetchProducts() {
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+      "Content-Type": "application/json",
+    };
+
+    try {
+      const res = await axios.get(`${BASE_URL}product/list`, config);
+      if (res) {
+        setMyProducts(res.data.data);
+      }
+      console.log(res);
+    } catch(err) {
+      console.log(err);
+    }
+  }
+
   useEffect(() => {
-    setMyProducts(data);
-  }, [reRender, data]);
+    fetchProducts();
+  }, [reRender]);
 
   const Children = ({ id, productName, price, status, inventory, keys }) => {
     const [currentState, setCurrentState] = React.useState(false);

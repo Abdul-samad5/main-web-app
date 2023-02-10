@@ -5,7 +5,6 @@ import {
   Navigate,
 } from "react-router-dom";
 import { Register, Dashboard, StoreFront } from "./pages";
-
 import React, { useContext } from "react";
 import { Cart, Checkout } from "./store-components";
 import { cartContext } from "./context/CartContext";
@@ -25,13 +24,29 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Register />} />
+        <Route 
+        path="/" 
+        element={
+            <Register />
+        } />
         <Route
           path="/dashboard"
           element={
             <PreventLogin>
               <Dashboard />
             </PreventLogin>
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            <Login />
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            <Register />
           }
         />
         <Route

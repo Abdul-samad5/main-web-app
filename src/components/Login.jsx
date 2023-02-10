@@ -1,6 +1,6 @@
 import { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { LoginContext } from "../context/LoginContext";
+import { Link } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
 import { styles } from "../constants";
 import { userLogin } from "../services/services";
@@ -57,7 +57,7 @@ const Login = ({ handleClick }) => {
     setLoading(true);
     try {
       const response = await userLogin(user);
-
+      console.log(response);
       if (!response.statusText === "OK") return;
 
       if (response) {
@@ -168,13 +168,13 @@ const Login = ({ handleClick }) => {
           >
             Forgot password?
           </button>
-          <button
-            className="text-brand-gray font-normal text-[14px]"
-            type="button"
-            onClick={() => handleClick("signUp")}
-          >
-            Register
-          </button>
+          <Link to="/register">
+            <button
+              className="text-brand-gray font-normal text-[14px]"
+              type="button">
+              Register
+            </button>
+          </Link>
         </div>
       </form>
       {showModal && <Modal text={modalContent} showButton={showButton} />}
