@@ -1,11 +1,9 @@
 import { useState, useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { LoginContext } from "../context/LoginContext";
+import { useNavigate } from "react-router-dom";
 import { styles } from "../constants";
 import { userLogin } from "../services/services";
 import { UserContext } from "../context/UserContext";
 import Modal from "./Modal";
-import { isArray } from "lodash";
 
 const Login = ({ handleClick }) => {
   // Initialize state for the login to enable user login
@@ -54,6 +52,7 @@ const Login = ({ handleClick }) => {
 
         const email = response.data.data.user.email;
         const user_id = response.data.data.user.user_id;
+        console.log(response.data.data.user);
 
         onUserLogin(token, email, user_id);
 
@@ -79,11 +78,17 @@ const Login = ({ handleClick }) => {
     } catch (err) {
       setLoading(false);
       if (err.response.data.email && err.response.data.password) {
+        setLoading(false);
         setShowModal(true);
-        setModalText("Empty Field(s)!");
+        setModalText("Field(s) cannot be empty!");
       } else if (err.code === "ERR_NETWORK") {
+        setLoading(false);
         setShowModal(true);
         setModalText("There might be a problem with your network connection!");
+      } else if (err.response.status === 401) {
+        setLoading(false);
+        setShowModal(true);
+        setModalText("Invalid login credentials");
       }
       setTimeout(() => {
         setShowModal(false);
@@ -94,7 +99,7 @@ const Login = ({ handleClick }) => {
 
   return (
     <div className="max-w-[400px] w-full mx-auto">
-      {showModal && <Modal text={modalText} />}
+      {showModal && <Modal text={modalText} showModal={showModal} />}
       <h1 className="text-center text-[28px] mb-[40px] font-normal">
         Login to your account
       </h1>

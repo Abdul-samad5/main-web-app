@@ -45,11 +45,10 @@ const SignUp = ({ handleClick }) => {
       console.log(res);
       if (!res.status === 201 || res.status === 200) return;
       setShowModal(true);
-      setModalText("Registration Successful! Please Check Your email");
-      setTimeout(() => {
-        setShowModal(false);
-        handleClick("login");
-      }, 3000);
+      setModalText(
+        "Registration Successful! Please Check Your email to complete your registration"
+      );
+      // handleClick("login");
     } catch (err) {
       setLoading(false);
       if (
@@ -58,7 +57,7 @@ const SignUp = ({ handleClick }) => {
         err.response.data.password
       ) {
         setShowModal(true);
-        setModalText("Empty Field(s)!");
+        setModalText("Field(s) cannot be empty!");
       } else if (err.code === "ERR_NETWORK") {
         setShowModal(true);
         setModalText("There might be a problem with your network connection!");
@@ -72,7 +71,7 @@ const SignUp = ({ handleClick }) => {
 
   return (
     <div className="max-w-[400px] w-full mx-auto mb-20">
-      {showModal && <Modal text={modalContent} />}
+      {showModal && <Modal text={modalContent} showModal={showModal} />}
 
       <h1 className="text-center text-[28px] mb-[15px] font-normal">
         Register

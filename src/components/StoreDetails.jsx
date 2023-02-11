@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { styles } from "../constants/index";
-import { BASE_URL, getStoreInfo } from "../services/services";
+import { BASE_URL, updateStore, getStoreInfo } from "../services/services";
 import Cookies from "js-cookie";
 import Modal from "./Modal";
 
@@ -19,10 +19,9 @@ const StoreDetails = () => {
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [modalContent, setModalContent] = useState(null);
-  const [showButton, setShowButton] = useState(null);
   const tk = Cookies.get("_tksr");
   const id = Cookies.get("_id");
-  
+
   function changeMessage(status) {
     if (status === 200 || status === 201) {
       setModalContent("Settings saved!");
@@ -49,26 +48,12 @@ const StoreDetails = () => {
     };
 
     try {
-      let res;
-      if(storeId) {
-        res = await axios.put(
-          `${BASE_URL}store_settings/store/update/`,
-          formDetails,
-          { headers: { Authorization: `Bearer ${tk}` } }
-        );
-        console.log(storeId);
-      } else {
-        res = await axios.post(
-          `${BASE_URL}store_settings/store`,
-          formDetails,
-          { headers: { Authorization: `Bearer ${tk}` } }
-        );
-      }
-      
+      const res = await updateStore(formDetails);
+
       if (!res.statusText === "OK") return;
       console.log(res);
       changeMessage(res.status);
-       
+
       setShowModal(true);
       setTimeout(() => {
         setShowModal(false);
@@ -76,7 +61,7 @@ const StoreDetails = () => {
       makeEmpty();
     } catch (error) {
       console.log(error);
-     
+
       setShowModal(true);
       setTimeout(() => {
         setShowModal(false);
@@ -86,16 +71,18 @@ const StoreDetails = () => {
   };
 
   function makeEmpty() {
-      setStoreDetails((prev) => {
-        return { ...prev, 
-          store_name: "",
-          tag_line: "",
-          store_description: "",
-          store_logo: "",
-          store_currency: "Naira",
-          store_email: "",
-          store_phone_number: "" };
-      });
+    setStoreDetails((prev) => {
+      return {
+        ...prev,
+        store_name: "",
+        tag_line: "",
+        store_description: "",
+        store_logo: "",
+        store_currency: "Naira",
+        store_email: "",
+        store_phone_number: "",
+      };
+    });
   }
 
   const handleChange = (event) => {
@@ -113,7 +100,7 @@ const StoreDetails = () => {
     const file = event.target.files[0];
     const formInfo = new FormData();
     formInfo.append("file", file);
-    formInfo.append('upload_preset', 'images');
+    formInfo.append("upload_preset", "images");
 
     async function uploadImg() {
       try {
@@ -139,12 +126,6 @@ const StoreDetails = () => {
       }
     }
     uploadImg();
-    // setStoreDetails((prev) => {
-    //   return {
-    //     ...prev,
-    //     storeLogo: imageUri,
-    //   };
-    // });
   };
 
   function handleSubmit(event) {
@@ -155,28 +136,32 @@ const StoreDetails = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await axios.get(`${BASE_URL}store_settings/store_details`, { headers: { Authorization: `Bearer ${tk}`} });
+        const response = await axios.get(
+          `${BASE_URL}store_settings/store_details`,
+          { headers: { Authorization: `Bearer ${tk}` } }
+        );
         if (response) {
           const data = response.data.data;
           // const store_name = response.data["Store Details"].length === 0 ? "" : response.data["Store Details"][0].store_name;
           // const store_email = response.data["Email"];
           setStoreDetails((prev) => {
-            return { ...prev, 
-              storeName: data.store_name, 
+            return {
+              ...prev,
+              storeName: data.store_name,
               storeEmail: data.store_email,
               tagLine: data.tag_line,
               storeDesc: data.store_description,
               storeLogo: data.store_logo,
               storeCurrency: "Naira",
-              storeContactNumber: data.store_phone_number
+              storeContactNumber: data.store_phone_number,
             };
           });
           storeId = data.id;
           console.log(storeId);
         }
         // console.log(response);
-        if(!response.statusText === "OK") return;
-      } catch(err) {
+        if (!response.statusText === "OK") return;
+      } catch (err) {
         console.log(err);
       }
     }
@@ -232,7 +217,9 @@ const StoreDetails = () => {
 
               <div className="relative flex left-3/4 bottom-10">
                 <span className="text-xs text-slate-300">
-                  {storeDetails.storeDesc === null ? 0 : storeDetails.storeDesc?.length }
+                  {storeDetails.storeDesc === null
+                    ? 0
+                    : storeDetails.storeDesc?.length}
                 </span>
                 <span className="text-xs text-slate-300">/100</span>
               </div>
@@ -250,7 +237,8 @@ const StoreDetails = () => {
               <label
                 htmlFor="image-selector"
                 className={
-                  storeDetails.storeLogo === "" || storeDetails.storeLogo === null
+                  storeDetails.storeLogo === "" ||
+                  storeDetails.storeLogo === null
                     ? "border border-dotted border-slate-300 text-slate-300 h-40 pt-16 block w-11/12 text-center rounded-lg text-sm"
                     : "hidden"
                 }
@@ -261,7 +249,8 @@ const StoreDetails = () => {
               <img
                 src={storeDetails.storeLogo}
                 className={
-                  storeDetails.storeLogo === "" || storeDetails.storeLogo === null
+                  storeDetails.storeLogo === "" ||
+                  storeDetails.storeLogo === null
                     ? "hidden"
                     : "border border-dotted border-slate-300 text-slate-300 h-40 block w-11/12 text-center rounded-lg text-sm"
                 }
@@ -296,7 +285,6 @@ const StoreDetails = () => {
               <input
                 placeholder="Enter store email"
                 name="storeEmail"
-
                 className={`${styles.inputBox} px-3 w-11/12`}
                 value={storeDetails.storeEmail}
                 onChange={handleChange}
@@ -325,7 +313,7 @@ const StoreDetails = () => {
             />
           </div>
         </form>
-        {showModal && <Modal text={modalContent} showButton={showButton} />}
+        {showModal && <Modal text={modalContent} showModal={showModal} />}
       </div>
     </>
   );
