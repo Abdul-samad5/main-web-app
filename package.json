@@ -10,10 +10,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.10",
     "axios": "^0.27.2",
     "chart.js": "^3.9.1",
     "draft-js": "^0.11.7",
     "flowbite": "^1.5.3",
+    "headlessui": "^0.0.0",
     "html2canvas": "^1.4.1",
     "js-cookie": "^3.0.1",
     "react": "^18.2.0",

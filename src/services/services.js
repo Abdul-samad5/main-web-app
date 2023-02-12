@@ -53,6 +53,10 @@ const resetPasswordConfirm = (user_id, token) =>
     config
   );
 
+//store
+
+const updateStore = (formDetails) =>
+  axios.put(`${BASE_URL}store_settings/store/update/`, formDetails, config);
 // add product
 const addProduct = (product) =>
   axios.post(`${BASE_URL}product/`, product, config);
@@ -152,4 +156,5 @@ export {
   deleteProduct,
   updateProduct,
   userLogout,
+  updateStore,
 };
