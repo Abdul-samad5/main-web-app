@@ -36,7 +36,7 @@ const CreateStore = ({ handleClick }) => {
     e.preventDefault();
     const store = {
       store_name: formData.storeName,
-      store_domain: "https://" + formData.storeDomain + ".myyetti.co",
+      store_domain: "https://" + formData.storeDomain + ".myyetti.store",
     };
 
     try {
@@ -44,7 +44,7 @@ const CreateStore = ({ handleClick }) => {
       const res = await postStore(store);
       changeMessage(res.status);
 
-      if (res.status === 201 || res.status === 200) {
+      if (res.status === 201) {
         setLoading(false);
         setShowModal(true);
         setModalText("Store Created successfully");
@@ -55,11 +55,7 @@ const CreateStore = ({ handleClick }) => {
       }
     } catch (err) {
       setLoading(false);
-      if (err.response.data.store_name && err.response.data.store_domain) {
-        setLoading(false);
-        setShowModal(true);
-        setModalText("Field(s) cannot be empty!");
-      } else if (err.code === "ERR_NETWORK") {
+      if (err.code === "ERR_NETWORK") {
         setLoading(false);
         setShowModal(true);
         setModalText("There might be a problem with your network connection!");
@@ -110,7 +106,7 @@ const CreateStore = ({ handleClick }) => {
               className="w-full border border-brand-stroke rounded-lg p-3"
             />
             <span className="absolute top-1/2 -translate-y-[50%] right-[12px] text-[14px] text-brand-gray">
-              .myetti.co
+              .myetti.store
             </span>
           </div>
         </div>
