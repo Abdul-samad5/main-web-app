@@ -8,9 +8,8 @@ import { Register, Dashboard, StoreFront } from "./pages";
 import React, { useContext } from "react";
 import { Cart, Checkout } from "./store-components";
 import { cartContext } from "./context/CartContext";
- 
-import { GetStarted, Login, ResetPassword } from "./components";
 
+import { CreateStore, GetStarted, Login, ResetPassword } from "./components";
 
 import Cookies from "js-cookie";
 import ProductDetails from "./store-components/ProductDetails";
@@ -37,7 +36,6 @@ function App() {
           }
         />
         <Route
-
           path="/store-front"
           element={
             <PreventLogin>

@@ -63,10 +63,8 @@ const Login = ({ handleClick }) => {
           setModalText("Login Success! Please create a store to continue");
           setTimeout(() => {
             setShowModal(false);
-
             handleClick("createStore");
           }, 3000);
-
         } else {
           setLoading(false);
           setShowModal(true);
@@ -76,7 +74,6 @@ const Login = ({ handleClick }) => {
 
             navigate("/dashboard");
           }, 3000);
-
         }
       }
     } catch (err) {
@@ -145,7 +142,7 @@ const Login = ({ handleClick }) => {
           <label htmlFor="remember">Remember me</label>
         </div>
         <button disabled={loading} className={`${styles.button} w-full`}>
-          Login to store
+          {loading ? "Please wait..." : "Login to store"}
         </button>
         <div className="w-full flex justify-between items-center mt-2">
           <button

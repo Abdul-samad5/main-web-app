@@ -3,42 +3,18 @@ import axios from "axios";
 import { BASE_URL, postStore } from "../services/services";
 import { UserContext } from "../context/UserContext";
 import { useNavigate } from "react-router-dom";
+import Modal from "./Modal";
 
 const CreateStore = ({ handleClick }) => {
   // Initialize state for submit button textContent
   const [message, setMessage] = useState({ text: true });
+  const [showModal, setShowModal] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [modalText, setModalText] = useState(null);
 
   const { userData } = useContext(UserContext);
   const navigate = useNavigate();
 
-  function changeMessage(status) {
-    if (status) {
-      setMessage({
-        color: "text-brand-secondary",
-        text: "Submitting...",
-      });
-    }
-    if (status === 200 || status === 201) {
-      setMessage({
-        color: "text-green-500",
-        text: "Registration successful!",
-      });
-    }
-    if (status === 400) {
-      setMessage({
-        color: "text-red-500",
-        text: "Store already exists, Please choose a different name",
-      });
-    }
-    if (status > 400) {
-      setMessage({
-        color: "text-red-500",
-        text: "Registration Failed!",
-      });
-    }
-  }
-
-  // const { userData, onUserLogin } = useContext(UserContext);
   // Collect form data
   const [formData, setFormData] = useState({
     storeName: "",
@@ -63,26 +39,45 @@ const CreateStore = ({ handleClick }) => {
       store_domain: "https://" + formData.storeDomain + ".myyetti.co",
     };
 
-    changeMessage(true);
-
     try {
+      setLoading(true);
       const res = await postStore(store);
       changeMessage(res.status);
 
       if (res.status === 201 || res.status === 200) {
-        navigate("/dashboard");
+        setLoading(false);
+        setShowModal(true);
+        setModalText("Store Created successfully");
+        setTimeout(() => {
+          setShowModal(false);
+          navigate("dashboard");
+        }, 3000);
       }
-      // if (res.status === 400) {
-      //   navigate("/dashboard");
-      //   console.log("Store already exists, Please choose a different name");
-      // }
     } catch (err) {
-      changeMessage(err.code);
+      setLoading(false);
+      if (err.response.data.store_name && err.response.data.store_domain) {
+        setLoading(false);
+        setShowModal(true);
+        setModalText("Field(s) cannot be empty!");
+      } else if (err.code === "ERR_NETWORK") {
+        setLoading(false);
+        setShowModal(true);
+        setModalText("There might be a problem with your network connection!");
+      } else if (err.response.status === 401) {
+        setLoading(false);
+        setShowModal(true);
+        setModalText("Invalid request");
+      }
+      setTimeout(() => {
+        setShowModal(false);
+      }, 3000);
+      console.log(err);
     }
   }
 
   return (
     <div className="max-w-[400px] w-full mx-auto mb-20">
+      {showModal && <Modal text={modalText} showModal={showModal} />}
       <h1 className="text-center text-[28px] mb-[15px] font-normal">
         Create Store
       </h1>
@@ -142,9 +137,10 @@ const CreateStore = ({ handleClick }) => {
         <button
           type="submit"
           // onClick={() => handleClick("getStarted")}
+          disabled={loading}
           className="w-full py-3 bg-brand-primary text-white font-normal rounded-lg hover:bg-brand-secondary transition-colors duration-500"
         >
-          Create Store
+          {loading ? "Please wait..." : "Create Store"}
         </button>
       </form>
     </div>
