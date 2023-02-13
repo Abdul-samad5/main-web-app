@@ -48,6 +48,9 @@ const SignUp = ({ handleClick }) => {
       setModalText(
         "Registration Successful! Please Check Your email to complete your registration"
       );
+      setTimeout(() => {
+        setShowModal(false);
+      }, 3000);
       // handleClick("login");
     } catch (err) {
       setLoading(false);
@@ -155,7 +158,7 @@ const SignUp = ({ handleClick }) => {
           // onClick={() => handleClick("getStarted")}
           className={`w-full py-3 bg-brand-primary text-white font-normal rounded-lg hover:bg-brand-secondary transition-colors duration-500`}
         >
-          Register
+          {loading ? "Please wait..." : "Register"}
         </button>
         <div className="w-full flex justify-between items-center mt-2">
           <p className="text-brand-gray font-normal text-[14px]">
