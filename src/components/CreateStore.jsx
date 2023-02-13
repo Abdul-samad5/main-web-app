@@ -50,7 +50,7 @@ const CreateStore = ({ handleClick }) => {
         setModalText("Store Created successfully");
         setTimeout(() => {
           setShowModal(false);
-          navigate("dashboard");
+          navigate("/dashboard");
         }, 3000);
       }
     } catch (err) {
