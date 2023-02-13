@@ -9,6 +9,10 @@ import React, { useContext } from "react";
 import { Cart, Checkout } from "./store-components";
 import { cartContext } from "./context/CartContext";
 
+ 
+import { GetStarted,CreateStore, Login, ResetPassword } from "./components";
+
+
 import { CreateStore, GetStarted, Login, ResetPassword } from "./components";
 
 import Cookies from "js-cookie";
@@ -34,6 +38,42 @@ function App() {
               <Dashboard />
             </PreventLogin>
           }
+        />
+            
+            <Route
+
+          path="/login"
+
+          element={
+
+            <Login />
+
+          }
+
+        />
+
+        <Route
+
+          path="/register"
+
+          element={
+
+            <Register />
+
+          }
+
+        />
+
+        <Route
+
+          path="/create-store"
+
+          element={
+
+            <CreateStore />
+
+          }
+
         />
         <Route
           path="/store-front"
