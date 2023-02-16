@@ -48,12 +48,26 @@ const StoreDetails = () => {
     };
 
     try {
-      const res = await updateStore(formDetails);
-
+      let res;
+      if(storeId) {
+        res = await axios.put(
+          `${BASE_URL}store_settings/store/update/`,
+          formDetails,
+          { headers: { Authorization: `Bearer ${tk}` } }
+        );
+        console.log(storeId);
+      } else {
+        res = await axios.post(
+          `${BASE_URL}store_settings/store`,
+          formDetails,
+          { headers: { Authorization: `Bearer ${tk}` } }
+        );
+      }
+      
       if (!res.statusText === "OK") return;
       console.log(res);
       changeMessage(res.status);
-
+       
       setShowModal(true);
       setTimeout(() => {
         setShowModal(false);
@@ -61,7 +75,7 @@ const StoreDetails = () => {
       makeEmpty();
     } catch (error) {
       console.log(error);
-
+     
       setShowModal(true);
       setTimeout(() => {
         setShowModal(false);
