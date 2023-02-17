@@ -1,7 +1,7 @@
-import { useState, useContext } from "react";
-import { styles } from "../constants";
-import axios from "axios";
-import { BASE_URL } from "../services/services";
+import { useState, useContext } from 'react';
+import { styles } from '../constants';
+import axios from 'axios';
+import { BASE_URL } from '../services/services';
 import {
   logo,
   all_prods,
@@ -30,7 +30,8 @@ import {
   storeDetails,
   finances,
   websiteSettings,
-} from "../assets";
+} from '../assets';
+import { AiFillWarning } from 'react-icons/ai';
 
 import {
   AddEditProducts,
@@ -46,28 +47,28 @@ import {
   MyStore,
   Finances,
   UserAccount,
-} from "../components";
-import { Link, Navigate, useNavigate } from "react-router-dom";
-import { LoginContext } from "../context/LoginContext";
-import { UserContext } from "../context/UserContext";
-import { useEffect } from "react";
-import { getStoreInfo, userLogout } from "../services/services";
-import Cookies from "js-cookie";
+} from '../components';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { LoginContext } from '../context/LoginContext';
+import { UserContext } from '../context/UserContext';
+import { useEffect } from 'react';
+import { getStoreInfo, userLogout } from '../services/services';
+import Cookies from 'js-cookie';
 
 function DbIcon({ src }) {
-  return <img src={src} className="w-[16px]" alt="Icon" />;
+  return <img src={src} className='w-[16px]' alt='Icon' />;
 }
 
 const Dashboard = () => {
   // Sidebar
   const [isNavOpen, setIsNavOpen] = useState(false);
-  const [storeName, setStoreName] = useState("");
-  const [storeLogo, setStoreLogo] = useState("");
+  const [storeName, setStoreName] = useState('');
+  const [storeLogo, setStoreLogo] = useState('');
 
   // Component to be rendered on the main
   const [activeComponent, setActiveComponent] = useState([<MyStore />]);
-  const tk = Cookies.get("_tksr");
-  const id = Cookies.get("_id");
+  const tk = Cookies.get('_tksr');
+  const id = Cookies.get('_id');
 
   // Dropdowns on the sidebar
   const [isProdOpen, setIsProdOpen] = useState(false);
@@ -90,7 +91,7 @@ const Dashboard = () => {
       if (res) {
         userLoggedOut();
         onUserLogOut();
-        navigate("/");
+        navigate('/');
       }
     }
     logUserOut();
@@ -108,9 +109,12 @@ const Dashboard = () => {
 
   useEffect(() => {
     async function fetchData() {
-      const response = await axios.get(`${BASE_URL}store_settings/store_details`, { headers: { Authorization: `Bearer ${tk}`} });
-      const store_name = response.data.data["store_name"];
-      const profileLogo = response.data.data["store_logo"];
+      const response = await axios.get(
+        `${BASE_URL}store_settings/store_details`,
+        { headers: { Authorization: `Bearer ${tk}` } }
+      );
+      const store_name = response.data.data['store_name'];
+      const profileLogo = response.data.data['store_logo'];
 
       console.log(response);
       setStoreName(`${store_name}`);
@@ -120,25 +124,25 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div className="w-full overflow-hidden">
-      <div className="w-full flex">
+    <div className='w-full overflow-hidden'>
+      <div className='w-full flex'>
         {/* {Sidebar} */}
         <div
           className={`w-full lg:w-1/5 shrink-0 fixed left-0 top-0 h-screen border-r border-brand-gray-300 ${
-            isNavOpen ? "-translate-x-[0]" : "-translate-x-[100%]"
+            isNavOpen ? '-translate-x-[0]' : '-translate-x-[100%]'
           } lg:-translate-x-[0] z-10 bg-white transition-transform duration-500 overflow-y-scroll`}
         >
-          <div className="border-b p-5 flex w-full justify-between items-center">
-            <img src={logo} className="w-[50px]" alt="Yetti Logo" />
+          <div className='border-b p-5 flex w-full justify-between items-center'>
+            <img src={logo} className='w-[50px]' alt='Yetti Logo' />
             <img
               src={close}
-              className="w-[24px] lg:hidden"
-              alt="Icon"
+              className='w-[24px] lg:hidden'
+              alt='Icon'
               onClick={handleClick}
             />
           </div>
-          <div className="border-b flex items-center justify-between p-4 mb-[10px]">
-            <h1 className="font-bold text-[16px] ">{storeName}</h1>
+          <div className='border-b flex items-center justify-between p-4 mb-[10px]'>
+            <h1 className='font-bold text-[16px] '>{storeName}</h1>
             <DbIcon src={edit} />
           </div>
           <div
@@ -156,19 +160,19 @@ const Dashboard = () => {
             <h2>My Orders</h2>
           </div>
           <div
-            className="w-full"
+            className='w-full'
             onClick={(e) => handleDropdown(e, setIsProdOpen)}
           >
             <div className={`${styles.dbNavItem} relative`}>
               <DbIcon src={products} />
               <h2>Products</h2>
-              <div className="absolute top-1/2 -translate-y-1/2 right-4">
+              <div className='absolute top-1/2 -translate-y-1/2 right-4'>
                 <DbIcon src={isProdOpen ? arrow_down : arrow_right} />
               </div>
             </div>
             <div
               className={`${
-                isProdOpen ? "max-h-[200px]" : "max-h-0"
+                isProdOpen ? 'max-h-[200px]' : 'max-h-0'
               } transition-[max-height] duration-300 pl-[24px] overflow-hidden`}
             >
               <div
@@ -202,19 +206,19 @@ const Dashboard = () => {
             <h2>My Customers</h2>
           </div>
           <div
-            className="w-full"
+            className='w-full'
             onClick={(e) => handleDropdown(e, setIsMarkOpen)}
           >
             <div className={`${styles.dbNavItem} relative`}>
               <DbIcon src={products} />
               <h2>Marketing</h2>
-              <div className="absolute top-1/2 -translate-y-1/2 right-4">
+              <div className='absolute top-1/2 -translate-y-1/2 right-4'>
                 <DbIcon src={isMarkOpen ? arrow_down : arrow_right} />
               </div>
             </div>
             <div
               className={`${
-                isMarkOpen ? "max-h-[200px]" : "max-h-0"
+                isMarkOpen ? 'max-h-[200px]' : 'max-h-0'
               } transition-[max-height] duration-300 pl-[24px] overflow-hidden`}
             >
               <div
@@ -254,8 +258,8 @@ const Dashboard = () => {
             <DbIcon src={history} />
             <h2>Transaction history</h2>
           </div>
-          <div className="border-b border-t p-4 mb-[10px]">
-            <h1 className="font-bold text-[16px] text-brand-gray">Settings</h1>
+          <div className='border-b border-t p-4 mb-[10px]'>
+            <h1 className='font-bold text-[16px] text-brand-gray'>Settings</h1>
           </div>
           {/* <div
             className={`${styles.dbNavItem} relative w-full`}
@@ -268,19 +272,19 @@ const Dashboard = () => {
             </div>
           </div> */}
           <div
-            className="w-full"
+            className='w-full'
             onClick={(e) => handleDropdown(e, setIsSettingsOpen)}
           >
             <div className={`${styles.dbNavItem} relative`}>
               <DbIcon src={settings} />
               <h2>Store Settings</h2>
-              <div className="absolute top-1/2 -translate-y-1/2 right-4">
+              <div className='absolute top-1/2 -translate-y-1/2 right-4'>
                 <DbIcon src={isSettingsOpen ? arrow_down : arrow_right} />
               </div>
             </div>
             <div
               className={`${
-                isSettingsOpen ? "max-h-[200px]" : "max-h-0"
+                isSettingsOpen ? 'max-h-[200px]' : 'max-h-0'
               } transition-[max-height] duration-300 pl-[24px] overflow-hidden`}
             >
               <div
@@ -325,64 +329,88 @@ const Dashboard = () => {
         </div>
 
         {/* {Main} */}
-        <div className="lg:w-4/5 w-full shrink-0 bg-brand-gray-200 min-h-screen p-[24px] lg:px-10 lg:py-5 lg:absolute top-0 right-0">
-          <div className="w-full flex justify-between items-center">
-            <div className="flex gap-8 items-center">
+        <div className='lg:w-4/5 w-full shrink-0 bg-brand-gray-200 min-h-screen p-[24px] lg:px-10 lg:py-5 lg:absolute top-0 right-0'>
+          <div className='w-full flex justify-between items-center'>
+            <div className='flex gap-8 items-center'>
               <img
                 src={burger}
-                className="w-[24px] block lg:hidden"
-                alt="Icon"
+                className='w-[24px] block lg:hidden'
+                alt='Icon'
                 onClick={handleClick}
               />
-              <Link to={"/store-front"}>
+              <Link to={'/store-front'}>
                 <button className={`${styles.buttonOutline}`}>
                   Go to store front
                 </button>
               </Link>
             </div>
-            <div className="flex items-center">
-              <div className="relative w-[370px] hidden lg:block">
+            <div className='hidden p-6 bg-[#fff9e9] rounded-xl md:flex items-center gap-2 ml-4 mr-4'>
+              <AiFillWarning className='text-[#d39f1c]' />
+              <h2 className='text-center'>
+                Your Email is not verified. Click{' '}
+                <Link className='text-blue-200 hover:cursor-pointer'>here</Link>{' '}
+                to verify
+              </h2>
+            </div>
+            <div className='flex items-center'>
+              <div className='relative w-[370px] hidden lg:block'>
                 <img
                   src={search}
-                  alt="Icon"
-                  className="w-[13px] absolute top-1/2 left-3 -translate-y-[50%]"
+                  alt='Icon'
+                  className='w-[13px] absolute top-1/2 left-3 -translate-y-[50%]'
                 />
                 <input
-                  type="search"
-                  placeholder="Search for customers,orders,products..."
-                  className="w-full placeholder:text-brand-gray-400 bg-inherit border py-4 px-8 rounded-xl"
+                  type='search'
+                  placeholder='Search for customers,orders,products...'
+                  className='w-full placeholder:text-brand-gray-400 bg-inherit border py-4 px-8 rounded-xl'
                 />
               </div>
-              <div className="mr-[24px] ml-2">
-                <img src={bell} alt="Icon" className="w-[18px]" />
+              <div className='mr-[24px] ml-2'>
+                <img src={bell} alt='Icon' className='w-[18px]' />
               </div>
               <div
-                className="flex items-center gap-2"
+                className='flex items-center gap-2'
                 onClick={() => setIsLogOpen(!isLogOpen)}
               >
-                <img src={storeLogo === "" ? user_img : storeLogo} alt="Profile Image" className={storeLogo === "" ? "w-[32px]" : "w-[40px] h-[40px] rounded-full"} />
-                <img src={arrow_down} alt="Icon" className="w-[13px]" />
+                <img
+                  src={storeLogo === '' ? user_img : storeLogo}
+                  alt='Profile Image'
+                  className={
+                    storeLogo === ''
+                      ? 'w-[32px]'
+                      : 'w-[40px] h-[40px] rounded-full'
+                  }
+                />
+                <img src={arrow_down} alt='Icon' className='w-[13px]' />
                 {/* <Link to="/"> */}
                 <div
                   onClick={handleLogOut}
                   className={`absolute flex px-2 py-2 ${
-                    isLogOpen ? "flex" : "hidden"
+                    isLogOpen ? 'flex' : 'hidden'
                   } top-20 right-10 rounded-sm shadow-lg hover:bg-gray-200 bg-white flex group`}
                 >
                   <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="fill-black my-auto group-hover:fill-brand-secondary h-3 w-3"
-                    viewBox="0 0 512 512"
+                    xmlns='http://www.w3.org/2000/svg'
+                    className='fill-black my-auto group-hover:fill-brand-secondary h-3 w-3'
+                    viewBox='0 0 512 512'
                   >
-                    <path d="M160 96c17.7 0 32-14.3 32-32s-14.3-32-32-32H96C43 32 0 75 0 128V384c0 53 43 96 96 96h64c17.7 0 32-14.3 32-32s-14.3-32-32-32H96c-17.7 0-32-14.3-32-32l0-256c0-17.7 14.3-32 32-32h64zM504.5 273.4c4.8-4.5 7.5-10.8 7.5-17.4s-2.7-12.9-7.5-17.4l-144-136c-7-6.6-17.2-8.4-26-4.6s-14.5 12.5-14.5 22v72H192c-17.7 0-32 14.3-32 32l0 64c0 17.7 14.3 32 32 32H320v72c0 9.6 5.7 18.2 14.5 22s19 2 26-4.6l144-136z" />
+                    <path d='M160 96c17.7 0 32-14.3 32-32s-14.3-32-32-32H96C43 32 0 75 0 128V384c0 53 43 96 96 96h64c17.7 0 32-14.3 32-32s-14.3-32-32-32H96c-17.7 0-32-14.3-32-32l0-256c0-17.7 14.3-32 32-32h64zM504.5 273.4c4.8-4.5 7.5-10.8 7.5-17.4s-2.7-12.9-7.5-17.4l-144-136c-7-6.6-17.2-8.4-26-4.6s-14.5 12.5-14.5 22v72H192c-17.7 0-32 14.3-32 32l0 64c0 17.7 14.3 32 32 32H320v72c0 9.6 5.7 18.2 14.5 22s19 2 26-4.6l144-136z' />
                   </svg>
-                  <p className="text-xs text-black text-black my-auto mx-3 opacity-60 group-hover:opacity-100">
+                  <p className='text-xs text-black  my-auto mx-3 opacity-60 group-hover:opacity-100'>
                     Sign out
                   </p>
                 </div>
                 {/* </Link> */}
               </div>
             </div>
+          </div>
+          <div className='p-6 bg-[#fff9e9] rounded-xl flex items-center gap-2 ml-4 mr-4 mt-4 md:hidden'>
+            <AiFillWarning className='text-[#d39f1c]' />
+            <h2 className='text-center'>
+              Your Email is not verified. Click{' '}
+              <Link className='text-blue-200 hover:cursor-pointer'>here</Link>{' '}
+              to verify
+            </h2>
           </div>
           <div>{activeComponent[0]}</div>
         </div>
