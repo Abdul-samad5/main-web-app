@@ -8,16 +8,18 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import { BASE_URL } from '../services/services';
 import Modal from './Modal';
+import { useNavigate } from 'react-router-dom';
 
 function AddEditProduct() {
+  const navigate = useNavigate();
   // Records if the user has clicked the toggle button in the last form element and accordingly records it
   const [isToggled, setIsToggled] = useState(false);
   const [loading, setLoading] = useState(false);
   const [collections, setCollections] = useState([]);
 
   const [showModal, setShowModal] = useState(false);
+  const [showButton, setShowButton] = useState(false);
   const [modalContent, setModalContent] = useState(null);
-  const [showButton, setShowButton] = useState(null);
 
   function changeMessage(status) {
     if (status === 200 || status === 201) {
@@ -26,11 +28,11 @@ function AddEditProduct() {
     if (status === 401) {
       setModalContent('Email or Password Incorrect!');
     }
-    if (status >= 400) {
-      setModalContent(
-        'There might be a problem with your Internet Connection! Please try again'
-      );
-    }
+    // if (status >= 400) {
+    //   setModalContent(
+    //     'There might be a problem with your Internet Connection! Please try again'
+    //   );
+    // }
   }
 
   const itemUnits = [
@@ -50,6 +52,21 @@ function AddEditProduct() {
     'In',
     'Mg',
   ];
+
+  const initialState = {
+    productTitle: '',
+    productDesc: '',
+    productImg: '',
+    price: '',
+    discountedPrice: '',
+    costPrice: '',
+    stockCount: 0,
+    stockUnit: '',
+    itemUnit: '',
+    productCollections: '',
+    productStatus: '',
+    storeTheme: '',
+  };
 
   const [formData, setFormData] = useState({
     productTitle: '',
@@ -127,10 +144,13 @@ function AddEditProduct() {
       if (!res.statusText === 'OK') return;
       changeMessage(res.status);
 
+      setModalContent(res.data.message);
       setShowModal(true);
+      window.scrollTo(0, -window.scrollY);
+      setFormData(initialState);
       setTimeout(() => {
         setShowModal(false);
-      }, 1000);
+      }, 2000);
     } catch (err) {
       console.log(err);
       changeMessage(err.response.status);
@@ -202,11 +222,12 @@ function AddEditProduct() {
 
   return (
     <div className='py-2 w-full'>
-      <div className='flex justify-between pl-3'>
+      {/* <Modal text={'modalContent'} showButton={false} /> */}
+      <div className='flex justify-between pl-3 items-center'>
         <h1 className='lg:text-xl text-xl font-bold leading-7 text-black lg:text-left mt-2'>
           Add/Edit Product
         </h1>
-
+        {/* <h4>component to be here</h4> */}
         <span>
           <button className='border border-blue-300 rounded-lg lg:px-8 py-2 px-4 mx-1 text-blue-300 bg-white'>
             Preview
@@ -219,7 +240,6 @@ function AddEditProduct() {
           </button>
         </span>
       </div>
-
       {/* Contains the entire form the user has to fill to enter/edit a product. */}
       <form className='flex justify-between flex-col mt-4 lg:flex-row'>
         <div className='lg:w-3/5 mx-3 w-full'>
@@ -541,7 +561,6 @@ function AddEditProduct() {
           </div>
         </div>
       </form>
-
       {/* Submit button of the entire form. */}
       <div className='w-full flex justify-center'>
         <button
@@ -553,7 +572,8 @@ function AddEditProduct() {
           Save
         </button>
       </div>
-      {showModal && <Modal text={modalContent} showButton={showButton} />}
+      {showModal && <Modal text={modalContent} showModal={true} />}
+      {/* <Modal text={'modalContent'} showModal={false} /> */}
     </div>
   );
 }

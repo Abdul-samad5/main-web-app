@@ -54,6 +54,7 @@ import { UserContext } from '../context/UserContext';
 import { useEffect } from 'react';
 import { getStoreInfo, userLogout } from '../services/services';
 import Cookies from 'js-cookie';
+import { User } from '../constants/config';
 
 function DbIcon({ src }) {
   return <img src={src} className='w-[16px]' alt='Icon' />;
@@ -69,6 +70,11 @@ const Dashboard = () => {
   const [activeComponent, setActiveComponent] = useState([<MyStore />]);
   const tk = Cookies.get('_tksr');
   const id = Cookies.get('_id');
+  const isEmailVerified = Cookies.get('user_is_active');
+  const emailUrl = Cookies.get('email_url');
+
+  // verified state
+  const [verifyState, setVerifyState] = useState(isEmailVerified);
 
   // Dropdowns on the sidebar
   const [isProdOpen, setIsProdOpen] = useState(false);
@@ -87,11 +93,12 @@ const Dashboard = () => {
   function handleLogOut() {
     async function logUserOut() {
       const res = await userLogout();
+      navigate('/');
       console.log(res);
       if (res) {
         userLoggedOut();
         onUserLogOut();
-        navigate('/');
+        // navigate('/login');
       }
     }
     logUserOut();
@@ -123,6 +130,13 @@ const Dashboard = () => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    if (!tk) {
+      navigate('/');
+    }
+    return;
+  }, [tk]);
+
   return (
     <div className='w-full overflow-hidden'>
       <div className='w-full flex'>
@@ -147,14 +161,22 @@ const Dashboard = () => {
           </div>
           <div
             className={`${styles.dbNavItem}`}
-            onClick={(e) => showActiveComponent(e, <MyStore />)}
+            // onClick={(e) => showActiveComponent(e, <MyStore />)}
+            onClick={(e) => {
+              showActiveComponent(e, <MyStore />);
+              handleClick();
+            }}
           >
             <DbIcon src={store} />
             <h2>My Store</h2>
           </div>
           <div
             className={`${styles.dbNavItem}`}
-            onClick={(e) => showActiveComponent(e, <MyOrders />)}
+            // onClick={(e) => showActiveComponent(e, <MyOrders />)}
+            onClick={(e) => {
+              showActiveComponent(e, <MyOrders />);
+              handleClick();
+            }}
           >
             <DbIcon src={orders} />
             <h2>My Orders</h2>
@@ -177,21 +199,33 @@ const Dashboard = () => {
             >
               <div
                 className={`${styles.dbNavItemDrop}`}
-                onClick={(e) => showActiveComponent(e, <AllProducts />)}
+                // onClick={(e) => showActiveComponent(e, <AllProducts />)}
+                onClick={(e) => {
+                  showActiveComponent(e, <AllProducts />);
+                  handleClick();
+                }}
               >
                 <DbIcon src={all_prods} />
                 <h2>All Products</h2>
               </div>
               <div
                 className={`${styles.dbNavItemDrop}`}
-                onClick={(e) => showActiveComponent(e, <AddEditProducts />)}
+                // onClick={(e) => showActiveComponent(e, <AddEditProducts />)}
+                onClick={(e) => {
+                  showActiveComponent(e, <AddEditProducts />);
+                  handleClick();
+                }}
               >
                 <DbIcon src={add_prod} />
                 <h2>Add New Product</h2>
               </div>
               <div
                 className={`${styles.dbNavItemDrop}`}
-                onClick={(e) => showActiveComponent(e, <Collections />)}
+                // onClick={(e) => showActiveComponent(e, <Collections />)}
+                onClick={(e) => {
+                  showActiveComponent(e, <Collections />);
+                  handleClick();
+                }}
               >
                 <DbIcon src={collections} />
                 <h2>Collections</h2>
@@ -200,7 +234,11 @@ const Dashboard = () => {
           </div>
           <div
             className={`${styles.dbNavItem}`}
-            onClick={(e) => showActiveComponent(e, <MyCustomers />)}
+            // onClick={(e) => showActiveComponent(e, <MyCustomers />)}
+            onClick={(e) => {
+              showActiveComponent(e, <MyCustomers />);
+              handleClick();
+            }}
           >
             <DbIcon src={customers} />
             <h2>My Customers</h2>
@@ -223,7 +261,11 @@ const Dashboard = () => {
             >
               <div
                 className={`${styles.dbNavItemDrop}`}
-                onClick={(e) => showActiveComponent(e, <Discounts />)}
+                // onClick={(e) => showActiveComponent(e, <Discounts />)}
+                onClick={(e) => {
+                  showActiveComponent(e, <Discounts />);
+                  handleClick();
+                }}
               >
                 <DbIcon src={discounts} />
                 <h2>Discounts</h2>
@@ -239,21 +281,33 @@ const Dashboard = () => {
           </div>
           <div
             className={`${styles.dbNavItem}`}
-            onClick={(e) => showActiveComponent(e, <Finances />)}
+            // onClick={(e) => showActiveComponent(e, <Finances />)}
+            onClick={(e) => {
+              showActiveComponent(e, <Finances />);
+              handleClick();
+            }}
           >
             <DbIcon src={finances} />
             <h2>Finances</h2>
           </div>
           <div
             className={`${styles.dbNavItem}`}
-            onClick={(e) => showActiveComponent(e, <StoreReviews />)}
+            // onClick={(e) => showActiveComponent(e, <StoreReviews />)}
+            onClick={(e) => {
+              showActiveComponent(e, <StoreReviews />);
+              handleClick();
+            }}
           >
             <DbIcon src={review} />
             <h2>Store reviews</h2>
           </div>
           <div
             className={`${styles.dbNavItem}`}
-            onClick={(e) => showActiveComponent(e, <TransactionHistory />)}
+            // onClick={(e) => showActiveComponent(e, <TransactionHistory />)}
+            onClick={(e) => {
+              showActiveComponent(e, <TransactionHistory />);
+              handleClick();
+            }}
           >
             <DbIcon src={history} />
             <h2>Transaction history</h2>
@@ -289,14 +343,22 @@ const Dashboard = () => {
             >
               <div
                 className={`${styles.dbNavItemDrop}`}
-                onClick={(e) => showActiveComponent(e, <StoreDetails />)}
+                // onClick={(e) => showActiveComponent(e, <StoreDetails />)}
+                onClick={(e) => {
+                  showActiveComponent(e, <StoreDetails />);
+                  handleClick();
+                }}
               >
                 <DbIcon src={storeDetails} />
                 <h2>Store Details</h2>
               </div>
               <div
                 className={`${styles.dbNavItemDrop}`}
-                onClick={(e) => showActiveComponent(e, <WebsiteSettings />)}
+                // onClick={(e) => showActiveComponent(e, <WebsiteSettings />)}
+                onClick={(e) => {
+                  showActiveComponent(e, <WebsiteSettings />);
+                  handleClick();
+                }}
               >
                 <DbIcon src={websiteSettings} />
                 <h2>Website Settings</h2>
@@ -313,7 +375,11 @@ const Dashboard = () => {
 
           <div
             className={`${styles.dbNavItem}`}
-            onClick={(e) => showActiveComponent(e, <UserAccount />)}
+            // onClick={(e) => showActiveComponent(e, <UserAccount />)}
+            onClick={(e) => {
+              showActiveComponent(e, <UserAccount />);
+              handleClick();
+            }}
           >
             <DbIcon src={user_account} />
             <h2>User Account</h2>
@@ -344,14 +410,29 @@ const Dashboard = () => {
                 </button>
               </Link>
             </div>
-            <div className='hidden p-6 bg-[#fff9e9] rounded-xl md:flex items-center gap-2 ml-4 mr-4'>
-              <AiFillWarning className='text-[#d39f1c]' />
-              <h2 className='text-center'>
-                Your Email is not verified. Click{' '}
-                <Link className='text-blue-200 hover:cursor-pointer'>here</Link>{' '}
-                to verify
-              </h2>
-            </div>
+            {verifyState === 'false' ? (
+              <div className='hidden p-6 bg-[#fff9e9] rounded-xl md:flex items-center gap-2 ml-4 mr-4'>
+                <AiFillWarning className='text-[#d39f1c]' />
+                <h2 className='text-center'>
+                  Your Email is not verified. Click{' '}
+                  {/* <Link className='text-blue-200 hover:cursor-pointer'>
+                    here
+                  </Link>{' '} */}
+                  <span className='text-blue-200 hover:cursor-pointer'>
+                    <a
+                      href={emailUrl}
+                      target='_blank'
+                      onClick={() => {
+                        setVerifyState('true');
+                      }}
+                    >
+                      here
+                    </a>
+                  </span>{' '}
+                  to verify
+                </h2>
+              </div>
+            ) : null}
             <div className='flex items-center'>
               <div className='relative w-[370px] hidden lg:block'>
                 <img

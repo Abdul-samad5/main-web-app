@@ -69,7 +69,7 @@ const MyStore = () => {
 
               <div>
                 <p className='text-xs text-white'>Store setup status</p>
-                <p className='font-bold text-white text-xl'>Impressive</p>
+                <p className='font text-white text-xl'>Impressive</p>
               </div>
             </div>
 
@@ -337,9 +337,7 @@ const Total = ({ image, type, number }) => {
         <p className='text-sm opacity-50'>{`Total ${type}`}</p>
         <p
           className={
-            type === 'sales'
-              ? 'hidden'
-              : 'font-semibold text-brand-black text-xl'
+            type === 'sales' ? 'hidden' : 'font- text-brand-black text-xl'
           }
         >
           {number}
@@ -347,7 +345,7 @@ const Total = ({ image, type, number }) => {
 
         <div className={type === 'sales' ? 'flex' : 'hidden invisible'}>
           <img src={naira} alt='' className='w-4 h-4 my-auto' />
-          <p className='font-semibold text-brand-black text-xl'> {number} </p>
+          <p className='font text-brand-black text-xl font-Nunito'>{number}</p>
         </div>
       </div>
     </div>

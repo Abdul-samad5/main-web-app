@@ -1,37 +1,37 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { styles } from "../constants/index";
-import { BASE_URL, updateStore, getStoreInfo } from "../services/services";
-import Cookies from "js-cookie";
-import Modal from "./Modal";
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { styles } from '../constants/index';
+import { BASE_URL, updateStore, getStoreInfo } from '../services/services';
+import Cookies from 'js-cookie';
+import Modal from './Modal';
 
 const StoreDetails = () => {
   const [storeDetails, setStoreDetails] = useState({
-    storeName: "",
-    tagLine: "",
-    storeDesc: "",
-    storeLogo: "",
-    storeCurrency: "Naira",
-    storeEmail: "",
-    storeContactNumber: "",
+    storeName: '',
+    tagLine: '',
+    storeDesc: '',
+    storeLogo: '',
+    storeCurrency: 'Naira',
+    storeEmail: '',
+    storeContactNumber: '',
   });
   let storeId;
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [modalContent, setModalContent] = useState(null);
-  const tk = Cookies.get("_tksr");
-  const id = Cookies.get("_id");
+  const tk = Cookies.get('_tksr');
+  const id = Cookies.get('_id');
 
   function changeMessage(status) {
     if (status === 200 || status === 201) {
-      setModalContent("Settings saved!");
+      setModalContent('Settings saved!');
     }
     if (status === 401) {
-      setModalContent("Email or Password Incorrect!");
+      setModalContent('Email or Password Incorrect!');
     }
     if (status >= 400) {
       setModalContent(
-        "There might be a problem with your Internet Connection! Please try again"
+        'There might be a problem with your Internet Connection! Please try again'
       );
     }
   }
@@ -49,7 +49,7 @@ const StoreDetails = () => {
 
     try {
       let res;
-      if(storeId) {
+      if (storeId) {
         res = await axios.put(
           `${BASE_URL}store_settings/store/update/`,
           formDetails,
@@ -57,29 +57,33 @@ const StoreDetails = () => {
         );
         console.log(storeId);
       } else {
-        res = await axios.post(
-          `${BASE_URL}store_settings/store`,
-          formDetails,
-          { headers: { Authorization: `Bearer ${tk}` } }
-        );
+        res = await axios.post(`${BASE_URL}store_settings/store`, formDetails, {
+          headers: { Authorization: `Bearer ${tk}` },
+        });
       }
-      
-      if (!res.statusText === "OK") return;
-      console.log(res);
+
+      if (res.response.data.code === 'user_inactive') {
+        setModalContent(res.response.data.details);
+        setModalContent(true);
+      }
+      if (!res.statusText === 'OK') return;
       changeMessage(res.status);
-       
       setShowModal(true);
       setTimeout(() => {
         setShowModal(false);
       }, 1000);
       makeEmpty();
     } catch (error) {
-      console.log(error);
-     
-      setShowModal(true);
+      // console.log(error);
+      console.log(error.response.data.code);
+      if (error.response.data.code === 'user_inactive') {
+        setShowModal(true);
+        setModalContent('please verify email to create store');
+      }
+
       setTimeout(() => {
         setShowModal(false);
-      }, 1000);
+      }, 1500);
       makeEmpty();
     }
   };
@@ -88,13 +92,13 @@ const StoreDetails = () => {
     setStoreDetails((prev) => {
       return {
         ...prev,
-        store_name: "",
-        tag_line: "",
-        store_description: "",
-        store_logo: "",
-        store_currency: "Naira",
-        store_email: "",
-        store_phone_number: "",
+        store_name: '',
+        tag_line: '',
+        store_description: '',
+        store_logo: '',
+        store_currency: 'Naira',
+        store_email: '',
+        store_phone_number: '',
       };
     });
   }
@@ -113,13 +117,13 @@ const StoreDetails = () => {
   const handleSelectedImage = (event) => {
     const file = event.target.files[0];
     const formInfo = new FormData();
-    formInfo.append("file", file);
-    formInfo.append("upload_preset", "images");
+    formInfo.append('file', file);
+    formInfo.append('upload_preset', 'images');
 
     async function uploadImg() {
       try {
         const res = await axios.post(
-          "https://api.Cloudinary.com/v1_1/doqnvybu5/upload",
+          'https://api.Cloudinary.com/v1_1/doqnvybu5/upload',
           formInfo
         );
         if (!res) {
@@ -166,7 +170,7 @@ const StoreDetails = () => {
               tagLine: data.tag_line,
               storeDesc: data.store_description,
               storeLogo: data.store_logo,
-              storeCurrency: "Naira",
+              storeCurrency: 'Naira',
               storeContactNumber: data.store_phone_number,
             };
           });
@@ -174,7 +178,7 @@ const StoreDetails = () => {
           console.log(storeId);
         }
         // console.log(response);
-        if (!response.statusText === "OK") return;
+        if (!response.statusText === 'OK') return;
       } catch (err) {
         console.log(err);
       }
@@ -185,76 +189,76 @@ const StoreDetails = () => {
   return (
     <>
       <p className={`${styles.componentHeader}`}>Store Settings</p>
-      <div className="overflow-hidden w-full shadow-2xl">
+      <div className='overflow-hidden w-full shadow-2xl'>
         <form
-          className="rounded shadow-2xl w-full pl-10 pr-3 py-3 mx-auto my-auto h-auto"
+          className='rounded shadow-2xl w-full pl-10 pr-3 py-3 mx-auto my-auto h-auto'
           onSubmit={handleSubmit}
         >
-          <p className="text-sm text-brand-primary">Store details</p>
+          <p className='text-sm text-brand-primary'>Store details</p>
 
-          <div className="my-5 flex jusfity-between">
-            <span className="w-1/2">
-              <p className="mb-1">Store name</p>
+          <div className='my-5 flex jusfity-between'>
+            <span className='w-1/2'>
+              <p className='mb-1'>Store name</p>
               <input
-                placeholder="Michelline"
+                placeholder='Michelline'
                 onChange={handleChange}
                 value={storeDetails.storeName}
                 className={`${styles.inputBox} px-3 w-11/12`}
-                type="text"
-                name="storeName"
+                type='text'
+                name='storeName'
               />
             </span>
 
-            <span className="w-1/2">
-              <p className="mb-1">Tag line</p>
+            <span className='w-1/2'>
+              <p className='mb-1'>Tag line</p>
               <input
                 className={`${styles.inputBox} px-3 w-11/12`}
                 onChange={handleChange}
                 value={storeDetails.tagLine}
-                type="text"
-                name="tagLine"
+                type='text'
+                name='tagLine'
               />
             </span>
           </div>
 
-          <div className="my-6 flex jusfity-between">
-            <span className="w-1/2">
-              <p className="mb-1">Short description</p>
+          <div className='my-6 flex jusfity-between'>
+            <span className='w-1/2'>
+              <p className='mb-1'>Short description</p>
               <textarea
-                placeholder="Enter your business description here..."
-                maxLength="100"
-                className="border border-slate-200 rounded-lg w-11/12 px-5 py-3 h-40 resize-none placeholder-slate-300"
-                name="storeDesc"
+                placeholder='Enter your business description here...'
+                maxLength='100'
+                className='border border-slate-200 rounded-lg w-11/12 px-5 py-3 h-40 resize-none placeholder-slate-300'
+                name='storeDesc'
                 value={storeDetails.storeDesc}
                 onChange={handleChange}
               />
 
-              <div className="relative flex left-3/4 bottom-10">
-                <span className="text-xs text-slate-300">
+              <div className='relative flex left-3/4 bottom-10'>
+                <span className='text-xs text-slate-300'>
                   {storeDetails.storeDesc === null
                     ? 0
                     : storeDetails.storeDesc?.length}
                 </span>
-                <span className="text-xs text-slate-300">/100</span>
+                <span className='text-xs text-slate-300'>/100</span>
               </div>
             </span>
 
-            <span className="w-1/2">
-              <p className="mb-1">Store logo</p>
+            <span className='w-1/2'>
+              <p className='mb-1'>Store logo</p>
               <input
-                type="file"
-                id="image-selector"
-                className="invisible hidden"
-                accept="image/*"
+                type='file'
+                id='image-selector'
+                className='invisible hidden'
+                accept='image/*'
                 onChange={handleSelectedImage}
               ></input>
               <label
-                htmlFor="image-selector"
+                htmlFor='image-selector'
                 className={
-                  storeDetails.storeLogo === "" ||
+                  storeDetails.storeLogo === '' ||
                   storeDetails.storeLogo === null
-                    ? "border border-dotted border-slate-300 text-slate-300 h-40 pt-16 block w-11/12 text-center rounded-lg text-sm"
-                    : "hidden"
+                    ? 'border border-dotted border-slate-300 text-slate-300 h-40 pt-16 block w-11/12 text-center rounded-lg text-sm'
+                    : 'hidden'
                 }
               >
                 Choose Image
@@ -263,18 +267,18 @@ const StoreDetails = () => {
               <img
                 src={storeDetails.storeLogo}
                 className={
-                  storeDetails.storeLogo === "" ||
+                  storeDetails.storeLogo === '' ||
                   storeDetails.storeLogo === null
-                    ? "hidden"
-                    : "border border-dotted border-slate-300 text-slate-300 h-40 block w-11/12 text-center rounded-lg text-sm"
+                    ? 'hidden'
+                    : 'border border-dotted border-slate-300 text-slate-300 h-40 block w-11/12 text-center rounded-lg text-sm'
                 }
               />
             </span>
           </div>
 
-          <div className="flex justify-between my-6">
-            <span className="w-1/3">
-              <p className="mb-1">Store currency</p>
+          <div className='flex justify-between my-6'>
+            <span className='w-1/3'>
+              <p className='mb-1'>Store currency</p>
               {/* <select
                 name="storeCurrency"
                 className={`${styles.inputBox} px-3 w-11/12`}
@@ -289,42 +293,40 @@ const StoreDetails = () => {
                 disabled={true}
                 value={storeDetails.storeCurrency}
                 className={`${styles.inputBox} px-3 w-11/12`}
-                type="text"
-                name="storeCurrency"
+                type='text'
+                name='storeCurrency'
               />
             </span>
 
-            <span className="w-1/3">
-              <p className="mb-1">Store email</p>
+            <span className='w-1/3'>
+              <p className='mb-1'>Store email</p>
               <input
-                placeholder="Enter store email"
-                name="storeEmail"
+                placeholder='Enter store email'
+                name='storeEmail'
                 className={`${styles.inputBox} px-3 w-11/12`}
                 value={storeDetails.storeEmail}
                 onChange={handleChange}
-                type="text"
+                type='text'
               />
             </span>
 
-            <span className="w-1/3">
-              <p className="mb-1">Store contact number</p>
+            <span className='w-1/3'>
+              <p className='mb-1'>Store contact number</p>
               <input
-                placeholder="Enter store contact number"
-                name="storeContactNumber"
+                placeholder='Enter store contact number'
+                name='storeContactNumber'
                 className={`${styles.inputBox} px-3 w-11/12`}
-                type="text"
+                type='text'
                 value={storeDetails.storeContactNumber}
                 onChange={handleChange}
               />
             </span>
           </div>
 
-          <div className="w-full flex justify-end">
-            <input
-              type="submit"
-              className={`${styles.button} mr-6`}
-              value="Save settings"
-            />
+          <div className='w-full flex justify-end'>
+            <button type='submit' className={`${styles.button} mr-6`}>
+              Save settings
+            </button>
           </div>
         </form>
         {showModal && <Modal text={modalContent} showModal={showModal} />}
