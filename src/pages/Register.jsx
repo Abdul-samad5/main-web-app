@@ -1,12 +1,12 @@
-import { useState } from "react";
-import { logo_2 } from "../assets";
+import { useState } from 'react';
+import { logo_2 } from '../assets';
 import {
   Login,
   SignUp,
   ResetPassword,
   GetStarted,
   CreateStore,
-} from "../components";
+} from '../components';
 
 const Register = () => {
   // Initialize state for the login, forgotPassword, and createStore to determine the component to show.
@@ -19,7 +19,7 @@ const Register = () => {
   });
 
   // Logic to display toggle the state of the three components in order to conditionally render Login, forgotPassword, createStore
-  const keys = ["login", "forgotPassword", "createStore", "signUp"];
+  const keys = ['login', 'forgotPassword', 'createStore', 'signUp'];
   function handleGetStarted(current) {
     setGetStarted(() => {
       // Loop over the keys array defined above and create an object where all the value is set to false.
@@ -36,10 +36,10 @@ const Register = () => {
   }
 
   return (
-    <div className="w-full px-[15px] lg:w-[80%] mx-auto relative pt-[80px] ">
-      <div className="py-5 absolute top-0 sm[320px]:hidden left-5 lg:-left-[100px]">
-        <a href="/" className="w-[50px] block">
-          <img src={logo_2} alt="Yetti Logo" />
+    <div className='w-full px-[15px] lg:w-[80%] mx-auto relative pt-[80px] '>
+      <div className='py-5 absolute top-0 sm[320px]:hidden left-5 lg:-left-[100px]'>
+        <a href='/' className='w-[50px] block'>
+          <img src={logo_2} alt='Yetti Logo' />
         </a>
       </div>
       {getStarted.login && <Login handleClick={handleGetStarted} />}

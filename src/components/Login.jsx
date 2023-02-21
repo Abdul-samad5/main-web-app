@@ -1,9 +1,9 @@
-import { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import { styles } from "../constants";
-import { userLogin } from "../services/services";
-import { UserContext } from "../context/UserContext";
-import Modal from "./Modal";
+import { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { styles } from '../constants';
+import { userLogin } from '../services/services';
+import { UserContext } from '../context/UserContext';
+import Modal from './Modal';
 
 const Login = ({ handleClick }) => {
   // Initialize state for the login to enable user login
@@ -12,10 +12,11 @@ const Login = ({ handleClick }) => {
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [modalText, setModalText] = useState(null);
+  const [emailActive, setEmailActive] = useState(null);
 
   const [formData, setFormData] = useState({
-    email: "",
-    password: "",
+    email: '',
+    password: '',
     remember: false,
   });
 
@@ -28,7 +29,7 @@ const Login = ({ handleClick }) => {
     setFormData((prev) => {
       return {
         ...prev,
-        [name]: type === "checkbox" ? checked : value,
+        [name]: type === 'checkbox' ? checked : value,
       };
     });
   }
@@ -45,34 +46,39 @@ const Login = ({ handleClick }) => {
     try {
       const response = await userLogin(user);
 
-      if (!response.statusText === "OK") return;
+      if (!response.statusText === 'OK') return;
 
       if (response) {
         const token = response.data.data.access;
 
         const email = response.data.data.user.email;
         const user_id = response.data.data.user.user_id;
+        const user_is_active = response.data.data.user.user_is_active;
+        const user_email_url = response.data.data.user.user_email_url;
+        setEmailActive(user_email_url);
+
         console.log(response.data.data.user);
 
-        onUserLogin(token, email, user_id);
+        onUserLogin(token, email, user_id, user_is_active, user_email_url);
 
         console.log(response);
         if (response.data.data.user.has_store === false) {
           setLoading(false);
           setShowModal(true);
-          setModalText("Login Success! Please create a store to continue");
+          setModalText('Login Success! Please create a store to continue');
           setTimeout(() => {
             setShowModal(false);
-            handleClick("createStore");
+            handleClick('createStore');
           }, 3000);
+          navigate('/dashboard');
         } else {
           setLoading(false);
           setShowModal(true);
-          setModalText("Login Success! Please wait...");
+          setModalText('Login Success! Please wait...');
           setTimeout(() => {
             setShowModal(false);
 
-            navigate("/dashboard");
+            navigate('/dashboard');
           }, 3000);
         }
       }
@@ -81,15 +87,15 @@ const Login = ({ handleClick }) => {
       if (err.response.data.email && err.response.data.password) {
         setLoading(false);
         setShowModal(true);
-        setModalText("Field(s) cannot be empty!");
-      } else if (err.code === "ERR_NETWORK") {
+        setModalText('Field(s) cannot be empty!');
+      } else if (err.code === 'ERR_NETWORK') {
         setLoading(false);
         setShowModal(true);
-        setModalText("There might be a problem with your network connection!");
+        setModalText('There might be a problem with your network connection!');
       } else if (err.response.status === 401) {
         setLoading(false);
         setShowModal(true);
-        setModalText("Invalid login credentials");
+        setModalText('Invalid login credentials');
       }
       setTimeout(() => {
         setShowModal(false);
@@ -98,65 +104,67 @@ const Login = ({ handleClick }) => {
     }
   }
 
+  console.log(emailActive);
+
   return (
-    <div className="max-w-[400px] w-full mx-auto">
+    <div className='max-w-[400px] w-full mx-auto'>
       {showModal && <Modal text={modalText} showModal={showModal} />}
-      <h1 className="text-center text-[28px] mb-[40px] font-normal">
+      <h1 className='text-center text-[28px] mb-[40px] font-normal'>
         Login to your account
       </h1>
-      <form className="w-full" onSubmit={formSubmit}>
-        <div className="mb-4 w-full">
-          <label htmlFor="email" className="w-full mb-3 ml-2">
+      <form className='w-full' onSubmit={formSubmit}>
+        <div className='mb-4 w-full'>
+          <label htmlFor='email' className='w-full mb-3 ml-2'>
             Email address
           </label>
           <input
-            type="email"
-            name="email"
+            type='email'
+            name='email'
             value={formData.value}
-            placeholder="Enter your email address"
+            placeholder='Enter your email address'
             onChange={handleChange}
-            className="w-full border border-brand-stroke rounded-lg p-3"
+            className='w-full border border-brand-stroke rounded-lg p-3'
           />
         </div>
-        <div className="w-full mb-4">
-          <label htmlFor="password" className="w-full mb-3 ml-2">
+        <div className='w-full mb-4'>
+          <label htmlFor='password' className='w-full mb-3 ml-2'>
             Password
           </label>
           <input
-            type="password"
-            name="password"
+            type='password'
+            name='password'
             value={formData.value}
-            placeholder="Enter password"
+            placeholder='Enter password'
             onChange={handleChange}
-            className="w-full border border-brand-stroke rounded-lg p-3"
+            className='w-full border border-brand-stroke rounded-lg p-3'
           />
         </div>
-        <div className="w-full mb-4 flex gap-2 items-center">
+        <div className='w-full mb-4 flex gap-2 items-center'>
           <input
-            type="checkbox"
-            name="remember"
-            id="remember"
+            type='checkbox'
+            name='remember'
+            id='remember'
             checked={formData.remember}
             onChange={handleChange}
           />
-          <label htmlFor="remember">Remember me</label>
+          <label htmlFor='remember'>Remember me</label>
         </div>
         <button disabled={loading} className={`${styles.button} w-full`}>
-          {loading ? "Please wait..." : "Login to store"}
+          {loading ? 'Please wait...' : 'Login to store'}
         </button>
-        <div className="w-full flex justify-between items-center mt-2">
+        <div className='w-full flex justify-between items-center mt-2'>
           <button
-            className="text-brand-gray font-normal text-[14px]"
-            type="button"
-            onClick={() => handleClick("forgotPassword")}
+            className='text-brand-gray font-normal text-[14px]'
+            type='button'
+            onClick={() => handleClick('forgotPassword')}
           >
             Forgot password?
           </button>
 
           <button
-            className="text-brand-gray font-normal text-[14px]"
-            type="button"
-            onClick={() => handleClick("signUp")}
+            className='text-brand-gray font-normal text-[14px]'
+            type='button'
+            onClick={() => handleClick('signUp')}
           >
             Register
           </button>

@@ -1,20 +1,21 @@
-import React, { useContext, useEffect } from "react";
-import { styles } from "../constants/index";
-import axios from "axios";
-import { facebook, instagram } from "../assets";
-import { BASE_URL, getStoreInfo } from "../services/services";
-import { UserContext } from "../context/UserContext";
-import Cookies from "js-cookie";
+import React, { useContext, useEffect } from 'react';
+import { styles } from '../constants/index';
+import axios from 'axios';
+import { facebook, instagram, twitter } from '../assets';
+import { BASE_URL, getStoreInfo } from '../services/services';
+import { UserContext } from '../context/UserContext';
+import Cookies from 'js-cookie';
+import { IoLogoTwitter } from 'react-icons/io';
 
 const WebsiteSettings = () => {
   const [websiteSettings, setWebsiteSettings] = React.useState({
-    storeURL: "",
-    facebookUsername: "",
-    instagramUsername: "",
+    twitterUsername: 'https://twitter.com/',
+    facebookUsername: 'https://www.facebook.com/',
+    instagramUsername: 'https://www.instagram.com/',
   });
 
-  const tk = Cookies.get("_tksr");
-  const id = Cookies.get("_id");
+  const tk = Cookies.get('_tksr');
+  const id = Cookies.get('_id');
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -36,14 +37,14 @@ const WebsiteSettings = () => {
         formDetails,
         { headers: { Authorization: `Bearer ${tk}` } }
       );
-      if (!res.statusText === "OK") return;
+      if (!res.statusText === 'OK') return;
       console.log(res);
       setWebsiteSettings((prev) => {
         return {
           ...prev,
-          storeURL: "",
-          facebookUsername: "",
-          instagramUsername: "",
+          storeURL: '',
+          facebookUsername: '',
+          instagramUsername: '',
         };
       });
     } catch (error) {
@@ -52,7 +53,7 @@ const WebsiteSettings = () => {
   }
 
   function handleChange(event) {
-    const {name, value} = event.target;
+    const { name, value } = event.target;
     setWebsiteSettings((prev) => {
       return {
         ...prev,
@@ -64,18 +65,22 @@ const WebsiteSettings = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await axios.get(`${BASE_URL}store_settings/website/${id}`, { headers: { Authorization: `Bearer ${tk}`} });
+        const response = await axios.get(
+          `${BASE_URL}store_settings/website/${id}`,
+          { headers: { Authorization: `Bearer ${tk}` } }
+        );
         console.log(response);
 
         setWebsiteSettings((prev) => {
-          return { ...prev, 
-            storeURL: response.data.store_url, 
-            facebookUsername: response.data.facebook_url, 
-            instagramUsername: response.data.instagram_url 
+          return {
+            ...prev,
+            storeURL: response.data.store_url,
+            facebookUsername: response.data.facebook_url,
+            instagramUsername: response.data.instagram_url,
           };
         });
-        if(!response.statusText === "OK") return;
-      } catch(err) {
+        if (!response.statusText === 'OK') return;
+      } catch (err) {
         console.log(err);
       }
     }
@@ -85,59 +90,64 @@ const WebsiteSettings = () => {
   return (
     <>
       <p className={`${styles.componentHeader}`}>Store Settings</p>
-      <div className="overflow-hidden w-full shadow-2xl">
+      <div className='overflow-hidden w-full shadow-2xl'>
         <form
-          className="rounded shadow-2xl w-full px-4 py-4 h-auto"
+          className='rounded shadow-2xl w-full px-4 py-4 h-auto'
           onSubmit={handleSubmit}
         >
-          <p className="text-sm text-brand-primary">Website settings</p>
+          <p className='text-sm text-brand-primary'>Website settings</p>
 
-          <div className="my-8">
-            <p>Store URL</p>
-            <input
-              disabled={websiteSettings.storeURL === "" ? false : true}
-              type="text"
-              className={`${styles.inputBox} w-full mt-1 px-3`}
-              onChange={handleChange}
-              value={websiteSettings.storeURL}
-              name="storeURL"
-            />
-          </div>
-
-          <div className="my-8">
+          <div className='my-8'>
             <p>Facebook username</p>
             <input
-              type="text"
+              type='text'
               className={`${styles.inputBox} w-full mt-1 pl-10 pr-3`}
               onChange={handleChange}
               value={websiteSettings.facebookUsername}
-              name="facebookUsername"
+              name='facebookUsername'
             />
             <img
               src={facebook}
-              alt=""
-              className="relative w-4 h-4 bottom-8 left-3"
+              alt=''
+              className='relative w-4 h-4 bottom-8 left-3'
             />
           </div>
 
-          <div className="my-8">
+          <div className='my-8'>
             <p>Instagram username</p>
             <input
-              type="text"
+              type='text'
               className={`${styles.inputBox} w-full mt-1 pl-10 pr-3`}
               onChange={handleChange}
               value={websiteSettings.instagramUsername}
-              name="instagramUsername"
+              name='instagramUsername'
             />
             <img
               src={instagram}
-              alt=""
-              className="relative w-4 h-4 bottom-8 left-3"
+              alt=''
+              className='relative w-4 h-4 bottom-8 left-3'
             />
           </div>
 
-          <div className="w-full flex justify-end">
-            <input type="submit" className={`${styles.button}`} value="Save" />
+          <div className='my-8'>
+            <p>Twitter Username</p>
+            <input
+              disabled={websiteSettings.storeURL === '' ? false : true}
+              type='text'
+              className={`${styles.inputBox} w-full mt-1 pl-10 pr-3`}
+              onChange={handleChange}
+              value={websiteSettings.twitterUsername}
+              name='twitterUsername'
+            />
+            <img
+              src={twitter}
+              alt=''
+              className='relative w-4 h-4 bottom-8 left-3'
+            />
+          </div>
+
+          <div className='w-full flex justify-end'>
+            <input type='submit' className={`${styles.button}`} value='Save' />
           </div>
         </form>
       </div>

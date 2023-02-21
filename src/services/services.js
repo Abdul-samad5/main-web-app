@@ -1,14 +1,16 @@
-import axios from "axios";
-import Cookies from "js-cookie";
-import { cookies } from "../assets";
+import axios from 'axios';
+import Cookies from 'js-cookie';
+import { cookies } from '../assets';
 
-export const BASE_URL = "https://yetti-backend.herokuapp.com/api/v1/";
+export const BASE_URL = 'https://yetti-backend.herokuapp.com/api/v1/';
 
-const token = Cookies.get("_tksr");
+const token = Cookies.get('_tksr');
+
+console.log(token);
 
 // Load ALL countries from countries endpoint
 let countries = [];
-axios.get("https://restcountries.com/v3.1/all").then(function (response) {
+axios.get('https://restcountries.com/v3.1/all').then(function (response) {
   const countryInfo = response.data;
   for (const value of countryInfo.values()) {
     let country = value.name.common;
@@ -21,7 +23,7 @@ axios.get("https://restcountries.com/v3.1/all").then(function (response) {
 
 const config = {
   headers: { Authorization: `Bearer ${token}` },
-  "Content-Type": "application/json",
+  'Content-Type': 'application/json',
 };
 
 // Register endpoint
