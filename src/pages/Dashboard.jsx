@@ -65,16 +65,19 @@ const Dashboard = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [storeName, setStoreName] = useState('');
   const [storeLogo, setStoreLogo] = useState('');
+  const [emailUrl, setEmailUrl] = useState('');
+  const [isEmailVerified, setIsEmailVerified] = useState(false);
 
   // Component to be rendered on the main
   const [activeComponent, setActiveComponent] = useState([<MyStore />]);
   const tk = Cookies.get('_tksr');
   const id = Cookies.get('_id');
-  const isEmailVerified = Cookies.get('user_is_active');
-  const emailUrl = Cookies.get('email_url');
+  const isVerified = Cookies.get('isVerify');
+  const url = Cookies.get('emailUrl');
 
+  console.log(typeof isVerified);
   // verified state
-  const [verifyState, setVerifyState] = useState(isEmailVerified);
+  const [verifyState, setVerifyState] = useState(isVerified);
 
   // Dropdowns on the sidebar
   const [isProdOpen, setIsProdOpen] = useState(false);
@@ -110,7 +113,7 @@ const Dashboard = () => {
   }
 
   function handleDropdown(e, handler) {
-    e.stopPropagation();
+    // e.stopPropagation();
     handler((prev) => !prev);
   }
 
@@ -120,12 +123,17 @@ const Dashboard = () => {
         `${BASE_URL}store_settings/store_details`,
         { headers: { Authorization: `Bearer ${tk}` } }
       );
+      console.log(response, 'kk');
       const store_name = response.data.data['store_name'];
       const profileLogo = response.data.data['store_logo'];
+      // const url = response.data.user_data.user_email_url;
 
-      console.log(response);
+      // const verifyState = response.data.user_data.user_is_active;
+
       setStoreName(`${store_name}`);
       setStoreLogo(profileLogo);
+      // setEmailUrl(url);
+      // setIsEmailVerified(verifyState);
     }
     fetchData();
   }, []);
@@ -195,7 +203,7 @@ const Dashboard = () => {
             <div
               className={`${
                 isProdOpen ? 'max-h-[200px]' : 'max-h-0'
-              } transition-[max-height] duration-300 pl-[24px] overflow-hidden`}
+              } transition-[max-height] duration-300 pl-[24px] overflow-hidden `}
             >
               <div
                 className={`${styles.dbNavItemDrop}`}
@@ -410,7 +418,7 @@ const Dashboard = () => {
                 </button>
               </Link>
             </div>
-            {verifyState === 'false' ? (
+            {verifyState === 'false' && (
               <div className='hidden p-6 bg-[#fff9e9] rounded-xl md:flex items-center gap-2 ml-4 mr-4'>
                 <AiFillWarning className='text-[#d39f1c]' />
                 <h2 className='text-center'>
@@ -420,7 +428,7 @@ const Dashboard = () => {
                   </Link>{' '} */}
                   <span className='text-blue-200 hover:cursor-pointer'>
                     <a
-                      href={emailUrl}
+                      href={url}
                       target='_blank'
                       onClick={() => {
                         setVerifyState('true');
@@ -432,7 +440,7 @@ const Dashboard = () => {
                   to verify
                 </h2>
               </div>
-            ) : null}
+            )}
             <div className='flex items-center'>
               <div className='relative w-[370px] hidden lg:block'>
                 <img
@@ -485,14 +493,27 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
-          <div className='p-6 bg-[#fff9e9] rounded-xl flex items-center gap-2 ml-4 mr-4 mt-4 md:hidden'>
-            <AiFillWarning className='text-[#d39f1c]' />
-            <h2 className='text-center'>
-              Your Email is not verified. Click{' '}
-              <Link className='text-blue-200 hover:cursor-pointer'>here</Link>{' '}
-              to verify
-            </h2>
-          </div>
+          {verifyState === 'false' && (
+            <div className='p-6 bg-[#fff9e9] rounded-xl flex items-center justify-center gap-2 ml-4 mr-4 mt-4 md:hidden'>
+              <AiFillWarning className='text-[#d39f1c] ' />
+              <h2 className='text-center'>
+                Your Email is not verified. Click{' '}
+                <span className='text-blue-200 hover:cursor-pointer'>
+                  <a
+                    href={url}
+                    target='_blank'
+                    onClick={() => {
+                      setVerifyState('true');
+                    }}
+                  >
+                    here
+                  </a>
+                </span>{' '}
+                to verify
+              </h2>
+            </div>
+          )}
+
           <div>{activeComponent[0]}</div>
         </div>
       </div>
