@@ -106,7 +106,7 @@ const SignUp = ({ handleClick }) => {
       </h1>
 
       {showAlert && (
-        <div className='bg-red-300 p-2 rounded'>
+        <div className='bg-red-300 p-2 rounded m-4'>
           <p className='text-center '>
             please make sure to read and agree to the terms and conditions
           </p>

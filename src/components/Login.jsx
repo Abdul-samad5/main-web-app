@@ -12,7 +12,6 @@ const Login = ({ handleClick }) => {
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [modalText, setModalText] = useState(null);
-  const [emailActive, setEmailActive] = useState(null);
 
   const [formData, setFormData] = useState({
     email: '',
@@ -53,15 +52,11 @@ const Login = ({ handleClick }) => {
 
         const email = response.data.data.user.email;
         const user_id = response.data.data.user.user_id;
-        const user_is_active = response.data.data.user.user_is_active;
-        const user_email_url = response.data.data.user.user_email_url;
-        setEmailActive(user_email_url);
-
-        console.log(response.data.data.user);
-
-        onUserLogin(token, email, user_id, user_is_active, user_email_url);
-
+        const emailUrl = response.data.data.user.user_email_url;
+        const emailVerify = response.data.data.user.user_is_active;
         console.log(response);
+        onUserLogin(token, email, user_id, emailUrl, emailVerify);
+
         if (response.data.data.user.has_store === false) {
           setLoading(false);
           setShowModal(true);
@@ -103,8 +98,6 @@ const Login = ({ handleClick }) => {
       console.log(err);
     }
   }
-
-  console.log(emailActive);
 
   return (
     <div className='max-w-[400px] w-full mx-auto'>
@@ -164,7 +157,10 @@ const Login = ({ handleClick }) => {
           <button
             className='text-brand-gray font-normal text-[14px]'
             type='button'
-            onClick={() => handleClick('signUp')}
+            onClick={() => {
+              handleClick('signUp');
+              navigate('/register');
+            }}
           >
             Register
           </button>
