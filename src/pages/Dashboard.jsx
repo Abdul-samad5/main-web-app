@@ -108,12 +108,12 @@ const Dashboard = () => {
   }
 
   function showActiveComponent(e, comp) {
-    // e.stopPropagation();
+    e.stopPropagation();
     setActiveComponent([comp]);
   }
 
   function handleDropdown(e, handler) {
-    // e.stopPropagation();
+    e.stopPropagation();
     handler((prev) => !prev);
   }
 
