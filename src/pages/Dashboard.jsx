@@ -126,9 +126,6 @@ const Dashboard = () => {
       console.log(response, 'kk');
       const store_name = response.data.data['store_name'];
       const profileLogo = response.data.data['store_logo'];
-      // const url = response.data.user_data.user_email_url;
-
-      // const verifyState = response.data.user_data.user_is_active;
 
       setStoreName(`${store_name}`);
       setStoreLogo(profileLogo);
