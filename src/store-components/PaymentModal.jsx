@@ -22,7 +22,7 @@ const PaymentModal = () => {
     publicKey,
     text: "Proceed",
     onSuccess: () => {
-      navigate("/");
+      navigate("/store-front");
     },
     onClose: () => alert("Failed"),
   };
