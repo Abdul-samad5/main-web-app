@@ -7,17 +7,16 @@ import {
 import { Register, Dashboard, StoreFront } from "./pages";
 import React, { useContext } from "react";
 import { Cart, Checkout } from "./store-components";
-import { cartContext } from "./context/CartContext";
+import { CartContext } from "./context/CartContext";
 
- 
-import { GetStarted,CreateStore, Login, ResetPassword } from "./components";
+import { GetStarted, CreateStore, Login, ResetPassword } from "./components";
 
 import Cookies from "js-cookie";
 import ProductDetails from "./store-components/ProductDetails";
 
 function App() {
-  const { cart, deleteFromCart, clearCart, changeQuantity } =
-    useContext(cartContext);
+  const { cartTotal, cart, deleteFromCart, clearCart, changeQuantity } =
+    useContext(CartContext);
 
   const PreventLogin = ({ children }) => {
     const tk = Cookies.get("_tksr");
@@ -36,42 +35,12 @@ function App() {
             </PreventLogin>
           }
         />
-            
-            <Route
 
-          path="/login"
+        <Route path="/login" element={<Login />} />
 
-          element={
+        <Route path="/register" element={<Register />} />
 
-            <Login />
-
-          }
-
-        />
-
-        <Route
-
-          path="/register"
-
-          element={
-
-            <Register />
-
-          }
-
-        />
-
-        <Route
-
-          path="/create-store"
-
-          element={
-
-            <CreateStore />
-
-          }
-
-        />
+        <Route path="/create-store" element={<CreateStore />} />
         <Route
           path="/store-front"
           element={
