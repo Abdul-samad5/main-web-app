@@ -5,7 +5,7 @@ import { styles } from "../constants";
 import { countries } from "../services/services";
 import Footer from "./Footer";
 import Navbar from "./Navbar";
-import { cartContext } from "../context/CartContext";
+import { CartContext } from "../context/CartContext";
 import PaymentModal from "./PaymentModal";
 
 const Checkout = ({ cart }) => {
@@ -85,12 +85,12 @@ const Checkout = ({ cart }) => {
     event.preventDefault();
   };
 
-  const { cartLength, deleteFromCart } = useContext(cartContext);
+  const { cartTotal, deleteFromCart } = useContext(CartContext);
   return (
     <div>
       <Navbar
         product_details={cart}
-        amount_in_cart={cartLength}
+        amount_in_cart={cartTotal}
         handleDelete={deleteFromCart}
         storeName={"emmystore"}
       />
