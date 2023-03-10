@@ -4,32 +4,12 @@ import Footer from "./Footer";
 import Navbar from "./Navbar";
 import { CartContext } from "../context/CartContext";
 
-const Cart = ({ cart, deleteFromCart, clearCart, changeQuantity }) => {
-  const getGrandTotal = () => {
-    if (cart.length === 0) {
-      return 0;
-    }
-    return cart.reduce((total, currentValue) => {
-      return total + currentValue.productPrice * currentValue.quantity;
-    }, 0);
-  };
-
-  const [render, setRender] = useState(false);
-
-  const reRender = () => {
-    setRender((prev) => !prev);
-  };
-  const { cartTotal } = useContext(CartContext);
-
+const Cart = () => {
+  const { cartItems, getCartItemsTotal } = useContext(CartContext);
   return (
     <div className="">
       {/* <Navbar/> */}
-      <Navbar
-        product_details={cart}
-        amount_in_cart={cartTotal}
-        handleDelete={deleteFromCart}
-        storeName={"emmystore"}
-      />
+      <Navbar />
       <div className="bg-gray-200 lg:px-20 px-6 py-2 flex justify-start items-start">
         <Link
           to="/store-front"
@@ -50,7 +30,7 @@ const Cart = ({ cart, deleteFromCart, clearCart, changeQuantity }) => {
       </h1>
 
       {/* To be displayed if there's nothing in the cart yet */}
-      <div className={cart.length === 0 ? "my-6" : "hidden"}>
+      <div className={cartItems.length === 0 ? "my-6" : "hidden"}>
         {/* <img src={Logo} alt="" className='w-1/3 mx-auto'/> */}
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -74,24 +54,7 @@ const Cart = ({ cart, deleteFromCart, clearCart, changeQuantity }) => {
       </div>
 
       {/* To display all the products the user has added to the cart */}
-      <div className={cart.length === 0 ? "hidden" : "lg:px-20 px-10"}>
-        {cart.map((product, index) => {
-          return (
-            <div key={index}>
-              <CartProducts
-                productLogo={product.productLogo}
-                productName={product.productName}
-                productPrice={product.productPrice}
-                id={product.id}
-                deleteFromCart={deleteFromCart}
-                changeQuantity={changeQuantity}
-                quantity={product.quantity}
-                reRender={reRender}
-              />
-            </div>
-          );
-        })}
-
+      <div className={"lg:px-20 px-10"}>
         <div className="py-6">
           <div className="lg:flex lg:justify-between grid place-content-center w-full">
             <Link to="/store-front">
@@ -112,10 +75,7 @@ const Cart = ({ cart, deleteFromCart, clearCart, changeQuantity }) => {
             </Link>
 
             <div className="lg:flex">
-              <div
-                className="flex group lg:my-auto my-3 hover:opacity-80 hover:cursor-pointer"
-                onClick={clearCart}
-              >
+              <div className="flex group lg:my-auto my-3 hover:opacity-80 hover:cursor-pointer">
                 <span className="my-auto">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -130,10 +90,7 @@ const Cart = ({ cart, deleteFromCart, clearCart, changeQuantity }) => {
                 </p>
               </div>
 
-              <div
-                className="flex group lg:my-auto my-3 lg:ml-3 hover:opacity-80 hover:cursor-pointer"
-                onClick={clearCart}
-              >
+              <div className="flex group lg:my-auto my-3 lg:ml-3 hover:opacity-80 hover:cursor-pointer">
                 <span className="my-auto">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -161,7 +118,7 @@ const Cart = ({ cart, deleteFromCart, clearCart, changeQuantity }) => {
                 >
                   <path d="M122.6 46.3c-7.8-11.7-22.4-17-35.9-12.9S64 49.9 64 64V256H32c-17.7 0-32 14.3-32 32s14.3 32 32 32H64V448c0 17.7 14.3 32 32 32s32-14.3 32-32V320H228.2l97.2 145.8c7.8 11.7 22.4 17 35.9 12.9s22.7-16.5 22.7-30.6V320h32c17.7 0 32-14.3 32-32s-14.3-32-32-32H384V64c0-17.7-14.3-32-32-32s-32 14.3-32 32V256H262.5L122.6 46.3zM305.1 320H320v22.3L305.1 320zM185.5 256H128V169.7L185.5 256z" />
                 </svg>
-                <p className="text-sm my-auto">{cartTotal}</p>
+                <p className="text-sm my-auto">{getCartItemsTotal()}</p>
               </span>
             </div>
 
@@ -175,7 +132,7 @@ const Cart = ({ cart, deleteFromCart, clearCart, changeQuantity }) => {
                 >
                   <path d="M122.6 46.3c-7.8-11.7-22.4-17-35.9-12.9S64 49.9 64 64V256H32c-17.7 0-32 14.3-32 32s14.3 32 32 32H64V448c0 17.7 14.3 32 32 32s32-14.3 32-32V320H228.2l97.2 145.8c7.8 11.7 22.4 17 35.9 12.9s22.7-16.5 22.7-30.6V320h32c17.7 0 32-14.3 32-32s-14.3-32-32-32H384V64c0-17.7-14.3-32-32-32s-32 14.3-32 32V256H262.5L122.6 46.3zM305.1 320H320v22.3L305.1 320zM185.5 256H128V169.7L185.5 256z" />
                 </svg>
-                <p className="text-sm my-auto">{getGrandTotal()}</p>
+                <p className="text-sm my-auto">{"Get grand total"}</p>
               </span>
             </div>
 
@@ -205,16 +162,7 @@ const Cart = ({ cart, deleteFromCart, clearCart, changeQuantity }) => {
 };
 
 // Cart product. Can edit the quantity and delete the particular item from the cart.
-const CartProducts = ({
-  productLogo,
-  productName,
-  id,
-  productPrice,
-  quantity,
-  deleteFromCart,
-  changeQuantity,
-  reRender,
-}) => {
+const CartProducts = () => {
   const [thisQuantity, setThisQuantity] = React.useState(quantity);
 
   const handleChange = (event) => {
@@ -226,14 +174,14 @@ const CartProducts = ({
   return (
     <div className="flex justify-between w-full py-6 border-t border-b border-gray-200">
       <img
-        src={productLogo}
+        src={""}
         alt=""
         className="rounded my-auto shadow-sm w-[80px] h-[50px]"
       />
 
       <span className="lg:flex justify-between lg:w-1/2">
         <p className="text-sm font-semibold lg:my-auto my-2 text-black">
-          {productName}
+          {"Name"}
         </p>
 
         <span className="flex my-2 lg:my-auto">
@@ -244,7 +192,7 @@ const CartProducts = ({
           >
             <path d="M122.6 46.3c-7.8-11.7-22.4-17-35.9-12.9S64 49.9 64 64V256H32c-17.7 0-32 14.3-32 32s14.3 32 32 32H64V448c0 17.7 14.3 32 32 32s32-14.3 32-32V320H228.2l97.2 145.8c7.8 11.7 22.4 17 35.9 12.9s22.7-16.5 22.7-30.6V320h32c17.7 0 32-14.3 32-32s-14.3-32-32-32H384V64c0-17.7-14.3-32-32-32s-32 14.3-32 32V256H262.5L122.6 46.3zM305.1 320H320v22.3L305.1 320zM185.5 256H128V169.7L185.5 256z" />
           </svg>
-          <p className="text-sm my-auto">{productPrice}</p>
+          <p className="text-sm my-auto">{"Price"}</p>
         </span>
 
         <input
@@ -263,11 +211,11 @@ const CartProducts = ({
           >
             <path d="M122.6 46.3c-7.8-11.7-22.4-17-35.9-12.9S64 49.9 64 64V256H32c-17.7 0-32 14.3-32 32s14.3 32 32 32H64V448c0 17.7 14.3 32 32 32s32-14.3 32-32V320H228.2l97.2 145.8c7.8 11.7 22.4 17 35.9 12.9s22.7-16.5 22.7-30.6V320h32c17.7 0 32-14.3 32-32s-14.3-32-32-32H384V64c0-17.7-14.3-32-32-32s-32 14.3-32 32V256H262.5L122.6 46.3zM305.1 320H320v22.3L305.1 320zM185.5 256H128V169.7L185.5 256z" />
           </svg>
-          <p className="text-sm my-auto">{productPrice * thisQuantity}</p>
+          <p className="text-sm my-auto">{2 * thisQuantity}</p>
         </span>
       </span>
 
-      <span onClick={() => deleteFromCart(id)} className="my-auto">
+      <span className="my-auto">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="w-3 h-3 fill-brand-primary hover:fill-brand-secondary"

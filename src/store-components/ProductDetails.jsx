@@ -13,8 +13,7 @@ const ProductDetails = () => {
   const { productId } = useParams("productId");
   const [quantity, setQuantity] = useState(1);
   const { userData } = useContext(UserContext);
-  const { cartTotal, cart, deleteFromCart, cartLength } =
-    useContext(CartContext);
+  const { cart, deleteFromCart, cartLength } = useContext(CartContext);
 
   async function fetchProduct() {
     // const token = window.localStorage.getItem("token");

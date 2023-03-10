@@ -1,51 +1,10 @@
-import axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { LoginContext } from "../context/LoginContext";
-import { BASE_URL } from "../services/services";
-import Cookies from "js-cookie";
+import { CartContext } from "../context/CartContext";
 
-const Products = ({ handleAdd, handleDelete, cart }) => {
-  // const [products, setProducts] = useState([]);
-  const [products, setProducts] = useState([]);
-
-  const token = Cookies.get("_tksr");
-
-  async function fetchProducts() {
-    const config = {
-      headers: { Authorization: `Bearer ${token}` },
-      "Content-Type": "application/json",
-    };
-
-    const res = await axios.get(`${BASE_URL}product/list`, config);
-    if (res) {
-      setProducts(res.data.data);
-    }
-    console.log(res);
-  }
-  async function dataAdd(id, amount) {
-    const data = {
-      product: id,
-      amount: Number(amount),
-      status: "pending",
-      purchase_type: "paystack",
-    };
-    try {
-      const res = await axios.post(
-        `${BASE_URL}buyer/order_history/create/`,
-        token,
-        data
-      );
-      if (!res.status === "OK") return;
-      console.log(res);
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
-  useEffect(() => {
-    fetchProducts();
-  }, []);
+const Products = () => {
+  const { products, addToCart } = useContext(CartContext);
 
   return (
     <div className="w-full lg:px-0 mt-8 md:px-5 px-10 z-1 py-5">
@@ -55,7 +14,7 @@ const Products = ({ handleAdd, handleDelete, cart }) => {
           No products found!
         </p>
       )}
-      <div className="flex flex-wrap justify-between mt-10 w-full">
+      <div className="flex flex-wrap gap-5 mt-10 w-full">
         {products.map((product, index) => {
           return (
             <div
@@ -69,10 +28,7 @@ const Products = ({ handleAdd, handleDelete, cart }) => {
                 productDescription={product.description}
                 id={product.id}
                 stock_count={product.stock_count}
-                addToCart={handleAdd}
-                deleteFromCart={handleDelete}
-                cart={cart}
-                dataAdd={dataAdd}
+                addToCart={addToCart}
                 amount={product.price}
               />
             </div>
@@ -87,36 +43,31 @@ const DisplayProducts = ({
   productName,
   productLogo,
   productPrice,
-  id,
   addToCart,
-  deleteFromCart,
-  cart,
-  dataAdd,
+  id,
   productDescription,
   stock_count,
-  amount,
 }) => {
-  const [displayToggled, setDisplayToggled] = React.useState(false);
-  const [added, setAdded] = React.useState(false);
   const { isLoggedIn } = useContext(LoginContext);
-  const add = () => {
+
+  const add = (id) => {
     if (isLoggedIn === false) {
       alert("You need to login first!");
       return;
     }
-
-    // addToCart(id);
-    dataAdd(id, amount);
-    setAdded(true);
+    addToCart(id);
   };
 
   return (
-    <div className="group rounded w-full z-1 mb-10">
-      <div
-        className={`flex justify-center align-center rounded shadow-base border border-slate-100 bg-gray-100`}
-      >
+    <div className="group rounded w-[100%] z-1 mb-10">
+      <div className={`border-slate-100 bg-gray-100`}>
         <Link to={`/store-front/${id}`}>
-          <img src={productLogo} alt="Logo" className=" my-auto h-[200px]" />
+          <img
+            src={productLogo}
+            alt="Logo"
+            width={"100%"}
+            className="my-auto h-[150px]"
+          />
         </Link>
       </div>
 
@@ -133,16 +84,11 @@ const DisplayProducts = ({
       {/* Product added pop-up */}
       <div
         className={
-          added
-            ? "h-full grid overflow-hidden place-content-center w-full top-0 right-0 left-0 bottom-0 z-30 outline-none fixed"
-            : " -translate-x-full hidden"
+          "h-full grid hidden overflow-hidden place-content-center w-full top-0 right-0 left-0 bottom-0 z-30 outline-none fixed"
         }
       >
         <div className="mx-auto bg-white shadow-lg rounded lg:w-3/4 w-11/12 lg:h-[auto] h-auto lg:px-10 px-6 py-7">
-          <div
-            className="flex justify-end item-end hover:cursor-pointer mb-5"
-            onClick={() => setAdded(false)}
-          >
+          <div className="flex justify-end item-end hover:cursor-pointer mb-5">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="w-6 h-6 fill-gray-200 hover:fill-black"
@@ -185,8 +131,8 @@ const DisplayProducts = ({
         </div>
       </div>
 
-      <div className="">
-        <div className="w-full flex justify-between px-2">
+      <div className="h-[200px]">
+        <div className="w-full flex justify-between">
           <p className="text-xl font-bold text-black">{productName}</p>
           {/* <p className='text-base text-brand-primary font-semibold'>{`#${productPrice}`}</p> */}
           <div className="flex lg:my-auto ">
@@ -206,7 +152,7 @@ const DisplayProducts = ({
         </p>
         <p className="my-2 text-sm font-semibold text-black opacity-60">{`(${stock_count})`}</p>
         <button
-          onClick={add}
+          onClick={() => add(id)}
           className="w-auto ml-1 flex transition-all duration-400 justify-start my-3 border border-black rounded-full text-black py-1 text-center px-4 hover:border-none hover:bg-brand-primary hover:text-white"
         >
           <span className="my-auto">Add to cart</span>
