@@ -4,18 +4,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { CartContext } from "../context/CartContext";
 import { LoginContext } from "../context/LoginContext";
 import { UserContext } from "../context/UserContext";
+import CartItem from "./CartItem";
 
-const Navbar = ({
-  amount_in_cart,
-  product_details,
-  handleDelete,
-  storeName,
-}) => {
+const Navbar = ({ storeName }) => {
   const [cartToggled, setCartToggled] = useState(false);
   const [dropDown, setDropDown] = useState(false);
   // const [userIconToggled, setUserIconToggled] = useState(false);
 
-  const { cartTotal } = useContext(CartContext);
+  const { cartItems, getCartItemsTotal } = useContext(CartContext);
 
   const { userLoggedOut } = useContext(LoginContext);
   const { onUserLogOut } = useContext(UserContext);
@@ -85,7 +81,7 @@ const Navbar = ({
         >
           <div className="grid place-content-center">
             <div className="relative bg-brand-primary rounded-full w-4 h-4 text-center top-2 left-3">
-              <p className="text-white text-xs">{amount_in_cart}</p>
+              <p className="text-white text-xs">{cartItems.length}</p>
             </div>
 
             <span
@@ -105,39 +101,25 @@ const Navbar = ({
             <div
               className={`${
                 cartToggled ? "" : "hidden"
-              } z-10 bg-slate-200 absolute top-16 right-16 shadow-lg w-[300px] h-auto px-5 py-3`}
+              } z-10 bg-slate-200 absolute top-16 right-16 shadow-lg w-[350px] h-auto px-5 py-3`}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className={`w-5 h-5 my-3 fill-black ${
-                  product_details === 0 ? "" : "hidden"
+                  cartItems.length === 0 ? "" : "hidden"
                 } mx-auto`}
                 viewBox="0 0 576 512"
               >
                 <path d="M24 0C10.7 0 0 10.7 0 24S10.7 48 24 48H76.1l60.3 316.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24-10.7 24-24s-10.7-24-24-24H179.9l-9.1-48h317c14.3 0 26.9-9.5 30.8-23.3l54-192C578.3 52.3 563 32 541.8 32H122l-2.4-12.5C117.4 8.2 107.5 0 96 0H24zM176 512c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm336-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48z" />
               </svg>
-              <p
-                className={`text-sm text-center my-3 ${
-                  product_details.length === 0 ? "" : "hidden"
-                }`}
-              >
-                No products in the cart.
-              </p>
+              {cartItems.length > 0 ? (
+                <CartItem />
+              ) : (
+                <p className={`text-sm text-center my-3`}>
+                  No products in the cart.
+                </p>
+              )}
 
-              {product_details.map((item, index) => {
-                return (
-                  <div key={index}>
-                    <Products
-                      productImage={item.productLogo}
-                      productName={item.productName}
-                      quantity={item.quantity}
-                      price={item.productPrice}
-                      deleteFromCart={handleDelete}
-                      id={item.id}
-                    />
-                  </div>
-                );
-              })}
               <hr></hr>
               <div className="flex justify-between mt-3">
                 <p className="text-sm">SUBTOTAL:</p>
@@ -149,11 +131,11 @@ const Navbar = ({
                   >
                     <path d="M122.6 46.3c-7.8-11.7-22.4-17-35.9-12.9S64 49.9 64 64V256H32c-17.7 0-32 14.3-32 32s14.3 32 32 32H64V448c0 17.7 14.3 32 32 32s32-14.3 32-32V320H228.2l97.2 145.8c7.8 11.7 22.4 17 35.9 12.9s22.7-16.5 22.7-30.6V320h32c17.7 0 32-14.3 32-32s-14.3-32-32-32H384V64c0-17.7-14.3-32-32-32s-32 14.3-32 32V256H262.5L122.6 46.3zM305.1 320H320v22.3L305.1 320zM185.5 256H128V169.7L185.5 256z" />
                   </svg>
-                  <p className="text-sm my-auto">{cartTotal}</p>
+                  <p className="text-sm my-auto">{getCartItemsTotal()}</p>
                 </span>
               </div>
 
-              {product_details.length > 0 && (
+              {cartItems.length > 0 ? (
                 <Link to="/store-front/checkout">
                   <button
                     type="button"
@@ -165,18 +147,10 @@ const Navbar = ({
                     PROCEED TO CHECKOUT
                   </button>
                 </Link>
+              ) : (
+                ""
               )}
-              {product_details.length === 0 && (
-                <button
-                  type="button"
-                  onClick={() => {
-                    setCartToggled((prev) => !prev);
-                  }}
-                  className="text-white hover:cursor-not-allowed opacity-50 rounded py-3 mt-3 w-full text-center bg-black"
-                >
-                  PROCEED TO CHECKOUT
-                </button>
-              )}
+
               <Link
                 to="/store-front/view-cart"
                 onClick={() => {
@@ -221,49 +195,6 @@ const Navbar = ({
                     </span>
                 </li> */}
       </ul>
-    </div>
-  );
-};
-
-const Products = ({
-  productImage,
-  productName,
-  quantity,
-  price,
-  id,
-  deleteFromCart,
-}) => {
-  return (
-    <div className="flex justify-between">
-      <img src={productImage} alt="Product" className="w-1/4 h-[80px]" />
-
-      <div className="my-auto">
-        <p className="text-sm text-black">{productName}</p>
-        <span className="flex">
-          <p className="text-xs my-auto">{quantity}</p>
-          <p className="my-auto mx-2 text-xs">x</p>
-          <span className="flex my-2 lg:my-auto">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-2 h-2 fill-black my-auto"
-              viewBox="0 0 448 512"
-            >
-              <path d="M122.6 46.3c-7.8-11.7-22.4-17-35.9-12.9S64 49.9 64 64V256H32c-17.7 0-32 14.3-32 32s14.3 32 32 32H64V448c0 17.7 14.3 32 32 32s32-14.3 32-32V320H228.2l97.2 145.8c7.8 11.7 22.4 17 35.9 12.9s22.7-16.5 22.7-30.6V320h32c17.7 0 32-14.3 32-32s-14.3-32-32-32H384V64c0-17.7-14.3-32-32-32s-32 14.3-32 32V256H262.5L122.6 46.3zM305.1 320H320v22.3L305.1 320zM185.5 256H128V169.7L185.5 256z" />
-            </svg>
-            <p className="text-xs my-auto">{price}</p>
-          </span>
-        </span>
-      </div>
-
-      <span onClick={() => deleteFromCart(id)} className="my-auto ">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 448 512"
-          className="w-4 h-3 fill-slate-300 hover:fill-brand-primary"
-        >
-          <path d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0H284.2c12.1 0 23.2 6.8 28.6 17.7L320 32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 96 0 81.7 0 64S14.3 32 32 32h96l7.2-14.3zM32 128H416V448c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V128zm96 64c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16z" />
-        </svg>
-      </span>
     </div>
   );
 };

@@ -8,25 +8,9 @@ import Navbar from "./Navbar";
 import { CartContext } from "../context/CartContext";
 import PaymentModal from "./PaymentModal";
 
-const Checkout = ({ cart }) => {
+const Checkout = () => {
   const [showModal, setShowModal] = useState(false);
-  const getSubTotal = () => {
-    if (cart.length === 0) {
-      return 0;
-    }
-    return cart.reduce((total, currentValue) => {
-      return total + currentValue.productPrice;
-    }, 0);
-  };
-
-  const getGrandTotal = () => {
-    if (cart.length === 0) {
-      return 0;
-    }
-    return cart.reduce((total, currentValue) => {
-      return total + currentValue.productPrice * currentValue.quantity;
-    }, 0);
-  };
+  const { cartItems, getCartItemsTotal } = useContext(CartContext);
 
   const [formData, setFormData] = useState({
     email: "",
@@ -72,9 +56,9 @@ const Checkout = ({ cart }) => {
 
   const changeForm = (value) => {
     setFormData({
-      contact: false,
-      shipping: false,
-      payment: false,
+      contact: true,
+      shipping: true,
+      payment: true,
     });
     setFormData((prev) => {
       return { ...prev, [value]: true };
@@ -89,7 +73,7 @@ const Checkout = ({ cart }) => {
   return (
     <div>
       <Navbar
-        product_details={cart}
+        product_details={cartItems}
         amount_in_cart={cartTotal}
         handleDelete={deleteFromCart}
         storeName={"emmystore"}
@@ -450,22 +434,22 @@ const Checkout = ({ cart }) => {
         </div>
 
         <div className="lg:w-2/5 w-full bg-slate-100 lg:px-10 px-3 py-10">
-          {cart.map((item) => {
+          {cartItems.map((item) => {
             return (
               <div key={item.id}>
                 <CartPrducts
-                  productLogo={item.productLogo}
-                  productName={item.productName}
-                  productPrice={item.productPrice}
-                  // getSubTotal={getSubTotal}
+                  productLogo={item.media}
+                  productName={item.title}
+                  productPrice={item.price}
+                  getSubTotal={getCartItemsTotal}
                   // getGrandTotal={getGrandTotal}
-                  quantity={item.quantity}
+                  quantity={item.stock_count}
                 />
               </div>
             );
           })}
           <div className="flex justify-between my-6 border-b border-t border-gray-200 py-5">
-            <p className="text-base text-black opacity-70">SUBTOTAL: </p>
+            <p className="text-base text-black opacity-70">TOTAL: </p>
             <span className="flex">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -474,10 +458,12 @@ const Checkout = ({ cart }) => {
               >
                 <path d="M122.6 46.3c-7.8-11.7-22.4-17-35.9-12.9S64 49.9 64 64V256H32c-17.7 0-32 14.3-32 32s14.3 32 32 32H64V448c0 17.7 14.3 32 32 32s32-14.3 32-32V320H228.2l97.2 145.8c7.8 11.7 22.4 17 35.9 12.9s22.7-16.5 22.7-30.6V320h32c17.7 0 32-14.3 32-32s-14.3-32-32-32H384V64c0-17.7-14.3-32-32-32s-32 14.3-32 32V256H262.5L122.6 46.3zM305.1 320H320v22.3L305.1 320zM185.5 256H128V169.7L185.5 256z" />
               </svg>
-              <p className="text-sm text-black my-auto">{getSubTotal()}</p>
+              <p className="text-sm text-black my-auto">
+                {getCartItemsTotal()}
+              </p>
             </span>
           </div>
-
+          {/* 
           <div className="flex justify-between my-6 border-b border-t border-gray-200 py-5">
             <p className="text-base text-black font-semibold">GRAND TOTAL: </p>
             <span className="flex">
@@ -488,13 +474,13 @@ const Checkout = ({ cart }) => {
               >
                 <path d="M122.6 46.3c-7.8-11.7-22.4-17-35.9-12.9S64 49.9 64 64V256H32c-17.7 0-32 14.3-32 32s14.3 32 32 32H64V448c0 17.7 14.3 32 32 32s32-14.3 32-32V320H228.2l97.2 145.8c7.8 11.7 22.4 17 35.9 12.9s22.7-16.5 22.7-30.6V320h32c17.7 0 32-14.3 32-32s-14.3-32-32-32H384V64c0-17.7-14.3-32-32-32s-32 14.3-32 32V256H262.5L122.6 46.3zM305.1 320H320v22.3L305.1 320zM185.5 256H128V169.7L185.5 256z" />
               </svg>
-              <p className="text-sm text-black my-auto">
+              {/* <p className="text-sm text-black my-auto">
                 {formData.shippingMethod === "FLAT RATE. #1000"
                   ? getGrandTotal() + 1000
                   : getGrandTotal()}
-              </p>
+              </p> 
             </span>
-          </div>
+          </div> */}
           <button
             type="submit"
             onClick={() => setShowModal(true)}

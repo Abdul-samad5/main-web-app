@@ -8,9 +8,7 @@ import Cookies from "js-cookie";
 // import useFetchData from "../hooks/useFetchProducts";
 
 const StoreFront = () => {
-  const { cartTotal, cart, products, deleteFromCart, addToCart } =
-    useContext(CartContext);
-  // const [myProducts, setMyProducts] = useState([]);
+  const { products } = useContext(CartContext);
   const [name, setStoreName] = useState("");
   const [storeLogo, setStoreLogo] = useState("");
   const tk = Cookies.get("_tksr");
@@ -24,7 +22,6 @@ const StoreFront = () => {
       const store_name = response.data.data["store_name"];
       const profileLogo = response.data.data["store_logo"];
 
-      console.log(response);
       setStoreName(`${store_name}`);
       setStoreLogo(profileLogo);
     }
@@ -33,20 +30,10 @@ const StoreFront = () => {
 
   return (
     <div>
-      <Navbar
-        product_details={cart}
-        amount_in_cart={cartTotal}
-        handleDelete={deleteFromCart}
-        storeName={name}
-      />
+      <Navbar storeName={name} />
       <div className="lg:px-16 px-3">
         <Hero storeLogo={storeLogo} storeName={name} />
-        <Products
-          products={products}
-          handleAdd={addToCart}
-          cart={cart}
-          handleDelete={deleteFromCart}
-        />
+        <Products />
       </div>
       <Footer />
     </div>

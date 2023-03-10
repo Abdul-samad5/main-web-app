@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { PaystackButton } from "react-paystack";
 import { useNavigate } from "react-router-dom";
+import { CartContext } from "../context/CartContext";
 const publicKey = import.meta.env.VITE_PK;
 
 const PaymentModal = () => {
+  const { getCartItemsTotal } = useContext(CartContext);
   const navigate = useNavigate();
   const [formData, setFormData] = React.useState({
     name: "",
@@ -14,7 +16,7 @@ const PaymentModal = () => {
   const componentProps = {
     name: formData.name,
     email: formData.email,
-    amount: 50000 * 100,
+    amount: getCartItemsTotal() * 100,
     metadata: {
       name: formData.name,
       phone: formData.phone,
