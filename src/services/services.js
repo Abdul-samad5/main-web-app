@@ -40,6 +40,9 @@ const userLogout = () => axios.post(`${BASE_URL}auth/logout`, config);
 
 const getStoreInfo = () => axios.get(`${BASE_URL}store/list`, config);
 
+const getStoreDetails = () =>
+  axios.get(`${BASE_URL}store_settings/store_details`, config);
+
 const resendActivationEmail = (email) =>
   axios.get(`${BASE_URL}auth/resend_activation_link/${email}`, config);
 
@@ -145,6 +148,7 @@ export {
   patchOrderHistory,
   getOrderHistory,
   getProducts,
+  getStoreDetails,
   addCollection,
   deleteCollection,
   updateCollection,
