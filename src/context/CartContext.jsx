@@ -5,17 +5,31 @@ export const CartContext = createContext();
 const CartContextProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
   const [cartItems, setCartItems] = useState([]);
+  const [quantity, setQuantity] = useState(1);
+
+  const handleIncrease = () => {
+    if (quantity < 0) {
+      return 1;
+    } else {
+      setQuantity((prev) => (prev = quantity + 1));
+    }
+  };
+  const handleDecrease = () => {
+    if (quantity < 0) {
+      return 1;
+    } else {
+      setQuantity((prev) => (prev = quantity - 1));
+    }
+  };
 
   const addToCart = (id) => {
-    const filterId = products.map((product) => product.id);
-    console.log(filterId);
+    // const filterId = products.map((product) => product.id);
     const singleItem = products.find((product) => {
       return product.id === id;
     });
     setCartItems((prevItem) => {
       return [...prevItem, singleItem];
     });
-    console.log(singleItem);
   };
 
   const getCartItemsTotal = () => {
@@ -28,7 +42,7 @@ const CartContextProvider = ({ children }) => {
 
   const deleteFromCart = (id) => {
     const deletedItem = cartItems.filter((product) => id !== product.id);
-    console.log(deletedItem);
+
     return setCartItems(deletedItem);
   };
 
@@ -50,6 +64,9 @@ const CartContextProvider = ({ children }) => {
         addToCart,
         deleteFromCart,
         getCartItemsTotal,
+        quantity,
+        handleIncrease,
+        handleDecrease,
       }}
     >
       {children}

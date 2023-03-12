@@ -8,31 +8,11 @@ import Cookies from "js-cookie";
 // import useFetchData from "../hooks/useFetchProducts";
 
 const StoreFront = () => {
-  const { products } = useContext(CartContext);
-  const [name, setStoreName] = useState("");
-  const [storeLogo, setStoreLogo] = useState("");
-  const tk = Cookies.get("_tksr");
-
-  useEffect(() => {
-    async function fetchData() {
-      const response = await axios.get(
-        `${BASE_URL}store_settings/store_details`,
-        { headers: { Authorization: `Bearer ${tk}` } }
-      );
-      const store_name = response.data.data["store_name"];
-      const profileLogo = response.data.data["store_logo"];
-
-      setStoreName(`${store_name}`);
-      setStoreLogo(profileLogo);
-    }
-    fetchData();
-  }, []);
-
   return (
     <div>
-      <Navbar storeName={name} />
+      <Navbar />
       <div className="lg:px-16 px-3">
-        <Hero storeLogo={storeLogo} storeName={name} />
+        <Hero />
         <Products />
       </div>
       <Footer />
