@@ -98,7 +98,7 @@ const Navbar = () => {
             <div
               className={`${
                 cartToggled ? "" : "hidden"
-              }  absolute top-16 right-1 bg-slate-100 z-20 p-3`}
+              }  absolute top-16 right-1 bg-slate-100 z-100 p-3`}
             >
               {cartItems.length > 0 ? (
                 <>
