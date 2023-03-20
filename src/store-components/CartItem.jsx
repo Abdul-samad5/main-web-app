@@ -9,12 +9,12 @@ const CartItem = () => {
   const {
     cartItems,
     deleteFromCart,
-    getCartItemsTotal,
     quantity,
     handleIncrease,
     handleDecrease,
   } = useContext(CartContext);
-  const [itemQuantity, setItemQuantity] = useState(quantity);
+
+  const [count, setCount] = useState(0);
 
   return (
     <div>
@@ -51,11 +51,9 @@ const CartItem = () => {
                       <input
                         type="text"
                         value={quantity}
-                        className="w-[15px] bg-white pl-0.5"
+                        className="w-[20px] bg-white pl-0.5"
                         name="cartQuantity"
-                        onChange={() =>
-                          setItemQuantity(getCartItemsTotal() * itemQuantity)
-                        }
+                        onChange={(e) => setCount(e.target.value)}
                       />
                       <AiOutlineMinus onClick={() => handleDecrease()} />
                     </div>

@@ -11,14 +11,14 @@ const CartContextProvider = ({ children }) => {
     if (quantity < 0) {
       return 1;
     } else {
-      setQuantity((prev) => (prev = quantity + 1));
+      setQuantity(quantity + 1);
     }
   };
   const handleDecrease = () => {
     if (quantity < 0) {
       return 1;
     } else {
-      setQuantity((prev) => (prev = quantity - 1));
+      setQuantity(quantity - 1);
     }
   };
 
@@ -37,7 +37,7 @@ const CartContextProvider = ({ children }) => {
 
     const totalPrice = prices.reduce((acc, curr) => acc + curr, 0);
 
-    return totalPrice;
+    return totalPrice * quantity;
   };
 
   const deleteFromCart = (id) => {
