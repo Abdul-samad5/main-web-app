@@ -76,14 +76,14 @@ const BankInformation = () => {
       setShowModal(true);
       setTimeout(() => {
         setShowModal(false);
-      }, 1000);
+      }, 2000);
       if (!res.statusText === 'OK') return;
     } catch (error) {
       console.log(error);
       setShowModal(true);
       setTimeout(() => {
         setShowModal(false);
-      }, 1000);
+      }, 2000);
     }
   };
 
@@ -234,7 +234,7 @@ const BankInformation = () => {
                 id='bankName'
                 onChange={handleChange}
               >
-                <option disabled>Choose an option</option>
+                <option disabled selected>Choose an option</option>
                 {banks.map((bank, index) => {
                   return (
                     <option key={index} value={bank.name}>
