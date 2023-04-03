@@ -147,7 +147,7 @@ const BankInformation = () => {
   };
 
   return (
-    <div className='px-10 py-10'>
+    <div className='lg:px-10 px-4 py-10'>
       <button
         className={`${styles.button} w-auto float-right`}
         onClick={() => setAdded(!added)}
