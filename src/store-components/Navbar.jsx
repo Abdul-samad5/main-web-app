@@ -77,7 +77,7 @@ const Navbar = () => {
                   Dashboard
                 </a>
 
-                <a
+                {/* <a
                   href="#"
                   class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
                 >
@@ -96,7 +96,7 @@ const Navbar = () => {
                   class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
                 >
                   Coupons
-                </a>
+                </a> */}
               </div>
             </div>
           </div>
@@ -133,18 +133,24 @@ const Navbar = () => {
                   id="user-menu-button"
                   aria-expanded="false"
                   aria-haspopup="true"
+                  onClick={() => setDropDown(prev => !prev)}
                 >
                   <span class="sr-only">Open user menu</span>
-                  <img
+                  {/* <img
                     class="h-8 w-8 rounded-full"
                     src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                    alt=""
+                  /> */}
+                  <img
+                    class="h-8 w-8 rounded-full"
+                    src={storeLogo}
                     alt=""
                   />
                 </button>
               </div>
 
               <div
-                class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                class={`right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 ${dropDown ? "absolute" : "hidden invinsible"} shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none`}
                 role="menu"
                 aria-orientation="vertical"
                 aria-labelledby="user-menu-button"
@@ -183,7 +189,7 @@ const Navbar = () => {
         </div>
       </div>
 
-      <div class="sm:hidden" id="mobile-menu">
+      {/* <div class="sm:hidden" id="mobile-menu">
         <div class="space-y-1 px-2 pb-3 pt-2">
           <a
             href="#"
@@ -214,7 +220,7 @@ const Navbar = () => {
             Coupons
           </a>
         </div>
-      </div>
+      </div> */}
     </nav>
   );
 };
