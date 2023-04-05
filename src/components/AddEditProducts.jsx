@@ -10,7 +10,7 @@ import { BASE_URL } from "../services/services";
 import Modal from "./Modal";
 import { useNavigate } from "react-router-dom";
 
-function AddEditProduct() {
+function AddEditProduct({productId}) {
   const navigate = useNavigate();
   // Records if the user has clicked the toggle button in the last form element and accordingly records it
   const [isToggled, setIsToggled] = useState(false);
@@ -218,6 +218,39 @@ function AddEditProduct() {
 
   useEffect(() => {
     fetchCollections();
+  }, []);
+
+  useEffect(() => {
+    if(productId) {
+      async function fetchData() {
+        const response = await axios.get(
+          `${BASE_URL}product/${productId}`,
+          { headers: { Authorization: `Bearer ${tk}` } }
+        );
+        
+        console.log(response.data.data);
+        const productData = response.data.data;
+        setFormData((prev) => {
+          return {...prev, 
+            productTitle: productData.title,
+            productDesc: productData.description,
+            productImg: productData.media,
+            price: productData.price,
+            discountedPrice: productData.discounted_price,
+            costPrice: productData.cost_price,
+            stockCount: productData.stock_count,
+            stockUnit: productData.stock_keeping_unit,
+            itemUnit: productData.item_unit,
+            productCollections: productData.collection,
+            productStatus: productData.status,
+            storeTheme: productData.theme,
+          }
+        });
+      
+        console.log(response);
+      }
+      fetchData();
+    }
   }, []);
 
   return (

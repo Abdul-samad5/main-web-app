@@ -206,7 +206,7 @@ const Dashboard = () => {
                 className={`${styles.dbNavItemDrop}`}
                 // onClick={(e) => showActiveComponent(e, <AllProducts />)}
                 onClick={(e) => {
-                  showActiveComponent(e, <AllProducts />);
+                  showActiveComponent(e, <AllProducts showActiveComponent={showActiveComponent} handleNavClick={handleClick}/>);
                   handleClick();
                 }}
               >

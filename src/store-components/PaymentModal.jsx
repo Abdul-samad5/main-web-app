@@ -2,11 +2,13 @@ import React, { useContext } from "react";
 import { PaystackButton } from "react-paystack";
 import { useNavigate } from "react-router-dom";
 import { CartContext } from "../context/CartContext";
+import { UserContext } from "../context/UserContext";
 const publicKey = import.meta.env.VITE_PK;
 
 const PaymentModal = () => {
   const { getCartItemsTotal } = useContext(CartContext);
   const navigate = useNavigate();
+  const { storeName } = useContext(UserContext);
   const [formData, setFormData] = React.useState({
     name: "",
     email: "",
@@ -24,7 +26,7 @@ const PaymentModal = () => {
     publicKey,
     text: "Proceed",
     onSuccess: () => {
-      navigate("/store-front");
+      navigate(`/store-front/${storeName}`);
     },
     onClose: () => alert("Failed"),
   };
