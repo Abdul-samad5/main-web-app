@@ -111,6 +111,23 @@ function AddEditProduct({productId}) {
     }
   };
 
+  let updatedProduct = {
+    description: formData.productDesc,
+    title: formData.productTitle,
+    media: formData.productImg,
+    price: formData.price,
+    theme: formData.storeTheme,
+    status: formData.status,
+    collection: formData.productCollections,
+    color: formData.status,
+    size: formData.size,
+    item_unit: formData.itemUnit,
+    stock_count: formData.stockCount,
+    stock_keeping_unit: formData.stockUnit,
+    cost_price: formData.costPrice,
+    discounted_price: formData.discountedPrice,
+  };
+
   async function handleSubmit(event) {
     event.preventDefault();
     // if(formData.productCollections === "") {
@@ -162,10 +179,10 @@ function AddEditProduct({productId}) {
     }
   }
 
-  async function handleUpdateProduct(event, id) {
+  async function handleUpdateProduct(event, id, product) {
     event.preventDefault();
     try {
-      const res = await updateProduct(id);
+      const res = await updateProduct(id, product);
       if (!res.statusText === "OK") return;
       console.log(res);
     } catch (err) {
@@ -227,7 +244,7 @@ function AddEditProduct({productId}) {
           `${BASE_URL}product/${productId}`,
           { headers: { Authorization: `Bearer ${tk}` } }
         );
-        
+
         console.log(response.data.data);
         const productData = response.data.data;
         setFormData((prev) => {
@@ -267,7 +284,11 @@ function AddEditProduct({productId}) {
           </button>
           <button
             className="bg-blue-400 text-white rounded-lg lg:px-8 px-4 py-2.5 mx-1 text-sm"
-            onClick={handleUpdateProduct}
+            onClick={(e) => {
+              if(productId) {
+                handleUpdateProduct(e, productId, updatedProduct)
+              }
+            }}
           >
             Save Changes
           </button>
