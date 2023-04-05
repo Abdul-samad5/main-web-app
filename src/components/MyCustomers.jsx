@@ -1,13 +1,20 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import { noCustomer } from '../assets';
 import UserData from './UserData';
 import {styles} from '../constants/index';
+import { BASE_URL } from '../services/services';
+import Cookies from 'js-cookie';
+import axios from 'axios';
 
 const details = ["Customer name", "Email", "No of Orders", "Location", "Total amount spent", "Action"];
+// const details = ["id", 	"Payment ID",	"User Email", "Reference Code", "Amount", "Status"];
 
 const MyCustomers = () => {
     // State to store the customers gotten from the API
     const [customers, setCustomers] = useState([]);
+    
+    const token = Cookies.get("_tksr");
+    const email = Cookies.get("_email");
 
     // Function to update the state to the next five or so customer details gotten from the API.
     const handleNext = () => {
@@ -20,6 +27,27 @@ const MyCustomers = () => {
         // Logic for searching for a specific transaction history by setting the transaction history state to the data gotten from the API following the users prompt.
         // alert(searchValue);
     }
+
+    // async function fetchCustomers(user_email, token) {
+    //     const config = {
+    //       headers: { Authorization: `Bearer ${token}` },
+    //       'Content-Type': 'application/json',
+    //     };
+    
+    //     try {
+    //       const res = await axios.get(`${BASE_URL}checkout/buyer_info/get_info`, config);
+    //       if (res) {
+    //         setCustomers(res.data.data);
+    //       }
+    //       console.log(res);
+    //     } catch (err) {
+    //       console.log(err);
+    //     }
+    // }
+
+    useEffect(() => {
+        fetchCustomers(email, token);
+    }, []);
 
     return (
         <div>
@@ -45,4 +73,5 @@ const Children = ({id, name, email, noOfOrders, location, amount}) => {
         </div>
     )
 };
+
 export default MyCustomers;
