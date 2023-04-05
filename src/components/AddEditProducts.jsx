@@ -28,6 +28,10 @@ function AddEditProduct({productId}) {
     if (status === 401) {
       setModalContent("Email or Password Incorrect!");
     }
+    if(status && productId) {
+      setModalContent("Product succesfully updated!");
+    }
+
     // if (status >= 400) {
     //   setModalContent(
     //     'There might be a problem with your Internet Connection! Please try again'
@@ -184,9 +188,24 @@ function AddEditProduct({productId}) {
     try {
       const res = await updateProduct(id, product);
       if (!res.statusText === "OK") return;
-      console.log(res);
+      // console.log(res);
+      changeMessage(res.status);
+
+      setModalContent(res.data.message);
+      setShowModal(true);
+      window.scrollTo(0, -window.scrollY);
+      setFormData(initialState);
+      setTimeout(() => {
+        setShowModal(false);
+      }, 2000);
     } catch (err) {
       console.log(err);
+      changeMessage(err.response.status);
+
+      setShowModal(true);
+      setTimeout(() => {
+        setShowModal(false);
+      }, 1000);
     }
   }
 
