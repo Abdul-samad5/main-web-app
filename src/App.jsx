@@ -42,7 +42,7 @@ function App() {
 
         <Route path="/create-store" element={<CreateStore />} />
         <Route
-          path="/store-front"
+          path="/store-front/:storeName"
           element={
             <PreventLogin>
               <StoreFront />

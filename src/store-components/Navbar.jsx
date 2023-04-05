@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { CartContext } from "../context/CartContext";
 import { LoginContext } from "../context/LoginContext";
 import { UserContext } from "../context/UserContext";
+import Cookies from "js-cookie";
 import CartItem from "./CartItem";
 
 const Navbar = () => {
@@ -12,6 +13,7 @@ const Navbar = () => {
   const [userIconToggled, setUserIconToggled] = useState(false);
 
   const { cartItems, getCartItemsTotal } = useContext(CartContext);
+  const type = Cookies.get("user_type");
 
   const { userLoggedOut } = useContext(LoginContext);
   const { onUserLogOut, storeName, storeLogo } = useContext(UserContext);
@@ -25,85 +27,90 @@ const Navbar = () => {
   }
 
   return (
-    <nav class="bg-gray-800">
-      <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-        <div class="relative flex h-16 items-center justify-between">
-          <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
+    <nav className="bg-gray-800">
+      <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+        <div className="relative flex h-16 items-center justify-between">
+          <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
             <button
               type="button"
-              class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+              className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
               aria-controls="mobile-menu"
               aria-expanded="false"
             >
-              <span class="sr-only">Open main menu</span>
+              <span className="sr-only">Open main menu</span>
               <svg
-                class="block h-6 w-6"
+                className="block h-6 w-6"
                 fill="none"
                 viewBox="0 0 24 24"
-                stroke-width="1.5"
+                strokeWidth="1.5"
                 stroke="currentColor"
                 aria-hidden="true"
               >
                 <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
                 />
               </svg>
               <svg
-                class="hidden h-6 w-6"
+                className="hidden h-6 w-6"
                 fill="none"
                 viewBox="0 0 24 24"
-                stroke-width="1.5"
+                strokeWidth="1.5"
                 stroke="currentColor"
                 aria-hidden="true"
               >
                 <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   d="M6 18L18 6M6 6l12 12"
                 />
               </svg>
             </button>
           </div>
-          <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-            <div class="hidden sm:ml-6 sm:block">
-              <div class="flex space-x-4">
-                <a
-                  href="#"
-                  class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium"
-                  aria-current="page"
-                >
-                  Dashboard
-                </a>
+          <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+            <div className="hidden sm:ml-6 sm:block">
+              <div className="flex space-x-4">
+                <div className={type ? "" : "hidden"}>
+                  <Link to="/dashboard">
+                    <div
+                      className="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium"
+                      aria-current="page"
+                    >
+                      Dashboard
+                    </div>
+                  </Link>
+                </div>
+                
+                
 
                 {/* <a
                   href="#"
-                  class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
+                  className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
                 >
                   About us
                 </a>
 
                 <a
                   href="#"
-                  class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
+                  className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
                 >
                   Contact us
                 </a>
 
                 <a
                   href="#"
-                  class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
+                  className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
                 >
                   Coupons
                 </a> */}
               </div>
             </div>
           </div>
-          <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+          <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
             <button
               type="button"
-              class="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+              className="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
             >
               <div
                 onClick={() => {
@@ -125,24 +132,24 @@ const Navbar = () => {
               </svg>
             </button>
 
-            <div class="relative ml-3">
+            <div className="relative ml-3">
               <div>
                 <button
                   type="button"
-                  class="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                  className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                   id="user-menu-button"
                   aria-expanded="false"
                   aria-haspopup="true"
                   onClick={() => setDropDown(prev => !prev)}
                 >
-                  <span class="sr-only">Open user menu</span>
+                  <span className="sr-only">Open user menu</span>
                   {/* <img
-                    class="h-8 w-8 rounded-full"
+                    className="h-8 w-8 rounded-full"
                     src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                     alt=""
                   /> */}
                   <img
-                    class="h-8 w-8 rounded-full"
+                    className="h-8 w-8 rounded-full"
                     src={storeLogo}
                     alt=""
                   />
@@ -150,35 +157,35 @@ const Navbar = () => {
               </div>
 
               <div
-                class={`right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 ${dropDown ? "absolute" : "hidden invinsible"} shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none`}
+                className={`right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 ${dropDown ? "absolute" : "hidden invinsible"} shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none`}
                 role="menu"
                 aria-orientation="vertical"
                 aria-labelledby="user-menu-button"
-                tabindex="-1"
+                tabIndex="-1"
               >
                 <a
                   href="#"
-                  class="block px-4 py-2 text-sm text-gray-700"
+                  className="block px-4 py-2 text-sm text-gray-700"
                   role="menuitem"
-                  tabindex="-1"
+                  tabIndex="-1"
                   id="user-menu-item-0"
                 >
                   Dashboard
                 </a>
                 <a
                   href="#"
-                  class="block px-4 py-2 text-sm text-gray-700"
+                  className="block px-4 py-2 text-sm text-gray-700"
                   role="menuitem"
-                  tabindex="-1"
+                  tabIndex="-1"
                   id="user-menu-item-1"
                 >
                   Settings
                 </a>
                 <a
                   href="#"
-                  class="block px-4 py-2 text-sm text-gray-700"
+                  className="block px-4 py-2 text-sm text-gray-700"
                   role="menuitem"
-                  tabindex="-1"
+                  tabIndex="-1"
                   id="user-menu-item-2"
                 >
                   Sign out
@@ -189,38 +196,38 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* <div class="sm:hidden" id="mobile-menu">
-        <div class="space-y-1 px-2 pb-3 pt-2">
+      <div className="sm:hidden" id="mobile-menu">
+        <div className="space-y-1 px-2 pb-3 pt-2">
           <a
             href="#"
-            class="bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium"
+            className="bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium"
             aria-current="page"
           >
             Dashboard
           </a>
 
-          <a
+          {/* <a
             href="#"
-            class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
+            className="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
           >
             About us
           </a>
 
           <a
             href="#"
-            class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
+            className="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
           >
             Contact us
           </a>
 
           <a
             href="#"
-            class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
+            className="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"
           >
             Coupons
-          </a>
+          </a> */}
         </div>
-      </div> */}
+      </div>
     </nav>
   );
 };
@@ -287,13 +294,13 @@ export default Navbar;
             >
               {cartItems.length > 0 ? (
                 <>
-                  <div class="flex items-center justify-between mb-2">
-                    <h5 class="text-xl font-bold leading-none text-gray-900">
+                  <div className="flex items-center justify-between mb-2">
+                    <h5 className="text-xl font-bold leading-none text-gray-900">
                       Your Cart
                     </h5>
                     <a
                       href="#"
-                      class="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500"
+                      className="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500"
                     >
                       View Cart
                     </a>
