@@ -3,23 +3,18 @@ import { CartContext } from "../context/CartContext";
 import { IoMdTrash, IoMdArrowDropup, IoMdArrowDropdown } from "react-icons/io";
 
 const SingleCartItem = ({ item }) => {
-  const { quantity, deleteFromCart } = useContext(CartContext);
+  const { quantity, deleteFromCart, handleIncrease, handleDecrease } =
+    useContext(CartContext);
   const [count, setCount] = useState(quantity);
 
-  const handleIncrease = () => {
-    if (quantity < 0) {
-      setCount(0);
-    } else {
-      setCount(count + 1);
-    }
+  const handleCartIncrease = () => {
+    setCount(count + 1);
   };
-  const handleDecrease = () => {
-    if (quantity < 0) {
-      setCount(0);
-    } else {
-      setCount(count - 1);
-    }
+
+  const handleCartDecrease = () => {
+    setCount(count - 1);
   };
+
   return (
     <div class="w-[300px] ">
       <div class="">
@@ -47,15 +42,15 @@ const SingleCartItem = ({ item }) => {
               <div className=" inline-flex items-center text-base font-semibold text-gray-900 ">
                 <input
                   type="text"
-                  value={quantity}
+                  value={count}
                   className="w-[20px] bg-slate-100"
                   name="cartQuantity"
                   onChange={(e) => setCount(e.target.value)}
                 />
               </div>
               <div className="flex flex-col">
-                <IoMdArrowDropup onClick={() => handleIncrease()} />
-                <IoMdArrowDropdown onClick={() => handleDecrease()} />
+                <IoMdArrowDropup onClick={() => handleCartIncrease()} />
+                <IoMdArrowDropdown onClick={() => handleCartDecrease()} />
               </div>
               <button
                 onClick={() => deleteFromCart(item.id)}

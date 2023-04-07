@@ -4,7 +4,7 @@ import { CartContext } from "../context/CartContext";
 import SingleCartItem from "./SingleCartItem";
 
 const CartItem = () => {
-  const { cartItems, quantity } = useContext(CartContext);
+  const { cartItems } = useContext(CartContext);
 
   return (
     <div>

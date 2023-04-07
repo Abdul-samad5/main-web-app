@@ -35,6 +35,21 @@ const CartContextProvider = ({ children }) => {
     return totalPrice * quantity;
   };
 
+  const handleIncrease = () => {
+    if (quantity < 0) {
+      setQuantity(0);
+    } else {
+      setQuantity(quantity + 1);
+    }
+  };
+  const handleDecrease = () => {
+    if (quantity < 0) {
+      setQuantity(0);
+    } else {
+      setQuantity(quantity - 1);
+    }
+  };
+
   const deleteFromCart = (id) => {
     const deletedItem = cartItems.filter((product) => id !== product.id);
 
@@ -58,7 +73,10 @@ const CartContextProvider = ({ children }) => {
         getCartItemsTotal,
         addToCart,
         cartItems,
+        quantity,
         deleteFromCart,
+        handleIncrease,
+        handleDecrease,
       }}
     >
       {children}
