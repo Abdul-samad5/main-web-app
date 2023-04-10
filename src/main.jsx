@@ -5,6 +5,7 @@ import "./index.css";
 import App from "./App";
 import UserContext from "./context/UserContext";
 import CartContextProvider from "./context/CartContext";
+import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -17,3 +18,5 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     </LoginProvider>
   </React.StrictMode>
 );
+
+serviceWorkerRegistration.register();
