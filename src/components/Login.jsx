@@ -4,6 +4,8 @@ import { styles } from '../constants';
 import { userLogin } from '../services/services';
 import { UserContext } from '../context/UserContext';
 import Modal from './Modal';
+import Cookies from 'js-cookie';
+import axios from 'axios';
 
 const Login = ({ handleClick }) => {
   // Initialize state for the login to enable user login
@@ -12,6 +14,7 @@ const Login = ({ handleClick }) => {
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [modalText, setModalText] = useState(null);
+  const tk = Cookies.get("_tksr");
 
   const [formData, setFormData] = useState({
     email: '',
@@ -44,19 +47,20 @@ const Login = ({ handleClick }) => {
     setLoading(true);
     try {
       const response = await userLogin(user);
-
       if (!response.statusText === 'OK') return;
 
       if (response) {
         const token = response.data.data.access;
-
         const email = response.data.data.user.email;
         const user_id = response.data.data.user.user_id;
         const emailUrl = response.data.data.user.user_email_url;
-        const emailVerify = response.data.data.user.user_is_active;
         const type = response.data.data.type;
+        const emailVerify = response.data.data.user.user_is_active;
+
+        console.log(emailVerify);
         console.log(type);
         console.log(response);
+
         onUserLogin(token, email, user_id, emailUrl, emailVerify, type);
 
         if (response.data.data.user.has_store === false) {

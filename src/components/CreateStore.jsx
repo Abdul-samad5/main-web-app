@@ -94,7 +94,7 @@ const CreateStore = ({ handleClick }) => {
           />
         </div>
 
-        <div className='w-full mb-4'>
+        {/* <div className='w-full mb-4'>
           <label htmlFor='password' className='w-full mb-3 ml-2'>
             Store domain
           </label>
@@ -126,7 +126,7 @@ const CreateStore = ({ handleClick }) => {
               terms and conditions.
             </a>
           </label>
-        </div>
+        </div> */}
         {message.text && (
           <p className={`${message.color} text-sm text-center`}>
             {message?.text}
