@@ -10,6 +10,7 @@ import {
 } from "../services/services";
 import Cookies from "js-cookie";
 import { BASE_URL } from "../services/services";
+import Modal from "./Modal";
 
 const details = ["Collection name", "Product", "Action"];
 const Collections = () => {
@@ -22,6 +23,10 @@ const Collections = () => {
     collectionImage: "",
   });
   const [reRender, setRender] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [modalContent, setModalContent] = useState(null);
+  const tk = Cookies.get("_tksr");
+  const isVerified = Cookies.get("emailVerify");
 
   // Function to update the state to the next five or so collection details gotten from the API.
   const handleNext = () => {
@@ -44,7 +49,7 @@ const Collections = () => {
   useEffect(() => {
     fetchCollections();
   }, [isVisible, reRender]);
-  const tk = Cookies.get("_tksr");
+  
 
   const handleCollectionSearch = (searchValue) => {
     // Logic for searching for a specific transaction history by setting the transaction history state to the data gotten from the API following the users prompt.
@@ -54,6 +59,20 @@ const Collections = () => {
   // To add the collections to the backend
   async function handleAddCollection(event) {
     event.preventDefault();
+
+    if(isVerified === false) {
+      window.alert("You must verify your email before you can perform this action!");
+
+      setModalContent("You must verify your email before you can perform this action!");
+      setShowModal(true);
+      // setFormData(initialState);
+      setTimeout(() => {
+        setShowModal(false);
+      }, 2000);
+
+      return;
+    }
+    
     let collection = {
       name: newCollectionInfo.collectionName,
       image: newCollectionInfo.collectionImage,
@@ -283,6 +302,7 @@ const Collections = () => {
           </div>
         </div>
       </div>
+      {showModal && <Modal text={modalContent} showModal={true} />}
     </div>
   );
 };

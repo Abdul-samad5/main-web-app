@@ -72,7 +72,7 @@ const Dashboard = () => {
   const [activeComponent, setActiveComponent] = useState([<MyStore />]);
   const tk = Cookies.get("_tksr");
   const id = Cookies.get("_id");
-  const isVerified = Cookies.get("isVerify");
+  const isVerified = Cookies.get("emailVerify");
   const url = Cookies.get("emailUrl");
 
   console.log(typeof isVerified);
@@ -84,7 +84,7 @@ const Dashboard = () => {
   const [isMarkOpen, setIsMarkOpen] = useState(false);
   const [isLogOpen, setIsLogOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-
+  
   function handleClick() {
     setIsNavOpen((prev) => !prev);
   }
@@ -126,10 +126,12 @@ const Dashboard = () => {
       console.log(response, "kk");
       const store_name = response.data.data["store_name"];
       const profileLogo = response.data.data["store_logo"];
+      const emailVerify = response.data.user_data.user_is_active;
+      Cookies.set("emailVerify", emailVerify, { secure: true });
 
       setStoreName(`${store_name}`);
       setStoreLogo(profileLogo);
-      // setEmailUrl(url);
+      setEmailUrl(response.data.user_data.user_email_url);
       // setIsEmailVerified(verifyState);
     }
     fetchData();
@@ -415,8 +417,8 @@ const Dashboard = () => {
                 </button>
               </Link>
             </div>
-            {verifyState === "false" && (
-              <div className="hidden p-6 bg-[#fff9e9] rounded-xl md:flex items-center gap-2 ml-4 mr-4">
+            {verifyState == false && (
+              <div className=" p-6 bg-[#fff9e9] rounded-xl md:flex items-center gap-2 ml-4 mr-4">
                 <AiFillWarning className="text-[#d39f1c]" />
                 <h2 className="text-center">
                   Your Email is not verified. Click{" "}
@@ -425,10 +427,10 @@ const Dashboard = () => {
                   </Link>{' '} */}
                   <span className="text-blue-200 hover:cursor-pointer">
                     <a
-                      href={url}
+                      href={emailUrl}
                       target="_blank"
                       onClick={() => {
-                        setVerifyState("true");
+                        // setVerifyState("true");
                       }}
                     >
                       here

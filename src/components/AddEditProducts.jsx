@@ -16,10 +16,11 @@ function AddEditProduct({productId}) {
   const [isToggled, setIsToggled] = useState(false);
   const [loading, setLoading] = useState(false);
   const [collections, setCollections] = useState([]);
-
+  const tk = Cookies.get("_tksr");
+  const isVerified = Cookies.get("emailVerify");
   const [showModal, setShowModal] = useState(false);
-  const [showButton, setShowButton] = useState(false);
   const [modalContent, setModalContent] = useState(null);
+  // const [showButton, setShowButton] = useState(false);
 
   function changeMessage(status) {
     if (status === 200 || status === 201) {
@@ -102,7 +103,6 @@ function AddEditProduct({productId}) {
   const handleToggle = () => {
     setIsToggled((prevValue) => !prevValue);
   };
-  const tk = Cookies.get("_tksr");
 
   const fetchCollections = async () => {
     try {
@@ -134,10 +134,19 @@ function AddEditProduct({productId}) {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    // if(formData.productCollections === "") {
-    //   window.alert("The product collections must not be empty!");
-    //   return;
-    // }
+
+    if(isVerified === false) {
+      window.alert("You must verify your email before you can perform this action!");
+
+      setModalContent("You must verify your email before you can perform this action!");
+      setShowModal(true);
+      // setFormData(initialState);
+      setTimeout(() => {
+        setShowModal(false);
+      }, 2000);
+
+      return;
+    }
 
     let product = {
       description: formData.productDesc,
@@ -167,7 +176,6 @@ function AddEditProduct({productId}) {
 
       setModalContent(res.data.message);
       setShowModal(true);
-      window.scrollTo(0, -window.scrollY);
       setFormData(initialState);
       setTimeout(() => {
         setShowModal(false);
@@ -185,6 +193,12 @@ function AddEditProduct({productId}) {
 
   async function handleUpdateProduct(event, id, product) {
     event.preventDefault();
+
+    if(isVerified === false) {
+      window.alert("You must verify your email before you can perform this action!");
+      return;
+    }
+
     try {
       const res = await updateProduct(id, product);
       if (!res.statusText === "OK") return;

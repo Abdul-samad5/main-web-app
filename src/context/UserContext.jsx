@@ -24,6 +24,7 @@ const UserContextProvider = ({ children }) => {
     Cookies.remove("emailUrl", { path: "" });
     Cookies.remove("isVerify", { path: "" });
     Cookies.remove("user_type", { path: "" });
+    Cookies.remove("emailVerify", { path: "" })
   };
 
   useEffect(() => {
