@@ -7,29 +7,24 @@ const CartContextProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
   const [quantity, setQuantity] = useState(1);
 
-  const handleIncrease = () => {
-    if (quantity < 0) {
-      return 1;
-    } else {
-      setQuantity(quantity + 1);
-    }
-  };
-  const handleDecrease = () => {
-    if (quantity < 0) {
-      return 1;
-    } else {
-      setQuantity(quantity - 1);
-    }
-  };
-
   const addToCart = (id) => {
     // const filterId = products.map((product) => product.id);
+
+    const existingItem = cartItems.find((item) => item.id === id);
     const singleItem = products.find((product) => {
       return product.id === id;
     });
-    setCartItems((prevItem) => {
-      return [...prevItem, singleItem];
-    });
+    if (singleItem) {
+      if (existingItem) {
+        return setCartItems((prevItem) => [...prevItem]);
+      } else {
+        setCartItems((prevItem) => {
+          return [...prevItem, singleItem];
+        });
+      }
+    } else {
+      setCartItems(cartItems);
+    }
   };
 
   const getCartItemsTotal = () => {
@@ -38,6 +33,21 @@ const CartContextProvider = ({ children }) => {
     const totalPrice = prices.reduce((acc, curr) => acc + curr, 0);
 
     return totalPrice * quantity;
+  };
+
+  const handleIncrease = () => {
+    if (quantity < 0) {
+      setQuantity(0);
+    } else {
+      setQuantity(quantity + 1);
+    }
+  };
+  const handleDecrease = () => {
+    if (quantity < 0) {
+      setQuantity(0);
+    } else {
+      setQuantity(quantity - 1);
+    }
   };
 
   const deleteFromCart = (id) => {
@@ -60,11 +70,11 @@ const CartContextProvider = ({ children }) => {
     <CartContext.Provider
       value={{
         products,
-        cartItems,
-        addToCart,
-        deleteFromCart,
         getCartItemsTotal,
+        addToCart,
+        cartItems,
         quantity,
+        deleteFromCart,
         handleIncrease,
         handleDecrease,
       }}

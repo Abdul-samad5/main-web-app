@@ -1,5 +1,4 @@
 import React, { useState, useContext } from "react";
-import { IoIosCart } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
 import { CartContext } from "../context/CartContext";
 import { LoginContext } from "../context/LoginContext";
@@ -44,7 +43,6 @@ const Navbar = () => {
                 viewBox="0 0 24 24"
                 strokeWidth="1.5"
                 stroke="currentColor"
-                aria-hidden="true"
               >
                 <path
                   strokeLinecap="round"
@@ -68,6 +66,7 @@ const Navbar = () => {
               </svg>
             </button>
           </div>
+
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
             <div className="hidden sm:ml-6 sm:block">
               <div className="flex space-x-4">
@@ -137,6 +136,7 @@ const Navbar = () => {
               </button>
             </Link>
 
+
             <div className="relative ml-3">
               <div>
                 <button
@@ -145,8 +145,9 @@ const Navbar = () => {
                   id="user-menu-button"
                   aria-expanded="false"
                   aria-haspopup="true"
-                  onClick={() => setDropDown(prev => !prev)}
+                  onClick={() => setDropDown((prev) => !prev)}
                 >
+
                   <span className="sr-only">Open user menu</span>
                   {/* <img
                     className="h-8 w-8 rounded-full"
@@ -185,13 +186,13 @@ const Navbar = () => {
                   role="menuitem"
                   tabIndex="-1"
                   id="user-menu-item-1"
-                >
                   Settings
                 </a>
                 <a
                   href="#"
                   className="block px-4 py-2 text-sm text-gray-700"
                   role="menuitem"
+
                   tabIndex="-1"
                   onClick={() => handleLogOut()}
                   id="user-menu-item-2"

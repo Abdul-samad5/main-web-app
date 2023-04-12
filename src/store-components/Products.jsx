@@ -60,7 +60,7 @@ const DisplayProducts = ({
     >
       <a href="#">
         <img
-          className="w-[100%] h-[250px]"
+          className="w-[100%] h-[250px] object-center object-cover"
           src={productLogo}
           alt="product image"
         />
