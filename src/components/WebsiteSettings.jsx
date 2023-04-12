@@ -6,6 +6,7 @@ import { BASE_URL, getStoreInfo } from '../services/services';
 import { UserContext } from '../context/UserContext';
 import Cookies from 'js-cookie';
 import { IoLogoTwitter } from 'react-icons/io';
+import Modal from "./Modal";
 
 const WebsiteSettings = () => {
   const [websiteSettings, setWebsiteSettings] = React.useState({
@@ -16,9 +17,26 @@ const WebsiteSettings = () => {
 
   const tk = Cookies.get('_tksr');
   const id = Cookies.get('_id');
+  const [showModal, setShowModal] = useState(false);
+  const [modalContent, setModalContent] = useState(null);
+  const isVerified = Cookies.get("emailVerify");
 
   async function handleSubmit(event) {
     event.preventDefault();
+
+    
+    if(isVerified === false) {
+      window.alert("You must verify your email before you can perform this action!");
+
+      setModalContent("You must verify your email before you can perform this action!");
+      setShowModal(true);
+      // setFormData(initialState);
+      setTimeout(() => {
+        setShowModal(false);
+      }, 2000);
+
+      return;
+    }
 
     let formDetails = {
       store_url: websiteSettings.storeURL,
@@ -151,6 +169,7 @@ const WebsiteSettings = () => {
           </div>
         </form>
       </div>
+      {showModal && <Modal text={modalContent} showModal={true} />}
     </>
   );
 };
