@@ -8,12 +8,13 @@ const UserContextProvider = ({ children }) => {
   const [storeName, setStoreName] = useState("");
   const [storeLogo, setStoreLogo] = useState("");
 
-  const onUserLogin = (token, email, user_id, emailUrl, user_is_active) => {
+  const onUserLogin = (token, email, user_id, emailUrl, user_is_active, type) => {
     Cookies.set("_tksr", token, { secure: true });
     Cookies.set("_email", email, { secure: true });
     Cookies.set("_id", user_id, { secure: true });
     Cookies.set("emailUrl", emailUrl, { secure: true });
     Cookies.set("isVerify", user_is_active, { secure: true });
+    Cookies.set("user_type", type, { secure: true });
   };
 
   const onUserLogOut = () => {
@@ -22,7 +23,9 @@ const UserContextProvider = ({ children }) => {
     Cookies.remove("_id", { path: "" });
     Cookies.remove("emailUrl", { path: "" });
     Cookies.remove("isVerify", { path: "" });
+    Cookies.remove("user_type", { path: "" });
   };
+
   useEffect(() => {
     async function fetchData() {
       const response = await getStoreDetails();

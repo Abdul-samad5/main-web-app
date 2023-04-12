@@ -206,7 +206,7 @@ const Dashboard = () => {
                 className={`${styles.dbNavItemDrop}`}
                 // onClick={(e) => showActiveComponent(e, <AllProducts />)}
                 onClick={(e) => {
-                  showActiveComponent(e, <AllProducts />);
+                  showActiveComponent(e, <AllProducts showActiveComponent={showActiveComponent} handleNavClick={handleClick}/>);
                   handleClick();
                 }}
               >
@@ -409,7 +409,7 @@ const Dashboard = () => {
                 alt="Icon"
                 onClick={handleClick}
               />
-              <Link to={"/store-front"}>
+              <Link to={`/store-front/${storeName.split(" ").join("")}`}>
                 <button className={`${styles.buttonOutline} text-[14px] p-1`}>
                   Go to store front
                 </button>

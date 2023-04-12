@@ -42,11 +42,11 @@ function App() {
 
         <Route path="/create-store" element={<CreateStore />} />
         <Route
-          path="/store-front"
+          path="/store-front/:storeName"
           element={
-            <PreventLogin>
+            // <PreventLogin>
               <StoreFront />
-            </PreventLogin>
+            // </PreventLogin>
           }
         />
         <Route

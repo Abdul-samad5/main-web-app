@@ -6,9 +6,10 @@ import { styles } from '../constants/index';
 import { BASE_URL } from '../services/services';
 import Cookies from 'js-cookie';
 import axios from 'axios';
+import { AddEditProducts } from './index';
 
 const details = ['Product name', 'Price', 'Status:', 'Inventory:', 'Action'];
-const MyOrders = () => {
+const AllProducts = ({ showActiveComponent, handleNavClick }) => {
   const [myProducts, setMyProducts] = useState([]);
   const [reRender, setRender] = useState(false);
 
@@ -89,6 +90,10 @@ const MyOrders = () => {
                   ? 'rounded bg-white shadow-lg relative top-4 px-3 h-24 w-26'
                   : 'hidden'
               }
+              onClick={(e) => {
+                showActiveComponent(e, <AddEditProducts productId={id}/>);
+                handleNavClick();
+              }}
             >
               <p className='text-xs cursor-pointer hover:opacity-70 my-2'>
                 Edit product
@@ -153,4 +158,4 @@ const Status = ({ value }) => {
   }
 };
 
-export default MyOrders;
+export default AllProducts;

@@ -10,7 +10,7 @@ import { BASE_URL } from "../services/services";
 import Modal from "./Modal";
 import { useNavigate } from "react-router-dom";
 
-function AddEditProduct() {
+function AddEditProduct({productId}) {
   const navigate = useNavigate();
   // Records if the user has clicked the toggle button in the last form element and accordingly records it
   const [isToggled, setIsToggled] = useState(false);
@@ -28,6 +28,10 @@ function AddEditProduct() {
     if (status === 401) {
       setModalContent("Email or Password Incorrect!");
     }
+    if(status && productId) {
+      setModalContent("Product succesfully updated!");
+    }
+
     // if (status >= 400) {
     //   setModalContent(
     //     'There might be a problem with your Internet Connection! Please try again'
@@ -111,6 +115,23 @@ function AddEditProduct() {
     }
   };
 
+  let updatedProduct = {
+    description: formData.productDesc,
+    title: formData.productTitle,
+    media: formData.productImg,
+    price: formData.price,
+    theme: formData.storeTheme,
+    status: formData.status,
+    collection: formData.productCollections,
+    color: formData.status,
+    size: formData.size,
+    item_unit: formData.itemUnit,
+    stock_count: formData.stockCount,
+    stock_keeping_unit: formData.stockUnit,
+    cost_price: formData.costPrice,
+    discounted_price: formData.discountedPrice,
+  };
+
   async function handleSubmit(event) {
     event.preventDefault();
     // if(formData.productCollections === "") {
@@ -162,14 +183,29 @@ function AddEditProduct() {
     }
   }
 
-  async function handleUpdateProduct(event, id) {
+  async function handleUpdateProduct(event, id, product) {
     event.preventDefault();
     try {
-      const res = await updateProduct(id);
+      const res = await updateProduct(id, product);
       if (!res.statusText === "OK") return;
-      console.log(res);
+      // console.log(res);
+      changeMessage(res.status);
+
+      setModalContent(res.data.message);
+      setShowModal(true);
+      window.scrollTo(0, -window.scrollY);
+      setFormData(initialState);
+      setTimeout(() => {
+        setShowModal(false);
+      }, 2000);
     } catch (err) {
       console.log(err);
+      changeMessage(err.response.status);
+
+      setShowModal(true);
+      setTimeout(() => {
+        setShowModal(false);
+      }, 1000);
     }
   }
 
@@ -220,6 +256,39 @@ function AddEditProduct() {
     fetchCollections();
   }, []);
 
+  useEffect(() => {
+    if(productId) {
+      async function fetchData() {
+        const response = await axios.get(
+          `${BASE_URL}product/${productId}`,
+          { headers: { Authorization: `Bearer ${tk}` } }
+        );
+
+        console.log(response.data.data);
+        const productData = response.data.data;
+        setFormData((prev) => {
+          return {...prev, 
+            productTitle: productData.title,
+            productDesc: productData.description,
+            productImg: productData.media,
+            price: productData.price,
+            discountedPrice: productData.discounted_price,
+            costPrice: productData.cost_price,
+            stockCount: productData.stock_count,
+            stockUnit: productData.stock_keeping_unit,
+            itemUnit: productData.item_unit,
+            productCollections: productData.collection,
+            productStatus: productData.status,
+            storeTheme: productData.theme,
+          }
+        });
+      
+        console.log(response);
+      }
+      fetchData();
+    }
+  }, []);
+
   return (
     <div className="py-2 w-full">
       {/* <Modal text={'modalContent'} showButton={false} /> */}
@@ -234,7 +303,11 @@ function AddEditProduct() {
           </button>
           <button
             className="bg-blue-400 text-white rounded-lg lg:px-8 px-4 py-2.5 mx-1 text-sm"
-            onClick={handleUpdateProduct}
+            onClick={(e) => {
+              if(productId) {
+                handleUpdateProduct(e, productId, updatedProduct)
+              }
+            }}
           >
             Save Changes
           </button>

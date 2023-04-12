@@ -54,8 +54,10 @@ const Login = ({ handleClick }) => {
         const user_id = response.data.data.user.user_id;
         const emailUrl = response.data.data.user.user_email_url;
         const emailVerify = response.data.data.user.user_is_active;
+        const type = response.data.data.type;
+        console.log(type);
         console.log(response);
-        onUserLogin(token, email, user_id, emailUrl, emailVerify);
+        onUserLogin(token, email, user_id, emailUrl, emailVerify, type);
 
         if (response.data.data.user.has_store === false) {
           setLoading(false);
