@@ -9,7 +9,7 @@ import Cookies from "js-cookie";
 
 const StoreFront = () => {
   return (
-    <div>
+    <div className="relative">
       <Navbar />
       <div className="lg:px-16 px-3">
         <Hero />
