@@ -10,6 +10,7 @@ import {
 } from "../services/services";
 import Cookies from "js-cookie";
 import { BASE_URL } from "../services/services";
+import Modal from "./Modal";
 
 const details = ["Collection name", "Product", "Action"];
 const Collections = () => {
