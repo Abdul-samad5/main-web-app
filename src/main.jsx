@@ -5,7 +5,7 @@ import "./index.css";
 import App from "./App";
 import UserContext from "./context/UserContext";
 import CartContextProvider from "./context/CartContext";
-import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
+import * as serviceWorker from "./serviceWorker";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -19,4 +19,4 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   </React.StrictMode>
 );
 
-serviceWorkerRegistration.register();
+serviceWorker.register();
