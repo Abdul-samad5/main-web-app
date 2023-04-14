@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { postUser } from "../services/services";
 import Modal from "./Modal";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { userLogin } from '../services/services';
+import { UserContext } from "../context/UserContext";
 
 const SignUp = ({ handleClick }) => {
   const navigate = useNavigate();
@@ -10,6 +12,7 @@ const SignUp = ({ handleClick }) => {
   const [showModal, setShowModal] = useState(false);
   const [modalContent, setModalText] = useState(null);
   const [showAlert, setShowAlert] = useState(false);
+  const { onUserLogin } = useContext(UserContext);
 
   const alertState = {
     bgColor: "",
@@ -38,6 +41,35 @@ const SignUp = ({ handleClick }) => {
     });
   }
 
+  async function loginNewUser() {
+    let user = {
+      email: formData.email,
+      password: formData.password,
+    };
+
+    try {
+      const response = await userLogin(user);
+      if (!response.statusText === 'OK') return;
+
+      if (response) {
+        const token = response.data.data.access;
+        const email = response.data.data.user.email;
+        const user_id = response.data.data.user.user_id;
+        const emailUrl = response.data.data.user.user_email_url;
+        const type = response.data.data.type;
+        const emailVerify = response.data.data.user.user_is_active;
+
+        console.log(type);
+        console.log(response);
+
+        onUserLogin(token, email, user_id, emailUrl, emailVerify, type);
+        navigate('/dashboard');
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   async function formSubmit(e) {
     e.preventDefault();
     const user = {
@@ -63,14 +95,16 @@ const SignUp = ({ handleClick }) => {
       console.log(res);
       if (!res.status === 201 || res.status === 200) return;
       setShowModal(true);
-      setModalText("Registration Successful!Navigating to the Login Page...");
+      setModalText("Registration Successful! Navigating to the Dashboard...");
 
       setTimeout(() => {
         setShowModal(false);
+        loginNewUser();
       }, 3000);
-      setTimeout(() => {
-        navigate("/login");
-      }, 3000);
+
+      // setTimeout(() => {
+      //   navigate("/login");
+      // }, 3000);
     } catch (err) {
       setLoading(false);
       if (

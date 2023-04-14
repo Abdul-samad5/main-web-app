@@ -441,7 +441,7 @@ const Dashboard = () => {
               </div>
             )}
             <div className="flex items-center">
-              <div className="relative w-[370px] hidden lg:block">
+              {/* <div className="relative w-[370px] hidden lg:block">
                 <img
                   src={search}
                   alt="Icon"
@@ -452,7 +452,7 @@ const Dashboard = () => {
                   placeholder="Search for customers,orders,products..."
                   className="w-full placeholder:text-brand-gray-400 bg-inherit border py-4 px-8 rounded-xl"
                 />
-              </div>
+              </div> */}
               <div className="mr-[24px] ml-2">
                 <img src={bell} alt="Icon" className="w-[18px]" />
               </div>

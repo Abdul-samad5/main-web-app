@@ -46,7 +46,7 @@ const MyCustomers = () => {
     // }
 
     useEffect(() => {
-        fetchCustomers(email, token);
+        // fetchCustomers(email, token);
     }, []);
 
     return (
