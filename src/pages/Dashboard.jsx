@@ -56,8 +56,8 @@ import { getStoreInfo, userLogout } from "../services/services";
 import Cookies from "js-cookie";
 import { User } from "../constants/config";
 
-function DbIcon({ src }) {
-  return <img src={src} className="w-[16px]" alt="Icon" />;
+function DbIcon({ src, click }) {
+  return <img src={src} className="w-[16px]" alt="Icon" onClick={(e) => click(e)}/>;
 }
 
 const Dashboard = () => {
@@ -144,6 +144,12 @@ const Dashboard = () => {
     return;
   }, [tk]);
 
+  const editStoreDetails = (e) => {
+    showActiveComponent(e, <StoreDetails />);
+    handleClick();
+    setIsSettingsOpen(prev => prev = true);
+  }
+
   return (
     <div className="w-full overflow-hidden">
       <div className="w-full flex">
@@ -164,7 +170,8 @@ const Dashboard = () => {
           </div>
           <div className="border-b flex items-center justify-between p-4 mb-[10px]">
             <h1 className="font-bold text-[16px] ">{storeName}</h1>
-            <DbIcon src={edit} />
+            <DbIcon src={edit} click={editStoreDetails} />
+            {/* onClick={(event) => editStoreDetails(event)} */}
           </div>
           <div
             className={`${styles.dbNavItem}`}
