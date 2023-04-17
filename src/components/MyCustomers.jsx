@@ -6,7 +6,7 @@ import { BASE_URL } from '../services/services';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 
-const details = ["Customer name", "Email", "No of Orders", "Location", "Total amount spent", "Action"];
+const details = ["Name", "Email", "Phone", "Last seen"];
 // const details = ["id", 	"Payment ID",	"User Email", "Reference Code", "Amount", "Status"];
 
 const MyCustomers = () => {

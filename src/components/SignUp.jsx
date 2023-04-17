@@ -99,7 +99,7 @@ const SignUp = ({ handleClick }) => {
 
       setTimeout(() => {
         setShowModal(false);
-        // loginNewUser();
+        loginNewUser();
       }, 3000);
 
       // setTimeout(() => {

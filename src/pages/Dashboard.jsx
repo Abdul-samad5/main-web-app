@@ -38,7 +38,6 @@ import {
   Collections,
   MyCustomers,
   TransactionHistory,
-  StoreReviews,
   StoreDetails,
   Discounts,
   WebsiteSettings,
@@ -47,6 +46,7 @@ import {
   MyStore,
   Finances,
   UserAccount,
+  SalesTarget,
 } from "../components";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { LoginContext } from "../context/LoginContext";
@@ -308,12 +308,12 @@ const Dashboard = () => {
             className={`${styles.dbNavItem}`}
             // onClick={(e) => showActiveComponent(e, <StoreReviews />)}
             onClick={(e) => {
-              showActiveComponent(e, <StoreReviews />);
+              showActiveComponent(e, <SalesTarget />);
               handleClick();
             }}
           >
             <DbIcon src={review} />
-            <h2>Store reviews</h2>
+            <h2>Sales target</h2>
           </div>
           <div
             className={`${styles.dbNavItem}`}
@@ -491,7 +491,7 @@ const Dashboard = () => {
                   >
                     <path d="M160 96c17.7 0 32-14.3 32-32s-14.3-32-32-32H96C43 32 0 75 0 128V384c0 53 43 96 96 96h64c17.7 0 32-14.3 32-32s-14.3-32-32-32H96c-17.7 0-32-14.3-32-32l0-256c0-17.7 14.3-32 32-32h64zM504.5 273.4c4.8-4.5 7.5-10.8 7.5-17.4s-2.7-12.9-7.5-17.4l-144-136c-7-6.6-17.2-8.4-26-4.6s-14.5 12.5-14.5 22v72H192c-17.7 0-32 14.3-32 32l0 64c0 17.7 14.3 32 32 32H320v72c0 9.6 5.7 18.2 14.5 22s19 2 26-4.6l144-136z" />
                   </svg>
-                  <p className="text-xs text-black  my-auto mx-3 opacity-60 group-hover:opacity-100">
+                  <p className="text-xs text-black my-auto mx-3 hover:cursor-pointer opacity-60 group-hover:opacity-80">
                     Sign out
                   </p>
                 </div>

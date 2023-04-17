@@ -68,7 +68,7 @@ const MyStore = () => {
               </div>
 
               <div>
-                <p className='text-xs text-white'>Store setup status</p>
+                <p className='text-xs text-white'>Store rating</p>
                 <p className='font text-white text-xl'>Impressive</p>
               </div>
             </div>
@@ -126,7 +126,7 @@ const MyStore = () => {
 
         <span className='bg-white rounded lg:w-1/2 shadow-lg px-3 py-3'>
           <p className='text-2xl font-bold text-black-800'>
-            Total conversion rates
+            Store target status
           </p>
         </span>
       </div>

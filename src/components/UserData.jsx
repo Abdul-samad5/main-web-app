@@ -129,7 +129,7 @@ const UserData = ({
               </div>
             );
             // Displays the details of each store review if the type of the component equals Store Reviews.
-          } else if (type === "Store Reviews") {
+          } else if (type === "Sales target") {
             return (
               <div className="mb-3">
                 <Children
