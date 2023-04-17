@@ -6,7 +6,7 @@ import ResetPassword from './ResetPassword';
 import AddEditProducts from './AddEditProducts';
 import Collections from './Collections';
 import MyCustomers from './MyCustomers';
-import StoreReviews from './StoreReviews';
+import SalesTarget from './SalesTarget';
 import TransactionHistory from './TransactionHistory';
 import UserData from './UserData';
 import StoreDetails from './StoreDetails';
@@ -32,7 +32,7 @@ export {
   AddEditProducts,
   Collections,
   MyCustomers,
-  StoreReviews,
+  SalesTarget,
   TransactionHistory,
   UserData,
   StoreDetails,

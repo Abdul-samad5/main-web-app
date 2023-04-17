@@ -43,7 +43,7 @@ const UserData = ({
   return (
     <div className="rounded shadow-xl w-full lg:px-5 px-2 py-3 lg:mx-auto my-auto h-auto">
       {/* Search Bar */}
-      <div className="flex justify-between">
+      <div className={`flex justify-between ${type === "Sales target" ? "hidden" : ""}`}>
         <span className="w-2/5">
           <input
             placeholder={`Search ${type}`}
@@ -129,7 +129,7 @@ const UserData = ({
               </div>
             );
             // Displays the details of each store review if the type of the component equals Store Reviews.
-          } else if (type === "Store Reviews") {
+          } else if (type === "Sales target") {
             return (
               <div className="mb-3">
                 <Children

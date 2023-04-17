@@ -74,8 +74,8 @@ const StoreDetails = () => {
       }, 1000);
       makeEmpty();
     } catch (error) {
-      // console.log(error);
-      console.log(error.response.data.code);
+      console.log(error);
+      // console.log(error.response.data.code);
       if (error.response.data.code === 'user_inactive') {
         setShowModal(true);
         setModalContent('please verify email to create store');
