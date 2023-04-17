@@ -95,16 +95,16 @@ const SignUp = ({ handleClick }) => {
       console.log(res);
       if (!res.status === 201 || res.status === 200) return;
       setShowModal(true);
-      setModalText("Registration Successful! Navigating to the Dashboard...");
+      setModalText("Registration Successful! Navigating to the Login page...");
 
       setTimeout(() => {
         setShowModal(false);
-        loginNewUser();
+        // loginNewUser();
       }, 3000);
 
-      // setTimeout(() => {
-      //   navigate("/login");
-      // }, 3000);
+      setTimeout(() => {
+        navigate("/login");
+      }, 3000);
     } catch (err) {
       setLoading(false);
       if (
