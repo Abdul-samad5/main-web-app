@@ -7,10 +7,12 @@ import Footer from "./Footer";
 import Navbar from "./Navbar";
 import { CartContext } from "../context/CartContext";
 import PaymentModal from "./PaymentModal";
+import { UserContext } from "../context/UserContext";
 
 const Checkout = () => {
   const [showModal, setShowModal] = useState(false);
   const { cartItems, getCartItemsTotal } = useContext(CartContext);
+  const { storeName, storeLogo } = useContext(UserContext);
 
   const [formData, setFormData] = useState({
     email: "",
@@ -81,7 +83,7 @@ const Checkout = () => {
       <div className="lg:flex lg:flex-row w-full flex-col-reverse">
         <div className="lg:w-3/5 lg:px-20 lg:px-10 px-8 w-full py-10">
           <h1 className="text-black opacity-60 text-2xl text-center mb-6">
-            emmystore
+            {storeName}
           </h1>
 
           {/* Contact information and shipping address */}
