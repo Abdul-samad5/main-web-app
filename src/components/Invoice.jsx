@@ -1,7 +1,10 @@
-import React, {useState}from 'react';
-import {styles} from '../constants/index';
+import React, { useState, useEffect }from 'react';
+import { styles } from '../constants/index';
 import { noCollections, naira, invoice_styles} from '../assets';
 import html2canvas from 'html2canvas';
+import axios from 'axios';
+import { BASE_URL } from '../services/services';
+import Cookies from 'js-cookie';
 
 const Invoice = ({}) => {
     const [getStarted, setGetStarted] = useState(true);
@@ -11,7 +14,6 @@ const Invoice = ({}) => {
         invoice: false,
         footer: false
     });
-
     const [invoiceDetails, setInvoiceDetails] = useState({
         logo: "",
         invoiceNo: "#000001",
@@ -20,14 +22,22 @@ const Invoice = ({}) => {
         customerEmail: "",
         customerAddress: "",
         customerName: "",
-        items: [],
-        unitPrice: "",
-        quantity: "",
-        itemName: "",
+        invoiceBody: [
+            {
+                id: 0,
+                itemName: "",
+                unitPrice: "",
+                quantity: "",
+            }
+        ],
         vat: 0,
         discount: 0,
         subTotal: 0
     });
+    const [storeName, setStoreName] = useState("");
+    const [storeLogo, setStoreLogo] = useState("");
+    const [storeEmail, setStoreEmail] = useState("");
+    const tk = Cookies.get("_tksr");
 
     const handleToggle = (value) => {
         setSectionToggled(prev => {
@@ -48,25 +58,63 @@ const Invoice = ({}) => {
     }
 
     const addNewField = () => {
-        const array = invoiceDetails.items;
+        const array = invoiceDetails.invoiceBody;
         array.push({
-            itemName: invoiceDetails.itemName, 
-            quantity: invoiceDetails.quantity, 
-            unitPrice: invoiceDetails.unitPrice
+            id: null,
+            itemName: "", 
+            quantity: null, 
+            unitPrice: null,
         });
         
         console.log(array);
         setInvoiceDetails((prev) => {
-            return {...prev, items: array}
+            return {...prev, invoiceBody: array}
         });
     }
 
-    const handleInput = (event) => {
+    const handleInput = (event, index) => {
         const {name, value} = event.target;
+
+        const calcSubTotal = invoiceDetails.invoiceBody.reduce((total, current) => {
+            return total += current.unitPrice;
+        }, 0);
+
+        const total = invoiceDetails.invoiceBody.reduce((total, current) => {
+            return total = total + (current.quantity * current.unitPrice);
+        }, 0);
+
+        if(name === "itemName" || name === "unitPrice" || name === "quantity" ) {
+            let newArray = invoiceDetails.invoiceBody.map((obj, arrayIndex) =>
+                arrayIndex === index ? { ...obj, [name]: value } : obj
+            );
+            
+            setInvoiceDetails((prev) => {
+                return {...prev, invoiceBody: newArray, subTotal: calcSubTotal}
+            });
+        }
+        
         setInvoiceDetails((prev) => {
-            return {...prev, [name]: value}
+            return {...prev, [name]: value, subTotal: calcSubTotal }
         });
+        
     }
+
+    useEffect(() => {
+        async function fetchData() {
+          const response = await axios.get(
+            `${BASE_URL}store_settings/store_details`,
+            { headers: { Authorization: `Bearer ${tk}` } }
+          );
+          const store_name = response.data.data["store_name"];
+          const profileLogo = response.data.data["store_logo"];
+          const store_email = response.data.data["store_email"];
+    
+          setStoreName(`${store_name}`);
+          setStoreLogo(profileLogo);
+          setStoreEmail(`${store_email}`);
+        }
+        fetchData();
+      }, []);
 
     function downloadInvoice() {
         const screenshotTarget = document.getElementById("invoice");
@@ -109,11 +157,11 @@ const Invoice = ({}) => {
                            
                             <div className={sectionToggled.header ? 'mt-5' : "hidden"}>
                                 {/* Responsible for selecting a logo to be added to the invoice  */}
-                                <span className='flex justify-between border-b border-grey-600 px-3 pb-3'>
+                                {/* <span className='flex justify-between border-b border-grey-600 px-3 pb-3'>
                                     <p className='text-sm text-slate-500'>Logo</p>
                                     <input type="file" className='hidden' id='addLogo' onChange={selectImage} accept="image/*"/>
                                     <label className='text-xs my-auto text-brand-primary hover:opacity-50 hover:cursor-pointer' htmlFor='addLogo' >+ Add logo</label>
-                                </span>
+                                </span> */}
 
                                 <div className='px-3 mt-3'>
                                     {/* Section for selecting fields - and entering the values - to be added to the header of the invoice being prepared. */}
@@ -138,26 +186,28 @@ const Invoice = ({}) => {
                                     </span>
 
                                     {/* Section for Reference number */}
-                                    <span className='w-full mt-3 block'>
+                                    {/* <span className='w-full mt-3 block'>
                                         <span className='flex justify-between w-1/2'>
                                             <input type="checkbox" name="Invoice date" id="invoiceDate" className='my-auto'/>
                                             <label htmlFor="invoiceDate" className='text-base my-auto text-slate-500'>Reference number</label>
                                         </span>
-                                        {/* <input type="date" className='w-1/2 mt-2 border border-slate-200 px-2 py-2 rounded'/> */}
-                                    </span>
+                                        
+                                    </span> */}
+                                    {/* <input type="date" className='w-1/2 mt-2 border border-slate-200 px-2 py-2 rounded'/> */}
 
                                     {/* Section for Tracking number */}
-                                    <span className='w-full mt-3 block'>
+                                    {/* <span className='w-full mt-3 block'>
                                         <span className='flex justify-between w-1/2'>
                                             <input type="checkbox" name="Invoice date" id="invoiceDate" className='my-auto'/>
                                             <label htmlFor="invoiceDate" className='text-base my-auto text-slate-500'>Tracking number</label>
                                         </span>
-                                        {/* <input type="date" className='w-1/2 mt-2 border border-slate-200 px-2 py-2 rounded'/> */}
-                                    </span>
+                                       
+                                    </span> */}
+                                     {/* <input type="date" className='w-1/2 mt-2 border border-slate-200 px-2 py-2 rounded'/> */}
 
-                                    <p className='text-brand-primary text-right hover:cursor-pointer hover:opacity-40 w-auto text-base mt-6'>
+                                    {/* <p className='text-brand-primary text-right hover:cursor-pointer hover:opacity-40 w-auto text-base mt-6'>
                                         + Add new field
-                                    </p>
+                                    </p> */}
                                 </div>
                             </div>
                         </div>
@@ -178,11 +228,11 @@ const Invoice = ({}) => {
                                 <div className='px-3 w-full h-auto py-2 '>
                                     <span className='flex justify-between w-full'>
                                         <span>
-                                            <p id='customerName' className='text-sm text-black mb-2'>Michelline</p>
+                                            <p id='customerName' className='text-sm text-black mb-2'>{storeName}</p>
                                             <p id='customerAddress' className='text-sm text-slate-300 my-2'>Nigeria</p>
-                                            <p id='customerEmail' className='text-sm text-slate-300 my-2'>yetti@gmail.org</p>
+                                            <p id='customerEmail' className='text-sm text-slate-300 my-2'>{storeEmail}</p>
                                         </span>
-                                        <p className='text-sm text-brand-primary text-center hover:opacity-40 hover:cursor-pointer'>Edit your business info</p>
+                                        {/* <p className='text-sm text-brand-primary text-center hover:opacity-40 hover:cursor-pointer'>Edit your business info</p> */}
                                     </span>
                                     
                                 </div>
@@ -197,41 +247,45 @@ const Invoice = ({}) => {
                             </span>
 
                             <div className={sectionToggled.invoice ? 'mt-5' : "hidden"}>
-                                <div className='w-full px-3 py-4'>
-                                    <select className={`${styles.inputBox} w-full px-3`} value={invoiceDetails.itemName} placeholder="Choose customers" name="itemName" onChange={handleInput}>
-                                        <option>Add an item</option>
-                                        <option>Sneakers</option>
-                                        <option>Headphones</option>
-                                    </select>
-
-                                    <div className='jusfity-between flex w-full mt-5'>
-                                        <span className='mx-1 w-1/2'>
-                                            <label htmlFor="unitPrice" className='text-grey-300 block text-sm'>Unit Price</label>
-                                            <input type="text" className={`${styles.inputBox} w-full px-3`} value={invoiceDetails.unitPrice} name="unitPrice" onChange={handleInput}/>
-                                        </span>
-
-                                        <span className='mx-1 w-1/2'>
-                                            <label htmlFor="quantity" className='text-grey-300 block text-sm'>Quantity</label>
-                                            <input type="text" className={`${styles.inputBox} w-full px-3`} value={invoiceDetails.quantity} name="quantity" onChange={handleInput}/>
-                                        </span>
-                                    </div>
-
-                                    <span className='mt-5 block'>
-                                        <label htmlFor="total" className='text-grey-300 block text-sm'>Total</label>
-                                        <input type="text" className={`${styles.inputBox} w-full pl-8 pr-3 bg-blue-100 opacity-70`} disabled value={invoiceDetails.unitPrice * invoiceDetails.quantity} placeholder="100000.00" id="total"/>
-                                        <img src={naira} alt="" className='w-3 h-3 relative left-3 bottom-7'/>
-                                    </span>
-
-                                    <p onClick={addNewField} className='text-brand-primary text-right hover:cursor-pointer hover:opacity-40 w-auto text-sm mt-2'>
-                                        + Add new field
-                                    </p>
-                                </div>
-
+                                {invoiceDetails.invoiceBody.map((item, index) => {
+                                    return (
+                                        <div key={index}>
+                                            <div className='w-full px-3 py-4 border border-slate-200'>
+                                                <select className={`${styles.inputBox} w-full px-3`} value={invoiceDetails.invoiceBody[index].itemName} placeholder="Choose customers" name="itemName" onChange={(event) => handleInput(event, index)}>
+                                                    <option>Add an item</option>
+                                                    <option>Sneakers</option>
+                                                    <option>Headphones</option>
+                                                </select>
+            
+                                                <div className='jusfity-between flex w-full mt-5'>
+                                                    <span className='mx-1 w-1/2'>
+                                                        <label htmlFor="unitPrice" className='text-grey-300 block text-sm'>Unit Price</label>
+                                                        <input type="text" className={`${styles.inputBox} w-full px-3`} value={invoiceDetails.invoiceBody[index].unitPrice} name="unitPrice" onChange={(event) => handleInput(event, index)}/>
+                                                    </span>
+            
+                                                    <span className='mx-1 w-1/2'>
+                                                        <label htmlFor="quantity" className='text-grey-300 block text-sm'>Quantity</label>
+                                                        <input type="text" className={`${styles.inputBox} w-full px-3`} value={invoiceDetails.invoiceBody[index].quantity} name="quantity" onChange={(event) => handleInput(event, index)}/>
+                                                    </span>
+                                                </div>
+            
+                                                <span className='mt-5 block'>
+                                                    <label htmlFor="total" className='text-grey-300 block text-sm'>Total</label>
+                                                    <input type="text" className={`${styles.inputBox} w-full pl-8 pr-3 bg-blue-100 opacity-70`} disabled value={invoiceDetails.invoiceBody[index].unitPrice * invoiceDetails.invoiceBody[index].quantity} placeholder="100000.00" id="total"/>
+                                                    <img src={naira} alt="" className='w-3 h-3 relative left-3 bottom-7'/>
+                                                </span> 
+                                            </div>
+                                        </div>
+                                    )
+                                })}
+                                <p onClick={addNewField} className='text-brand-primary px-3 py-3 text-right hover:cursor-pointer hover:opacity-40 w-auto text-sm mt-2'>
+                                    + Add new field
+                                </p>
                                 <div className='w-full h-auto py-2 border-t border-grey-800'>
                                     <div className='w-full px-3'>
                                         <span className='mt-5 block w-full'>
                                             <label htmlFor="subTotal" className='text-grey-300 block text-sm mb-1'>Sub-Total</label>
-                                            <input type="text" className={`${styles.inputBox} w-full pl-8 pr-3 bg-blue-100 opacity-70`} disabled placeholder="100000.00" id="subTotal"/>
+                                            <input type="text" className={`${styles.inputBox} w-full pl-8 pr-3 bg-blue-100 opacity-70`} disabled value={invoiceDetails.subTotal} placeholder="100000.00" id="subTotal"/>
                                             <img src={naira} alt="" className='w-3 h-3 relative left-3 bottom-7'/>
                                         </span>
 
@@ -312,8 +366,8 @@ const Invoice = ({}) => {
                                 <p className='text-sm text-brand-primary float-right mb-6'>Invoice</p>
 
                                 <div className='flex justify-between w-full'>
-                                    <img src={invoiceDetails.logo} alt="Image Chosen" className={invoiceDetails.logo === "" ? "hidden" : "rounded w-2/5 h-24 shadow-lg bg-grey-800"}/>
-                                    <div className={invoiceDetails.logo != "" ? "hidden" : 'rounded w-2/5 h-24 shadow-lg bg-slate-200'}></div>
+                                    <img src={storeLogo} alt="Image Chosen" className={storeLogo === "" ? "hidden" : "rounded w-2/5 h-24 shadow-lg bg-grey-800"}/>
+                                    <div className={storeLogo != "" ? "hidden" : 'rounded w-2/5 h-24 shadow-lg bg-slate-200'}></div>
 
                                     <div className='w-2/5 my-auto'>
                                         <span className='flex justify-between block'>
@@ -364,7 +418,7 @@ const Invoice = ({}) => {
                                     </div>
 
                                     <div>
-                                        {invoiceDetails.items.map((item, index) => {
+                                        {invoiceDetails.invoiceBody.map((item, index) => {
                                             return (
                                                 <Item itemName={item.itemName} key={index} quantity={item.quantity} unitPrice={item.unitPrice}/>
                                             )
