@@ -125,7 +125,7 @@ const MyStore = () => {
         </span>
 
         <div className='bg-white rounded lg:w-1/2 shadow-lg my-4 lg:my-0 px-3 py-3'>
-          <p className='text-2xl font-bold  text-black-800'>
+          <p className='text-2xl font-bold pb-24 lg:pb-0 text-black-800'>
             Store target status
           </p>
         </div>
