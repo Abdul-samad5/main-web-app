@@ -30,9 +30,9 @@ function App() {
         <Route
           path="/dashboard"
           element={
-            <PreventLogin>
+            // <PreventLogin>
               <Dashboard />
-            </PreventLogin>
+            // </PreventLogin>
           }
         />
 

@@ -138,10 +138,10 @@ const Dashboard = () => {
   }, []);
 
   useEffect(() => {
-    if (!tk) {
-      navigate("/");
-    }
-    return;
+    // if (!tk) {
+    //   navigate("/");
+    // }
+    // return;
   }, [tk]);
 
   const editStoreDetails = (e) => {
