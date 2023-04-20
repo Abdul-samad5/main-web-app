@@ -127,7 +127,32 @@ const Invoice = ({}) => {
             anchor.click();
             anchor.remove();
         });
+    }
 
+    function shareInvoice() {
+        const target = document.getElementById("invoice");
+        let image;
+
+        html2canvas(target).then((canvas) => {
+            image = canvas.toDataURL("image/png");
+        });
+
+        if(!window.navigator.canShare) {
+            window.alert("Your browser does not support this feature!");
+            return;
+        } 
+        
+        if(window.navigator.canShare({ image })) {
+            navigator.share({
+                image,
+                title: "Invoice",
+                text: "invoice images",
+            }).then(() => {
+                console.log("Thanks for sharing!");
+            }).catch((error) => console.log(error));
+        } else {
+            window.alert("Your system does not support this!");
+        }
     }
 
     return (
@@ -472,7 +497,8 @@ const Invoice = ({}) => {
                         </div>
                     </div>
                 </div>
-                <div className={`${styles.button}`} onClick={downloadInvoice}>Download Incoice</div>
+                <div className={`${styles.button} mt-4`} onClick={downloadInvoice}>Download Incoice</div>
+                <div className={`${styles.button} mt-4`} onClick={shareInvoice}>Share Incoice</div>
             </div>
         </div>
     )
