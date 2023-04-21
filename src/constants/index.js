@@ -1,7 +1,7 @@
 // all reusable Tailwind styles
 const styles = {
   button:
-    "py-[10px] w-full flex justify-center px-[32px] bg-brand-primary text-white rounded-[8px] hover:bg-brand-secondary transition:colors duration-500",
+    "py-[10px] w-full flex justify-center px-[32px] bg-brand-primary hover:cursor-pointer text-white rounded-[8px] hover:bg-brand-secondary transition:colors duration-500",
   buttonOutline:
     "py-3 px-2 bg-inherit text-[10px] text-brand-primary md:text-[15px] hover:text-white rounded-[5px] hover:bg-brand-primary transition:colors duration-500 border border-brand-primary",
   stepFormCont: "w-[16.67%] shrink-0 gs_slide px-2",
