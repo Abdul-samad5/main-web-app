@@ -1,4 +1,5 @@
 import React from 'react';
+import { AiFillFacebook, AiOutlineTwitter, AiOutlineWhatsApp } from 'react-icons/ai';
 
 const ShareButtons = ({image}) => {
   const shareOnFacebook = (imageUrl, imageTitle, facebookImage) => {
@@ -44,10 +45,21 @@ const ShareButtons = ({image}) => {
 
   return (
     <div className='flex justify-between'>
-      {/* <img id="imageToShare" src="image_url_here" alt="image_title_here" /> */}
-      <button id="shareFacebook" onClick={() => handleShareClick('facebook', image)}>Share on Facebook</button>
-      <button id="shareTwitter" onClick={() => handleShareClick('twitter', image)}>Share on Twitter</button>
-      <button id="shareWhatsApp" onClick={() => handleShareClick('whatsapp', image)}>Share on WhatsApp</button>
+      <img id="imageToShare" src="image_url_here" className="hidden" alt="image_title_here" />
+      <div className="flex-col items-center content-center justify-center hover:bg-grey-300" onClick={() => handleShareClick('facebook', image)}>
+        <AiFillFacebook className='flex items-center justify-center'/>
+        <button id="shareFacebook">Share on Facebook</button>
+      </div>
+
+      <div onClick={() => handleShareClick('twitter', image)}>
+        <AiOutlineTwitter/>
+        <button id="shareTwitter" >Share on Twitter</button>
+      </div>
+      
+      <div onClick={() => handleShareClick('whatsapp', image)}>
+        <AiOutlineWhatsApp/>
+        <button id="shareWhatsApp" >Share on WhatsApp</button>
+      </div>
     </div>
   );
 };

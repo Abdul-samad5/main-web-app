@@ -6,6 +6,7 @@ import axios from 'axios';
 import { BASE_URL } from '../services/services';
 import Cookies from 'js-cookie';
 import ShareButtons from './ShareButtons';
+import { AiFillFacebook, AiOutlineTwitter, AiOutlineWhatsApp } from 'react-icons/ai';
 
 const Invoice = ({}) => {
     const [getStarted, setGetStarted] = useState(true);
@@ -116,7 +117,7 @@ const Invoice = ({}) => {
           setStoreEmail(`${store_email}`);
         }
         fetchData();
-      }, []);
+    }, []);
 
     function downloadInvoice() {
         const screenshotTarget = document.getElementById("invoice");
@@ -157,15 +158,80 @@ const Invoice = ({}) => {
         }
     }
 
+    const [url, setUrl] = useState();
+
     const getInvoice = () => {
         const target = document.getElementById("invoice");
-        let image;
+        const imageDisplay =  document.getElementById("imageToShare");
+        let imageUrl;
+        // let image;
 
         html2canvas(target).then((canvas) => {
-            image = canvas.toDataURL("image/png");
-        });
-        return image;
+            // imageDisplay.src = canvas;
+            // imageDisplay.getAttribute("src") = canvas;
+            // imageUrl = canvas.toDataURL("image/png");
+            // imageUrl = canvas;
+            
+            // document.body.appendChild(canvas);
+            // imageUrl = imageDisplay.src;
+        })
+
+        return imageUrl;     
     }
+
+    const shareOnFacebook = (imageUrl, imageTitle) => {
+        const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(imageUrl)}&t=${encodeURIComponent(imageTitle)}`;
+        openShareWindow(url);
+    };
+    
+    const shareOnTwitter = (imageUrl, imageTitle) => {
+        const url = `https://twitter.com/intent/tweet?url=${encodeURIComponent(imageUrl)}&text=${encodeURIComponent(imageTitle)}`;
+        openShareWindow(url);
+    };
+
+    const shareOnWhatsApp = (imageUrl, imageTitle) => {
+        const url = `https://wa.me/?text=${encodeURIComponent(imageTitle + ' ' + imageUrl)}`;
+        openShareWindow(url);
+    };
+
+    const openShareWindow = (url) => {
+        const width = 600;
+        const height = 400;
+        const left = (window.innerWidth / 2) - (width / 2);
+        const top = (window.innerHeight / 2) - (height / 2);
+
+        window.open(url, 'shareWindow', `toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=${width}, height=${height}, top=${top}, left=${left}`);
+    };
+
+    const handleShareClick = (platform) => {
+        const imageElement = document.getElementById('imageToShare');
+        // const imageUrl = imageElement.src;
+        // const imageTitle = imageElement.alt;
+        const imageTitle = "invoice";
+        const target = document.getElementById("invoice");
+        // const imageDisplay =  document.getElementById("imageToShare");
+        // let imageUrl;
+        // let image;
+
+        html2canvas(target).then((canvas) => {
+            // imageDisplay.src = canvas;
+            // imageDisplay.getAttribute("src") = canvas;
+            const imageUrl = canvas.toDataURL("image/png");
+            // imageUrl = canvas;
+            
+            // document.body.appendChild(canvas);
+            // imageUrl = imageDisplay.src;
+            if (platform === 'facebook') {
+                shareOnFacebook(imageUrl, imageTitle);
+            } else if (platform === 'twitter') {
+                shareOnTwitter(imageUrl, imageTitle);
+            } else if (platform === 'whatsapp') {
+                shareOnWhatsApp(imageUrl, imageTitle);
+            }
+        })
+
+        
+    };
 
     return (
         <>
@@ -511,7 +577,7 @@ const Invoice = ({}) => {
                         </div>
                     </div>
                     <div className={`${styles.button} mt-4`} onClick={downloadInvoice}>Download Incoice</div>
-                    <div className={`${styles.button} mt-4 `} onClick={() => setOpen(true)}>Share Incoice</div>
+                    <div className={`${styles.button} mt-4 `} onClick={() => {setOpen(true);}}>Share Incoice</div>
                     
                 </div>
             </div>
@@ -533,10 +599,27 @@ const Invoice = ({}) => {
                             </div>
                             {/*body*/}
                             <div className='relative p-6 flex-auto'>
-                                <p className='my-4 text-slate-500 text-center text-lg leading-relaxed'>
+                                <p className='my-4 text-slate-500 text-center text-lg leading-relaxed'></p>
                                 {/* {text} */}
-                                <ShareButtons image={() => getInvoice()}/>
-                                </p>
+                                {/* <ShareButtons image={getInvoice()}/>
+                                <img id="imageToShare" className="" src={url} alt="image_title_here" /> */}
+                                <div className='flex justify-between'>
+                                    <img id="imageToShare" src={getInvoice()} className="hidden" alt="invoice" />
+                                    <div className="flex-col items-center content-center justify-center hover:bg-grey-300" onClick={() => handleShareClick('facebook')}>
+                                        <AiFillFacebook className='w-10 h-10 mx-auto'/>
+                                        <button id="shareFacebook">Share on Facebook</button>
+                                    </div>
+
+                                    <div onClick={() => handleShareClick('twitter')}>
+                                        <AiOutlineTwitter className='w-10 h-10 mx-auto'/>
+                                        <button id="shareTwitter" >Share on Twitter</button>
+                                    </div>
+                                    
+                                    <div onClick={() => handleShareClick('whatsapp')}>
+                                        <AiOutlineWhatsApp className='w-10 h-10 mx-auto'/>
+                                        <button id="shareWhatsApp" >Share on WhatsApp</button>
+                                    </div>
+                                </div>
                             </div>
                             {/*footer*/}
                             <div className='flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b'>
