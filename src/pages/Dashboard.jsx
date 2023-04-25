@@ -276,10 +276,10 @@ const Dashboard = () => {
               <div
                 className={`${styles.dbNavItemDrop}`}
                 // onClick={(e) => showActiveComponent(e, <Discounts />)}
-                onClick={(e) => {
-                  showActiveComponent(e, <Discounts />);
-                  handleClick();
-                }}
+                // onClick={(e) => {
+                //   showActiveComponent(e, <Discounts />);
+                //   handleClick();
+                // }}
               >
                 <DbIcon src={discounts} />
                 <h2>Discounts</h2>
