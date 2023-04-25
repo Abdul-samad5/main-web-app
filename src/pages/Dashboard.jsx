@@ -138,10 +138,10 @@ const Dashboard = () => {
   }, []);
 
   useEffect(() => {
-    if (!tk) {
-      navigate("/");
-    }
-    return;
+    // if (!tk) {
+    //   navigate("/");
+    // }
+    // return;
   }, [tk]);
 
   const editStoreDetails = (e) => {
@@ -418,7 +418,8 @@ const Dashboard = () => {
                 alt="Icon"
                 onClick={handleClick}
               />
-              <Link to={`/store-front/${storeName.split(" ").join("")}`}>
+              {/* <Link to={`/store-front/${storeName}`}> */}
+              <Link to={`/store-front/${'Emmanuelstore'}`}>
                 <button className={`${styles.buttonOutline} text-[14px] p-1`}>
                   Go to store front
                 </button>

@@ -209,7 +209,7 @@ const Discounts = () => {
                     handleNext={handleNext}></UserData>
 
                 <div className={isVisible ? 'h-full w-full absolute top-0 right-0' : ' -translate-x-full hidden'}>
-                    <div className='h-auto w-1/3 shadow-2xl bg-white float-right px-4 py-3'>
+                    <div className='h-auto lg:w-1/3 w-3/4 shadow-2xl bg-white float-right px-4 py-3'>
                         <span className='cursor-pointer text-2xl float-right block text-slate-300' onClick={toggleAddDiscount}>x</span>
 
                         <div className='mt-10 mx-auto align-center px-5'>
