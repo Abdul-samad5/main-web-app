@@ -124,11 +124,11 @@ const MyStore = () => {
           />
         </span>
 
-        <span className='bg-white rounded lg:w-1/2 shadow-lg px-3 py-3'>
-          <p className='text-2xl font-bold text-black-800'>
+        <div className='bg-white rounded lg:w-1/2 shadow-lg my-4 lg:my-0 px-3 py-3'>
+          <p className='text-2xl font-bold pb-24 lg:pb-0 text-black-800'>
             Store target status
           </p>
-        </span>
+        </div>
       </div>
 
       {/* Product sales box of the My Store component */}
@@ -219,7 +219,7 @@ const MyStore = () => {
 
 const Today = ({ image, type, number, storeData }) => {
   return (
-    <div className='flex flex-col gap-2 bg-white shadow-lg rounded-lg py-4 px-2 mx-1 w-full lg:w-1/3'>
+    <div className='flex flex-col gap-2 bg-white shadow-lg rounded-lg py-4 px-2 my-3 lg:my-0 mx-1 w-full lg:w-1/3'>
       <div className='rounded-full bg-blue-100 w-[32px] h-[32px] flex justify-center items-center'>
         <img src={image} alt='' className='w-4 h-4 mx-auto' />
       </div>

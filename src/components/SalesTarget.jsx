@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { noReviews } from '../assets'; 
-import {styles} from '../constants/index';
+import { styles } from '../constants/index';
 import UserData from './UserData';
 
 // Table Headings of the store review component
@@ -11,15 +11,13 @@ const SalesTarget = () => {
     const [storeReviews, setStoreReviews] = useState([]);
     const [isVisible, setVisisble] = useState(false);
     const [newSalesTarget, setSalesTarget] = useState({
-        discountType: "Product Discount",
-        discountMethod: "",
-        discountTitle: "",
-        discountValue: "",
-        value: 0,
+        targetName: "",
+        amount: 0,
+        interval: "",
         startDate: "",
-        endDate: "",
-        minPurValue: 0
+        endDate: ""
     });
+    const [loading, setLooading] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [modalContent, setModalContent] = useState(null);
 
@@ -74,42 +72,43 @@ const SalesTarget = () => {
             return;
         }
       
-        let discountInfo = {
-            "discount_type": newDiscountInfo.discountType,
-            "discount_method": newDiscountInfo.discountMethod,
-            "discount_code": newDiscountInfo.discountTitle,
-            "discount_value": newDiscountInfo.discountValue,
-            "value": newDiscountInfo.value,
-            "start_date": newDiscountInfo.startDate.toString(),
-            "end_date": newDiscountInfo.endDate.toString(),
-            "minimum_purchase_value": newDiscountInfo.minPurValue
-        }
+        // let discountInfo = {
+        //     "discount_type": newDiscountInfo.discountType,
+        //     "discount_method": newDiscountInfo.discountMethod,
+        //     "discount_code": newDiscountInfo.discountTitle,
+        //     "discount_value": newDiscountInfo.discountValue,
+        //     "value": newDiscountInfo.value,
+        //     "start_date": newDiscountInfo.startDate.toString(),
+        //     "end_date": newDiscountInfo.endDate.toString(),
+        //     "minimum_purchase_value": newDiscountInfo.minPurValue
+        // }
+        setLooading(prev => prev = !prev);
 
-        try {
-            const res = await axios.post(`${BASE_URL}marketing/create_discount`, discountInfo, 
-            { headers: { Authorization: `Bearer ${tk}`} });
-            setVisisble(prev => prev = !prev);
-            console.log(res);
-            setDiscountInfo((prev) => {
-                return prev = {
-                    discountType: "",
-                    discountMethod: "",
-                    discountTitle: "",
-                    discountValue: "",
-                    value: 0,
-                    startDate: "",
-                    endDate: "",
-                    minPurValue: 0
-                }
-            });
-        } catch(err) {
-            console.log(err);
-        }
+        // try {
+        //     const res = await axios.post(`${BASE_URL}marketing/create_discount`, discountInfo, 
+        //     { headers: { Authorization: `Bearer ${tk}`} });
+        //     setVisisble(prev => prev = !prev);
+        //     console.log(res);
+        //     setDiscountInfo((prev) => {
+        //         return prev = {
+        //             discountType: "",
+        //             discountMethod: "",
+        //             discountTitle: "",
+        //             discountValue: "",
+        //             value: 0,
+        //             startDate: "",
+        //             endDate: "",
+        //             minPurValue: 0
+        //         }
+        //     });
+        // } catch(err) {
+        //     console.log(err);
+        // }
     }
 
     return (
         <div>
-            <div className='flex justify-between w-full mb-10'>
+            <div className='flex justify-between w-full mb-10 mt-6'>
                 <p className="text-2xl text-black-800 font-bold my-auto">Sales Target</p>
                 <span className='flex justify-between hover:opacity-50 cursor-pointer' onClick={toggleAddSalesTarget}>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" className='fill-blue-400 w-4 mx-1 h-4 my-auto'><path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/></svg>
@@ -119,145 +118,83 @@ const SalesTarget = () => {
             <UserData 
                 type={"Sales target"} 
                 image={noReviews} 
-                infoHead={details} data={storeReviews} 
+                infoHead={details} 
+                data={storeReviews} 
                 children={Children} 
                 handleNext={handleNext}
-                handleSearch={handleStoreReviewSearch}></UserData>
+                handleSearch={handleStoreReviewSearch}
+            ></UserData>
             <div className={isVisible ? 'h-full w-full absolute top-0 right-0' : ' -translate-x-full hidden'}>
-                    <div className='h-auto w-1/3 shadow-2xl bg-white float-right px-4 py-3'>
-                        <span className='cursor-pointer text-2xl float-right block text-slate-300' onClick={toggleAddSalesTarget}>x</span>
+                <div className='h-auto w-1/3 shadow-2xl bg-white float-right px-4 py-3'>
+                    <span className='cursor-pointer text-2xl float-right block text-slate-300' onClick={toggleAddSalesTarget}>x</span>
 
-                        <div className='mt-10 mx-auto align-center px-5'>
-                            <p>Create sales target</p>
+                    <div className='mt-10 mx-auto align-center px-5'>
+                        <p>Create sales target</p>
 
-                            <span className='mt-5 block'>
-                                <h4 className='text-sm'>Discount type</h4>
-                                <select name="discountType" className={`${styles.inputBox} w-full mt-1 px-3`} value={newSalesTarget.discountType} onChange={handleChange}>
-                                    <option>Product Discount</option>
-                                    <option>Order Discount</option>
-                                    <option>Shipping Discount</option>
-                                    <option>Buy and Get One Discount</option>
-                                </select>
-                            </span>
+                        <span className='mt-5 block'>
+                            <h4 className='text-sm'>Target name</h4>
+                            <input 
+                                className={`${styles.inputBox} w-full mt-1 px-3`} 
+                                value={newSalesTarget.discountTitle} 
+                                placeholder="Eg. Boots, Shoes..." 
+                                type="text" 
+                                onChange={handleChange}
+                                name="targetName"/>
+                        </span>
 
-                            <span className='mt-5 block'>
-                                <h4 className='text-sm'>Discount method</h4>
-                                <span className='flex justify-between mt-2'>
-                                    <div >
-                                        <input 
-                                            type="radio"
-                                            name="discountMethod"
-                                            value="Discount Code"
-                                            id='discountCode' 
-                                            onChange={handleChange}/>
+                        <span className='mt-5 block'>
+                            <h4 className='text-sm'>Interval</h4>
+                            <select name="interval" className={`${styles.inputBox} w-full mt-1 px-3`} value={newSalesTarget.interval} onChange={handleChange}>
+                                <option>Daily</option>
+                                <option>Weekly</option>
+                                <option>Monthly</option>
+                                <option>Bi-Monthly</option>
+                                <option>Yearly</option>
+                            </select>
+                        </span>
 
-                                        <label htmlFor="discountCode"> Discount Code</label>
-                                    </div>
+                        <span className='mt-5 block'>
+                            <h4 className='text-sm'>Amount</h4>
+                            <input
+                                type="text"
+                                placeholder="0.00"
+                                value={newSalesTarget.amount} 
+                                name="amount"
+                                onChange={handleChange}
+                                className={`${styles.inputBox} w-full mt-1 pl-8`} ></input>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 448 512"
+                                className="w-4 h-4 relative bottom-8 left-2 fill-gray-500">
+                                <path d="M122.6 46.3c-7.8-11.7-22.4-17-35.9-12.9S64 49.9 64 64V256H32c-17.7 0-32 14.3-32 32s14.3 32 32 32H64V448c0 17.7 14.3 32 32 32s32-14.3 32-32V320H228.2l97.2 145.8c7.8 11.7 22.4 17 35.9 12.9s22.7-16.5 22.7-30.6V320h32c17.7 0 32-14.3 32-32s-14.3-32-32-32H384V64c0-17.7-14.3-32-32-32s-32 14.3-32 32V256H262.5L122.6 46.3zM305.1 320H320v22.3L305.1 320zM185.5 256H128V169.7L185.5 256z" />
+                            </svg>
+                        </span>
 
-                                    <div>
-                                        <input 
-                                            type="radio"
-                                            name="discountMethod"
-                                            value="Automatic Discount"
-                                            id='autoDiscount' 
-                                            onChange={handleChange}/>
+                        <span className='mt-5 block'>
+                            <h4 className='text-sm'>Start date</h4>
+                            <input 
+                                className={`${styles.inputBox} w-full px-3`} 
+                                value={newSalesTarget.startDate} 
+                                type="date" 
+                                name='startDate'
+                                placeholder="YYYY-MM-DD"
+                                onChange={handleChange}/>
+                        </span>
 
-                                        <label htmlFor="autoDiscount"> Automatic Discount </label>
-                                    </div>
-                                </span>   
-                            </span>
-                            
-                            <span className='mt-5 block'>
-                                <h4 className='text-sm'>Discount Code</h4>
-                                <input 
-                                    className={`${styles.inputBox} w-full mt-1 px-3`} 
-                                    value={newSalesTarget.discountTitle} 
-                                    placeholder="Eg. Boots, Shoes..." 
-                                    type="text" 
-                                    onChange={handleChange}
-                                    name="discountTitle"/>
-                            </span>
+                        <span className='mt-5 block'>
+                            <h4 className='text-sm'>End Date</h4>
+                            <input 
+                                className={`${styles.inputBox} w-full mt-1 px-3`} 
+                                value={newSalesTarget.endDate}  
+                                placeholder="YYYY-MM-DD"
+                                type="date"
+                                name='endDate' 
+                                onChange={handleChange}/>
+                        </span>
 
-                            <span className='mt-5 block'>
-                                <h4 className='text-sm'>Discount value</h4>
-                                <span className='flex justify-between mt-2'>
-                                    <div >
-                                        <input 
-                                            type="radio"
-                                            name="discountValue"
-                                            value="Fixed Amount"
-                                            id='discountCode' 
-                                            onChange={handleChange}/>
-
-                                        <label htmlFor="discountCode"> Fixed Amount </label>
-                                    </div>
-
-                                    <div>
-                                        <input 
-                                            type="radio"
-                                            name="discountValue"
-                                            value="Percentage"
-                                            id='autoDiscount' 
-                                            onChange={handleChange}/>
-
-                                        <label htmlFor="autoDiscount"> Percentage </label>
-                                    </div>
-                                </span>   
-                            </span>
-
-                            <span className='mt-5 block'>
-                                <h4 className='text-sm'>Value</h4>
-                                <input
-                                    type="text"
-                                    placeholder="0.00"
-                                    value={newSalesTarget.value} 
-                                    name="value"
-                                    onChange={handleChange}
-                                    className={`${styles.inputBox} w-full mt-1 pl-8 pr-3`} ></input>
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 448 512"
-                                    className="w-4 h-4 relative bottom-8 left-2 fill-gray-500">
-                                    <path d="M122.6 46.3c-7.8-11.7-22.4-17-35.9-12.9S64 49.9 64 64V256H32c-17.7 0-32 14.3-32 32s14.3 32 32 32H64V448c0 17.7 14.3 32 32 32s32-14.3 32-32V320H228.2l97.2 145.8c7.8 11.7 22.4 17 35.9 12.9s22.7-16.5 22.7-30.6V320h32c17.7 0 32-14.3 32-32s-14.3-32-32-32H384V64c0-17.7-14.3-32-32-32s-32 14.3-32 32V256H262.5L122.6 46.3zM305.1 320H320v22.3L305.1 320zM185.5 256H128V169.7L185.5 256z" />
-                                </svg>
-                            </span>
-
-                            <span className='mt-5 block'>
-                                <h4 className='text-sm'>Start date</h4>
-                                <input 
-                                    className={`${styles.inputBox} w-full mt-1 px-3`} 
-                                    value={newSalesTarget.startDate} 
-                                    type="date" 
-                                    name='startDate'
-                                    placeholder="YYYY-MM-DD"
-                                    onChange={handleChange}/>
-                            </span>
-
-                            <span className='mt-5 block'>
-                                <h4 className='text-sm'>End Date</h4>
-                                <input 
-                                    className={`${styles.inputBox} w-full mt-1 px-3`} 
-                                    value={newSalesTarget.endDate}  
-                                    placeholder="YYYY-MM-DD"
-                                    type="date"
-                                    name='endDate' 
-                                    onChange={handleChange}/>
-                            </span>
-
-                            <span className='mt-5 block'>
-                                <h4 className='text-sm'>Minimum purchhase value</h4>
-                                <input 
-                                    className={`${styles.inputBox} w-full mt-1 px-3`} 
-                                    value={newSalesTarget.minPurValue} 
-                                    placeholder="Apply to orders above value set" 
-                                    type="text"
-                                    name="minPurValue"
-                                    onChange={handleChange}/>
-                            </span>
-
-                            <button className={`${styles.button} mt-7 w-full ${newSalesTarget.discountTitle === "" ? "opacity-50" : "opacity-100"}`} onClick={addSalesTarget}> Create discount </button>
-                        </div>
+                        <button className={`${styles.button} mt-7 w-full ${newSalesTarget.targetName === "" ? "opacity-50" : "opacity-100"}`} onClick={addSalesTarget}> {loading ? "Creating..." : "Create discount"} </button>
                     </div>
+                </div>
             </div>
             {showModal && <Modal text={modalContent} showModal={true} />}
         </div>
