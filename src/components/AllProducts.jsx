@@ -122,7 +122,7 @@ const AllProducts = ({ showActiveComponent, handleNavClick }) => {
   };
 
   return (
-    <div>
+    <div className="mt-6">
       <p className={`${styles.componentHeader}`}>All Products</p>
       <UserData
         type={'Products'}

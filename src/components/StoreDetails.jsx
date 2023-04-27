@@ -190,7 +190,7 @@ const StoreDetails = () => {
   }, []);
 
   return (
-    <>
+    <div className="mt-6">
       <p className={`${styles.componentHeader}`}>Store Settings</p>
       <div className='overflow-hidden w-full shadow-2xl'>
         <form
@@ -334,7 +334,7 @@ const StoreDetails = () => {
         </form>
         {showModal && <Modal text={modalContent} showModal={showModal} />}
       </div>
-    </>
+    </div>
   );
 };
 

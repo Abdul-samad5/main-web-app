@@ -45,7 +45,7 @@ const TransactionHistory = () => {
   }, []);
 
   return (
-    <div>
+    <div className="mt-6">
       <p className={`${styles.componentHeader}`}>Transaction History</p>
       <UserData
         type={"Transaction History"}

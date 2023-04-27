@@ -191,8 +191,8 @@ const Collections = () => {
   };
 
   return (
-    <div>
-      <div className="flex justify-between mx-auto w-full mb-10">
+    <div className="mt-6">
+      <div className="flex justify-between mx-auto w-full mb-8">
         <p className="text-2xl text-black-800 font-bold my-auto">Collections</p>
         <span
           className="flex justify-between hover:opacity-50 cursor-pointer"

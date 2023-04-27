@@ -190,7 +190,7 @@ const Discounts = () => {
 
     return (
         <>
-            <div className='w-full'>
+            <div className='w-full mt-6'>
                 <div className='flex justify-between w-full mb-10'>
                     <p className="text-2xl text-black-800 font-bold my-auto">Discounts</p>
                     <span className='flex justify-between hover:opacity-50 cursor-pointer' onClick={toggleAddDiscount}>

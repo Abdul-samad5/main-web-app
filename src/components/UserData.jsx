@@ -80,7 +80,7 @@ const UserData = ({
         </span>
         {infoHead.map((word, index) => {
           return (
-            <p key={index} className="text-sm">
+            <p key={index} className="lg:text-sm text-xs">
               {word}
             </p>
           );
@@ -92,7 +92,7 @@ const UserData = ({
         <img
           src={image}
           alt="No customer found"
-          className={data.length === 0 ? "mx-auto w-auto h-auto" : "hidden"}
+          className={data.length === 0 ? "mx-auto lg:w-auto lg:h-auto h-1/2 w-1/2" : "hidden"}
         />
         <p className={data.length === 0 ? "text-base text-center" : "hidden"}>
           {type === "My Orders" ? "No orders found" : `No ${type} found`}
@@ -233,12 +233,12 @@ const UserData = ({
           >
             Showing 0 to 0 of 0 entries
           </p>
-          <p className="text-blue-700 text-xs mx-2">{currentPage}</p>
+          <p className="text-blue-700 text-xs mx-1">{currentPage}</p>
           <span onClick={handleClick}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 384 512"
-              className="w-4 h-4 fill-slate-300"
+              className="w-3 relative top-1 h-3 fill-slate-300"
             >
               <path d="M342.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L274.7 256 105.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z" />
             </svg>
@@ -247,7 +247,7 @@ const UserData = ({
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 512 512"
-            className="w-4 h-4 fill-slate-300"
+            className="w-3 h-3 relative top-1 fill-slate-300"
           >
             <path d="M470.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L402.7 256 265.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160zm-352 160l160-160c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L210.7 256 73.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0z" />
           </svg>
