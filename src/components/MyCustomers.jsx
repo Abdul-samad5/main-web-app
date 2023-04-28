@@ -50,7 +50,7 @@ const MyCustomers = () => {
     }, []);
 
     return (
-        <div>
+        <div className="mt-6">
             <p className={`${styles.componentHeader}`}>My Customers</p>
             <UserData type={"Customer"} image={noCustomer} handleSearch={handleCustomerSearch} infoHead={details} data={customers} children={Children} handleNext={handleNext}></UserData>
         </div>

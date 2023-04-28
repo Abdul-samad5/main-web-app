@@ -191,8 +191,8 @@ const Collections = () => {
   };
 
   return (
-    <div>
-      <div className="flex justify-between mx-auto w-full mb-10">
+    <div className="mt-6">
+      <div className="flex justify-between mx-auto w-full mb-8">
         <p className="text-2xl text-black-800 font-bold my-auto">Collections</p>
         <span
           className="flex justify-between hover:opacity-50 cursor-pointer"
@@ -228,7 +228,7 @@ const Collections = () => {
             : "h-full w-full bg-red border -translate-x-full bg-slate-100 border-red-400 absolute top-0 right-0"
         }
       >
-        <div className="h-full w-1/3 bg-red shadow-2xl bg-white  absolute top-0 px-5 py-4 right-0">
+        <div className="h-full lg:w-1/3 w-3/4 bg-red shadow-2xl bg-white  absolute top-0 px-5 py-4 right-0">
           <span
             className="cursor-pointer text-2xl float-right block text-slate-300"
             onClick={toggleAddCollection}

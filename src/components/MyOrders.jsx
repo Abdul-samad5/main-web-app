@@ -18,7 +18,7 @@ const MyOrders = () => {
     }
 
     return (
-        <div>
+        <div className='mt-8'>
             <p className={`${styles.componentHeader}`}>My Orders</p>
             <UserData
                 type={"My Orders"}

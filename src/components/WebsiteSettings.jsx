@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { styles } from '../constants/index';
 import axios from 'axios';
 import { facebook, instagram, twitter } from '../assets';
@@ -106,7 +106,7 @@ const WebsiteSettings = () => {
   }, []);
 
   return (
-    <>
+    <div className="mt-6">
       <p className={`${styles.componentHeader}`}>Store Settings</p>
       <div className='overflow-hidden w-full shadow-2xl'>
         <form
@@ -170,7 +170,7 @@ const WebsiteSettings = () => {
         </form>
       </div>
       {showModal && <Modal text={modalContent} showModal={true} />}
-    </>
+    </div>
   );
 };
 

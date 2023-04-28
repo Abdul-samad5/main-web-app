@@ -11,7 +11,7 @@ const UserAccount = () => {
     }
 
     return (
-        <div>
+        <div className="mt-6">
             <p className="text-2xl text-black-800 font-bold w-full mx-auto mb-1">User Account</p>
             
             <div className='w-full rounded-lg shadow-lg h-auto mt-3'>

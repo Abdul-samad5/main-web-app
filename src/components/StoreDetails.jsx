@@ -46,6 +46,7 @@ const StoreDetails = () => {
       store_email: storeDetails.storeEmail,
       store_phone_number: storeDetails.storeContactNumber,
     };
+    setLoading(true);
 
     try {
       let res;
@@ -73,6 +74,7 @@ const StoreDetails = () => {
         setShowModal(false);
       }, 1000);
       makeEmpty();
+      setLoading(false);
     } catch (error) {
       console.log(error);
       // console.log(error.response.data.code);
@@ -85,6 +87,7 @@ const StoreDetails = () => {
         setShowModal(false);
       }, 1500);
       makeEmpty();
+      setLoading(false);
     }
   };
 
@@ -187,7 +190,7 @@ const StoreDetails = () => {
   }, []);
 
   return (
-    <>
+    <div className="mt-6">
       <p className={`${styles.componentHeader}`}>Store Settings</p>
       <div className='overflow-hidden w-full shadow-2xl'>
         <form
@@ -196,8 +199,8 @@ const StoreDetails = () => {
         >
           <p className='text-sm text-brand-primary'>Store details</p>
 
-          <div className='my-5 flex jusfity-between'>
-            <span className='w-1/2'>
+          <div className='my-5 lg:flex lg:jusfity-between'>
+            <span className='lg:w-1/2 block w-full lg:my-0 my-4'>
               <p className='mb-1'>Store name</p>
               <input
                 placeholder='Michelline'
@@ -209,7 +212,7 @@ const StoreDetails = () => {
               />
             </span>
 
-            <span className='w-1/2'>
+            <span className='lg:w-1/2 w-full block lg:my-0 my-4'>
               <p className='mb-1'>Tag line</p>
               <input
                 className={`${styles.inputBox} px-3 w-11/12`}
@@ -221,8 +224,8 @@ const StoreDetails = () => {
             </span>
           </div>
 
-          <div className='my-6 flex jusfity-between'>
-            <span className='w-1/2'>
+          <div className='my-6 lg:flex lg:jusfity-between'>
+            <span className='lg:w-1/2 w-full block'>
               <p className='mb-1'>Short description</p>
               <textarea
                 placeholder='Enter your business description here...'
@@ -243,7 +246,7 @@ const StoreDetails = () => {
               </div>
             </span>
 
-            <span className='w-1/2'>
+            <span className='lg:w-1/2 w-full'>
               <p className='mb-1'>Store logo</p>
               <input
                 type='file'
@@ -276,8 +279,8 @@ const StoreDetails = () => {
             </span>
           </div>
 
-          <div className='flex justify-between my-6'>
-            <span className='w-1/3'>
+          <div className='lg:flex lg:justify-between my-6'>
+            <span className='lg:w-1/3 w-full block lg:my-0 my-3'>
               <p className='mb-1'>Store currency</p>
               {/* <select
                 name="storeCurrency"
@@ -298,7 +301,7 @@ const StoreDetails = () => {
               />
             </span>
 
-            <span className='w-1/3'>
+            <span className='lg:w-1/3 w-full block lg:my-0 my-3'>
               <p className='mb-1'>Store email</p>
               <input
                 placeholder='Enter store email'
@@ -310,7 +313,7 @@ const StoreDetails = () => {
               />
             </span>
 
-            <span className='w-1/3'>
+            <span className='lg:w-1/3 w-full block lg:my-0 my-3'>
               <p className='mb-1'>Store contact number</p>
               <input
                 placeholder='Enter store contact number'
@@ -325,13 +328,13 @@ const StoreDetails = () => {
 
           <div className='w-full flex justify-end'>
             <button type='submit' className={`${styles.button} mr-6`}>
-              Save settings
+              {loading ? "Saving..." : "Save settings"}
             </button>
           </div>
         </form>
         {showModal && <Modal text={modalContent} showModal={showModal} />}
       </div>
-    </>
+    </div>
   );
 };
 

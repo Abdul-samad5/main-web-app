@@ -276,10 +276,10 @@ const Dashboard = () => {
               <div
                 className={`${styles.dbNavItemDrop}`}
                 // onClick={(e) => showActiveComponent(e, <Discounts />)}
-                onClick={(e) => {
-                  showActiveComponent(e, <Discounts />);
-                  handleClick();
-                }}
+                // onClick={(e) => {
+                //   showActiveComponent(e, <Discounts />);
+                //   handleClick();
+                // }}
               >
                 <DbIcon src={discounts} />
                 <h2>Discounts</h2>
@@ -409,7 +409,7 @@ const Dashboard = () => {
         </div>
 
         {/* {Main} */}
-        <div className="lg:w-4/5 w-full shrink-0 bg-brand-gray-200 min-h-screen p-[24px] lg:px-10 lg:py-5 lg:absolute top-0 right-0">
+        <div className="lg:w-4/5 w-full shrink-0 bg-brand-gray-200 min-h-screen p-[10px] lg:px-10 lg:py-5 lg:absolute top-0 right-0">
           <div className="w-full flex justify-between items-center">
             <div className="flex gap-8 items-center">
               <img
@@ -418,7 +418,8 @@ const Dashboard = () => {
                 alt="Icon"
                 onClick={handleClick}
               />
-              <Link to={`/store-front/${storeName.split(" ").join("")}`}>
+              {/* <Link to={`/store-front/${storeName}`}> */}
+              <Link to={`/store-front/${'Emmanuelstore'}`}>
                 <button className={`${styles.buttonOutline} text-[14px] p-1`}>
                   Go to store front
                 </button>
