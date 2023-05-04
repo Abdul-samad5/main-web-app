@@ -13,6 +13,7 @@ import {
 import axios from 'axios';
 import { getStoreInfo } from '../services/services';
 import { useEffect } from 'react';
+import ProgressBar from "@ramonak/react-progress-bar";
 
 function Icon({ icon }) {
   return <div className='rounded-full p-4 h-[32px] w-[32px]'></div>;
@@ -33,6 +34,7 @@ const MyStore = () => {
 
   // Stores the amount of sales of the previous days of the week and is to be rendered on the line graph below.
   const [historySales, setHistorySales] = useState([]);
+  const [storeTargetProgress, setStoreTargetProgress] = useState(80);
 
   const [name, setName] = useState('');
 
@@ -128,6 +130,20 @@ const MyStore = () => {
           <p className='text-2xl font-bold pb-24 lg:pb-0 text-black-800'>
             Store target status
           </p>
+          <span className='flex lg:mt-[40px] w-full justify-end'>
+            <ProgressBar 
+              completed={storeTargetProgress} 
+              customLabel={storeTargetProgress != 100 ? "Not quite there yet. Keep pushing." : "Yay! You made it!"} 
+              bgColor={storeTargetProgress != 100 ? "red" : "green"} 
+              height="40px"
+              borderRadius='10px'
+              labelAlignment='center'
+              transitionDuration='5'
+              transitionTimingFunction="ease-in-out"
+              maxCompleted={100}
+              animateOnRender={true} 
+              className='w-full'/>
+          </span>
         </div>
       </div>
 
