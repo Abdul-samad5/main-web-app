@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {UserData} from "./index";
 import {noOrders} from "../assets";
 import {styles} from '../constants/index';
+import axios from 'axios';
+import { BASE_URL } from '../services/services';
+import Cookies from 'js-cookie';
 
 const details = ["Customer", "Date", "Status", "Total"];
 const MyOrders = () => {
-    const [myOrders, setMyOrders] = React.useState([]);
+    const [myOrders, setMyOrders] = useState([]);
+    const token = Cookies.get("_tksr");
 
     const handleNext = () => {
         setMyOrders((prev) => {
@@ -16,6 +20,28 @@ const MyOrders = () => {
     const handleOrderSearch = () => {
 
     }
+
+    async function fetchOrders(token) {
+        const config = {
+          headers: { Authorization: `Bearer ${token}` },
+          'Content-Type': 'application/json',
+        };
+    
+        try {
+          const res = await axios.get(`${BASE_URL}store/list/`, config);
+          if (res) {
+            setMyOrders(res.data["Store Details"]);
+          }
+          console.log(res);
+        //   console.log(res.data["Store Details"]);
+        } catch (err) {
+          console.log(err);
+        }
+    }
+
+    useEffect(() => {
+        fetchOrders(token);
+    }, []);
 
     return (
         <div className='mt-8'>
