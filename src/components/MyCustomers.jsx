@@ -14,7 +14,7 @@ const MyCustomers = () => {
     const [customers, setCustomers] = useState([]);
     
     const token = Cookies.get("_tksr");
-    const email = Cookies.get("_email");
+    // const email = Cookies.get("_email");
 
     // Function to update the state to the next five or so customer details gotten from the API.
     const handleNext = () => {
@@ -28,25 +28,27 @@ const MyCustomers = () => {
         // alert(searchValue);
     }
 
-    // async function fetchCustomers(user_email, token) {
-    //     const config = {
-    //       headers: { Authorization: `Bearer ${token}` },
-    //       'Content-Type': 'application/json',
-    //     };
+    async function fetchCustomers(token) {
+        const config = {
+          headers: { Authorization: `Bearer ${token}` },
+          'Content-Type': 'application/json',
+        };
     
-    //     try {
-    //       const res = await axios.get(`${BASE_URL}checkout/buyer_info/get_info`, config);
-    //       if (res) {
-    //         setCustomers(res.data.data);
-    //       }
-    //       console.log(res);
-    //     } catch (err) {
-    //       console.log(err);
-    //     }
-    // }
+        try {
+        //   const res = await axios.get(`${BASE_URL}store_settings/store_details`, config);
+          const res = await axios.get(`${BASE_URL}store/list/`, config);
+          if (res) {
+            setCustomers(res.data["Store Details"]);
+          }
+        //   console.log(res);
+        //   console.log(res.data["Store Details"]);
+        } catch (err) {
+          console.log(err);
+        }
+    }
 
     useEffect(() => {
-        // fetchCustomers(email, token);
+        fetchCustomers(token);
     }, []);
 
     return (
