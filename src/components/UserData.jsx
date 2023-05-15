@@ -68,7 +68,7 @@ const UserData = ({
           </div>
         </div>
 
-        <div className="w-auto overflow-x-scroll">
+        <div className="w-auto lg:overflow-x-hidden overflow-x-scroll">
           <div className="flex w-[500px] lg:w-full md:w-full justify-between mt-10 ">
             <span className="flex justify-between">
               <p className="text-xs mr-1">#</p>

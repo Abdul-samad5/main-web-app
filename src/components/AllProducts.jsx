@@ -66,23 +66,23 @@ const AllProducts = ({ showActiveComponent, handleNavClick }) => {
       <div className='flex justify-between wrap items-center'>
         <div className='flex justify-between w-full sticky'>
           <p className={`${styles.valueStyle} sticky`}>{keys}</p>
-          <p className={`${styles.valueStyle} relative lg:left-8`}>
+          <p className={`${styles.valueStyle} relative left-6 lg:left-8`}>
             {productName}
           </p>
-          <p className={`${styles.valueStyle} relative lg:left-8`}>{price}</p>
+          <p className={`${styles.valueStyle} relative left-6 lg:left-8`}>{price}</p>
           <Status value={status} />
           <p
             className={
               inventory === 0
-                ? `${styles.valueStyle} text-red-600 relative lg:right-14`
-                : `${styles.valueStyle} relative lg:right-8`
+                ? `${styles.valueStyle} text-red-600 relative right-6 lg:right-14`
+                : `${styles.valueStyle} right-6 relative lg:right-8`
             }
           >
             {inventory + ' in stock'}
           </p>
           <div
             onClick={handleClick}
-            className='flex w-2 h-4 relative lg:right-4'
+            className='flex w-2 h-4 relative right-4 lg:right-4'
           >
             <div
               className={
@@ -139,19 +139,19 @@ const AllProducts = ({ showActiveComponent, handleNavClick }) => {
 const Status = ({ value }) => {
   if (value === 'draft') {
     return (
-      <div className='rounded text-black-800 bg-gray-300 text-xs relative lg:right-10 px-6 py-1 '>
+      <div className='rounded text-black-800 bg-gray-300 text-xs relative left-6 lg:right-10 px-6 py-1 '>
         {value}
       </div>
     );
   } else if (value === 'archived') {
     return (
-      <div className='rounded text-purple-800 bg-purple-200 text-xs relative lg:right-8 px-3 py-1'>
+      <div className='rounded text-purple-800 bg-purple-200 text-xs left-6 relative lg:right-8 px-3 py-1'>
         {value}
       </div>
     );
   } else if (value === 'active') {
     return (
-      <div className='rounded text-green-900 bg-green-200 mr-10 relative lg:left-4 text-sm px-2'>
+      <div className='rounded text-green-900 bg-green-200 mr-10 left-6  relative lg:left-4 text-sm px-2'>
         {value}
       </div>
     );
