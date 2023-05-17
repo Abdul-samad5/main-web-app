@@ -192,7 +192,7 @@ const SalesTarget = () => {
                                 onChange={handleChange}/>
                         </span>
 
-                        <button className={`${styles.button} mt-7 w-full ${newSalesTarget.targetName === "" ? "opacity-50" : "opacity-100"}`} onClick={addSalesTarget}> {loading ? "Creating..." : "Create discount"} </button>
+                        <button className={`${styles.button} mt-7 w-full ${newSalesTarget.targetName === "" ? "opacity-50" : "opacity-100"}`} onClick={addSalesTarget}> {loading ? "Creating..." : "Create sales target"} </button>
                     </div>
                 </div>
             </div>
