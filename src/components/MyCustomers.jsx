@@ -38,10 +38,13 @@ const MyCustomers = () => {
         //   const res = await axios.get(`${BASE_URL}store_settings/store_details`, config);
           const res = await axios.get(`${BASE_URL}store/list/`, config);
           if (res) {
+            // console.log(res);
             setCustomers(res.data["Store Details"]);
+            // setCustomers(res.data.customers);
           }
         //   console.log(res);
-        //   console.log(res.data["Store Details"]);
+        //   console.log(res.data["customers"]);
+        //   console.log(res.data.customers);
         } catch (err) {
           console.log(err);
         }

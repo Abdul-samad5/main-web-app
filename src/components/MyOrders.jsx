@@ -30,10 +30,11 @@ const MyOrders = () => {
         try {
           const res = await axios.get(`${BASE_URL}store/list/`, config);
           if (res) {
+            // setMyOrders(res.data["orders"]);
             setMyOrders(res.data["Store Details"]);
           }
-          console.log(res);
-        //   console.log(res.data["Store Details"]);
+          // console.log(res);
+          // console.log(res.data["orders"]);
         } catch (err) {
           console.log(err);
         }

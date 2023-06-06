@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { noReviews } from '../assets'; 
 import { styles } from '../constants/index';
 import UserData from './UserData';
+import { BASE_URL } from '../services/services';
+import Cookies from 'js-cookie';
+import axios from 'axios';
+import Orders from './Orders';
 
 // Table Headings of the store review component
 const details = ["Target name", "Amount", "Interval", "Start Date", "End Date"];
@@ -12,7 +16,7 @@ const SalesTarget = () => {
     const [isVisible, setVisisble] = useState(false);
     const [newSalesTarget, setSalesTarget] = useState({
         targetName: "",
-        amount: 0,
+        amount: null,
         interval: "",
         startDate: "",
         endDate: ""
@@ -20,6 +24,7 @@ const SalesTarget = () => {
     const [loading, setLooading] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [modalContent, setModalContent] = useState(null);
+    const token = Cookies.get("_tksr");
 
     // Function to update the state to the next five or so store reviews gotten from the API.
     const handleNext = () => {
@@ -49,7 +54,7 @@ const SalesTarget = () => {
 
     const handleChange = (event) => {
         const {name, value} = event.target;
-        setDiscountInfo((prev) => {
+        setSalesTarget((prev) => {
             return {
                 ...prev,
                 [name]: value
@@ -59,52 +64,85 @@ const SalesTarget = () => {
 
     async function addSalesTarget() {
 
-        if(isVerified === false) {
-            window.alert("You must verify your email before you can perform this action!");
+        // if(isVerified === false) {
+        //     window.alert("You must verify your email before you can perform this action!");
       
-            setModalContent("You must verify your email before you can perform this action!");
-            setShowModal(true);
-            // setFormData(initialState);
-            setTimeout(() => {
-              setShowModal(false);
-            }, 2000);
+        //     setModalContent("You must verify your email before you can perform this action!");
+        //     setShowModal(true);
+        //     // setFormData(initialState);
+        //     setTimeout(() => {
+        //       setShowModal(false);
+        //     }, 2000);
       
-            return;
-        }
-      
-        // let discountInfo = {
-        //     "discount_type": newDiscountInfo.discountType,
-        //     "discount_method": newDiscountInfo.discountMethod,
-        //     "discount_code": newDiscountInfo.discountTitle,
-        //     "discount_value": newDiscountInfo.discountValue,
-        //     "value": newDiscountInfo.value,
-        //     "start_date": newDiscountInfo.startDate.toString(),
-        //     "end_date": newDiscountInfo.endDate.toString(),
-        //     "minimum_purchase_value": newDiscountInfo.minPurValue
+        //     return;
         // }
+      
+        let salesTarget = {
+            "start_date": newSalesTarget.startDate.toString(),
+            "end_date": newSalesTarget.endDate.toString(),
+            "target_price": newSalesTarget.amount
+        }
+
         setLooading(prev => prev = !prev);
 
-        // try {
-        //     const res = await axios.post(`${BASE_URL}marketing/create_discount`, discountInfo, 
-        //     { headers: { Authorization: `Bearer ${tk}`} });
-        //     setVisisble(prev => prev = !prev);
-        //     console.log(res);
-        //     setDiscountInfo((prev) => {
-        //         return prev = {
-        //             discountType: "",
-        //             discountMethod: "",
-        //             discountTitle: "",
-        //             discountValue: "",
-        //             value: 0,
-        //             startDate: "",
-        //             endDate: "",
-        //             minPurValue: 0
-        //         }
-        //     });
-        // } catch(err) {
-        //     console.log(err);
-        // }
+        try {
+            const res = await axios.post(
+                `${BASE_URL}store/sales_target`, 
+                salesTarget, 
+                { headers: { Authorization: `Bearer ${token}`} }
+            );
+
+            setVisisble(prev => prev = !prev);
+
+            if(res) {
+                setShowModal(true);
+                console.log(res);
+                setModalContent('Sales target created successfully!');
+                setTimeout(() => {
+                    setShowModal(false);
+                }, 2000);
+            }
+
+            console.log(res);
+
+            setSalesTarget((prev) => {
+                return prev = {
+                    targetName: "",
+                    amount: 0,
+                    interval: "",
+                    startDate: "",
+                    endDate: ""
+                }
+            });
+        } catch(err) {
+            console.log(err);
+        }
     }
+
+    async function fetchSalesTarget(token) {
+        const config = {
+          headers: { Authorization: `Bearer ${token}` },
+          'Content-Type': 'application/json',
+        };
+    
+        try {
+          const res = await axios.get(`${BASE_URL}store/list/`, config);
+          
+          if (res) {
+            // setCustomers(res.data["sales_target"]);
+            // console.log(res);
+            console.log(res.data["Store Details"]);
+            // console.log(res.data["Store Details"]["store_target"]);
+          }
+          
+        } catch (err) {
+          console.log(err);
+        }
+    }
+
+    useEffect(() => {
+        fetchSalesTarget(token);
+    }, []);
 
     return (
         <div className="mt-6">
@@ -115,7 +153,7 @@ const SalesTarget = () => {
                     <p className='text-blue-400 text-sm my-auto mx-1'>Create sales target</p>
                 </span>
             </div>
-            <UserData 
+            {/* <UserData 
                 type={"Sales target"} 
                 image={noReviews} 
                 infoHead={details} 
@@ -123,7 +161,8 @@ const SalesTarget = () => {
                 children={Children} 
                 handleNext={handleNext}
                 handleSearch={handleStoreReviewSearch}
-            ></UserData>
+            ></UserData> */}
+            <Orders image={noReviews} infoHead={details}/>
             <div className={isVisible ? 'h-full w-full absolute top-0 right-0' : ' -translate-x-full hidden'}>
                 <div className='h-auto lg:w-1/3 w-3/4 shadow-2xl bg-white float-right lg:px-4 px-2 py-3'>
                     <span className='cursor-pointer text-2xl float-right block text-slate-300' onClick={toggleAddSalesTarget}>x</span>
