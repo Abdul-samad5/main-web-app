@@ -64,7 +64,7 @@ const MyStore = () => {
         <div className='w-full'>
           <div className='lg:flex justify-between'>
             {/* To display the setup status of the store */}
-            <div className='flex items-center gap-3 bg-blue-600 shadow-lg rounded-lg p-4 mx-1 w-full lg:w-1/4 mb-3'>
+            {/* <div className='flex items-center gap-3 bg-blue-600 shadow-lg rounded-lg p-4 mx-1 w-full lg:w-1/4 mb-3'>
               <div className='rounded-full bg-blue-100 w-[32px] h-[32px] flex justify-center items-center'>
                 <img src={chartStore} alt='' className='w-4 h-4' />
               </div>
@@ -73,7 +73,7 @@ const MyStore = () => {
                 <p className='text-xs text-white'>Store rating</p>
                 <p className='font text-white text-xl'>Impressive</p>
               </div>
-            </div>
+            </div> */}
 
             {/* Displays the total sales of the store so far */}
             <Total
@@ -100,8 +100,9 @@ const MyStore = () => {
       </div>
 
       <div className='lg:flex justify-between'>
-        <span className='lg:flex justify-between my-3 lg:my-0 w-full lg:w-1/2'>
-          {/* Displays the total number of customers for the day */}
+
+        {/* <span className='lg:flex justify-between my-3 lg:my-0 w-full lg:w-1/2'>
+          Displays the total number of customers for the day
           <Today
             image={today_customer}
             type={'customers'}
@@ -109,7 +110,7 @@ const MyStore = () => {
             storeData={storeData}
           />
 
-          {/* Displays the profit made for the day */}
+          Displays the profit made for the day
           <Today
             image={wallet}
             type={'profit'}
@@ -117,16 +118,32 @@ const MyStore = () => {
             storeData={storeData}
           />
 
-          {/* Displays the sales made for the day */}
+          Displays the sales made for the day
           <Today
             image={chartStore}
             type={'sales'}
             number={storeData.todaySales}
             storeData={storeData}
           />
-        </span>
+        </span> */}
 
-        <div className='bg-white rounded lg:w-1/2 shadow-lg my-4 lg:my-0 px-3 py-3'>
+        <div className='flex items-center gap-3 shadow-lg rounded-lg p-4 mx-1 w-full lg:w-1/3'>
+          <div className='rounded-full bg-blue-100 w-[32px] h-[32px] flex justify-center items-center'>
+            <img src={chartStore} alt='' className='w-4 h-4' />
+          </div>
+
+          <div>
+            <p className='text-xs text-black-800 font-bold'>Profit</p>
+            {/* <p className='font text-black font-extrabold text-xl'>{`$${0.00}`}</p> */}
+            <div className='flex'>
+              <img src={naira} alt='' className='w-4 h-4 my-auto' />
+              <p className='font text-brand-black text-xl font-Nunito'>{0.00}</p>
+            </div>
+            <div className={`${styles.button} mt-2`}>Withdraw Earnings</div>
+          </div>
+        </div>
+
+        <div className='bg-white rounded lg:w-2/3 shadow-lg my-4 lg:my-0 px-3 py-3'>
           <p className='text-2xl font-bold pb-24 lg:pb-0 text-black-800'>
             Store target status
           </p>
@@ -344,7 +361,7 @@ const Status = ({ value }) => {
 
 const Total = ({ image, type, number }) => {
   return (
-    <div className='flex items-center bg-white shadow-lg w-full rounded-lg px-4 py-6 mx-1 lg:w-1/4 mb-3 gap-3'>
+    <div className='flex items-center bg-white shadow-lg w-full rounded-lg px-4 py-6 mx-1 lg:w-1/3 mb-3 gap-3'>
       <div className='rounded-full bg-blue-100 w-[32px] h-[32px] flex justify-center items-center'>
         <img src={image} alt='' className=' w-4 h-4 mx-auto' />
       </div>

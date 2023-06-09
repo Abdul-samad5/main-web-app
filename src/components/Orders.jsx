@@ -1,50 +1,8 @@
 import * as React from 'react';
 import { TableRow, TableCell, TableBody, TableHead, Table } from '@mui/material';
 
-// Generate Order Data
-function createData(id, date, name, shipTo, paymentMethod, amount) {
-  return { id, date, name, shipTo, paymentMethod, amount };
-}
+const Orders = ({image, infoHead, children: Children, data, type}) => {
 
-// const rows = [
-//   createData(
-//     0,
-//     '16 Mar, 2019',
-//     'Elvis Presley',
-//     'Tupelo, MS',
-//     'VISA ⠀•••• 3719',
-//     312.44,
-//   ),
-//   createData(
-//     1,
-//     '16 Mar, 2019',
-//     'Paul McCartney',
-//     'London, UK',
-//     'VISA ⠀•••• 2574',
-//     866.99,
-//   ),
-//   createData(2, '16 Mar, 2019', 'Tom Scholz', 'Boston, MA', 'MC ⠀•••• 1253', 100.81),
-//   createData(
-//     3,
-//     '16 Mar, 2019',
-//     'Michael Jackson',
-//     'Gary, IN',
-//     'AMEX ⠀•••• 2000',
-//     654.39,
-//   ),
-//   createData(
-//     4,
-//     '15 Mar, 2019',
-//     'Bruce Springsteen',
-//     'Long Branch, NJ',
-//     'VISA ⠀•••• 5919',
-//     212.79,
-//   ),
-// ];
-
-const rows = [];
-
-const Orders = ({image, infoHead}) => {
     const [currentPage, setCurrentPage] = React.useState(0);
 
     return (
@@ -63,7 +21,7 @@ const Orders = ({image, infoHead}) => {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {rows.map((row) => (
+                                {/* {rows.map((row) => (
                                     <TableRow key={row.id}>
                                         <TableCell>{row.date}</TableCell>
                                         <TableCell>{row.name}</TableCell>
@@ -71,7 +29,113 @@ const Orders = ({image, infoHead}) => {
                                         <TableCell>{row.paymentMethod}</TableCell>
                                         <TableCell align="right">{`$${row.amount}`}</TableCell>
                                     </TableRow>
-                                ))}
+                                ))} */}
+
+                                
+                                {/* Structure of the children passed into the component and to be mapped into each of the data also passed into the component. } */}
+                                {data.map((children, index) => {
+                                // Displays the details of each collection if the type of the component equals Collections.
+                                    if (type === "Collections") {
+                                        return (
+                                            <div className="mb-3" key={index + 1}>
+                                                <Children
+                                                    id={children.id}
+                                                    no={index}
+                                                    collectionName={children.name}
+                                                    product={children.image}
+                                                />
+                                            </div>
+                                        );
+                                        // Displays the details of each customer if the type of the component equals Customer.
+                                    } else if (type === "Customer") {
+                                        return (
+                                        <div className="mb-3">
+                                            <Children
+                                            id={index + 1}
+                                            key={index + 1}
+                                            name={"Alex Ikenna"}
+                                            email={"Alex@gmail.com"}
+                                            noOfOrders={"29"}
+                                            location={"Lagos, LA. Nigeria"}
+                                            amount={"#4,555,000"}
+                                            // {propsKeys}
+                                            />
+                                        </div>
+                                        );
+                                        // Displays the details of each store review if the type of the component equals Store Reviews.
+                                    } else if (type === "Sales target") {
+                                        return (
+                                            // <div className="mb-3" key={index + 1}>
+                                                <TableRow>
+                                                    <Children
+                                                        id={children.id}
+                                                        reviews={children.paymentMethod}
+                                                        ratings={children.shipTo}
+                                                        date={children.date}
+                                                    />
+                                                </TableRow>
+                                            // {/* </div> */}
+                                        );
+                                    } else if (type === "Transaction History") {
+                                        return (
+                                        <div className="mb-3" key={index}>
+                                            <Children
+                                            id={children.id}
+                                            userEmail={children.userEmail}
+                                            refCode={children.ref_code}
+                                            amount={children.amount}
+                                            paymentID={children.uuid}
+                                            status={children.status}
+                                            />
+                                        </div>
+                                        );
+                                    } else if (type === "Discounts") {
+                                        return (
+                                        <div className="mb-3" key={index + 1}>
+                                            <Children
+                                            id={children.id}
+                                            no={index}
+                                            discountCode={children.discount_code}
+                                            method={children.discount_method}
+                                            type={children.discount_type}
+                                            discount_value={children.discount_value}
+                                            value={children.value}
+                                            end_date={children.end_date}
+                                            active={children.active}
+                                            // id, discountStatus, method, status, type, usage
+                                            />
+                                        </div>
+                                        );
+                                    } else if (type === "My Orders") {
+                                        return (
+                                        <div className="mb-3">
+                                            <Children
+                                            id={index + 1}
+                                            key={index + 1}
+                                            customer={"Alex Ikenna"}
+                                            date={"Alex@gmail.com"}
+                                            status={"Cancelled"}
+                                            total={"Stripe"}
+                                            />
+                                        </div>
+                                        );
+                                    } else if (type === "Products") {
+                                        return (
+                                            <div className="mb-3" key={index}>
+                                                <Children
+                                                    id={children.id}
+                                                    keys={index + 1}
+                                                    productName={children.title}
+                                                    price={children.price}
+                                                    status={children.status}
+                                                    inventory={children.stock_count}
+                                                />
+                                            </div>
+                                        );
+                                    } else {
+                                    }
+                                })}
+                               
                             </TableBody>
                         </Table>
 
@@ -79,9 +143,9 @@ const Orders = ({image, infoHead}) => {
                         <img
                             src={image}
                             alt="No data"
-                            className={rows.length === 0 ? "mx-auto lg:w-auto lg:h-auto h-1/2 w-1/2" : "hidden"}
+                            className={data.length === 0 ? "mx-auto lg:w-auto lg:h-auto h-1/2 w-1/2" : "hidden"}
                         />
-                        <p className={rows.length === 0 ? "text-base text-center" : "hidden"}>
+                        <p className={data.length === 0 ? "text-base text-center" : "hidden"}>
                             { "No orders found"}
                         </p>
                     </div>
@@ -101,7 +165,7 @@ const Orders = ({image, infoHead}) => {
                         <span className="flex justify-between">
                             <p
                                 className={
-                                    rows.length === 0
+                                    data.length === 0
                                         ? "text-xs text-slate-400 hidden"
                                         : "text-xs text-slate-400"
                                 }
@@ -110,7 +174,7 @@ const Orders = ({image, infoHead}) => {
                             </p>
                             <p
                                 className={
-                                    rows.length === 0
+                                    data.length === 0
                                         ? "text-xs text-slate-400"
                                         : "text-xs text-slate-400 hidden"
                                 }

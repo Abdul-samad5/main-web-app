@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { noReviews } from '../assets'; 
 import { styles } from '../constants/index';
 import UserData from './UserData';
+import { TableRow, TableCell, TableBody, TableHead, Table } from '@mui/material';
 import { BASE_URL } from '../services/services';
 import Cookies from 'js-cookie';
 import axios from 'axios';
@@ -9,6 +10,44 @@ import Orders from './Orders';
 
 // Table Headings of the store review component
 const details = ["Target name", "Amount", "Interval", "Start Date", "End Date"];
+function createData(id, date, name, shipTo, paymentMethod, amount) {
+    return { id, date, name, shipTo, paymentMethod, amount };
+  }
+const rows = [
+  createData(
+    0,
+    '16 Mar, 2019',
+    'Elvis Presley',
+    'Tupelo, MS',
+    'VISA ⠀•••• 3719',
+    312.44,
+  ),
+  createData(
+    1,
+    '16 Mar, 2019',
+    'Paul McCartney',
+    'London, UK',
+    'VISA ⠀•••• 2574',
+    866.99,
+  ),
+  createData(2, '16 Mar, 2019', 'Tom Scholz', 'Boston, MA', 'MC ⠀•••• 1253', 100.81),
+  createData(
+    3,
+    '16 Mar, 2019',
+    'Michael Jackson',
+    'Gary, IN',
+    'AMEX ⠀•••• 2000',
+    654.39,
+  ),
+  createData(
+    4,
+    '15 Mar, 2019',
+    'Bruce Springsteen',
+    'Long Branch, NJ',
+    'VISA ⠀•••• 5919',
+    212.79,
+  ),
+];
 
 const SalesTarget = () => {
     // State to store the store reviews gotten from the API.
@@ -162,7 +201,7 @@ const SalesTarget = () => {
                 handleNext={handleNext}
                 handleSearch={handleStoreReviewSearch}
             ></UserData> */}
-            <Orders image={noReviews} infoHead={details}/>
+            <Orders image={noReviews} infoHead={details} children={Children} data={rows} type={"Sales target"} />
             <div className={isVisible ? 'h-full w-full absolute top-0 right-0' : ' -translate-x-full hidden'}>
                 <div className='h-auto lg:w-1/3 w-3/4 shadow-2xl bg-white float-right lg:px-4 px-2 py-3'>
                     <span className='cursor-pointer text-2xl float-right block text-slate-300' onClick={toggleAddSalesTarget}>x</span>
@@ -250,20 +289,36 @@ const Children = ({id, reviews, ratings, date}) => {
     }
 
     return (
-        <div className="flex justify-between">
-            <p className={`${styles.valueStyle}`}>{id}</p>
-            <p className={`${styles.valueStyle}`}>{reviews}</p>
-            <p className={`${styles.valueStyle}`}>{ratings}</p>
-            <p className={`${styles.valueStyle}`}>{date}</p>
-            <span onClick={handleClick} className="flex justify-between w-2 h-4">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 512" className='w-4 fixed h-4 fill-slate-400'><path d="M64 360c30.9 0 56 25.1 56 56s-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56zm0-160c30.9 0 56 25.1 56 56s-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56zM120 96c0 30.9-25.1 56-56 56S8 126.9 8 96S33.1 40 64 40s56 25.1 56 56z"/></svg>
-                <div className={currentState ? 'rounded bg-white shadow-lg relative left-5 px-5 top-5 h-20 w-20' : 'hidden'}>
-                    <p className='text-xs'>View Review</p>
-                    <p className='text-xs my-auto text-red-400 my-2'>Delete Review</p>
-                </div>
-            </span>
-            
-        </div>
+        // <div className="flex justify-between">
+        //     <p className={`${styles.valueStyle}`}>{id}</p>
+        //     <p className={`${styles.valueStyle}`}>{reviews}</p>
+        //     <p className={`${styles.valueStyle}`}>{ratings}</p>
+        //     <p className={`${styles.valueStyle}`}>{date}</p>
+        //     <span onClick={handleClick} className="flex justify-between w-2 h-4">
+        //         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 512" className='w-4 fixed h-4 fill-slate-400'><path d="M64 360c30.9 0 56 25.1 56 56s-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56zm0-160c30.9 0 56 25.1 56 56s-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56zM120 96c0 30.9-25.1 56-56 56S8 126.9 8 96S33.1 40 64 40s56 25.1 56 56z"/></svg>
+        //         <div className={currentState ? 'rounded bg-white shadow-lg relative left-5 px-5 top-5 h-20 w-20' : 'hidden'}>
+        //             <p className='text-xs'>View Review</p>
+        //             <p className='text-xs my-auto text-red-400 my-2'>Delete Review</p>
+        //         </div>
+        //     </span>
+        // </div>
+        // <TableRow>
+            <>
+                <TableCell>{id}</TableCell>
+                <TableCell>{reviews}</TableCell>
+                <TableCell>{ratings}</TableCell>
+                <TableCell>{date}</TableCell>
+                <TableCell align="right">
+                    <span onClick={handleClick} className="flex justify-between w-2 h-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 512" className='w-4 fixed h-4 fill-slate-400'><path d="M64 360c30.9 0 56 25.1 56 56s-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56zm0-160c30.9 0 56 25.1 56 56s-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56zM120 96c0 30.9-25.1 56-56 56S8 126.9 8 96S33.1 40 64 40s56 25.1 56 56z"/></svg>
+                        <div className={currentState ? 'rounded bg-white shadow-lg relative left-5 px-5 top-5 h-20 w-20' : 'hidden'}>
+                            <p className='text-xs'>View Review</p>
+                            <p className='text-xs my-auto text-red-400 my-2'>Delete Review</p>
+                        </div>
+                    </span>
+                </TableCell>
+            </>
+        // {/* </TableRow> */}
     )
 };
 
