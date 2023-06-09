@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { noReviews } from '../assets'; 
 import { styles } from '../constants/index';
 import UserData from './UserData';
-import { TableRow, TableCell, TableBody, TableHead, Table } from '@mui/material';
+import { TableCell } from '@mui/material';
 import { BASE_URL } from '../services/services';
 import Cookies from 'js-cookie';
 import axios from 'axios';
@@ -119,7 +119,9 @@ const SalesTarget = () => {
         let salesTarget = {
             "start_date": newSalesTarget.startDate.toString(),
             "end_date": newSalesTarget.endDate.toString(),
-            "target_price": newSalesTarget.amount
+            "target_price": newSalesTarget.amount,
+            "interval": newSalesTarget.interval,
+            "target_name": newSalesTarget.targetName.toLowerCase(),
         }
 
         setLooading(prev => prev = !prev);

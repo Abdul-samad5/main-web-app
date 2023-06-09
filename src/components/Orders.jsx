@@ -15,7 +15,7 @@ const Orders = ({image, infoHead, children: Children, data, type}) => {
                                 <TableRow >
                                     {infoHead.map((word, index) => {
                                         return (
-                                            <TableCell key={index}>{word}</TableCell>
+                                            <TableCell key={index} >{word}</TableCell>
                                         )
                                     })}
                                 </TableRow>
@@ -37,36 +37,40 @@ const Orders = ({image, infoHead, children: Children, data, type}) => {
                                 // Displays the details of each collection if the type of the component equals Collections.
                                     if (type === "Collections") {
                                         return (
-                                            <div className="mb-3" key={index + 1}>
+                                            // <div className="mb-3" key={index + 1}>
+                                            <TableRow className='mb-3' key={index + 1}>
                                                 <Children
                                                     id={children.id}
                                                     no={index}
                                                     collectionName={children.name}
                                                     product={children.image}
                                                 />
-                                            </div>
+                                            </TableRow>
+                                            // </div>
                                         );
                                         // Displays the details of each customer if the type of the component equals Customer.
                                     } else if (type === "Customer") {
                                         return (
-                                        <div className="mb-3">
-                                            <Children
-                                            id={index + 1}
-                                            key={index + 1}
-                                            name={"Alex Ikenna"}
-                                            email={"Alex@gmail.com"}
-                                            noOfOrders={"29"}
-                                            location={"Lagos, LA. Nigeria"}
-                                            amount={"#4,555,000"}
-                                            // {propsKeys}
-                                            />
-                                        </div>
+                                        // <div className="mb-3">
+                                            <TableRow className='mb-3' key={index + 1}>
+                                                <Children
+                                                    id={index + 1}
+                                                    key={index + 1}
+                                                    name={"Alex Ikenna"}
+                                                    email={"Alex@gmail.com"}
+                                                    noOfOrders={"29"}
+                                                    location={"Lagos, LA. Nigeria"}
+                                                    amount={"#4,555,000"}
+                                                
+                                                />
+                                            </TableRow>
+                                        // {/* </div> */}
                                         );
                                         // Displays the details of each store review if the type of the component equals Store Reviews.
                                     } else if (type === "Sales target") {
                                         return (
                                             // <div className="mb-3" key={index + 1}>
-                                                <TableRow>
+                                                <TableRow key={index + 1}>
                                                     <Children
                                                         id={children.id}
                                                         reviews={children.paymentMethod}
@@ -78,59 +82,64 @@ const Orders = ({image, infoHead, children: Children, data, type}) => {
                                         );
                                     } else if (type === "Transaction History") {
                                         return (
-                                        <div className="mb-3" key={index}>
-                                            <Children
-                                            id={children.id}
-                                            userEmail={children.userEmail}
-                                            refCode={children.ref_code}
-                                            amount={children.amount}
-                                            paymentID={children.uuid}
-                                            status={children.status}
-                                            />
-                                        </div>
+                                        // <div className="mb-3" key={index}>
+                                            <TableRow className='mb-3' key={index + 1}>
+                                                <Children
+                                                    id={children.id}
+                                                    userEmail={children.userEmail}
+                                                    refCode={children.ref_code}
+                                                    amount={children.amount}
+                                                    paymentID={children.uuid}
+                                                    status={children.status}
+                                                />
+                                            </TableRow>
                                         );
                                     } else if (type === "Discounts") {
                                         return (
-                                        <div className="mb-3" key={index + 1}>
-                                            <Children
-                                            id={children.id}
-                                            no={index}
-                                            discountCode={children.discount_code}
-                                            method={children.discount_method}
-                                            type={children.discount_type}
-                                            discount_value={children.discount_value}
-                                            value={children.value}
-                                            end_date={children.end_date}
-                                            active={children.active}
-                                            // id, discountStatus, method, status, type, usage
-                                            />
-                                        </div>
+                                        // <div className="mb-3" key={index + 1}>
+                                            <TableRow className='mb-3' key={index + 1}>
+                                                <Children
+                                                    id={children.id}
+                                                    no={index}
+                                                    discountCode={children.discount_code}
+                                                    method={children.discount_method}
+                                                    type={children.discount_type}
+                                                    discount_value={children.discount_value}
+                                                    value={children.value}
+                                                    end_date={children.end_date}
+                                                    active={children.active}
+                                                // id, discountStatus, method, status, type, usage
+                                                />
+                                            </TableRow>
+                                        // </div>
                                         );
                                     } else if (type === "My Orders") {
                                         return (
-                                        <div className="mb-3">
-                                            <Children
-                                            id={index + 1}
-                                            key={index + 1}
-                                            customer={"Alex Ikenna"}
-                                            date={"Alex@gmail.com"}
-                                            status={"Cancelled"}
-                                            total={"Stripe"}
-                                            />
-                                        </div>
+                                            <TableRow className='mb-3' key={index + 1}>
+                                                <Children
+                                                    id={index + 1}
+                                                    key={index + 1}
+                                                    customer={"Alex Ikenna"}
+                                                    date={"Alex@gmail.com"}
+                                                    status={"Cancelled"}
+                                                    total={"Stripe"}
+                                                />
+                                            </TableRow>
                                         );
                                     } else if (type === "Products") {
                                         return (
-                                            <div className="mb-3" key={index}>
-                                                <Children
-                                                    id={children.id}
-                                                    keys={index + 1}
-                                                    productName={children.title}
-                                                    price={children.price}
-                                                    status={children.status}
-                                                    inventory={children.stock_count}
-                                                />
-                                            </div>
+                                            <TableRow  key={index + 1}>
+                                                {/* <div className="mb-3" key={index}> */}
+                                                    <Children
+                                                        id={children.id}
+                                                        keys={index + 1}
+                                                        productName={children.title}
+                                                        price={children.price}
+                                                        status={children.status}
+                                                        inventory={children.stock_count}
+                                                    />
+                                                {/* </div> */}
+                                            </TableRow>
                                         );
                                     } else {
                                     }
