@@ -20,18 +20,7 @@ const Orders = ({image, infoHead, children: Children, data, type}) => {
                                     })}
                                 </TableRow>
                             </TableHead>
-                            <TableBody>
-                                {/* {rows.map((row) => (
-                                    <TableRow key={row.id}>
-                                        <TableCell>{row.date}</TableCell>
-                                        <TableCell>{row.name}</TableCell>
-                                        <TableCell>{row.shipTo}</TableCell>
-                                        <TableCell>{row.paymentMethod}</TableCell>
-                                        <TableCell align="right">{`$${row.amount}`}</TableCell>
-                                    </TableRow>
-                                ))} */}
-
-                                
+                            <TableBody>    
                                 {/* Structure of the children passed into the component and to be mapped into each of the data also passed into the component. } */}
                                 {data.map((children, index) => {
                                 // Displays the details of each collection if the type of the component equals Collections.
@@ -144,7 +133,6 @@ const Orders = ({image, infoHead, children: Children, data, type}) => {
                                     } else {
                                     }
                                 })}
-                               
                             </TableBody>
                         </Table>
 
@@ -155,7 +143,7 @@ const Orders = ({image, infoHead, children: Children, data, type}) => {
                             className={data.length === 0 ? "mx-auto lg:w-auto lg:h-auto h-1/2 w-1/2" : "hidden"}
                         />
                         <p className={data.length === 0 ? "text-base text-center" : "hidden"}>
-                            { "No orders found"}
+                            { `No ${type} found`}
                         </p>
                     </div>
 

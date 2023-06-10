@@ -14,7 +14,7 @@ import Modal from "./Modal";
 import Orders from "./Orders";
 import { TableCell } from "@mui/material";
 
-const details = ["Collection name", "Product", "Action"];
+const details = ["ID", "Collection name", "Product", "Action"];
 const Collections = () => {
   // State to store the collections gotten from the API
   const [collections, setCollections] = useState([]);
@@ -197,7 +197,7 @@ const Collections = () => {
         </TableCell>
         <TableCell>
           <div
-            className="flex h-auto mt-2 group hover:cursor-pointer w-auto justify-between"
+            className="flex h-auto mt-2 group hover:cursor-pointer "
             onClick={deleteCollections}
           >
             <svg

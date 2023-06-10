@@ -137,12 +137,12 @@ const Dashboard = () => {
     fetchData();
   }, []);
 
-  // useEffect(() => {
-  //   if (!tk) {
-  //     navigate("/");
-  //   }
-  //   return;
-  // }, [tk]);
+  useEffect(() => {
+    if (!tk) {
+      navigate("/");
+    }
+    return;
+  }, [tk]);
 
   const editStoreDetails = (e) => {
     showActiveComponent(e, <StoreDetails />);

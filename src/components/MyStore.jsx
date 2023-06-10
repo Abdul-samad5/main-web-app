@@ -11,9 +11,10 @@ import {
   down_trend,
 } from '../assets';
 import axios from 'axios';
-import { getStoreInfo } from '../services/services';
+import { BASE_URL } from '../services/services';
 import { useEffect } from 'react';
 import ProgressBar from "@ramonak/react-progress-bar";
+import Cookies from 'js-cookie';
 
 function Icon({ icon }) {
   return <div className='rounded-full p-4 h-[32px] w-[32px]'></div>;
@@ -32,11 +33,14 @@ const MyStore = () => {
     yesterdayProfit: 0,
   });
 
+  const token = Cookies.get("_tksr");
+
   // Stores the amount of sales of the previous days of the week and is to be rendered on the line graph below.
   const [historySales, setHistorySales] = useState([]);
   const [storeTargetProgress, setStoreTargetProgress] = useState(80);
 
   const [name, setName] = useState('');
+  const [earnings, setEarnings] = useState("");
 
   // Stores the amount of sales of the previous days of the week and is to be rendered on the line graph below.
   const [historyProfit, setHistoryProfit] = useState([]);
@@ -47,14 +51,20 @@ const MyStore = () => {
 
   useEffect(() => {
     async function fetchData() {
-      const response = await getStoreInfo();
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+        "Content-Type": "application/json",
+      };
+      const response = await axios.get(`${BASE_URL}store/list`, config);;
       if (response) {
-        const store_name = response.data['Store Details'][0].store_name;
+        // const store_name = response.data['Store Details'][0].store_name;
+        // console.log(response);
 
-        setName(`Welcome to your Store, ${store_name}`);
+        // setName(`Welcome to your Store, ${store_name}`);
+        setEarnings(response.data['Store Details'][0].account_balance);
       }
-      fetchData();
     }
+    fetchData();
   }, []);
 
   return (
@@ -137,7 +147,7 @@ const MyStore = () => {
             {/* <p className='font text-black font-extrabold text-xl'>{`$${0.00}`}</p> */}
             <div className='flex'>
               <img src={naira} alt='' className='w-4 h-4 my-auto' />
-              <p className='font text-brand-black text-xl font-Nunito'>{0.00}</p>
+              <p className='font text-brand-black text-xl font-Nunito'>{earnings === "" ? "0.00" : earnings}</p>
             </div>
             <div className={`${styles.button} mt-2`}>Withdraw Earnings</div>
           </div>
