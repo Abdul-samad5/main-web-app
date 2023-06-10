@@ -1,11 +1,12 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { noReviews } from '../assets'
 import { styles } from "../constants/index";
 import UserData from "./UserData";
-import { UserContext } from "../context/UserContext";
 import axios from "axios";
 import { BASE_URL } from "../services/services";
 import Cookies from "js-cookie";
+import Orders from "./Orders";
+import { TableCell } from "@mui/material";
 
 const details = ["Payment ID", "User Email", "Ref Code", "Amount", "Status"];
 const TransactionHistory = () => {
@@ -47,7 +48,8 @@ const TransactionHistory = () => {
   return (
     <div className="mt-6">
       <p className={`${styles.componentHeader}`}>Transaction History</p>
-      <UserData
+
+      {/* <UserData
         type={"Transaction History"}
         image={noReviews}
         infoHead={details}
@@ -55,7 +57,9 @@ const TransactionHistory = () => {
         children={Children}
         handleNext={handleNext}
         handleSearch={handleTransactionSearch}
-      ></UserData>
+      ></UserData> */}
+
+      <Orders image={noReviews} infoHead={details} children={Children} data={transactionHistory} type={"Transaction History"} />
     </div>
   );
 };
@@ -63,14 +67,25 @@ const TransactionHistory = () => {
 // Child component of the transaction history meant to display each review and the date it was made.
 const Children = ({ id, paymentID, userEmail, refCode, amount, status }) => {
   return (
-    <div className="flex justify-between">
-      <p className={`${styles.valueStyle}`}>{id}</p>
-      <p className={`${styles.valueStyle}`}>{paymentID}</p>
-      <p className={`${styles.valueStyle}`}>{userEmail}</p>
-      <p className={`${styles.valueStyle}`}>{refCode}</p>
-      <p className={`${styles.valueStyle}`}>{amount}</p>
-      <Status value={status} />
-    </div>
+    // <div className="flex justify-between">
+    //   <p className={`${styles.valueStyle}`}>{id}</p>
+    //   <p className={`${styles.valueStyle}`}>{paymentID}</p>
+    //   <p className={`${styles.valueStyle}`}>{userEmail}</p>
+    //   <p className={`${styles.valueStyle}`}>{refCode}</p>
+    //   <p className={`${styles.valueStyle}`}>{amount}</p>
+    //   <Status value={status} />
+    // </div>
+
+    <>
+      <TableCell>{id}</TableCell>
+      <TableCell>{paymentID}</TableCell>
+      <TableCell>{userEmail}</TableCell>
+      <TableCell>{refCode}</TableCell>
+      <TableCell>{amount}</TableCell>
+      <TableCell>
+        <Status value={status} />
+      </TableCell>
+    </>
   );
 };
 
