@@ -11,8 +11,10 @@ import {
 import Cookies from "js-cookie";
 import { BASE_URL } from "../services/services";
 import Modal from "./Modal";
+import Orders from "./Orders";
+import { TableCell } from "@mui/material";
 
-const details = ["Collection name", "Product", "Action"];
+const details = ["ID", "Collection name", "Product", "Action"];
 const Collections = () => {
   // State to store the collections gotten from the API
   const [collections, setCollections] = useState([]);
@@ -25,7 +27,7 @@ const Collections = () => {
   const [reRender, setRender] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [modalContent, setModalContent] = useState(null);
-  const tk = Cookies.get("_tksr");
+  const token = Cookies.get("_tksr");
   const isVerified = Cookies.get("emailVerify");
 
   // Function to update the state to the next five or so collection details gotten from the API.
@@ -36,8 +38,13 @@ const Collections = () => {
   };
 
   const fetchCollections = async () => {
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+      'Content-Type': 'application/json',
+    };
+
     try {
-      const response = await getCollectionList();
+      const response = await axios.get(`${BASE_URL}product/collections/list`, config);;
       // console.log(response);
       setCollections(response.data.data);
       if (!response.statusText === "OK") return;
@@ -167,26 +174,50 @@ const Collections = () => {
     };
 
     return (
-      <div className="flex justify-between">
-        <p className={`${styles.valueStyle}`}>{no}</p>
-        <p className={`${styles.valueStyle} relative left-6`}>{collectionName}</p>
-        <img src={product} alt="product" className="w-8 rounded h-8 relative left-16"/>
-        <div
-          className="flex h-auto mt-2 group hover:cursor-pointer w-auto justify-between"
-          onClick={deleteCollections}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 448 512"
-            className="w-4 h-3 mt-1 align-middle mr-1 fill-slate-300 group-hover:fill-slate-100"
+      // <div className="flex justify-between">
+      //   <p className={`${styles.valueStyle}`}>{no}</p>
+      //   <p className={`${styles.valueStyle} relative left-6`}>{collectionName}</p>
+      //   <img src={product} alt="product" className="w-8 rounded h-8 relative left-16"/>
+      //   <div
+      //     className="flex h-auto mt-2 group hover:cursor-pointer w-auto justify-between"
+      //     onClick={deleteCollections}
+      //   >
+      //     <svg
+      //       xmlns="http://www.w3.org/2000/svg"
+      //       viewBox="0 0 448 512"
+      //       className="w-4 h-3 mt-1 align-middle mr-1 fill-slate-300 group-hover:fill-slate-100"
+      //     >
+      //       <path d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0H284.2c12.1 0 23.2 6.8 28.6 17.7L320 32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 96 0 81.7 0 64S14.3 32 32 32h96l7.2-14.3zM32 128H416V448c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V128zm96 64c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16z" />
+      //     </svg>
+      //     <p className="text-red-600 group-hover:text-red-200 text-sm">
+      //       Delete collection
+      //     </p>
+      //   </div>
+      // </div>
+      <>
+        <TableCell>{no}</TableCell>
+        <TableCell>{collectionName}</TableCell>
+        <TableCell>
+          <img src={product} alt="product" className="w-8 rounded h-8"/>
+        </TableCell>
+        <TableCell>
+          <div
+            className="flex h-auto mt-2 group hover:cursor-pointer "
+            onClick={deleteCollections}
           >
-            <path d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0H284.2c12.1 0 23.2 6.8 28.6 17.7L320 32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 96 0 81.7 0 64S14.3 32 32 32h96l7.2-14.3zM32 128H416V448c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V128zm96 64c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16z" />
-          </svg>
-          <p className="text-red-600 group-hover:text-red-200 text-sm">
-            Delete collection
-          </p>
-        </div>
-      </div>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 448 512"
+              className="w-4 h-3 mt-1 align-middle mr-1 fill-slate-300 group-hover:fill-slate-100"
+            >
+              <path d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0H284.2c12.1 0 23.2 6.8 28.6 17.7L320 32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 96 0 81.7 0 64S14.3 32 32 32h96l7.2-14.3zM32 128H416V448c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V128zm96 64c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16z" />
+            </svg>
+            <p className="text-red-600 group-hover:text-red-200 text-sm">
+              Delete collection
+            </p>
+          </div>
+        </TableCell>
+      </>
     );
   };
 
@@ -211,7 +242,7 @@ const Collections = () => {
         </span>
       </div>
 
-      <UserData
+      {/* <UserData
         type={"Collections"}
         image={noCollections}
         handleSearch={handleCollectionSearch}
@@ -219,7 +250,9 @@ const Collections = () => {
         data={collections}
         children={Children}
         handleNext={handleNext}
-      />
+      /> */}
+
+      <Orders image={noCollections} infoHead={details} children={Children} data={collections} type={"Collections"} />
 
       <div
         className={

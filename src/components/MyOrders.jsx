@@ -5,6 +5,8 @@ import {styles} from '../constants/index';
 import axios from 'axios';
 import { BASE_URL } from '../services/services';
 import Cookies from 'js-cookie';
+import Orders from './Orders';
+import { TableCell } from '@mui/material';
 
 const details = ["Customer", "Date", "Status", "Total"];
 const MyOrders = () => {
@@ -30,10 +32,11 @@ const MyOrders = () => {
         try {
           const res = await axios.get(`${BASE_URL}store/list/`, config);
           if (res) {
+            // setMyOrders(res.data["orders"]);
             setMyOrders(res.data["Store Details"]);
           }
-          console.log(res);
-        //   console.log(res.data["Store Details"]);
+          // console.log(res);
+          // console.log(res.data["orders"]);
         } catch (err) {
           console.log(err);
         }
@@ -46,7 +49,7 @@ const MyOrders = () => {
     return (
         <div className='mt-8'>
             <p className={`${styles.componentHeader}`}>My Orders</p>
-            <UserData
+            {/* <UserData
                 type={"My Orders"}
                 image={noOrders}
                 handleSearch={handleOrderSearch}
@@ -54,21 +57,30 @@ const MyOrders = () => {
                 data={myOrders}
                 children={Children}
                 handleNext={handleNext}
-            ></UserData>
-
+            ></UserData> */}
+            <Orders image={noOrders} infoHead={details} children={Children} data={myOrders} type={"My Orders"} />
         </div>
     )
 };
 
 const Children = ({id, customer, date, status, total}) => {
     return (
-        <div className="flex justify-between">
-            <p className={`${styles.valueStyle}`}>{id}</p>
-            <p className={`${styles.valueStyle}`}>{customer}</p>
-            <p className={`${styles.valueStyle}`}>{date}</p>
+        // <div className="flex justify-between">
+        //     <p className={`${styles.valueStyle}`}>{id}</p>
+        //     <p className={`${styles.valueStyle}`}>{customer}</p>
+        //     <p className={`${styles.valueStyle}`}>{date}</p>
+        //     <Status value={status}/>
+        //     <p className={`${styles.valueStyle}`}>{total}</p>
+        // </div>
+        <>
+          <TableCell>{id}</TableCell>
+          <TableCell>{customer}</TableCell>
+          <TableCell>{date}</TableCell>
+          <TableCell>
             <Status value={status}/>
-            <p className={`${styles.valueStyle}`}>{total}</p>
-        </div>
+          </TableCell>
+          <TableCell>{total}</TableCell>
+        </>
     )
 };
 

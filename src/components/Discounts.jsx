@@ -7,6 +7,8 @@ import axios from "axios";
 import { BASE_URL } from "../services/services";
 import Cookies from 'js-cookie';
 import Modal from './Modal';
+import Orders from './Orders';
+import { TableCell } from '@mui/material';
 
 const details = ["Discount Code", "Method", "Discount Type", "Status", "Discount Value", "Value", "Action"];
 const Discounts = () => {
@@ -145,7 +147,7 @@ const Discounts = () => {
             try {
                 const response = await axios.delete(`${BASE_URL}marketing/delete/${id}`, 
                 { headers: { Authorization: `Bearer ${tk}`} });
-                console.log(response);
+                // console.log(response);
                 if(!response.statusText === "OK") return;
                 setRender(prev => prev = !prev);
             } catch (err) {
@@ -167,24 +169,43 @@ const Discounts = () => {
         }
     
         return (
-            <div className="flex justify-between wrap items-center">
-                <p className={`${styles.valueStyle} relative lg:left-2`}>{no}</p>
-                <p className={`${styles.valueStyle} relative lg:left-6`}>{discountCode}</p>
-                <p className={`${styles.valueStyle} relative lg:left-8`}>{method}</p>
-                <p className={`${styles.valueStyle} relative lg:left-2`}>{type}</p>
-                {/* <Status value={new Date(end_date).getTime() > new Date().getTime() ? "Active" : "Expired"}/> */}
-                <Status value={active ? "Active" : "Expired"}/>
-                <p className={`${styles.valueStyle} relative lg:right-8`}>{discount_value}</p>
-                <p className={`${styles.valueStyle} relative lg:right-6`}>{value}</p>
-                <div onClick={handleClick} className="flex w-2 h-4 relative lg:right-4">
-                    <div className={currentState ? 'rounded bg-white shadow-lg top-6 relative px-1 z-10 h-20 w-auto' : 'hidden'}>
-                        <p className='text-xs cursor-pointer' onClick={deactivateDiscount}>Deactivte discount</p>
-                        <p className='text-xs cursor-pointer my-auto text-red-400 my-2' onClick={deleteDiscount}>Delete discount</p>
+            // <div className="flex justify-between wrap items-center">
+            //     <p className={`${styles.valueStyle} relative lg:left-2`}>{no}</p>
+            //     <p className={`${styles.valueStyle} relative lg:left-6`}>{discountCode}</p>
+            //     <p className={`${styles.valueStyle} relative lg:left-8`}>{method}</p>
+            //     <p className={`${styles.valueStyle} relative lg:left-2`}>{type}</p>
+            //     <Status value={new Date(end_date).getTime() > new Date().getTime() ? "Active" : "Expired"}/>
+            //     <Status value={active ? "Active" : "Expired"}/>
+            //     <p className={`${styles.valueStyle} relative lg:right-8`}>{discount_value}</p>
+            //     <p className={`${styles.valueStyle} relative lg:right-6`}>{value}</p>
+            //     <div onClick={handleClick} className="flex w-2 h-4 relative lg:right-4">
+            //         <div className={currentState ? 'rounded bg-white shadow-lg top-6 relative px-1 z-10 h-20 w-auto' : 'hidden'}>
+            //             <p className='text-xs cursor-pointer' onClick={deactivateDiscount}>Deactivte discount</p>
+            //             <p className='text-xs cursor-pointer my-auto text-red-400 my-2' onClick={deleteDiscount}>Delete discount</p>
+            //         </div>
+            //         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 512" className='w-4 h-4 fill-slate-400'><path d="M64 360c30.9 0 56 25.1 56 56s-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56zm0-160c30.9 0 56 25.1 56 56s-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56zM120 96c0 30.9-25.1 56-56 56S8 126.9 8 96S33.1 40 64 40s56 25.1 56 56z"/></svg>
+            //     </div>
+            // </div>
+            <>
+                <TableCell>{no}</TableCell>
+                <TableCell>{discountCode}</TableCell>
+                <TableCell>{method}</TableCell>
+                <TableCell>{type}</TableCell>
+                <TableCell>
+                    <Status value={active ? "Active" : "Expired"}/>
+                </TableCell>
+                <TableCell>{discount_value}</TableCell>
+                <TableCell>{value}</TableCell>
+                <TableCell>
+                    <div onClick={handleClick} className="flex w-2 h-4 relative lg:right-4">
+                        <div className={currentState ? 'rounded bg-white shadow-lg top-6 relative px-1 z-10 h-20 w-auto' : 'hidden'}>
+                            <p className='text-xs cursor-pointer' onClick={deactivateDiscount}>Deactivte discount</p>
+                            <p className='text-xs cursor-pointer my-auto text-red-400 my-2' onClick={deleteDiscount}>Delete discount</p>
+                        </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 512" className='w-4 h-4 fill-slate-400'><path d="M64 360c30.9 0 56 25.1 56 56s-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56zm0-160c30.9 0 56 25.1 56 56s-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56zM120 96c0 30.9-25.1 56-56 56S8 126.9 8 96S33.1 40 64 40s56 25.1 56 56z"/></svg>
                     </div>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 512" className='w-4 h-4 fill-slate-400'><path d="M64 360c30.9 0 56 25.1 56 56s-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56zm0-160c30.9 0 56 25.1 56 56s-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56zM120 96c0 30.9-25.1 56-56 56S8 126.9 8 96S33.1 40 64 40s56 25.1 56 56z"/></svg>
-                    
-                </div>
-            </div>
+                </TableCell>
+            </>
         )
     };
 
@@ -199,14 +220,17 @@ const Discounts = () => {
                     </span>
                 </div>
                 
-                <UserData 
+                {/* <UserData 
                     type={"Discounts"} 
                     image={noDiscounts} 
                     handleSearch={handleDiscountSearch} 
                     infoHead={details} 
                     data={discounts} 
                     children={Children} 
-                    handleNext={handleNext}></UserData>
+                    handleNext={handleNext}>
+                </UserData> */}
+
+                <Orders image={noDiscounts} infoHead={details} children={Children} data={discounts} type={"Discounts"} />
 
                 <div className={isVisible ? 'h-full w-full absolute top-0 right-0' : ' -translate-x-full hidden'}>
                     <div className='h-auto lg:w-1/3 w-3/4 shadow-2xl bg-white float-right px-4 py-3'>
