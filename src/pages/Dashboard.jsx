@@ -70,6 +70,7 @@ const Dashboard = () => {
 
   // Component to be rendered on the main
   const [activeComponent, setActiveComponent] = useState([<MyStore />]);
+  
   const tk = Cookies.get("_tksr");
   const id = Cookies.get("_id");
   const isVerified = Cookies.get("emailVerify");

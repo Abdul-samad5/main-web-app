@@ -117,48 +117,48 @@ const SalesTarget = () => {
         //     return;
         // }
       
-        let salesTarget = {
-            "start_date": newSalesTarget.startDate.toString(),
-            "end_date": newSalesTarget.endDate.toString(),
-            "target_price": newSalesTarget.amount,
-            "interval": newSalesTarget.interval,
-            "target_name": newSalesTarget.targetName.toLowerCase(),
-        }
+        // let salesTarget = {
+        //     "start_date": newSalesTarget.startDate.toString(),
+        //     "end_date": newSalesTarget.endDate.toString(),
+        //     "target_price": newSalesTarget.amount,
+        //     "interval": newSalesTarget.interval,
+        //     "target_name": newSalesTarget.targetName.toLowerCase(),
+        // }
 
-        setLooading(prev => prev = !prev);
+        // setLooading(prev => prev = !prev);
 
-        try {
-            const res = await axios.post(
-                `${BASE_URL}store/sales_target`, 
-                salesTarget, 
-                { headers: { Authorization: `Bearer ${token}`} }
-            );
+        // try {
+        //     const res = await axios.post(
+        //         `${BASE_URL}store/sales_target`, 
+        //         salesTarget, 
+        //         { headers: { Authorization: `Bearer ${token}`} }
+        //     );
 
-            setVisisble(prev => prev = !prev);
+        //     setVisisble(prev => prev = !prev);
 
-            if(res) {
-                setShowModal(true);
-                console.log(res);
-                setModalContent('Sales target created successfully!');
-                setTimeout(() => {
-                    setShowModal(false);
-                }, 2000);
-            }
+        //     if(res) {
+        //         setShowModal(true);
+        //         console.log(res);
+        //         setModalContent('Sales target created successfully!');
+        //         setTimeout(() => {
+        //             setShowModal(false);
+        //         }, 2000);
+        //     }
 
-            console.log(res);
+        //     console.log(res);
 
-            setSalesTarget((prev) => {
-                return prev = {
-                    targetName: "",
-                    amount: 0,
-                    interval: "",
-                    startDate: "",
-                    endDate: ""
-                }
-            });
-        } catch(err) {
-            console.log(err);
-        }
+        //     setSalesTarget((prev) => {
+        //         return prev = {
+        //             targetName: "",
+        //             amount: 0,
+        //             interval: "",
+        //             startDate: "",
+        //             endDate: ""
+        //         }
+        //     });
+        // } catch(err) {
+        //     console.log(err);
+        // }
     }
 
     async function fetchSalesTarget(token) {

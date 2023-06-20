@@ -27,7 +27,7 @@ const Collections = () => {
   const [reRender, setRender] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [modalContent, setModalContent] = useState(null);
-  const tk = Cookies.get("_tksr");
+  const token = Cookies.get("_tksr");
   const isVerified = Cookies.get("emailVerify");
 
   // Function to update the state to the next five or so collection details gotten from the API.
@@ -38,8 +38,13 @@ const Collections = () => {
   };
 
   const fetchCollections = async () => {
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+      'Content-Type': 'application/json',
+    };
+
     try {
-      const response = await getCollectionList();
+      const response = await axios.get(`${BASE_URL}product/collections/list`, config);;
       // console.log(response);
       setCollections(response.data.data);
       if (!response.statusText === "OK") return;
