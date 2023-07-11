@@ -58,7 +58,7 @@ const MyStore = () => {
       const response = await axios.get(`${BASE_URL}store/list`, config);;
       if (response) {
         // const store_name = response.data['Store Details'][0].store_name;
-        // console.log(response);
+        console.log(response);
 
         // setName(`Welcome to your Store, ${store_name}`);
         setEarnings(response.data['Store Details'][0].account_balance);

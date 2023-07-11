@@ -132,6 +132,7 @@ const Dashboard = () => {
 
       setStoreName(`${store_name}`);
       setStoreLogo(profileLogo);
+      // console.log(storeName);
       setEmailUrl(response.data.user_data.user_email_url);
       // setIsEmailVerified(verifyState);
     }
@@ -420,7 +421,7 @@ const Dashboard = () => {
                 onClick={handleClick}
               />
               {/* <Link to={`/store-front/${storeName}`}> */}
-              <Link to={`/store-front/${'Emmanuelstore'}`}>
+              <Link to={`/store-front/${storeName}`}>
                 <button className={`${styles.buttonOutline} text-[14px] p-1`}>
                   Go to store front
                 </button>
