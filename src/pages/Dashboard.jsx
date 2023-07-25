@@ -306,7 +306,7 @@ const Dashboard = () => {
             <DbIcon src={finances} />
             <h2>Finances</h2>
           </div>
-          <div
+          {/* <div
             className={`${styles.dbNavItem}`}
             // onClick={(e) => showActiveComponent(e, <StoreReviews />)}
             onClick={(e) => {
@@ -316,7 +316,7 @@ const Dashboard = () => {
           >
             <DbIcon src={review} />
             <h2>Sales target</h2>
-          </div>
+          </div> */}
           <div
             className={`${styles.dbNavItem}`}
             // onClick={(e) => showActiveComponent(e, <TransactionHistory />)}
