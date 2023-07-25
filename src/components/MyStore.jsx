@@ -176,7 +176,7 @@ const MyStore = () => {
 
       {/* Product sales box of the My Store component */}
       <div className='rounded shadow-xl w-full px-5 py-3 mx-auto my-auto h-auto'>
-        <p className={`${styles.componentHeader}`}>Product sales</p>
+        <p className={`${styles.componentHeader}`}>Order History</p>
 
         <div className='flex justify-between mt-10 align-center'>
           <p className='text-sm mr-1'>#</p>
