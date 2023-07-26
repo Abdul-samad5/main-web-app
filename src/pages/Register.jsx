@@ -36,12 +36,8 @@ const Register = () => {
   }
 
   return (
-    <div className='w-full px-[15px] lg:w-[80%] mx-auto relative pt-[80px] '>
-      <div className='py-5 absolute top-0 sm[320px]:hidden left-5 lg:-left-[100px]'>
-        <a href='/' className='w-[50px] block'>
-          <img src={logo_2} alt='Yetti Logo' />
-        </a>
-      </div>
+    <div className='w-full px-[15px] lg:w-[80%] mx-auto relative'>
+      
       {getStarted.login && <Login handleClick={handleGetStarted} />}
       {getStarted.forgotPassword && (
         <ResetPassword handleClick={handleGetStarted} />

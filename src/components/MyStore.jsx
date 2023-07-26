@@ -58,7 +58,7 @@ const MyStore = () => {
       const response = await axios.get(`${BASE_URL}store/list`, config);;
       if (response) {
         // const store_name = response.data['Store Details'][0].store_name;
-        // console.log(response);
+        console.log(response);
 
         // setName(`Welcome to your Store, ${store_name}`);
         setEarnings(response.data['Store Details'][0].account_balance);
@@ -154,7 +154,7 @@ const MyStore = () => {
         </div>
 
         <div className='bg-white rounded lg:w-2/3 shadow-lg my-4 lg:my-0 px-3 py-3'>
-          <p className='text-2xl font-bold pb-24 lg:pb-0 text-black-800'>
+          {/* <p className='text-2xl font-bold pb-24 lg:pb-0 text-black-800'>
             Store target status
           </p>
           <span className='flex lg:mt-[40px] w-full justify-end'>
@@ -170,13 +170,13 @@ const MyStore = () => {
               maxCompleted={100}
               animateOnRender={true} 
               className='w-full'/>
-          </span>
+          </span> */}
         </div>
       </div>
 
       {/* Product sales box of the My Store component */}
       <div className='rounded shadow-xl w-full px-5 py-3 mx-auto my-auto h-auto'>
-        <p className={`${styles.componentHeader}`}>Product sales</p>
+        <p className={`${styles.componentHeader}`}>Order History</p>
 
         <div className='flex justify-between mt-10 align-center'>
           <p className='text-sm mr-1'>#</p>

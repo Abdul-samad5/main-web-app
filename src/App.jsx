@@ -8,11 +8,10 @@ import { Register, Dashboard, StoreFront } from "./pages";
 import React, { useContext } from "react";
 import { Cart, Checkout } from "./store-components";
 import { CartContext } from "./context/CartContext";
-
 import { GetStarted, CreateStore, Login, ResetPassword } from "./components";
-
 import Cookies from "js-cookie";
 import ProductDetails from "./store-components/ProductDetails";
+import { SignUp } from "./components";
 
 function App() {
   const { cartTotal, cart, deleteFromCart, clearCart, changeQuantity } =
@@ -44,9 +43,9 @@ function App() {
         <Route
           path="/store-front/:storeName"
           element={
-            <PreventLogin>
+            // <PreventLogin>
               <StoreFront />
-            </PreventLogin>
+            // </PreventLogin>
           }
         />
         <Route
@@ -84,6 +83,18 @@ function App() {
             <PreventLogin>
               <ProductDetails />
             </PreventLogin>
+          }
+        />
+        <Route
+          path="/signUp"
+          element={
+            <SignUp />
+          }
+        />
+        <Route
+          path="/reset-password"
+          element={
+            <ResetPassword />
           }
         />
       </Routes>

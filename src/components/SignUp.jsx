@@ -4,6 +4,9 @@ import Modal from "./Modal";
 import { useNavigate } from "react-router-dom";
 import { userLogin } from '../services/services';
 import { UserContext } from "../context/UserContext";
+import { logo_2 } from '../assets';
+import axios from "axios";
+import { BASE_URL } from "../services/services";
 
 const SignUp = ({ handleClick }) => {
   const navigate = useNavigate();
@@ -90,16 +93,19 @@ const SignUp = ({ handleClick }) => {
     }
     try {
       setLoading(true);
-      const res = await postUser(user);
+      // const res = await postUser(user);
+      const res = await axios.post(`${BASE_URL}auth/register/seller`, user);
       console.log(res.data.message);
       console.log(res);
       if (!res.status === 201 || res.status === 200) return;
       setShowModal(true);
       setModalText("Registration Successful! Navigating to the Login page...");
+      // setModalText("Registration Successful! Navigating to the dashboard...");
 
+      // loginNewUser();
       setTimeout(() => {
         setShowModal(false);
-        // loginNewUser();
+        
       }, 3000);
 
       setTimeout(() => {
@@ -126,116 +132,124 @@ const SignUp = ({ handleClick }) => {
   }
 
   return (
-    <div className="max-w-[400px] w-full mx-auto mb-20">
-      {showModal && <Modal text={modalContent} showModal={showModal} />}
+    <div className='w-full px-[15px] lg:w-[80%] mx-auto relative pt-[80px]'>
+      <div className='py-5 absolute top-0 sm[320px]:hidden left-5 lg:-left-[100px]'>
+        <a href='/' className='w-[50px] block'>
+          <img src={logo_2} alt='Yetti Logo' />
+        </a>
+      </div>
 
-      <h1 className="text-center text-[28px] mb-[15px] font-normal">
-        Register
-      </h1>
+      <div className="max-w-[400px] w-full mx-auto mb-20">
+        {showModal && <Modal text={modalContent} showModal={showModal} />}
 
-      {showAlert && (
-        <div className="bg-red-300 p-2 rounded m-4">
-          <p className="text-center ">
-            please make sure to read and agree to the terms and conditions
-          </p>
-        </div>
-      )}
+        <h1 className="text-center text-[28px] mb-[15px] font-normal">
+          Register
+        </h1>
 
-      <form className="w-full" onSubmit={formSubmit}>
-        {/* <Modal /> */}
-        <div className="mb-4 w-full">
-          <label htmlFor="storeName" className="w-full mb-3 ml-2">
-            Full name
-          </label>
-          <input
-            type="text"
-            name="fullName"
-            value={formData.fullName}
-            placeholder="Enter your full name"
-            onChange={handleChange}
-            className="w-full border border-brand-stroke rounded-lg p-3"
-          />
-        </div>
-        <div className="mb-4 w-full">
-          <label htmlFor="storeName" className="w-full mb-3 ml-2">
-            Email
-          </label>
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            placeholder="Enter your email address"
-            onChange={handleChange}
-            className="w-full border border-brand-stroke rounded-lg p-3"
-          />
-        </div>
-        <div className="w-full mb-4">
-          <label htmlFor="password" className="w-full mb-3 ml-2">
-            Password
-          </label>
-          <input
-            type="password"
-            name="password"
-            value={formData.password}
-            placeholder="Password"
-            onChange={handleChange}
-            className="w-full border border-brand-stroke rounded-lg p-3"
-          />
-        </div>
-        <div className="w-full mb-4">
-          <label htmlFor="accountType" className="w-full mb-3 ml-2">
-            Account Type
-          </label>
-          <select
-            type="dropdown"
-            name="accountType"
-            value={formData.accountType}
-            required
-            onChange={handleChange}
-            className="w-full border border-brand-stroke rounded-lg p-3"
-          >
-            <option value="">Please select</option>
-            <option value="seller">Seller</option>
-            <option value="buyer">Buyer</option>
-          </select>
-        </div>
-        <div className="w-full mb-4 flex gap-2 items-center">
-          <input
-            type="checkbox"
-            name="agreeToTerms"
-            id="agreeToTerms"
-            checked={formData.agreeToTerms}
-            onChange={handleChange}
-          />
-          <label htmlFor="agreeToTerms">
-            I agree to the{" "}
-            <a href="/" className="text-brand-secondary">
-              terms and conditions.
-            </a>
-          </label>
-        </div>
-        <button
-          type="submit"
-          // onClick={() => handleClick("getStarted")}
-          className={`w-full py-3 bg-brand-primary text-white font-normal rounded-lg hover:bg-brand-secondary transition-colors duration-500`}
-        >
-          {loading ? "Please wait..." : "Register"}
-        </button>
-        <div className="w-full flex justify-between items-center mt-2">
-          <p className="text-brand-gray font-normal text-[14px]">
-            Already have an account?
-          </p>
+        {showAlert && (
+          <div className="bg-red-300 p-2 rounded m-4">
+            <p className="text-center ">
+              please make sure to read and agree to the terms and conditions
+            </p>
+          </div>
+        )}
 
+        <form className="w-full" onSubmit={formSubmit}>
+          {/* <Modal /> */}
+          <div className="mb-4 w-full">
+            <label htmlFor="storeName" className="w-full mb-3 ml-2">
+              Full name
+            </label>
+            <input
+              type="text"
+              name="fullName"
+              value={formData.fullName}
+              placeholder="Enter your full name"
+              onChange={handleChange}
+              className="w-full border border-brand-stroke rounded-lg p-3"
+            />
+          </div>
+          <div className="mb-4 w-full">
+            <label htmlFor="storeName" className="w-full mb-3 ml-2">
+              Email
+            </label>
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              placeholder="Enter your email address"
+              onChange={handleChange}
+              className="w-full border border-brand-stroke rounded-lg p-3"
+            />
+          </div>
+          <div className="w-full mb-4">
+            <label htmlFor="password" className="w-full mb-3 ml-2">
+              Password
+            </label>
+            <input
+              type="password"
+              name="password"
+              value={formData.password}
+              placeholder="Password"
+              onChange={handleChange}
+              className="w-full border border-brand-stroke rounded-lg p-3"
+            />
+          </div>
+          <div className="w-full mb-4">
+            <label htmlFor="accountType" className="w-full mb-3 ml-2">
+              Account Type
+            </label>
+            <select
+              type="dropdown"
+              name="accountType"
+              value={formData.accountType}
+              required
+              onChange={handleChange}
+              className="w-full border border-brand-stroke rounded-lg p-3"
+            >
+              <option value="">Please select</option>
+              <option value="seller">Seller</option>
+              <option value="buyer">Buyer</option>
+            </select>
+          </div>
+          <div className="w-full mb-4 flex gap-2 items-center">
+            <input
+              type="checkbox"
+              name="agreeToTerms"
+              id="agreeToTerms"
+              checked={formData.agreeToTerms}
+              onChange={handleChange}
+            />
+            <label htmlFor="agreeToTerms">
+              I agree to the{" "}
+              <a href="/" className="text-brand-secondary">
+                terms and conditions.
+              </a>
+            </label>
+          </div>
           <button
-            className="text-brand-gray font-normal text-[14px]"
-            type="button"
-            onClick={() => handleClick("login")}
+            type="submit"
+            // onClick={() => handleClick("getStarted")}
+            className={`w-full py-3 bg-brand-primary text-white font-normal rounded-lg hover:bg-brand-secondary transition-colors duration-500`}
           >
-            Login
+            {loading ? "Please wait..." : "Register"}
           </button>
-        </div>
-      </form>
-      {showModal && <Modal text={modalContent} />}
+          <div className="w-full flex justify-between items-center mt-2">
+            <p className="text-brand-gray font-normal text-[14px]">
+              Already have an account?
+            </p>
+
+            <button
+              className="text-brand-gray font-normal text-[14px]"
+              type="button"
+              onClick={() => handleClick("login")}
+            >
+              Login
+            </button>
+          </div>
+        </form>
+        {showModal && <Modal text={modalContent} />}
+      </div>
     </div>
   );
 };

@@ -6,6 +6,8 @@ import { UserContext } from '../context/UserContext';
 import Modal from './Modal';
 import Cookies from 'js-cookie';
 import axios from 'axios';
+import { logo_2 } from '../assets';
+import { Link } from 'react-router-dom';
 
 const Login = ({ handleClick }) => {
   // Initialize state for the login to enable user login
@@ -106,72 +108,83 @@ const Login = ({ handleClick }) => {
   }
 
   return (
-    <div className='max-w-[400px] w-full mx-auto'>
-      {showModal && <Modal text={modalText} showModal={showModal} />}
-      <h1 className='text-center text-[28px] mb-[40px] font-normal'>
-        Login to your account
-      </h1>
-      <form className='w-full' onSubmit={formSubmit}>
-        <div className='mb-4 w-full'>
-          <label htmlFor='email' className='w-full mb-3 ml-2'>
-            Email address
-          </label>
-          <input
-            type='email'
-            name='email'
-            value={formData.value}
-            placeholder='Enter your email address'
-            onChange={handleChange}
-            className='w-full border border-brand-stroke rounded-lg p-3'
-          />
-        </div>
-        <div className='w-full mb-4'>
-          <label htmlFor='password' className='w-full mb-3 ml-2'>
-            Password
-          </label>
-          <input
-            type='password'
-            name='password'
-            value={formData.value}
-            placeholder='Enter password'
-            onChange={handleChange}
-            className='w-full border border-brand-stroke rounded-lg p-3'
-          />
-        </div>
-        <div className='w-full mb-4 flex gap-2 items-center'>
-          <input
-            type='checkbox'
-            name='remember'
-            id='remember'
-            checked={formData.remember}
-            onChange={handleChange}
-          />
-          <label htmlFor='remember'>Remember me</label>
-        </div>
-        <button disabled={loading} className={`${styles.button} w-full`}>
-          {loading ? 'Please wait...' : 'Login to store'}
-        </button>
-        <div className='w-full flex justify-between items-center mt-2'>
-          <button
-            className='text-brand-gray font-normal text-[14px]'
-            type='button'
-            onClick={() => handleClick('forgotPassword')}
-          >
-            Forgot password?
+    <div className='w-full px-[15px] lg:w-[80%] mx-auto relative pt-[80px]'>
+      <div className='py-5 absolute top-0 sm[320px]:hidden left-5 lg:-left-[100px]'>
+        <a href='/' className='w-[50px] block'>
+          <img src={logo_2} alt='Yetti Logo' />
+        </a>
+      </div>
+    
+      <div className='max-w-[400px] w-full mx-auto'>
+        {showModal && <Modal text={modalText} showModal={showModal} />}
+        <h1 className='text-center text-[28px] mb-[40px] font-normal'>
+          Login to your account
+        </h1>
+        <form className='w-full' onSubmit={formSubmit}>
+          <div className='mb-4 w-full'>
+            <label htmlFor='email' className='w-full mb-3 ml-2'>
+              Email address
+            </label>
+            <input
+              type='email'
+              name='email'
+              value={formData.value}
+              placeholder='Enter your email address'
+              onChange={handleChange}
+              className='w-full border border-brand-stroke rounded-lg p-3'
+            />
+          </div>
+          <div className='w-full mb-4'>
+            <label htmlFor='password' className='w-full mb-3 ml-2'>
+              Password
+            </label>
+            <input
+              type='password'
+              name='password'
+              value={formData.value}
+              placeholder='Enter password'
+              onChange={handleChange}
+              className='w-full border border-brand-stroke rounded-lg p-3'
+            />
+          </div>
+          <div className='w-full mb-4 flex gap-2 items-center'>
+            <input
+              type='checkbox'
+              name='remember'
+              id='remember'
+              checked={formData.remember}
+              onChange={handleChange}
+            />
+            <label htmlFor='remember'>Remember me</label>
+          </div>
+          <button disabled={loading} className={`${styles.button} w-full`}>
+            {loading ? 'Please wait...' : 'Login to store'}
           </button>
+          <div className='w-full flex justify-between items-center mt-2'>
+            <button
+              className='text-brand-gray font-normal text-[14px]'
+              type='button'
+              onClick={() => handleClick('forgotPassword')}
+            >
+              Forgot password?
+            </button>
 
-          <button
-            className='text-brand-gray font-normal text-[14px]'
-            type='button'
-            onClick={() => {
-              handleClick('signUp');
-              navigate('/register');
-            }}
-          >
-            Register
-          </button>
-        </div>
-      </form>
+            <Link to="/signUp">
+              <button
+                className='text-brand-gray font-normal text-[14px]'
+                type='button'
+                // onClick={() => {
+                //   handleClick('signUp');
+                //   navigate('/register');
+                // }}
+              >
+                Register
+              </button>
+            </Link>
+          </div>
+        </form>
+      </div>
+
     </div>
   );
 };
