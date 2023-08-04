@@ -8,31 +8,31 @@ const CartContextProvider = ({ children }) => {
   const [quantity, setQuantity] = useState(1);
 
   const addToCart = (id) => {
-    // const filterId = products.map((product) => product.id);
-
     const existingItem = cartItems.find((item) => item.id === id);
     const singleItem = products.find((product) => {
       return product.id === id;
     });
+    const newItem = {...singleItem, quantity: 1}
     if (singleItem) {
       if (existingItem) {
-        return setCartItems((prevItem) => [...prevItem]);
+        setCartItems((prevItem) => [...prevItem]);
       } else {
         setCartItems((prevItem) => {
-          return [...prevItem, singleItem];
+          return [...prevItem, newItem];
         });
       }
+      // console.log(cartItems);
     } else {
       setCartItems(cartItems);
     }
   };
 
   const getCartItemsTotal = () => {
-    const prices = cartItems.map((item) => Number(item.price));
+    const subTotal = cartItems.reduce((acc, curr)  => acc + Number(curr.price), 0);
 
-    const totalPrice = prices.reduce((acc, curr) => acc + curr, 0);
+    const grandTotal = cartItems.reduce((acc, curr)  => acc + (curr.price * curr.quantity), 0);
 
-    return totalPrice * quantity;
+    return [subTotal, grandTotal];
   };
 
   const handleIncrease = () => {
@@ -60,6 +60,7 @@ const CartContextProvider = ({ children }) => {
     const getData = async () => {
       const request = await getProducts();
       const data = request.data.data;
+      console.log(data);
 
       setProducts(data);
     };

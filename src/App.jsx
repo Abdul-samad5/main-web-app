@@ -77,14 +77,14 @@ function App() {
             </PreventLogin>
           }
         />
-        <Route
+        {/* <Route
           path="/store-front/:productId"
           element={
             <PreventLogin>
               <ProductDetails />
             </PreventLogin>
           }
-        />
+        /> */}
         <Route
           path="/signUp"
           element={
