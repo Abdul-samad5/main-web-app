@@ -37,20 +37,24 @@ const CartContextProvider = ({ children }) => {
     return [subTotal, grandTotal];
   };
 
-  const handleIncrease = () => {
-    if (quantity < 0) {
-      setQuantity(0);
-    } else {
-      setQuantity(quantity + 1);
-    }
+  const handleIncrease = (id) => {
+    const newCartItems = cartItems.map((cartItem) => {
+      if(cartItem.id === id) {
+        return {...cartItem, quantity: cartItem.quantity + 1}
+      } else return cartItem;
+    });
+    setCartItems((prev) => prev = newCartItems);
+    localStorage.setItem("Cart", JSON.stringify(newCartItems));
   };
 
-  const handleDecrease = () => {
-    if (quantity < 0) {
-      setQuantity(0);
-    } else {
-      setQuantity(quantity - 1);
-    }
+  const handleDecrease = (id) => {
+    const newCartItems = cartItems.map((cartItem) => {
+      if(cartItem.id === id) {
+        return {...cartItem, quantity: cartItem.quantity - 1}
+      } else return cartItem;
+    });
+    setCartItems((prev) => prev = newCartItems);
+    localStorage.setItem("Cart", JSON.stringify(newCartItems));
   };
 
   const deleteFromCart = (id) => {
