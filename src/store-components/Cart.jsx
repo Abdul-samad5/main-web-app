@@ -6,7 +6,7 @@ import { CartContext } from "../context/CartContext";
 import { UserContext } from "../context/UserContext";
 
 const Cart = () => {
-  const { cartItems, getCartItemsTotal } = useContext(CartContext);
+  const { cartItems, getCartItemsTotal, deleteFromCart } = useContext(CartContext);
   const { storeName } = useContext(UserContext);
   const name = storeName;
   return (
@@ -66,7 +66,7 @@ const Cart = () => {
                     productName={product.title}
                     productPrice={product.price}
                     id={product.id}
-                    // deleteFromCart={deleteFromCart}
+                    deleteFromCart={deleteFromCart}
                     // changeQuantity={changeQuantity}
                     quantity={product.quantity}
                     // reRender={reRender}
@@ -181,7 +181,7 @@ const Cart = () => {
 };
 
 // Cart product. Can edit the quantity and delete the particular item from the cart.
-const CartProducts = ({ productLogo, productName, productPrice, id, quantity }) => {
+const CartProducts = ({ productLogo, productName, productPrice, id, quantity, deleteFromCart }) => {
   const [thisQuantity, setThisQuantity] = React.useState(quantity);
   
   const handleChange = (event) => {
@@ -234,7 +234,7 @@ const CartProducts = ({ productLogo, productName, productPrice, id, quantity }) 
         </span>
       </span>
 
-      <span className="my-auto">
+      <span className="my-auto" onClick={() => deleteFromCart(id)}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="w-3 h-3 fill-brand-primary hover:fill-brand-secondary"

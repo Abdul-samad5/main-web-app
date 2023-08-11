@@ -9,12 +9,15 @@ import {
   wallet,
   up_trend,
   down_trend,
+  noOrders
 } from '../assets';
 import axios from 'axios';
 import { BASE_URL } from '../services/services';
 import { useEffect } from 'react';
 import ProgressBar from "@ramonak/react-progress-bar";
 import Cookies from 'js-cookie';
+import Orders from './Orders';
+import { Status, Children as OrdersChildren, details } from './MyOrders';
 
 function Icon({ icon }) {
   return <div className='rounded-full p-4 h-[32px] w-[32px]'></div>;
@@ -36,8 +39,8 @@ const MyStore = () => {
   const token = Cookies.get("_tksr");
 
   // Stores the amount of sales of the previous days of the week and is to be rendered on the line graph below.
-  const [historySales, setHistorySales] = useState([]);
-  const [storeTargetProgress, setStoreTargetProgress] = useState(80);
+  // const [storeTargetProgress, setStoreTargetProgress] = useState(80);
+  const [myOrders, setMyOrders] = useState([]);
 
   const [name, setName] = useState('');
   const [earnings, setEarnings] = useState("");
@@ -175,7 +178,7 @@ const MyStore = () => {
       </div>
 
       {/* Product sales box of the My Store component */}
-      <div className='rounded shadow-xl w-full px-5 py-3 mx-auto my-auto h-auto'>
+      {/* <div className='rounded shadow-xl w-full px-5 py-3 mx-auto my-auto h-auto'>
         <p className={`${styles.componentHeader}`}>Order History</p>
 
         <div className='flex justify-between mt-10 align-center'>
@@ -224,7 +227,7 @@ const MyStore = () => {
         </div>
 
         <div className='mt-8'>
-          {/* Image and text to be displayed if no data is found */}
+          Image and text to be displayed if no data is found
           <img
             src={product}
             alt='No customer found'
@@ -255,6 +258,10 @@ const MyStore = () => {
             );
           })}
         </div>
+      </div> */}
+      <div className='mt-8'>
+        <p className={`${styles.componentHeader}`}>Order History</p>
+        <Orders image={noOrders} infoHead={details} children={OrdersChildren} data={myOrders} type={"My Orders"} />
       </div>
     </div>
   );
@@ -338,36 +345,36 @@ const Rate = ({ yesterday_value, today_value }) => {
   );
 };
 
-const Children = ({ id, productName, sales, price, stock, status }) => {
-  return (
-    <div className='flex justify-between'>
-      <div className='flex justify-between w-full sticky'>
-        <p className={`${styles.valueStyle} sticky`}>{id}</p>
-        <p className={`${styles.valueStyle} sticky `}>{productName}</p>
-        <p className={`${styles.valueStyle} sticky `}>{sales}</p>
-        <p className={`${styles.valueStyle} sticky ml-12`}>{price}</p>
-        <p className={`${styles.valueStyle} sticky `}>{stock}</p>
-        <Status value={status} />
-      </div>
-    </div>
-  );
-};
+// const Children = ({ id, productName, sales, price, stock, status }) => {
+//   return (
+//     <div className='flex justify-between'>
+//       <div className='flex justify-between w-full sticky'>
+//         <p className={`${styles.valueStyle} sticky`}>{id}</p>
+//         <p className={`${styles.valueStyle} sticky `}>{productName}</p>
+//         <p className={`${styles.valueStyle} sticky `}>{sales}</p>
+//         <p className={`${styles.valueStyle} sticky ml-12`}>{price}</p>
+//         <p className={`${styles.valueStyle} sticky `}>{stock}</p>
+//         <Status value={status} />
+//       </div>
+//     </div>
+//   );
+// };
 
-const Status = ({ value }) => {
-  if (value === 'In Stock') {
-    return (
-      <div className='rounded text-green-800 bg-green-100 text-xs px-6 py-1'>
-        {value}
-      </div>
-    );
-  }
+// const Status = ({ value }) => {
+//   if (value === 'In Stock') {
+//     return (
+//       <div className='rounded text-green-800 bg-green-100 text-xs px-6 py-1'>
+//         {value}
+//       </div>
+//     );
+//   }
 
-  return (
-    <div className='rounded text-red-800 bg-red-100 text-xs px-3 py-1'>
-      {value}
-    </div>
-  );
-};
+//   return (
+//     <div className='rounded text-red-800 bg-red-100 text-xs px-3 py-1'>
+//       {value}
+//     </div>
+//   );
+// };
 
 const Total = ({ image, type, number }) => {
   return (

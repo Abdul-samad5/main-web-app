@@ -25,7 +25,7 @@
     "flowbite": "^1.5.3",
     "headlessui": "^0.0.0",
     "html2canvas": "^1.4.1",
-    "js-cookie": "^3.0.1",
+    "js-cookie": "^3.0.5",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-chartjs-2": "^4.3.1",
@@ -37,6 +37,7 @@
     "slate-react": "^0.83.0"
   },
   "devDependencies": {
+    "@types/js-cookie": "^3.0.3",
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
     "@vitejs/plugin-react": "^2.1.0",

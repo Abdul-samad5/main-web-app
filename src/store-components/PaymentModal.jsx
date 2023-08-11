@@ -18,7 +18,7 @@ const PaymentModal = () => {
   const componentProps = {
     name: formData.name,
     email: formData.email,
-    amount: getCartItemsTotal() * 100,
+    amount: getCartItemsTotal()[1] * 100,
     metadata: {
       name: formData.name,
       phone: formData.phone,
@@ -30,6 +30,7 @@ const PaymentModal = () => {
     },
     onClose: () => alert("Failed"),
   };
+
   function handleChange(e) {
     e.preventDefault();
     const { name, value } = e.target;
@@ -42,10 +43,10 @@ const PaymentModal = () => {
   }
   return (
     <>
-      <div className="justify-center items-center backdrop-filter backdrop-blur-xl flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-        <div className="relative transition ease-in-out delay-150 w-auto w-[80%] mx-auto max-w-3xl">
+      <div className="justify-center w-full items-center backdrop-filter backdrop-blur-xl flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+        <div className="relative transition ease-in-out delay-150 w-auto w-[95%] px-2 mx-auto max-w-3xl">
           {/*content*/}
-          <div className="border-0 rounded-lg  shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+          <div className="border-0 rounded-lg shadow-lg relative flex flex-col px-2 w-full bg-white outline-none focus:outline-none">
             {/*header*/}
             <h1 className="flex justify-center text-[28px] my-[20px]  font-bolder">
               Checkout
