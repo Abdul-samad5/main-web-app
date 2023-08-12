@@ -74,6 +74,7 @@ import up_trend from './icons/up_trend.png';
 import down_trend from './icons/down_trend.png';
 import invoice_styles from './icons/invoice_style.png';
 import camera from './icons/camera.png';
+import Loader from "./icons/loader.svg"
 
 export {
   all_prods,
@@ -149,4 +150,5 @@ export {
   storeDetails,
   websiteSettings,
   twitter,
+  Loader
 };

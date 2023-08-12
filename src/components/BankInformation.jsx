@@ -5,6 +5,8 @@ import { BASE_URL } from '../services/services';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import Modal from './Modal';
+import { Loader } from '../assets';
+import { BankDetails } from '../constants/config';
 
 const BankInformation = () => {
   const [acctDetails, setAcctDetails] = useState(null);
@@ -14,12 +16,13 @@ const BankInformation = () => {
     accountName: '',
   });
   const tk = Cookies.get('_tksr');
-  // const { userData } = useContext(UserContext);
   const [added, setAdded] = useState(false);
   const [banks, setBanks] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [modalContent, setModalContent] = useState(null);
   const [showButton, setShowButton] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   function changeMessage(status) {
     if (status === 200 || status === 201) {
@@ -50,11 +53,9 @@ const BankInformation = () => {
       return;
     }
 
-    const data = {
-      bank_name: formDetails.bankName,
-      account_number: formDetails.accoutNumber,
-      account_name: formDetails.accountName,
-    };
+    setLoading(true);
+
+    const data = new BankDetails(formDetails.bankName, formDetails.accoutNumber, formDetails.accountName);
 
     try {
       const res = await axios.post(
@@ -84,6 +85,8 @@ const BankInformation = () => {
       setTimeout(() => {
         setShowModal(false);
       }, 2000);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -122,10 +125,8 @@ const BankInformation = () => {
   }, [added]);
 
   const handleDelete = async (id) => {
+    setIsDeleting(true);
     try {
-      // const res = await axios.delete(`${BASE_URL}store_settings/bank_info/delete/${id}`, {
-      //     headers: { Authorization: `Bearer ${userData.access}` },
-      // });
       const res = await axios.delete(
         `${BASE_URL}store_settings/bank_info/delete/${id}`,
         {
@@ -143,6 +144,8 @@ const BankInformation = () => {
       if (!res.statusText === 'OK') return;
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -161,9 +164,10 @@ const BankInformation = () => {
           <p className='font-semibold text-lg text-black'>Account name</p>
           <p className='font-semibold text-lg text-black invisible'>Action</p>
         </div>
+        {isDeleting && <img src={Loader} alt="loader" className='flex w-10 h-10 justity-center mx-auto align-center'/>}
         <div
-          className={
-            acctDetails === null ? 'hidden' : 'flex justify-between px-4 py-4'
+          className= {
+            acctDetails === null || isDeleting ? 'hidden' : 'flex justify-between px-4 py-4'
           }
         >
           <p className='text-base text-black opacity-70'>
@@ -263,7 +267,7 @@ const BankInformation = () => {
                   className={`${styles.inputBox} w-full px-3`}
                 />
               </div>
-              <div className='lg:w-1/2 w-full lg:ml-2'>
+              <div className='lg:w-1/2 w-full lg:ml-2 mt-4 lg:mt-0'>
                 <label
                   htmlFor=''
                   className='text-base text-black opacity-60 mb-3'
@@ -281,8 +285,8 @@ const BankInformation = () => {
               </div>
             </div>
 
-            <button className={`${styles.button} w-auto`} type='submit'>
-              Add bank account
+            <button className={`${styles.button} w-full ${loading ? "cursor-none" : "cursor-pointer"}`} type='submit' disabled={loading}>
+              {loading ? "Adding account..." : "Add bank account"}
             </button>
           </form>
         </div>

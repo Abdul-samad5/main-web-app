@@ -439,7 +439,7 @@ const Checkout = () => {
                   productName={item.title}
                   productPrice={item.price}
                   getSubTotal={getCartItemsTotal()[1]}
-                  quantity={item.stock_count}
+                  quantity={item.quantity}
                 />
               </div>
             );
