@@ -99,6 +99,7 @@ const Dashboard = () => {
       const res = await userLogout();
       navigate("/");
       console.log(res);
+      localStorage.removeItem("Cart");
       if (res) {
         userLoggedOut();
         onUserLogOut();

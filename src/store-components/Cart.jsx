@@ -6,8 +6,9 @@ import { CartContext } from "../context/CartContext";
 import { UserContext } from "../context/UserContext";
 
 const Cart = () => {
-  const { cartItems, getCartItemsTotal } = useContext(CartContext);
+  const { cartItems, getCartItemsTotal, deleteFromCart, clearCart } = useContext(CartContext);
   const { storeName } = useContext(UserContext);
+  const name = storeName;
   return (
     <div className="">
       {/* <Navbar/> */}
@@ -48,7 +49,7 @@ const Cart = () => {
         <p className="text-gray-300 text-base text-center">
           You have no items in your shopping cart!
         </p>
-        <Link to="/store-front" className="">
+        <Link to={`/store-front/${storeName}`}>
           <div className="mx-auto lg:w-1/4 w-1/2 mt-8 text-center bg-brand-primary hover:bg-brand-secondary rounded text-white px-3 py-3">
             Continue shopping
           </div>
@@ -65,7 +66,7 @@ const Cart = () => {
                     productName={product.title}
                     productPrice={product.price}
                     id={product.id}
-                    // deleteFromCart={deleteFromCart}
+                    deleteFromCart={deleteFromCart}
                     // changeQuantity={changeQuantity}
                     quantity={product.quantity}
                     // reRender={reRender}
@@ -75,7 +76,7 @@ const Cart = () => {
           })}
         <div className="py-6">
           <div className="lg:flex lg:justify-between grid place-content-center w-full">
-            <Link to={`/store-front/${storeName}`}>
+            <Link to={`/store-front/${name}`}>
               <span className="flex group hover:opacity-80 hover:cursor-pointer">
                 <span className="mr-3 my-auto">
                   <svg
@@ -92,7 +93,7 @@ const Cart = () => {
               </span>
             </Link>
 
-            <div className="lg:flex">
+            <div className="lg:flex" onClick={clearCart}>
               <div className="flex group lg:my-auto my-3 hover:opacity-80 hover:cursor-pointer">
                 <span className="my-auto">
                   <svg
@@ -136,7 +137,7 @@ const Cart = () => {
                 >
                   <path d="M122.6 46.3c-7.8-11.7-22.4-17-35.9-12.9S64 49.9 64 64V256H32c-17.7 0-32 14.3-32 32s14.3 32 32 32H64V448c0 17.7 14.3 32 32 32s32-14.3 32-32V320H228.2l97.2 145.8c7.8 11.7 22.4 17 35.9 12.9s22.7-16.5 22.7-30.6V320h32c17.7 0 32-14.3 32-32s-14.3-32-32-32H384V64c0-17.7-14.3-32-32-32s-32 14.3-32 32V256H262.5L122.6 46.3zM305.1 320H320v22.3L305.1 320zM185.5 256H128V169.7L185.5 256z" />
                 </svg>
-                <p className="text-sm my-auto">{getCartItemsTotal()}</p>
+                <p className="text-sm my-auto">{getCartItemsTotal()[0]}</p>
               </span>
             </div>
 
@@ -150,7 +151,7 @@ const Cart = () => {
                 >
                   <path d="M122.6 46.3c-7.8-11.7-22.4-17-35.9-12.9S64 49.9 64 64V256H32c-17.7 0-32 14.3-32 32s14.3 32 32 32H64V448c0 17.7 14.3 32 32 32s32-14.3 32-32V320H228.2l97.2 145.8c7.8 11.7 22.4 17 35.9 12.9s22.7-16.5 22.7-30.6V320h32c17.7 0 32-14.3 32-32s-14.3-32-32-32H384V64c0-17.7-14.3-32-32-32s-32 14.3-32 32V256H262.5L122.6 46.3zM305.1 320H320v22.3L305.1 320zM185.5 256H128V169.7L185.5 256z" />
                 </svg>
-                <p className="text-sm my-auto">{"Get grand total"}</p>
+                <p className="text-sm my-auto">{getCartItemsTotal()[1]}</p>
               </span>
             </div>
 
@@ -180,7 +181,7 @@ const Cart = () => {
 };
 
 // Cart product. Can edit the quantity and delete the particular item from the cart.
-const CartProducts = ({ productLogo, productName, productPrice, id, quantity }) => {
+const CartProducts = ({ productLogo, productName, productPrice, id, quantity, deleteFromCart }) => {
   const [thisQuantity, setThisQuantity] = React.useState(quantity);
   
   const handleChange = (event) => {
@@ -229,11 +230,11 @@ const CartProducts = ({ productLogo, productName, productPrice, id, quantity }) 
           >
             <path d="M122.6 46.3c-7.8-11.7-22.4-17-35.9-12.9S64 49.9 64 64V256H32c-17.7 0-32 14.3-32 32s14.3 32 32 32H64V448c0 17.7 14.3 32 32 32s32-14.3 32-32V320H228.2l97.2 145.8c7.8 11.7 22.4 17 35.9 12.9s22.7-16.5 22.7-30.6V320h32c17.7 0 32-14.3 32-32s-14.3-32-32-32H384V64c0-17.7-14.3-32-32-32s-32 14.3-32 32V256H262.5L122.6 46.3zM305.1 320H320v22.3L305.1 320zM185.5 256H128V169.7L185.5 256z" />
           </svg>
-          <p className="text-sm my-auto">{2 * thisQuantity}</p>
+          <p className="text-sm my-auto">{thisQuantity * productPrice}</p>
         </span>
       </span>
 
-      <span className="my-auto">
+      <span className="my-auto" onClick={() => deleteFromCart(id)}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="w-3 h-3 fill-brand-primary hover:fill-brand-secondary"

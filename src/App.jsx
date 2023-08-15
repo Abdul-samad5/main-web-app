@@ -7,16 +7,12 @@ import {
 import { Register, Dashboard, StoreFront } from "./pages";
 import React, { useContext } from "react";
 import { Cart, Checkout } from "./store-components";
-import { CartContext } from "./context/CartContext";
 import { GetStarted, CreateStore, Login, ResetPassword } from "./components";
 import Cookies from "js-cookie";
 import ProductDetails from "./store-components/ProductDetails";
 import { SignUp } from "./components";
 
 function App() {
-  const { cartTotal, cart, deleteFromCart, clearCart, changeQuantity } =
-    useContext(CartContext);
-
   const PreventLogin = ({ children }) => {
     const tk = Cookies.get("_tksr");
     return tk ? children : <Navigate to={"/"} />;
@@ -43,9 +39,9 @@ function App() {
         <Route
           path="/store-front/:storeName"
           element={
-            // <PreventLogin>
+            <PreventLogin>
               <StoreFront />
-            // </PreventLogin>
+            </PreventLogin>
           }
         />
         <Route
@@ -60,12 +56,7 @@ function App() {
           path="/store-front/view-cart"
           element={
             <PreventLogin>
-              <Cart
-                cart={cart}
-                deleteFromCart={deleteFromCart}
-                clearCart={clearCart}
-                changeQuantity={changeQuantity}
-              />
+              <Cart />
             </PreventLogin>
           }
         />
@@ -73,18 +64,18 @@ function App() {
           path="/store-front/checkout"
           element={
             <PreventLogin>
-              <Checkout cart={cart} />
+              <Checkout />
             </PreventLogin>
           }
         />
-        <Route
+        {/* <Route
           path="/store-front/:productId"
           element={
             <PreventLogin>
               <ProductDetails />
             </PreventLogin>
           }
-        />
+        /> */}
         <Route
           path="/signUp"
           element={

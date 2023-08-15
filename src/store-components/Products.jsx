@@ -4,8 +4,8 @@ import { LoginContext } from "../context/LoginContext";
 import { CartContext } from "../context/CartContext";
 import Modal from "../components/Modal";
 
-const Products = ({ products }) => {
-  const { addToCart } = useContext(CartContext);
+const Products = () => {
+  const { addToCart, products } = useContext(CartContext);
 
   return (
     <div className="w-full lg:px-0 mt-8 md:px-5 px-10 z-1 py-5">

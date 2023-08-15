@@ -13,3 +13,11 @@ export class Store {
     this.store_domain = storeDomain;
   }
 }
+
+export class BankDetails {
+  constructor(bankName, accoutNumber, accountName) {
+      this.bank_name = bankName;
+      this.account_number = accoutNumber;
+      this.account_name = accountName;
+  }
+}
