@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { TableRow, TableCell, TableBody, TableHead, Table } from '@mui/material';
+import { Loader } from '../assets';
 
 const Orders = ({image, infoHead, children: Children, data, type}) => {
 
@@ -20,6 +21,7 @@ const Orders = ({image, infoHead, children: Children, data, type}) => {
                                     })}
                                 </TableRow>
                             </TableHead>
+                            {/* {!data.length && <img src={Loader} alt="loader" className='mx-auto h-[100px] w-[100px]'></img>} */}
                             <TableBody>    
                                 {/* Structure of the children passed into the component and to be mapped into each of the data also passed into the component. } */}
                                 {data.map((children, index) => {

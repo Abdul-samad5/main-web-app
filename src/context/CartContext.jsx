@@ -63,6 +63,10 @@ const CartContextProvider = ({ children }) => {
     setCartItems(newItems);
   };
 
+  const clearCart = () => {
+    setCartItems((previous) => previous = []);
+  }
+
   useEffect(() => {
     const getData = async () => {
       const request = await getProducts();
@@ -85,6 +89,7 @@ const CartContextProvider = ({ children }) => {
         deleteFromCart,
         handleIncrease,
         handleDecrease,
+        clearCart
       }}
     >
       {children}

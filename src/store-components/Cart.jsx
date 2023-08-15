@@ -6,7 +6,7 @@ import { CartContext } from "../context/CartContext";
 import { UserContext } from "../context/UserContext";
 
 const Cart = () => {
-  const { cartItems, getCartItemsTotal, deleteFromCart } = useContext(CartContext);
+  const { cartItems, getCartItemsTotal, deleteFromCart, clearCart } = useContext(CartContext);
   const { storeName } = useContext(UserContext);
   const name = storeName;
   return (
@@ -93,7 +93,7 @@ const Cart = () => {
               </span>
             </Link>
 
-            <div className="lg:flex">
+            <div className="lg:flex" onClick={clearCart}>
               <div className="flex group lg:my-auto my-3 hover:opacity-80 hover:cursor-pointer">
                 <span className="my-auto">
                   <svg
