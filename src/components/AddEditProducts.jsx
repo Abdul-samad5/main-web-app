@@ -426,7 +426,7 @@ function AddEditProduct({productId}) {
             <h3 className="text-black opacity-50 mb-5">Product pricing</h3>
 
             <div className="flex jusify-between flex-col lg:flex-row w-full mt-2">
-              <span className="flex flex-col lg:w-1/2 w-full">
+              <span className="flex flex-col w-full">
                 <label className="lg:text-base text-sm">Price</label>
                 <input
                   type="text"
@@ -445,7 +445,7 @@ function AddEditProduct({productId}) {
                 </svg>
               </span>
 
-              <span className="flex-col flex w-full block lg:w-1/2 mt-3 lg:mt-0">
+              {/* <span className="flex-col flex w-full block lg:w-1/2 mt-3 lg:mt-0">
                 <label className="lg:text-base text-sm lg:ml-3">
                   Discounted Price
                 </label>
@@ -480,7 +480,7 @@ function AddEditProduct({productId}) {
                     sale or a discount to be given to your customers.
                   </p>
                 </div>
-              </span>
+              </span> */}
             </div>
 
             <div className="flex flex-col w-full mt-4 lg:mt-0">
@@ -507,7 +507,7 @@ function AddEditProduct({productId}) {
             <h3 className="text-black opacity-50 mb-5">Product Inventory</h3>
 
             <div className="flex jusify-between flex-col lg:flex-row w-full mt-2">
-              <span className="flex flex-col w-full lg:w-1/2">
+              <span className="flex flex-col w-full">
                 <label className="lg:text-base text-sm">Stock Count</label>
                 <input
                   type="text"
@@ -519,7 +519,7 @@ function AddEditProduct({productId}) {
                 ></input>
               </span>
 
-              <span className="flex flex-col w-full lg:w-1/2 mt-3 lg:mt-0">
+              {/* <span className="flex flex-col w-full lg:w-1/2 mt-3 lg:mt-0">
                 <label className="lg:text-base text-sm">
                   Stock Keeping Unit (SKU)
                 </label>
@@ -530,7 +530,7 @@ function AddEditProduct({productId}) {
                   value={formData.stockUnit}
                   className="border border-slate-700 lg:ml-2 border-opacity-50 rounded-lg text-sm shadow-sm px-3 py-3 placeholder-slate-300"
                 ></input>
-              </span>
+              </span> */}
             </div>
 
             <div className="flex flex-col w-full mt-4">
@@ -631,7 +631,7 @@ function AddEditProduct({productId}) {
           </div>
 
           {/* Store Theme Input Box */}
-          <div className="px-4 py-7 bg-white-900 w-full shadow-xl rounded-lg mb-4">
+          {/* <div className="px-4 py-7 bg-white-900 w-full shadow-xl rounded-lg mb-4">
             <h3 className="text-black opacity-50 mb-5">Store Theme</h3>
             <select
               name="storeTheme"
@@ -645,7 +645,7 @@ function AddEditProduct({productId}) {
             <p className="mt-2 opacity-50">
               Choose any template you would love to be displayed on your store
             </p>
-          </div>
+          </div> */}
         </div>
       </form>
       {/* Submit button of the entire form. */}
