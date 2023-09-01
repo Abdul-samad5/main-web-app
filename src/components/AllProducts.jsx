@@ -147,12 +147,14 @@ const AllProducts = ({ showActiveComponent, handleNavClick }) => {
                       ? 'rounded bg-white shadow-lg relative top-4 px-3 h-24 w-26'
                       : 'hidden'
                   }
-                  onClick={(e) => {
-                    showActiveComponent(e, <AddEditProducts productId={id}/>);
-                    handleNavClick();
-                  }}
                 >
-                  <p className='text-xs cursor-pointer hover:opacity-70 my-2'>
+                  <p 
+                    className='text-xs cursor-pointer hover:opacity-70 my-2'
+                    onClick={(e) => {
+                      showActiveComponent(e, <AddEditProducts productId={id}/>);
+                      handleNavClick();
+                    }}
+                  >
                     Edit product
                   </p>
                   <p className='text-xs cursor-pointer hover:opacity-70 my-2'>

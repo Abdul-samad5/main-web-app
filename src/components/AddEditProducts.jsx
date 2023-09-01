@@ -222,7 +222,7 @@ function AddEditProduct({productId}) {
       }, 1000);
     }
   }
-
+  
   // Gets Image selected by user and updates the selectedImage state to the url of the image selected.
   const onImageSelected = (event) => {
     const file = event.target.files[0];
@@ -278,7 +278,7 @@ function AddEditProduct({productId}) {
           { headers: { Authorization: `Bearer ${tk}` } }
         );
 
-        console.log(response.data.data);
+        // console.log(response.data.data);
         const productData = response.data.data;
         setFormData((prev) => {
           return {...prev, 
@@ -296,8 +296,6 @@ function AddEditProduct({productId}) {
             storeTheme: productData.theme,
           }
         });
-      
-        console.log(response);
       }
       fetchData();
     }
