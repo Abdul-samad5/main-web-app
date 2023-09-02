@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useLayoutEffect } from "react";
 import { styles } from "../constants";
 import axios from "axios";
 import { BASE_URL } from "../services/services";
@@ -39,22 +39,19 @@ import {
   MyCustomers,
   TransactionHistory,
   StoreDetails,
-  Discounts,
   WebsiteSettings,
   MyOrders,
   AllProducts,
   MyStore,
   Finances,
   UserAccount,
-  SalesTarget,
 } from "../components";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { LoginContext } from "../context/LoginContext";
 import { UserContext } from "../context/UserContext";
 import { useEffect } from "react";
-import { getStoreInfo, userLogout } from "../services/services";
+import { userLogout } from "../services/services";
 import Cookies from "js-cookie";
-import { User } from "../constants/config";
 
 function DbIcon({ src, click }) {
   return <img src={src} className="w-[16px]" alt="Icon" onClick={(e) => click(e)}/>;
@@ -66,10 +63,13 @@ const Dashboard = () => {
   const [storeName, setStoreName] = useState("");
   const [storeLogo, setStoreLogo] = useState("");
   const [emailUrl, setEmailUrl] = useState("");
-  const [isEmailVerified, setIsEmailVerified] = useState(false);
 
   // Component to be rendered on the main
-  const [activeComponent, setActiveComponent] = useState([<MyStore />]);
+  const [activeComponent, setActiveComponent] = useState([]);
+
+  useLayoutEffect(() => {
+    setActiveComponent([<MyStore click={navigateMyOrders}/>]);
+  }, []);
   
   const tk = Cookies.get("_tksr");
   const id = Cookies.get("_id");
@@ -153,6 +153,12 @@ const Dashboard = () => {
     setIsSettingsOpen(prev => prev = true);
   }
 
+  const navigateMyOrders = (e) => {
+    showActiveComponent(e, <MyOrders />);
+    handleClick();
+    setIsSettingsOpen(prev => prev = true);
+  }
+
   return (
     <div className="w-full overflow-hidden">
       <div className="w-full flex">
@@ -180,7 +186,7 @@ const Dashboard = () => {
             className={`${styles.dbNavItem}`}
             // onClick={(e) => showActiveComponent(e, <MyStore />)}
             onClick={(e) => {
-              showActiveComponent(e, <MyStore />);
+              showActiveComponent(e, <MyStore click={navigateMyOrders}/>);
               handleClick();
             }}
           >

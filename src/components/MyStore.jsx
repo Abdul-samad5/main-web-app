@@ -23,7 +23,7 @@ function Icon({ icon }) {
   return <div className='rounded-full p-4 h-[32px] w-[32px]'></div>;
 }
 
-const MyStore = () => {
+const MyStore = ({ click }) => {
   const [storeData, setStoreData] = React.useState({
     totalSales: 0,
     totalCustomers: 0,
@@ -261,7 +261,7 @@ const MyStore = () => {
       </div> */}
       <div className='mt-8'>
         <p className={`${styles.componentHeader}`}>Order History</p>
-        <Orders image={noOrders} infoHead={details} children={OrdersChildren} data={myOrders} type={"My Orders"} />
+        <Orders image={noOrders} infoHead={details} children={OrdersChildren} navigate={click} data={myOrders} type={"My Orders Primary"} />
       </div>
     </div>
   );

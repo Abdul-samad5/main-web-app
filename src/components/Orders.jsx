@@ -2,8 +2,7 @@ import * as React from 'react';
 import { TableRow, TableCell, TableBody, TableHead, Table } from '@mui/material';
 import { Loader } from '../assets';
 
-const Orders = ({image, infoHead, children: Children, data, type}) => {
-
+const Orders = ({ image, infoHead, children: Children, data, type, navigate }) => {
     const [currentPage, setCurrentPage] = React.useState(0);
 
     return (
@@ -104,7 +103,7 @@ const Orders = ({image, infoHead, children: Children, data, type}) => {
                                             </TableRow>
                                         // </div>
                                         );
-                                    } else if (type === "My Orders") {
+                                    } else if (type === "My Orders" || type === "My Orders Primary") {
                                         return (
                                             <TableRow className='mb-3' key={index + 1}>
                                                 <Children
@@ -145,7 +144,7 @@ const Orders = ({image, infoHead, children: Children, data, type}) => {
                             className={data.length === 0 ? "mx-auto lg:w-auto lg:h-auto h-1/2 w-1/2" : "hidden"}
                         />
                         <p className={data.length === 0 ? "text-base text-center" : "hidden"}>
-                            { `No ${type} found`}
+                            { `No ${type === "My Orders Primary" ? "Orders" : type} found`}
                         </p>
                     </div>
 
@@ -201,6 +200,10 @@ const Orders = ({image, infoHead, children: Children, data, type}) => {
                                 <path d="M470.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L402.7 256 265.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160zm-352 160l160-160c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L210.7 256 73.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0z" />
                             </svg>
                         </span>
+
+                        {type === "My Orders Primary" ? <div onClick={navigate} className='rounded text-brand-primary font-semibold text-sm hover:text-brand-secondary cursor-pointer'>
+                            View more
+                        </div> : <div className='hidden invisible'></div>}
                     </div>
                 </div>
             </div>
