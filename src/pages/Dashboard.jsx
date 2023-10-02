@@ -374,9 +374,9 @@ const Dashboard = () => {
                 <DbIcon src={storeDetails} />
                 <h2>Store Details</h2>
               </div>
-              <div
+              {/* <div
                 className={`${styles.dbNavItemDrop}`}
-                // onClick={(e) => showActiveComponent(e, <WebsiteSettings />)}
+                onClick={(e) => showActiveComponent(e, <WebsiteSettings />)}
                 onClick={(e) => {
                   showActiveComponent(e, <WebsiteSettings />);
                   handleClick();
@@ -384,7 +384,7 @@ const Dashboard = () => {
               >
                 <DbIcon src={websiteSettings} />
                 <h2>Website Settings</h2>
-              </div>
+              </div> */}
             </div>
           </div>
           {/* <div
