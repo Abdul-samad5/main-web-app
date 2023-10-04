@@ -1,10 +1,11 @@
-
-![Logo](https://avatars.githubusercontent.com/u/83767728?v=4)
+<div align="center">
+  <img src="https://avatars.githubusercontent.com/u/83767728?v=4" alt="Logo">
+</div>
 
 
 # YETTI TECHNOLOGIES
 
-Yetti is an Open source e-commerce web app that helps users create their online stores with ease using just their mobile phones or device that has internet connections.Users can sell and buy products from other users. The management of YETTI Technologies regulates it to ensure accountability and security.
+Yetti is an open-source e-commerce web app that helps users create their online stores with ease using just their mobile phones or devices that have internet connections. Users can sell and buy products from other users. The management of YETTI Technologies regulates it to ensure accountability and security.
 
 
 ## Run Locally
@@ -51,7 +52,7 @@ Use the table of contents icon <img src="public/assets/table-of-contents.png" wi
 
 Read our [Code of Conduct](CODE_OF_CONDUCT.md) to understand how you can help keep our community approachable and respectable.
 
-### A quick summary
+<!-- ### A Quick Summary -->
 
 <!-- a quick summary of the Code of Conduct -->
 
@@ -59,7 +60,7 @@ Read our [Code of Conduct](CODE_OF_CONDUCT.md) to understand how you can help ke
 
 <!-- Add an introduction here -->
 
-## First Time Contributor
+### First Time Contributor
 
 <!-- Helpful links and things the contributor should know about contributing to the project: Like our stack (Next.js, TailwindCSS, Git, GitHub etc.), helpful links on setting up and working with each tool in the stack -->
 
@@ -76,10 +77,9 @@ We use the following tools on this codebase:
 
 ### Finding an Issue
 
-<!-- A concise guide to finding an issue on the repo -->
-<!-- Here, you can talk about the different labels on the project and what they mean. I think you should also add that if the contributor finds a new issue, they should comment on it and get approval first -->
 
-Here's a complete list of our frontend's [open issues](https://github.com/quizardhq/frontend/issues).
+
+Here's a complete list of our frontend's [open issues](https://github.com/YETTI-TECNOLOGIES/main-web-app/issues).
 
 We use labels to indicate each issue's priority, status, and beginner-friendliness. Look out for some of these labels:
 
@@ -103,41 +103,41 @@ The following tags mark issues that are _not_ open for community contribution:
 The following tags mark issues that are not ready to be worked on yet:
 
 - **🚧 status: blocked** -> Blocked by other work that needs to be done first
-- **🧹 status: ticket work required** -> Needs additional work before it is ready to be taken up
-
+- **🧹 status: ticket work required**  -> Needs additional work before it is ready to be taken up
+<br><br>
 ## Tech Stack
 
-**Frontend:** React, Javascript, TailwindCSS
+**Frontend:** React, JavaScript, TailwindCSS <br><br>
 
-### Contribution Process
+## Contribution Process
 
-<!-- How to get started with contributing once you find an issue -->
+ How to get started with contributing once you find an issue
 
-<!-- commenting on an issue and getting it assigned to you -->
-<!-- forking and cloning the repo -->
-<!-- creating a separate branch for each feature and making changes as required using a mobile-first approach -->
-<!-- sending a pull request -->
+- commenting on an issue and getting it assigned to you
+- forking and cloning the repo 
+- creating a separate branch for each feature and making changes as required using a mobile-first approach 
+- sending a pull request 
 
-**Picking an issue to work on**
+**1. Picking an issue to work on**
 
-<!-- Comment on the issue and get it assigned to you first -->
+- Comment on the issue and get it assigned to you first
 
-**Forking and cloning the repo**
+**2. Forking and cloning the repo**
 
-<!-- Click the fork icon at the top right corner of the project and fork the repo -->
-<!-- In your fork, click the code button, and copy the git URL to clone to your local PC. See how to clone here -->
+- Click the fork icon at the top right corner of the project and fork the repo
+- In your fork, click the code button, and copy the git URL to clone to your local PC. See how to clone here
 
-**Working on your chosen issue in a separate branch**
+**3. Working on your chosen issue in a separate branch**
 
-<!-- Create a branch with feat/refactor/bugfix/docs... following these concise branching guidelines -->
+- Create a branch with feat/refactor/bugfix/docs... following these concise branching guidelines 
 
-**Sending a pull request**
+**4. Sending a pull request**
 
-<!-- Send a pull request from your branch to the repo's staging branch -->
+ - Send a pull request from your branch to the repo's staging branch 
 
 ### Proposing a New Issue
 
-<!-- Didn't find an issue? How to raise a new one -->
+ - Didn't find an issue? How to raise a new one 
 
 If you discover any bugs or possible improvements while going through the project, **check the list of open issues first** to see if someone else has already proposed it.
 
@@ -188,6 +188,9 @@ Frontend Team
 - [@devsammyy](https://github.com/devsammyy)
 - [@AyodejiOmole](https://github.com/AyodejiOmole)
 
-## Support
+## Contributor(s)
+- [@favourdev1](https://github.com/favourdev1)
+
+##  Support
 
 For support, email myyetti@email.com or join our Slack channel.
