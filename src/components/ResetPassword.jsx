@@ -28,18 +28,20 @@ const ResetPassword = ({ handleClick }) => {
     setLoading(true);
 
     try {
-      const res = await axios.get(`${BASE_URL}auth/reset-password/${formData.email}`);
+      const res = await axios.post(`${BASE_URL}auth/reset-password/${formData.email}`);
       if (!res.statusText === 'OK') return;
       console.log(res);
       
       setShowModal(true);
       setModalContent("A mail has been sent to your email. Check your email to reset password.");
       setTimeout(() => {
-        setLoading(false);
         setShowModal(false);
       }, 3000);
+      
     } catch(error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   }
 

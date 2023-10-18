@@ -46,36 +46,58 @@ const StoreDetails = () => {
       store_email: storeDetails.storeEmail,
       store_phone_number: storeDetails.storeContactNumber,
     };
+
     setLoading(true);
 
     try {
-      let res;
-      if (storeId) {
-        res = await axios.put(
-          `${BASE_URL}store_settings/store/update/`,
-          formDetails,
-          { headers: { Authorization: `Bearer ${tk}` } }
-        );
-        console.log(storeId);
-      } else {
-        res = await axios.post(`${BASE_URL}store_settings/store`, formDetails, {
-          headers: { Authorization: `Bearer ${tk}` },
-        });
-      }
+      // const res = await axios.patch(
+      //   `${BASE_URL}store_settings/store/update/`,
+      //   formDetails,
+      //   { headers: { Authorization: `Bearer ${tk}` } }
+      // );
 
-      if (res.response.data.code === 'user_inactive') {
-        setModalContent(res.response.data.details);
-        setModalContent(true);
-      }
+      const res = await axios.post(
+        `${BASE_URL}store_settings/store`,
+        formDetails,
+        { headers: { Authorization: `Bearer ${tk}` } }
+      );
+      // console.log(storeId);
+      // if (storeId) {
+      //   res = await axios.put(
+      //     `${BASE_URL}store_settings/store/update/`,
+      //     formDetails,
+      //     { headers: { Authorization: `Bearer ${tk}` } }
+      //   );
+      //   console.log(storeId);
+      // } else {
+      //   res = await axios.post(`${BASE_URL}store_settings/store`, formDetails, {
+      //     headers: { Authorization: `Bearer ${tk}` },
+      //   });
+      // }
+
+      // if (res.response.data.code === 'user_inactive') {
+      //   setModalContent(res.response.data.details);
+      // }
+
       if (!res.statusText === 'OK') return;
-      changeMessage(res.status);
+
       setShowModal(true);
+      setModalContent("Details Saved");
       setTimeout(() => {
         setShowModal(false);
-      }, 1000);
+      }, 2000);
+
       makeEmpty();
+
     } catch (error) {
       console.log(error);
+
+      setShowModal(true);
+      setModalContent(error.response.data.message);
+      setTimeout(() => {
+        setShowModal(false);
+      }, 2000);
+      
     } finally {
       setLoading(false);
     }
@@ -182,9 +204,9 @@ const StoreDetails = () => {
   return (
     <div className="mt-6">
       <p className={`${styles.componentHeader}`}>Store Settings</p>
-      <div className='overflow-hidden w-full shadow-2xl'>
+      <div className='overflow-hidden w-full shadow-2xl flex align-center justify-center'>
         <form
-          className='rounded shadow-2xl w-full pl-10 pr-3 py-3 mx-auto my-auto h-auto'
+          className='rounded shadow-2xl w-full lg:pl-10 px-3 lg:pr-3 py-3 mx-auto my-auto h-auto'
           onSubmit={handleSubmit}
         >
           <p className='text-sm text-brand-primary'>Store details</p>
@@ -196,7 +218,7 @@ const StoreDetails = () => {
                 placeholder='Michelline'
                 onChange={handleChange}
                 value={storeDetails.storeName}
-                className={`${styles.inputBox} px-3 w-11/12`}
+                className={`${styles.inputBox} px-3 lg:w-11/12 w-full`}
                 type='text'
                 name='storeName'
               />
@@ -205,7 +227,7 @@ const StoreDetails = () => {
             <span className='lg:w-1/2 w-full block lg:my-0 my-4'>
               <p className='mb-1'>Tag line</p>
               <input
-                className={`${styles.inputBox} px-3 w-11/12`}
+                className={`${styles.inputBox} px-3 lg:w-11/12 w-full`}
                 onChange={handleChange}
                 value={storeDetails.tagLine}
                 type='text'
@@ -220,7 +242,7 @@ const StoreDetails = () => {
               <textarea
                 placeholder='Enter your business description here...'
                 maxLength='100'
-                className='border border-slate-200 rounded-lg w-11/12 px-5 py-3 h-40 resize-none placeholder-slate-300'
+                className='border border-slate-200 rounded-lg lg:w-11/12 w-full px-5 py-3 h-40 resize-none placeholder-slate-300'
                 name='storeDesc'
                 value={storeDetails.storeDesc}
                 onChange={handleChange}
@@ -250,7 +272,7 @@ const StoreDetails = () => {
                 className={
                   storeDetails.storeLogo === '' ||
                   storeDetails.storeLogo === null
-                    ? 'border border-dotted border-slate-300 text-slate-300 h-40 pt-16 block w-11/12 text-center rounded-lg text-sm'
+                    ? 'border border-dotted border-slate-300 text-slate-300 h-40 pt-16 block lg:w-11/12 w-full text-center rounded-lg text-sm'
                     : 'hidden'
                 }
               >
@@ -263,7 +285,7 @@ const StoreDetails = () => {
                   storeDetails.storeLogo === '' ||
                   storeDetails.storeLogo === null
                     ? 'hidden'
-                    : 'border border-dotted border-slate-300 text-slate-300 h-40 block w-11/12 text-center rounded-lg text-sm'
+                    : 'border border-dotted border-slate-300 text-slate-300 h-40 block lg:w-11/12 w-full text-center rounded-lg text-sm'
                 }
               />
             </span>
@@ -285,7 +307,7 @@ const StoreDetails = () => {
                 onChange={handleChange}
                 disabled={true}
                 value={storeDetails.storeCurrency}
-                className={`${styles.inputBox} px-3 w-11/12`}
+                className={`${styles.inputBox} px-3 lg:w-11/12 w-full`}
                 type='text'
                 name='storeCurrency'
               />
@@ -296,7 +318,7 @@ const StoreDetails = () => {
               <input
                 placeholder='Enter store email'
                 name='storeEmail'
-                className={`${styles.inputBox} px-3 w-11/12`}
+                className={`${styles.inputBox} px-3 lg:w-11/12 w-full`}
                 value={storeDetails.storeEmail}
                 onChange={handleChange}
                 type='text'
@@ -308,7 +330,7 @@ const StoreDetails = () => {
               <input
                 placeholder='Enter store contact number'
                 name='storeContactNumber'
-                className={`${styles.inputBox} px-3 w-11/12`}
+                className={`${styles.inputBox} px-3 lg:w-11/12 w-full`}
                 type='text'
                 value={storeDetails.storeContactNumber}
                 onChange={handleChange}
@@ -316,8 +338,8 @@ const StoreDetails = () => {
             </span>
           </div>
 
-          <div className='w-full flex justify-end'>
-            <button type='submit' className={`${styles.button} mr-6`}>
+          <div className='w-full flex justify-center mx-auto'>
+            <button type='submit' className={`${styles.button} lg:w-11/12 w-full ${loading ? "disabled:bg-gray disabled:cursor-not-allowed" : ""}`} disabled={loading}>
               {loading ? "Saving..." : "Save settings"}
             </button>
           </div>

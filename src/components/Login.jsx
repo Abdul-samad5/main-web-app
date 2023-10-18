@@ -45,7 +45,7 @@ const Login = ({ handleClick }) => {
       email: formData.email,
       password: formData.password,
     };
-    e.preventDefault();
+    
     setLoading(true);
     try {
       const response = await userLogin(user);
@@ -164,7 +164,7 @@ const Login = ({ handleClick }) => {
             <button
               className='text-brand-gray font-normal text-[14px]'
               type='button'
-              onClick={() => handleClick('forgotPassword')}
+              onClick={() => navigate("/reset-password")}
             >
               Forgot password?
             </button>
