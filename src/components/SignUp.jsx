@@ -94,6 +94,7 @@ const SignUp = ({ handleClick }) => {
       setLoading(true);
 
       let res;
+      // = await axios.post(`${BASE_URL}auth/register/seller`, user);
       if(formData.accountType === "seller") {
         res = await axios.post(`${BASE_URL}auth/register/seller`, user);
       } else {

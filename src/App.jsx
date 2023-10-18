@@ -11,6 +11,7 @@ import { GetStarted, CreateStore, Login, ResetPassword } from "./components";
 import Cookies from "js-cookie";
 import ProductDetails from "./store-components/ProductDetails";
 import { SignUp } from "./components";
+import ResetPasswordConfirm from "./components/ResetPasswordConfirm";
 
 function App() {
   const PreventLogin = ({ children }) => {
@@ -87,6 +88,10 @@ function App() {
           element={
             <ResetPassword />
           }
+        />
+        <Route
+          path="/reset-password-confirm/:id/:token"
+          element={<ResetPasswordConfirm/>}
         />
       </Routes>
     </Router>
