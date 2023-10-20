@@ -266,7 +266,7 @@ const Dashboard = () => {
             <DbIcon src={customers} />
             <h2>My Customers</h2>
           </div>
-          <div
+          {/* <div
             className="w-full"
             onClick={(e) => handleDropdown(e, setIsMarkOpen)}
           >
@@ -284,24 +284,23 @@ const Dashboard = () => {
             >
               <div
                 className={`${styles.dbNavItemDrop}`}
-                // onClick={(e) => showActiveComponent(e, <Discounts />)}
-                // onClick={(e) => {
-                //   showActiveComponent(e, <Discounts />);
-                //   handleClick();
-                // }}
+                onClick={(e) => {
+                  showActiveComponent(e, <Discounts />);
+                  handleClick();
+                }}
               >
                 <DbIcon src={discounts} />
                 <h2>Discounts</h2>
               </div>
-              {/* <div
+              <div
                 className={`${styles.dbNavItemDrop}`}
                 onClick={(e) => showActiveComponent(e, <AddEditProducts />)}
               >
                 <DbIcon src={marketing} />
                 <h2>Campaign</h2>
-              </div> */}
+              </div>
             </div>
-          </div>
+          </div> */}
           <div
             className={`${styles.dbNavItem}`}
             // onClick={(e) => showActiveComponent(e, <Finances />)}
@@ -375,9 +374,9 @@ const Dashboard = () => {
                 <DbIcon src={storeDetails} />
                 <h2>Store Details</h2>
               </div>
-              <div
+              {/* <div
                 className={`${styles.dbNavItemDrop}`}
-                // onClick={(e) => showActiveComponent(e, <WebsiteSettings />)}
+                onClick={(e) => showActiveComponent(e, <WebsiteSettings />)}
                 onClick={(e) => {
                   showActiveComponent(e, <WebsiteSettings />);
                   handleClick();
@@ -385,7 +384,7 @@ const Dashboard = () => {
               >
                 <DbIcon src={websiteSettings} />
                 <h2>Website Settings</h2>
-              </div>
+              </div> */}
             </div>
           </div>
           {/* <div
