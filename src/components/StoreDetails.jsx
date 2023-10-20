@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { styles } from '../constants/index';
 import { BASE_URL, updateStore, getStoreInfo } from '../services/services';
 import Cookies from 'js-cookie';
@@ -15,12 +15,11 @@ const StoreDetails = () => {
     storeEmail: '',
     storeContactNumber: '',
   });
-  let storeId;
+  const detailsExist = useRef(null);;
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [modalContent, setModalContent] = useState(null);
   const tk = Cookies.get('_tksr');
-  const id = Cookies.get('_id');
 
   function changeMessage(status) {
     if (status === 200 || status === 201) {
@@ -50,34 +49,18 @@ const StoreDetails = () => {
     setLoading(true);
 
     try {
-      // const res = await axios.patch(
-      //   `${BASE_URL}store_settings/store/update/`,
-      //   formDetails,
-      //   { headers: { Authorization: `Bearer ${tk}` } }
-      // );
-
-      const res = await axios.post(
-        `${BASE_URL}store_settings/store`,
-        formDetails,
-        { headers: { Authorization: `Bearer ${tk}` } }
-      );
-      // console.log(storeId);
-      // if (storeId) {
-      //   res = await axios.put(
-      //     `${BASE_URL}store_settings/store/update/`,
-      //     formDetails,
-      //     { headers: { Authorization: `Bearer ${tk}` } }
-      //   );
-      //   console.log(storeId);
-      // } else {
-      //   res = await axios.post(`${BASE_URL}store_settings/store`, formDetails, {
-      //     headers: { Authorization: `Bearer ${tk}` },
-      //   });
-      // }
-
-      // if (res.response.data.code === 'user_inactive') {
-      //   setModalContent(res.response.data.details);
-      // }
+      let res;
+      if (detailsExist.current) {
+        res = await axios.patch(
+          `${BASE_URL}store_settings/store/update/`,
+          formDetails,
+          { headers: { Authorization: `Bearer ${tk}` } }
+        );
+      } else {
+        res = await axios.post(`${BASE_URL}store_settings/store`, formDetails, {
+          headers: { Authorization: `Bearer ${tk}` },
+        });
+      }
 
       if (!res.statusText === 'OK') return;
 
@@ -85,6 +68,7 @@ const StoreDetails = () => {
       setModalContent("Details Saved");
       setTimeout(() => {
         setShowModal(false);
+        detailsExist.current = null;
       }, 2000);
 
       makeEmpty();
@@ -173,10 +157,14 @@ const StoreDetails = () => {
           `${BASE_URL}store_settings/store_details`,
           { headers: { Authorization: `Bearer ${tk}` } }
         );
+
+        if(response.data.data.store_name) {
+          detailsExist.current = true;
+        }
+
         if (response) {
           const data = response.data.data;
-          // const store_name = response.data["Store Details"].length === 0 ? "" : response.data["Store Details"][0].store_name;
-          // const store_email = response.data["Email"];
+        
           setStoreDetails((prev) => {
             return {
               ...prev,
@@ -189,10 +177,9 @@ const StoreDetails = () => {
               storeContactNumber: data.store_phone_number,
             };
           });
-          storeId = data.id;
-          console.log(storeId);
+        
+          // console.log(response);
         }
-        // console.log(response);
         if (!response.statusText === 'OK') return;
       } catch (err) {
         console.log(err);

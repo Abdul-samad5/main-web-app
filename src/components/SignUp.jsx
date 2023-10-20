@@ -66,7 +66,7 @@ const SignUp = ({ handleClick }) => {
         console.log(response);
 
         onUserLogin(token, email, user_id, emailUrl, emailVerify, type);
-        navigate('/dashboard');
+        // navigate('/dashboard');
       }
     } catch (err) {
       console.log(err);
@@ -94,23 +94,20 @@ const SignUp = ({ handleClick }) => {
       setLoading(true);
 
       let res;
-      // = await axios.post(`${BASE_URL}auth/register/seller`, user);
       if(formData.accountType === "seller") {
         res = await axios.post(`${BASE_URL}auth/register/seller`, user);
       } else {
         res = await axios.post(`${BASE_URL}auth/register/buyer`, user);
       }
       
-      // if (!res.status === 201 || res.status === 200) return;
       setShowModal(true);
       setModalText("Registration Successful! Navigating to the Login page...");
-    
-      setTimeout(() => {
-        setShowModal(false);
-      }, 3000);
+      loginNewUser();
 
       setTimeout(() => {
-        navigate("/login");
+        // navigate("/login");
+        setShowModal(false);
+        navigate("/create-store");
       }, 3000);
     } catch (err) {
       setShowModal(true);
