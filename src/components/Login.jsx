@@ -45,7 +45,7 @@ const Login = ({ handleClick }) => {
       email: formData.email,
       password: formData.password,
     };
-    e.preventDefault();
+    
     setLoading(true);
     try {
       const response = await userLogin(user);
@@ -66,27 +66,22 @@ const Login = ({ handleClick }) => {
         onUserLogin(token, email, user_id, emailUrl, emailVerify, type);
 
         if (response.data.data.user.has_store === false) {
-          setLoading(false);
           setShowModal(true);
           setModalText('Login Success! Please create a store to continue');
           setTimeout(() => {
             setShowModal(false);
-            handleClick('createStore');
+            navigate('/create-store');
           }, 3000);
-          navigate('/dashboard');
         } else {
-          setLoading(false);
           setShowModal(true);
           setModalText('Login Success! Please wait...');
           setTimeout(() => {
             setShowModal(false);
-
             navigate('/dashboard');
           }, 3000);
         }
       }
     } catch (err) {
-      setLoading(false);
       if (err.response.data.email && err.response.data.password) {
         setLoading(false);
         setShowModal(true);
@@ -104,6 +99,8 @@ const Login = ({ handleClick }) => {
         setShowModal(false);
       }, 3000);
       console.log(err);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -164,7 +161,7 @@ const Login = ({ handleClick }) => {
             <button
               className='text-brand-gray font-normal text-[14px]'
               type='button'
-              onClick={() => handleClick('forgotPassword')}
+              onClick={() => navigate("/reset-password")}
             >
               Forgot password?
             </button>

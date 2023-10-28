@@ -557,7 +557,7 @@ function AddEditProduct({productId}) {
 
             <div className="flex jusify-between w-full">
               <p className="text-sm opacity-50 w-1/2">
-                This product has of size, color, etc.
+                This product has size, color, etc.
               </p>
               <span className="w-1/2 align-right flex justify-end">
                 <div

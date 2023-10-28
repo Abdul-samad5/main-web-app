@@ -66,7 +66,7 @@ const SignUp = ({ handleClick }) => {
         console.log(response);
 
         onUserLogin(token, email, user_id, emailUrl, emailVerify, type);
-        navigate('/dashboard');
+        // navigate('/dashboard');
       }
     } catch (err) {
       console.log(err);
@@ -81,9 +81,7 @@ const SignUp = ({ handleClick }) => {
       password: formData.password,
       user_type: formData.accountType,
     };
-    // if (!user) {
-    //   return;
-    // }
+    
     if (!formData.agreeToTerms) {
       setShowAlert(true);
       setTimeout(() => {
@@ -91,43 +89,34 @@ const SignUp = ({ handleClick }) => {
       }, 3000);
       return;
     }
+
     try {
       setLoading(true);
-      // const res = await postUser(user);
-      const res = await axios.post(`${BASE_URL}auth/register/seller`, user);
-      console.log(res.data.message);
-      console.log(res);
-      if (!res.status === 201 || res.status === 200) return;
+
+      let res;
+      if(formData.accountType === "seller") {
+        res = await axios.post(`${BASE_URL}auth/register/seller`, user);
+      } else {
+        res = await axios.post(`${BASE_URL}auth/register/buyer`, user);
+      }
+      
       setShowModal(true);
-      setModalText("Registration Successful! Navigating to the Login page...");
-      // setModalText("Registration Successful! Navigating to the dashboard...");
-
+      setModalText("Registration Successful! An email containing a token has been sent to your email...");
       // loginNewUser();
-      setTimeout(() => {
-        setShowModal(false);
-        
-      }, 3000);
 
       setTimeout(() => {
-        navigate("/login");
+        // navigate("/login");
+        setShowModal(false);
+        navigate("/activate-account");
       }, 3000);
     } catch (err) {
-      setLoading(false);
-      if (
-        err.response.data.email &&
-        err.response.data.full_name &&
-        err.response.data.password
-      ) {
-        setShowModal(true);
-        setModalText("Field(s) cannot be empty!");
-      } else if (err.code === "ERR_NETWORK") {
-        setShowModal(true);
-        setModalText("There might be a problem with your network connection!");
-      }
+      setShowModal(true);
+      setModalText(err.response.data.message);
       setTimeout(() => {
         setShowModal(false);
       }, 3000);
-      console.log(err);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -242,7 +231,7 @@ const SignUp = ({ handleClick }) => {
             <button
               className="text-brand-gray font-normal text-[14px]"
               type="button"
-              onClick={() => handleClick("login")}
+              onClick={() => { navigate("/login"); }}
             >
               Login
             </button>
