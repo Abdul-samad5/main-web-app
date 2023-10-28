@@ -146,13 +146,13 @@ const MyStore = ({ click }) => {
           </div>
 
           <div>
-            <p className='text-xs text-black-800 font-bold'>Profit</p>
+            <p className='text-xs text-black-800 font-bold'>Total Balance</p>
             {/* <p className='font text-black font-extrabold text-xl'>{`$${0.00}`}</p> */}
             <div className='flex'>
               <img src={naira} alt='' className='w-4 h-4 my-auto' />
               <p className='font text-brand-black text-xl font-Nunito'>{earnings === "" ? "0.00" : earnings}</p>
             </div>
-            <div className={`${styles.button} mt-2`}>Withdraw Earnings</div>
+            <div className={`${styles.button} mt-2`}>Withdraw Funds</div>
           </div>
         </div>
 

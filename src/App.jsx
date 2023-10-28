@@ -12,6 +12,7 @@ import Cookies from "js-cookie";
 import ProductDetails from "./store-components/ProductDetails";
 import { SignUp } from "./components";
 import ResetPasswordConfirm from "./components/ResetPasswordConfirm";
+import ActiveAccount from "./components/ActiveAccount";
 
 function App() {
   const PreventLogin = ({ children }) => {
@@ -37,6 +38,7 @@ function App() {
         <Route path="/register" element={<Register />} />
 
         <Route path="/create-store" element={<CreateStore />} />
+
         <Route
           path="/store-front/:storeName"
           element={
@@ -45,6 +47,7 @@ function App() {
             </PreventLogin>
           }
         />
+
         <Route
           path="/getStarted"
           element={
@@ -61,6 +64,7 @@ function App() {
             </PreventLogin>
           }
         />
+
         <Route
           path="/store-front/checkout"
           element={
@@ -68,6 +72,11 @@ function App() {
               <Checkout />
             </PreventLogin>
           }
+        />
+
+        <Route
+          path="/activate-account"
+          element={<ActiveAccount/>}
         />
         {/* <Route
           path="/store-front/:productId"

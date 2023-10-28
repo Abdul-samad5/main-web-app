@@ -101,13 +101,13 @@ const SignUp = ({ handleClick }) => {
       }
       
       setShowModal(true);
-      setModalText("Registration Successful! Navigating to the Login page...");
-      loginNewUser();
+      setModalText("Registration Successful! An email containing a token has been sent to your email...");
+      // loginNewUser();
 
       setTimeout(() => {
         // navigate("/login");
         setShowModal(false);
-        navigate("/create-store");
+        navigate("/activate-account");
       }, 3000);
     } catch (err) {
       setShowModal(true);
