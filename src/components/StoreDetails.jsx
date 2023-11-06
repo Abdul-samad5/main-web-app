@@ -68,7 +68,6 @@ const StoreDetails = () => {
       setModalContent("Details Saved");
       setTimeout(() => {
         setShowModal(false);
-        detailsExist.current = null;
       }, 2000);
 
       makeEmpty();

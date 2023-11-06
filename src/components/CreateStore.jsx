@@ -45,11 +45,14 @@ const CreateStore = ({ handleClick }) => {
     try {
       setLoading(true);
 
-      const res = await axios.post(`${BASE_URL}store/create_store`, store, 
-      { headers: { Authorization: `Bearer ${tk}` } });
+      const res = await axios.post(
+        `${BASE_URL}store/create_store`, 
+        store, 
+        { headers: { Authorization: `Bearer ${tk}` } }
+      );
 
       setShowModal(true);
-      setModalText('Store Created successfully. Navigating to Dashboard...');
+      setModalText('Store created successfully. Navigating to Dashboard...');
       setTimeout(() => {
         setShowModal(false);
         navigate('/dashboard');

@@ -66,27 +66,22 @@ const Login = ({ handleClick }) => {
         onUserLogin(token, email, user_id, emailUrl, emailVerify, type);
 
         if (response.data.data.user.has_store === false) {
-          setLoading(false);
           setShowModal(true);
           setModalText('Login Success! Please create a store to continue');
           setTimeout(() => {
             setShowModal(false);
-            handleClick('createStore');
+            navigate('/create-store');
           }, 3000);
-          navigate('/dashboard');
         } else {
-          setLoading(false);
           setShowModal(true);
           setModalText('Login Success! Please wait...');
           setTimeout(() => {
             setShowModal(false);
-
             navigate('/dashboard');
           }, 3000);
         }
       }
     } catch (err) {
-      setLoading(false);
       if (err.response.data.email && err.response.data.password) {
         setLoading(false);
         setShowModal(true);
@@ -104,6 +99,8 @@ const Login = ({ handleClick }) => {
         setShowModal(false);
       }, 3000);
       console.log(err);
+    } finally {
+      setLoading(false);
     }
   }
 
