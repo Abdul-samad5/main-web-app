@@ -5,15 +5,14 @@ import {
   Navigate,
 } from "react-router-dom";
 import { Register, Dashboard, StoreFront } from "./pages";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Cart, Checkout } from "./store-components";
 import { GetStarted, CreateStore, Login, ResetPassword } from "./components";
 import Cookies from "js-cookie";
-import ProductDetails from "./store-components/ProductDetails";
 import { SignUp } from "./components";
 import ResetPasswordConfirm from "./components/ResetPasswordConfirm";
 import ActiveAccount from "./components/ActiveAccount";
-
+import VendorStore from "./store-components/VendorStore";
 function App() {
   const PreventLogin = ({ children }) => {
     const tk = Cookies.get("_tksr");
@@ -34,18 +33,22 @@ function App() {
         />
 
         <Route path="/login" element={<Login />} />
-
+        {/* <Route path="/:user_id" element={<VendorStore />} /> */}
         <Route path="/register" element={<Register />} />
 
         <Route path="/create-store" element={<CreateStore />} />
 
-        <Route
+        {/* <Route
           path="/store-front/:storeName"
           element={
             <PreventLogin>
               <StoreFront />
             </PreventLogin>
           }
+        /> */}
+         <Route
+          path="/:Name"
+          element={<StoreFront />  }
         />
 
         <Route

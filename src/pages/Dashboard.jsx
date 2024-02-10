@@ -1,7 +1,7 @@
 import { useState, useContext, useLayoutEffect } from "react";
 import { styles } from "../constants";
 import axios from "axios";
-import { BASE_URL } from "../services/services";
+import { BASE_URL, userLogin } from "../services/services";
 import {
   logo,
   all_prods,
@@ -32,7 +32,7 @@ import {
   websiteSettings,
 } from "../assets";
 import { AiFillWarning } from "react-icons/ai";
-
+import { useParams } from "react-router-dom";
 import {
   AddEditProducts,
   Collections,
@@ -63,7 +63,6 @@ const Dashboard = () => {
   const [storeName, setStoreName] = useState("");
   const [storeLogo, setStoreLogo] = useState("");
   const [emailUrl, setEmailUrl] = useState("");
-
   // Component to be rendered on the main
   const [activeComponent, setActiveComponent] = useState([]);
 
@@ -85,7 +84,8 @@ const Dashboard = () => {
   const [isMarkOpen, setIsMarkOpen] = useState(false);
   const [isLogOpen, setIsLogOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-  
+
+ 
   function handleClick() {
     setIsNavOpen((prev) => !prev);
   }
@@ -130,7 +130,7 @@ const Dashboard = () => {
       const profileLogo = response.data.data["store_logo"];
       const emailVerify = response.data.user_data.user_is_active;
       Cookies.set("emailVerify", emailVerify, { secure: true });
-
+        
       setStoreName(`${store_name}`);
       setStoreLogo(profileLogo);
       // console.log(storeName);
@@ -159,6 +159,20 @@ const Dashboard = () => {
     setIsSettingsOpen(prev => prev = true);
   }
 
+  const [data, setData] = useState({});
+
+  useEffect(() => {
+    fetch(`${BASE_URL}store/list`, { headers: { Authorization: `Bearer ${tk}`} })
+      .then((r) => r.json())
+      .then((r) => {
+        // save data from fetch request to state
+        setData(r.Store_Details[0].store_name);
+        //setData(r)
+        // const lower = r.Name.toLowerCase()
+        //console.log(r.Store_Details[0].store_name);
+      });
+  }, []);
+//  const lower = data.store_name.toLowerCase()
   return (
     <div className="w-full overflow-hidden">
       <div className="w-full flex">
@@ -192,6 +206,8 @@ const Dashboard = () => {
           >
             <DbIcon src={store} />
             <h2>My Store</h2>
+         {/* <p>{data.store_name.toLowerCase()}</p> */}
+         {/* <p>{data}</p> */}
           </div>
           <div
             className={`${styles.dbNavItem}`}
@@ -427,7 +443,12 @@ const Dashboard = () => {
                 onClick={handleClick}
               />
               {/* <Link to={`/store-front/${storeName}`}> */}
-              <Link to={`/store-front/${storeName}`}>
+              {/* <Link to={`/store-front/${storeName}`}>
+                <button className={`${styles.buttonOutline} text-[14px] p-1`}>
+                  Go to store front
+                </button>
+              </Link> */}
+              <Link to={`/${data}`}>
                 <button className={`${styles.buttonOutline} text-[14px] p-1`}>
                   Go to store front
                 </button>

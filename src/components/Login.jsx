@@ -58,21 +58,30 @@ const Login = ({ handleClick }) => {
         const emailUrl = response.data.data.user.user_email_url;
         const type = response.data.data.type;
         const emailVerify = response.data.data.user.user_is_active;
-
+        const identity = response.data.data.user.user_id
         console.log(emailVerify);
         console.log(type);
+        console.log(identity);
         console.log(response);
 
         onUserLogin(token, email, user_id, emailUrl, emailVerify, type);
 
-        if (response.data.data.user.has_store === false) {
+        if (type === "seller" & response.data.data.user.has_store === false) {
+        // if (response.data.data.user.has_store === false) {
           setShowModal(true);
           setModalText('Login Success! Please create a store to continue');
           setTimeout(() => {
             setShowModal(false);
             navigate('/create-store');
           }, 3000);
-        } else {
+        }else if(type === "buyer"){ 
+          setShowModal(true);
+          setModalText('Login Success! Please wait...');
+          setTimeout(() => {
+            setShowModal(false);
+            navigate('/store-front/view-cart');
+          }, 3000);
+        }        else {
           setShowModal(true);
           setModalText('Login Success! Please wait...');
           setTimeout(() => {

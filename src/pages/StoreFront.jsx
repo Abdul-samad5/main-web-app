@@ -17,7 +17,7 @@ const StoreFront = () => {
         // if (res) {
         //   setMyProducts(res.data.data);
         // }
-        console.log(response);
+        console.log(response.data);
       } catch (err) {
         console.log(err);
       }
@@ -30,7 +30,6 @@ const StoreFront = () => {
       <Navbar />
       <div className="lg:px-16 px-3">
         <Hero />
-        {/* {!myProducts.length ? <p className="text-center text-black flex align-center justify-center text-lg font-bold">Loading...</p> : } */}
         <Products products={myProducts}/>
       </div>
       <Footer />

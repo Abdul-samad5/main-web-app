@@ -104,6 +104,9 @@ const getProductList = () => axios.get(`${BASE_URL}product/list`, config);
 
 const getProducts = () => axios.get(`${BASE_URL}product/list`, config);
 
+const getProductsId = (id) => axios.get(`${BASE_URL}product/list/${id}`);
+
+const getProductsStore = (store_name) => axios.get(`${BASE_URL}product/products/${store_name}`);
 // Buyer endpoints
 const createOrder = (order) =>
   axios.post(`${BASE_URL}buyer/order_history/create/`, order, config);
@@ -140,6 +143,7 @@ export {
   postStore,
   userLogin,
   getStoreInfo,
+  getProductsId,
   addProduct,
   createOrder,
   deleteOrder,
@@ -158,6 +162,7 @@ export {
   getProductItemUnit,
   deleteItemUnit,
   updateItemUnit,
+  getProductsStore,
   getProductItemUnitById,
   getProductList,
   deleteProduct,

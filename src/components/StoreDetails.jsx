@@ -47,7 +47,7 @@ const StoreDetails = () => {
     };
 
     setLoading(true);
-
+ 
     try {
       let res;
       if (detailsExist.current) {
@@ -60,6 +60,7 @@ const StoreDetails = () => {
         res = await axios.post(`${BASE_URL}store_settings/store`, formDetails, {
           headers: { Authorization: `Bearer ${tk}` },
         });
+       
       }
 
       if (!res.statusText === 'OK') return;
@@ -219,6 +220,7 @@ const StoreDetails = () => {
                 type='text'
                 name='tagLine'
               />
+              
             </span>
           </div>
 
@@ -280,16 +282,7 @@ const StoreDetails = () => {
           <div className='lg:flex lg:justify-between my-6'>
             <span className='lg:w-1/3 w-full block lg:my-0 my-3'>
               <p className='mb-1'>Store currency</p>
-              {/* <select
-                name="storeCurrency"
-                className={`${styles.inputBox} px-3 w-11/12`}
-                value={storeDetails.storeCurrency}
-                onChange={handleChange}
-              >
-                <option>Nigerian naira</option>
-              </select> */}
               <input
-                // placeholder="Nigerian"
                 onChange={handleChange}
                 disabled={true}
                 value={storeDetails.storeCurrency}
@@ -298,7 +291,6 @@ const StoreDetails = () => {
                 name='storeCurrency'
               />
             </span>
-
             <span className='lg:w-1/3 w-full block lg:my-0 my-3'>
               <p className='mb-1'>Store email</p>
               <input
@@ -310,7 +302,6 @@ const StoreDetails = () => {
                 type='text'
               />
             </span>
-
             <span className='lg:w-1/3 w-full block lg:my-0 my-3'>
               <p className='mb-1'>Store contact number</p>
               <input
@@ -323,7 +314,6 @@ const StoreDetails = () => {
               />
             </span>
           </div>
-
           <div className='w-full flex justify-center mx-auto'>
             <button type='submit' className={`${styles.button} lg:w-11/12 w-full ${loading ? "disabled:bg-gray disabled:cursor-not-allowed" : ""}`} disabled={loading}>
               {loading ? "Saving..." : "Save settings"}

@@ -33,7 +33,7 @@ const UserContextProvider = ({ children }) => {
 
       const store_name = response.data.data["store_name"];
       const storeLogo = response.data.data["store_logo"];
-
+      console.log(storeLogo);
       setStoreName(store_name);
       setStoreLogo(storeLogo);
     }

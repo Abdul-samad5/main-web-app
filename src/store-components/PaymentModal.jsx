@@ -6,7 +6,7 @@ import { UserContext } from "../context/UserContext";
 const publicKey = import.meta.env.VITE_PK;
 
 const PaymentModal = () => {
-  const { getCartItemsTotal } = useContext(CartContext);
+  const { getCartItemsTotal, clearCart } = useContext(CartContext);
   const navigate = useNavigate();
   const { storeName } = useContext(UserContext);
   const [formData, setFormData] = React.useState({
@@ -26,7 +26,8 @@ const PaymentModal = () => {
     publicKey,
     text: "Proceed",
     onSuccess: () => {
-      navigate(`/store-front/${storeName}`);
+      navigate(`/store-front/view-cart`);
+      clearCart()
     },
     onClose: () => alert("Failed"),
   };
@@ -104,13 +105,6 @@ const PaymentModal = () => {
             </div>
             {/*footer*/}
             <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
-              {/* <button
-                  className={`${styles.button} w-[100px]`}
-                  type="button"
-                  onClick={() => setOpen(null)}
-                >
-                  Close
-                </button> */}
             </div>
           </div>
         </div>

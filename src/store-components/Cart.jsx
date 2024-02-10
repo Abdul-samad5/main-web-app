@@ -15,7 +15,7 @@ const Cart = () => {
       <Navbar />
       <div className="bg-gray-200 lg:px-20 px-6 py-2 flex justify-start items-start">
         <Link
-          to={`/store-front/${storeName}`}
+          to={`/:Name`}
           className="text-brand-primary text-xs hover:text-brand-secondary hover:cursor-pointer"
         >
           Home

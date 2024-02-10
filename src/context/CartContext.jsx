@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState } from "react";
-import { getProducts } from "../services/services";
+import { getProductsId, getProductsStore } from "../services/services";
 export const CartContext = createContext();
 
 const CartContextProvider = ({ children }) => {
@@ -66,10 +66,11 @@ const CartContextProvider = ({ children }) => {
   const clearCart = () => {
     setCartItems((previous) => previous = []);
   }
-
+  const urls = window.location.pathname;
+  console.log(urls); 
   useEffect(() => {
     const getData = async () => {
-      const request = await getProducts();
+      const request = await getProductsStore(urls);
       const data = request.data.data;
       console.log(data);
 
@@ -96,5 +97,4 @@ const CartContextProvider = ({ children }) => {
     </CartContext.Provider>
   );
 };
-
 export default CartContextProvider;

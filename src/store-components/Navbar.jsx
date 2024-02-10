@@ -71,14 +71,14 @@ const Navbar = () => {
             <div className="hidden sm:ml-6 sm:block">
               <div className="flex space-x-4">
                 <div className={type ? "" : "hidden"}>
-                  <Link to="/dashboard">
+                  {/* <Link to="/dashboard">
                     <div
                       className="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium"
                       aria-current="page"
                     >
                       Dashboard
                     </div>
-                  </Link>
+                  </Link> */}
                 </div>
                 
                 

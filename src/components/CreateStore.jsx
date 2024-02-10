@@ -41,7 +41,7 @@ const CreateStore = ({ handleClick }) => {
       store_name: formData.storeName,
       store_domain: 'https://' + formData.storeDomain + '.myyetti.store',
     };
-
+   
     try {
       setLoading(true);
 
