@@ -30,7 +30,7 @@ const ActiveAccount = ({ handleClick }) => {
     try {
       const res = await axios.get(`${BASE_URL}auth/activate-account/${formData.token}`);
       if (!res.statusText === 'OK') return;
-      console.log(res);
+      //console.log(res);
       
       setShowModal(true);
       setModalContent("Your account has been activated. Please proceed to login...");
@@ -40,7 +40,7 @@ const ActiveAccount = ({ handleClick }) => {
       }, 3000);
       
     } catch(error) {
-      console.log(error);
+      //console.log(error);
       setShowModal(true);
       setModalText(error.response.data.message);
       setTimeout(() => {
